@@ -57,7 +57,7 @@
   import swal from 'sweetalert';
   // sha1加密
   import sha1 from 'js-sha1'
-   import {user} from '@/logic'
+  import {user} from '@/logic'
   import {
     loginApi
   } from '../api/api';
@@ -132,8 +132,8 @@
             var profile = Object.assign({},headers,data)
              user.setLoginUser(profile)
              user.getLoginUser()
+             console.log(user)
           }).catch(error => {
-            console.log(error)
             // this.isError = error.response
           });
         }

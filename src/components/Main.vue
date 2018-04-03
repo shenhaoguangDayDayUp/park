@@ -87,6 +87,12 @@
 </template>
 <script>
     import axios from 'axios';
+    import {
+        user
+    } from '@/logic'
+    import {
+        integralApi
+    } from '../api/api';
     export default {
         name: "Login",
         data() {
@@ -111,6 +117,17 @@
                         this.point = res.data;
                     })
                     .catch(error => {});
+                integralApi.account().then(res => {
+                    const {
+                        headers,
+                        data
+                    } = res
+                    var profile = Object.assign({}, headers, data)
+                    user.setLoginUser(profile)
+                    user.getLoginUser()
+                }).catch(error => {
+                    // this.isError = error.response
+                });
                 axios.get('/api/member/entity/session', {
                         // axios.get('http://192.168.1.192/gateway/mobile/member/entity/session', {
                         data: data || {},
@@ -217,7 +234,7 @@
                 border-left: 4px solid #ffcb16;
                 padding-left: 20px;
                 font-size: 30px;
-            margin-left: 24px;
+                margin-left: 24px;
             }
             height: 78px;
             line-height:78px;
@@ -227,36 +244,36 @@
         .user-option-con.mint-tabbar {
             position: static;
             background: #2F323B;
-            height:168px;
+            height: 168px;
             display: flex;
             justify-content: space-around;
-            .mint-tab-item{
-                width:30%;
-                display:flex;
+            .mint-tab-item {
+                width: 30%;
+                display: flex;
                 justify-content: center;
                 flex-direction: column;
                 .mint-tab-item-icon {
-                    height:48px;
-                    margin-bottom:18px;
-                    img{
-                        width:55px;
-                        height:55px;
+                    height: 48px;
+                    margin-bottom: 18px;
+                    img {
+                        width: 55px;
+                        height: 55px;
                     }
                 }
-                .mint-tab-item-label{
-                    font-size:28px;
+                .mint-tab-item-label {
+                    font-size: 28px;
                 }
             }
         }
         .user-option-con .yue {
             width: 100%;
             line-height: 48px;
-            span{
-                font-size:28px;
+            span {
+                font-size: 28px;
             }
         }
-        .mint-tab-item{
-            font-size:28px;
+        .mint-tab-item {
+            font-size: 28px;
         }
     }
     .mint-cell {
