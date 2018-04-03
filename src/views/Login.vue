@@ -23,14 +23,17 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                                <span class="mint-checkbox">
-                                  <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                                  <span class="mint-checkbox-core">
-                                  </span>
-                                </span> 
-                                <span class="mint-checkbox-label">下次自动登录</span>
-                            </label>
+              <span class="mint-checkbox">
+                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
+                <span class="mint-checkbox-core">
+                </span>
+              </span> 
+              <span class="mint-checkbox-label">下次自动登录</span>
+          </label>
           <a href="#/password">重置密码</a>
+        </div>
+        <div class="isError" v-if="isError">
+          <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
       </div>
       <div class="btn">
@@ -55,7 +58,6 @@
   // sha1加密
   import sha1 from 'js-sha1'
   import {
-    requestLogin,
     loginApi
   } from '../api/api';
   export default {
@@ -69,7 +71,8 @@
         judgePwd: '',
         seen: 'ok',
         msg: '',
-        isActive: false
+        isActive: false,
+        isError:''
       };
     },
     methods: {
@@ -123,26 +126,10 @@
             mobileNumber: this.$refs.userName.value,
             password: sha1(this.$refs.normalPwd.value)
           };
-          requestLogin(loginParams).then(res => {
+          loginApi.login(loginParams).then(res => {
             console.log(res)
-            this.logining = false;
-            let {
-              status,
-              headers,
-              data
-            } = res;
-            if (status !== 200) {
-              this.$message({
-                message: status,
-                type: 'error'
-              });
-            } else {
-              localStorage.setItem("token", headers['x-auth-token']);
-              localStorage.setItem("accountInfo", JSON.stringify(loginParams));
-              this.$router.push({
-                path: '/'
-              });
-            }
+          }).catch(error => {
+            this.isError = error.response.data
           });
         }
       }

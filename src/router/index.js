@@ -21,7 +21,7 @@ export default new Router({
         {
           path: '/main',
           name: 'Main',
-          component: () => import('@/components/Main'),
+          component: Main,
         },
         {
           path: '/gameCenter',
@@ -35,11 +35,6 @@ export default new Router({
         }
       ]
     },
-    // {
-    //   path: '/',
-    //   name: 'Main',
-    //   component: Main,
-    // },
     {
       path: '/login',
       name: 'Login',
