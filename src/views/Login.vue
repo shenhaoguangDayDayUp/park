@@ -7,7 +7,7 @@
     <div class="content">
       <div class="slide_son" style="display: inline-block;width: 100%;">
         <!--账号登录begin-->
-        <ul id="normalLogin">
+        <ul class="normalLogin">
           <li>
             <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
             <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
@@ -151,158 +151,11 @@
   };
 </script>
 <style lang="scss" scoped>
+  @import '../style/myform.scss';
   .login {
     background-image: url("../assets/img/bg.png");
     color: #fff;
     height: 100%;
-  }
-  .content {
-    margin: 71px 82px 0 78px;
-    .slide_son {
-      #normalLogin {
-        input {
-          /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
-          -moz-user-select: none;
-          -webkit-appearance: none;
-          outline: none;
-          border: none;
-          -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-          border: none;
-          background-color: transparent;
-          filter: alpha(opacity=0)
-        }
-        .isTip {
-          color: #ffcb16;
-          display: block;
-          font-size: 25px;
-          img {
-            height: 25px;
-            margin-right: 5px;
-            margin-bottom: 0.1rem;
-          }
-        }
-        li {
-          padding: 24px 0;
-          border-bottom: 1px solid #d8d8d8;
-          box-sizing: border-box;
-          position: relative;
-          input {
-            border: none;
-            width: 70%;
-            outline: 0;
-            overflow: hidden;
-            font-size: 28px;
-            height: 46px;
-          }
-        }
-        .icon-eye {
-          position: absolute;
-          height: 21px;
-          width: 36px;
-          right: 0;
-          bottom: 24px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-      }
-      .forget {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 42px;
-        font-size: 26px;
-        a {
-          font-size: 14px;
-          color: #ffcb16;
-          font-size: 26px;
-        }
-        .mint-checklist-label {
-          display: block;
-          padding: 0;
-        }
-        .mint-checkbox-core {
-          border-radius: 3px;
-          background-color: transparent;
-          height: 27px;
-          width: 27px;
-        }
-        .mint-checkbox-input:checked+.mint-checkbox-core {
-          background-color: transparent;
-          border: solid 2px #d6dae2;
-        }
-        .mint-checkbox-input:checked+.mint-checkbox-core::after {
-          border-color: #ffcb16;
-          width: 10px;
-          height: 15px;
-          left: 7px;
-          top: -3px;
-        }
-      }
-    }
-    .btn {
-      font-size: 18px;
-      margin-top: 47px;
-      div.redBtn.active {
-        background: #ffcb16;
-        box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
-        color: #000;
-        height: 78px;
-        line-height: 78px;
-        letter-spacing: 5px;
-        font-size: 31px;
-      }
-      div.redBtn {
-        background: #f8f9fa; // opacity:0.5;
-        color: #aaadb4;
-        height: 78px;
-        line-height: 78px;
-        letter-spacing: 5px;
-        font-size: 31px;
-      }
-      div {
-        width: 100%;
-        height: 46px;
-        line-height: 46px;
-        border-radius: 8px;
-        text-align: center;
-      }
-    }
-  }
-  .normalTab {
-    text-align: center;
-    letter-spacing: 12px;
-    margin-top: 79px; // font-family: MyriadPro-Bold;
-    font-size: 60px;
-  }
-  .close {
-    height: 40px;
-    width: 100px;
-    img {
-      width: 18px;
-      margin-left: 20px;
-      margin-top: 11px;
-      margin-bottom: 11px;
-    }
-  }
-  .el-message-box__wrapper .el-message-box {
-    width: 375px !important;
-  }
-  /* 消除手机端input高亮 */
-  input {
-    /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
-    -moz-user-select: none;
-    -webkit-appearance: none;
-    outline: none;
-    border: none;
-    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-    border: none;
-    background-color: transparent;
-    filter: alpha(opacity=0)
-  }
-  a {
-    -webkit-user-select: auto!important;
   }
   .toRegister {
     display: flex;
