@@ -5,10 +5,18 @@ import App from './App'
 import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import './style/reset.css'
-// import './assets/css/my-mint.scss';//全局修改mint-UI样式 
-import 'lib-flexible/flexible.js'
 Vue.use(MintUI)
+import './style/reset.css'
+import 'lib-flexible/flexible.js'
+
+// vee-validator
+import VeeValidate, {Validator}  from 'vee-validate';
+import zh from 'vee-validate/dist/locale/zh_CN'; 
+Validator.addLocale(zh);
+const config = {
+  locale: 'zh_CN'
+}; 
+Vue.use(VeeValidate,config);
 
 Vue.config.productionTip = false
 
