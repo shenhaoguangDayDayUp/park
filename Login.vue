@@ -13,7 +13,7 @@
         <ul id="normalLogin">
           <li>
             <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-            <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
+            <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent">
           </li>
           <li class="lg_border">
             <i class="isTip isPsw" v-if=judgePwd><img src="../assets/img/tishi@2x.png">登录密码有误</i>
