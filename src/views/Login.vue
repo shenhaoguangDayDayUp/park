@@ -57,6 +57,7 @@
   import swal from 'sweetalert';
   // sha1加密
   import sha1 from 'js-sha1'
+   import {user} from '@/logic'
   import {
     loginApi
   } from '../api/api';
@@ -127,9 +128,13 @@
             password: sha1(this.$refs.normalPwd.value)
           };
           loginApi.login(loginParams).then(res => {
-            console.log(res)
+            const {headers,data} = res
+            var profile = Object.assign({},headers,data)
+             user.setLoginUser(profile)
+             user.getLoginUser()
           }).catch(error => {
-            this.isError = error.response.data
+            console.log(error)
+            // this.isError = error.response
           });
         }
       }

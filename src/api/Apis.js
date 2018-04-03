@@ -103,7 +103,7 @@ function send(url, data, otherOptions, method = 'get') {
         }
         axios.request(config).then((res) => {
             // if (!res.data) res.data = { code: 200 };
-            resolve(res.data);
+            resolve(res);
         }).catch(({ response }) => {
             let { data } = response;
             console.log(response);
