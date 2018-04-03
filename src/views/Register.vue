@@ -20,9 +20,9 @@
             <li id="msg" class="errorTips">
               <input ref="smsCode" id="lg_msg" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
               <button class="smsCode" @click="getCode()" :disabled="!show">
-                              <span v-show="show">发送验证码</span>
-                              <span v-show="!show">{{count}}秒后重发</span>
-                          </button>
+                                <span v-show="show">发送验证码</span>
+                                <span v-show="!show">{{count}}秒后重发</span>
+                            </button>
               <!-- <div id="sendCode" class="smsCode reCode" ></div> -->
             </li>
             <!-- 输入新密码 -->
@@ -50,13 +50,13 @@
           <!-- 账号密码登录特有的忘记密码 -->
           <div class="forget">
             <label class="mint-checklist-label">
-                            <span class="mint-checkbox">
-                              <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                              <span class="mint-checkbox-core">
-                              </span>
-                            </span> 
-                            <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
-                        </label>
+                              <span class="mint-checkbox">
+                                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
+                                <span class="mint-checkbox-core">
+                                </span>
+                              </span> 
+                              <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
+                          </label>
           </div>
           <!--账号登录end-->
         </li>
@@ -74,6 +74,7 @@
   </div>
 </template>
 <script>
+ 
   // sha1加密
   import sha1 from 'js-sha1'
   import {
@@ -240,205 +241,12 @@
   }
 </script>
 <style scoped lang="scss">
-  button {
-    padding: 0;
-  }
+  @import '../style/myform.scss';
   .changepsd {
     background-image: url("../assets/img/bg.png");
     color: #fff;
     height: 100%;
   }
-  .content {
-    margin: 71px 82px 0 78px;
-  }
-  .btn {
-    font-size: 18px;
-    margin-top: 47px;
-    div.redBtn.active {
-      background: #ffcb16;
-      box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
-      color: #000;
-      height: 78px;
-      line-height: 78px;
-      letter-spacing: 5px;
-      font-size: 31px;
-    }
-    div.redBtn {
-      background: #f8f9fa; // opacity:0.5;
-      color: #aaadb4;
-      height: 78px;
-      line-height: 78px;
-      letter-spacing: 5px;
-      font-size: 31px;
-    }
-    div {
-      width: 100%;
-      height: 46px;
-      line-height: 46px;
-      border-radius: 8px;
-      text-align: center;
-    }
-  }
-  .slide_son {
-    .normalLogin {
-      input {
-        /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
-        -moz-user-select: none;
-        -webkit-appearance: none;
-        outline: none;
-        border: none;
-        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-        border: none;
-        background-color: transparent;
-        filter: alpha(opacity=0)
-      }
-      .isTip {
-        color: #ffcb16;
-        display: block;
-        font-size: 25px;
-        img {
-          height: 25px;
-          margin-right: 5px;
-          margin-bottom: 0.1rem;
-        }
-      }
-      li {
-        padding: 24px 0;
-        border-bottom: 1px solid #d8d8d8;
-        box-sizing: border-box;
-        position: relative;
-        input {
-          border: none;
-          width: 70%;
-          outline: 0;
-          overflow: hidden;
-          font-size: 28px;
-          height: 46px;
-        }
-        button {
-          position: absolute;
-          right: 0;
-        }
-      }
-      .icon-eye {
-        position: absolute;
-        height: 21px;
-        width: 36px;
-        right: 0;
-        bottom: 24px;
-        img {
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-    .forget {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 42px;
-      font-size: 26px;
-      a {
-        font-size: 14px;
-        color: #ffcb16;
-        font-size: 26px;
-      }
-      .mint-checklist-label {
-        display: block;
-        padding: 0;
-      }
-      .mint-checkbox-core {
-        border-radius: 3px;
-        background-color: transparent;
-        height: 27px;
-        width: 27px;
-      }
-      .mint-checkbox-input:checked+.mint-checkbox-core {
-        background-color: transparent;
-        border: solid 2px #d6dae2;
-      }
-      .mint-checkbox-input:checked+.mint-checkbox-core::after {
-        border-color: #ffcb16;
-        width: 10px;
-        height: 15px;
-        left: 7px;
-        top: -3px;
-      }
-    }
-  }
-  .slide_son .forget {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 42px;
-    color: #ffcb16;
-    a {
-      font-size: 14px;
-      color: #ffcb16;
-    }
-    .mint-checklist-label {
-      display: block;
-      padding: 0;
-    }
-    .mint-checkbox-core {
-      border-radius: 3px;
-      background-color: transparent;
-      height: 27px;
-      width: 27px;
-    }
-    .mint-checkbox-input:checked+.mint-checkbox-core {
-      background-color: transparent;
-      border: solid 2px #d6dae2;
-    }
-    .mint-checkbox-input:checked+.mint-checkbox-core::after {
-      border-color: #ffcb16;
-      width: 10px;
-      height: 15px;
-      left: 7px;
-      top: -3px;
-    }
-  }
-  .normalTab {
-    text-align: center;
-    letter-spacing: 12px;
-    margin-top: 119px; // font-family: MyriadPro-Bold;
-    font-size: 60px;
-  }
-  .close {
-    height: 40px;
-    width: 100px;
-    img {
-      width: 18px;
-      margin-left: 20px;
-      margin-top: 11px;
-      margin-bottom: 11px;
-    }
-  }
-  .icon-eye.eye-grey {
-    /* background: url(../assets/img/images/hide.png) 15px 18px no-repeat; */
-    background-size: 50%;
-  }
-  .icon-eye.eye-red {
-    /* background: url(../assets/img/images/show.png) 15px 16px no-repeat; */
-    background-size: 50%;
-  }
-  a {
-    color: white;
-    text-decoration: none;
-  }
-  /* 输入动态码 */
-  .slide_son li input.sms {
-    width: 60%;
-  }
-  /* muze-ui */
-  .mu-raised-button.mu-raised-button-inverse {
-    width: 100%;
-    height: 100%;
-    background: none;
-    color: #000;
-    border: none;
-    letter-spacing: 5px;
-    border-radius: 100px;
-    color: #fff;
-  }
+
 </style>
 
