@@ -127,7 +127,7 @@
             mobileNumber: this.$refs.userName.value,
             password: sha1(this.$refs.normalPwd.value)
           };
-          loginApi.login(loginParams).then(res => {
+          loginApi.login(loginParams,{headers:{token:31131313}}).then(res => {
             const {headers,data} = res
             var profile = Object.assign({},headers,data)
              user.setLoginUser(profile)

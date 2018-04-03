@@ -1,6 +1,7 @@
 import Axios from 'axios';
 // import { Loading } from 'element-ui';
 import $config from './config';
+// import {user} from './logic';
 let baseUrl = $config.apiUrlPrefix[$config.env.NODE_ENV]
 
 let axios = Axios.create({
@@ -97,9 +98,9 @@ function send(url, data, otherOptions, method = 'get') {
     return new Promise((resolve, reject) => {
         let config = {};
         if (method == 'get') {
-            config = Object.assign({}, { url: url, method: method, params: data }, otherOptions);
+            config = Object.assign({}, { url: url, method: method, params: data }, otherOptions,);
         } else {
-            config = Object.assign({}, { url: url, method: method, data: data }, otherOptions);
+            config = Object.assign({},  { url: url, method: method, data: data }, otherOptions);
         }
         axios.request(config).then((res) => {
             // if (!res.data) res.data = { code: 200 };
