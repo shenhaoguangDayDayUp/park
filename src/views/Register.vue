@@ -20,9 +20,9 @@
             <li id="msg" class="errorTips">
               <input ref="smsCode" id="lg_msg" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
               <button class="smsCode" @click="getCode()" :disabled="!show">
-                                <span v-show="show">发送验证码</span>
-                                <span v-show="!show">{{count}}秒后重发</span>
-                            </button>
+                                  <span v-show="show">发送验证码</span>
+                                  <span v-show="!show">{{count}}秒后重发</span>
+                              </button>
               <!-- <div id="sendCode" class="smsCode reCode" ></div> -->
             </li>
             <!-- 输入新密码 -->
@@ -50,15 +50,18 @@
           <!-- 账号密码登录特有的忘记密码 -->
           <div class="forget">
             <label class="mint-checklist-label">
-                              <span class="mint-checkbox">
-                                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                                <span class="mint-checkbox-core">
-                                </span>
-                              </span> 
-                              <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
-                          </label>
+                                <span class="mint-checkbox">
+                                  <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
+                                  <span class="mint-checkbox-core">
+                                  </span>
+                                </span> 
+                                <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
+                            </label>
           </div>
           <!--账号登录end-->
+          <div class="isError">
+            <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
+          </div>
         </li>
       </ul>
       <div class="btn">
@@ -74,7 +77,6 @@
   </div>
 </template>
 <script>
- 
   // sha1加密
   import sha1 from 'js-sha1'
   import {
@@ -233,9 +235,9 @@
         //       path: '/'
         //     });
         //   })
-        //   .catch(error=>{
-        //     swal(error.response.data)
-        //   });
+          // .catch(error=>{
+          //   swal(error.response.data)
+          // });
       }
     },
   }
@@ -247,6 +249,5 @@
     color: #fff;
     height: 100%;
   }
-
 </style>
 

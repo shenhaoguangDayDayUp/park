@@ -1,23 +1,20 @@
 <template>
     <div class="password">
         <div class="close">
-           <router-link to="/login">
-               <img src="../assets/img/close.png">
-           </router-link>
-            
+            <router-link to="/login">
+                <img src="../assets/img/close.png">
+            </router-link>
         </div>
         <div class="logo">
             <!-- <img src="../assets/img/images/logo.png" alt=""> -->
         </div>
         <div class="normalTab">重置密码</div>
         <div class="nav">
-            <div class="nav-tab" @click=choosenP()>
+            <div class="nav-tab " @click=choosenP() :class="{ 'tabActive': tabActive}">
                 <mt-button size="small" @click.native.prevent="active = 'tab-container1'">密码验证</mt-button>
-                <hr v-if = line />
             </div>
-            <div class="nav-tab" @click=choosenM()>
-                <mt-button size="small" @click.native.prevent="active = 'tab-container2'" >短信验证</mt-button>
-                <hr v-if = !line />
+            <div class="nav-tab" @click=choosenM() :class="{ 'tabActive': !tabActive}">
+                <mt-button size="small" @click.native.prevent="active = 'tab-container2'">短信验证</mt-button>
             </div>
         </div>
         <mt-tab-container v-model="active" swipeable>
@@ -26,29 +23,30 @@
                     <!--账号登录begin-->
                     <ul class="normalLogin">
                         <li>
-                            <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-                            <input ref="userName" @blur="blurPhone()"  type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
+                            <i class="isTip isTel" v-if="judgePhone"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
+                            <input ref="userName" @blur="blurPhone()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if= judgePwd><img src="../assets/img/tishi@2x.png">登录密码有误</i>
+                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">当前密码不能为空</i>
                             <input @blur="blurPwd()" ref="normalPwd" placeholder="当前密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
-                            <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
+                            <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
+                            <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if=judgePwd><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
-                            <input @blur="blurPwd()" ref="normalPwd"  placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
-                            <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
+                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
+                            <input @blur="blurPwd()" ref="normalPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
+                            <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if=judgePwd><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
-                            <input @blur="blurPwd()" ref="normalPwd"  placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
-                            <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
+                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
+                            <input @blur="blurPwd()" ref="normalPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
                         </li>
                     </ul>
                     <!--账号登录end-->
+                    <div class="isError">
+                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
+                    </div>
                 </div>
                 <div class="btn">
                     <div class="redBtn" @click=submits()>
@@ -67,35 +65,26 @@
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                <span v-show="show">发送验证码</span>
-                                <span v-show="!show">{{count}}秒后重发</span>
-                            </button>
+                                                <span v-show="show">发送验证码</span>
+                                                <span v-show="!show">{{count}}秒后重发</span>
+                                            </button>
                         </li>
                         <li>
-                            <i class="isTip isPsw" ><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
-                            <input ref="normalPwd"  placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
+                            <input ref="normalPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
                             <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
                         </li>
                         <li>
-                            <i class="isTip isPsw" ><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
+                            <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
                             <input ref="normalPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
                             <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
                         </li>
                     </ul>
                     <!--账号登录end-->
-                    <!-- 账号密码登录特有的忘记密码 -->
-                    <div class="forget">
-                        <label class="mint-checklist-label">
-                            <span class="mint-checkbox">
-                                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                                <span class="mint-checkbox-core">
-                                </span>
-                            </span> 
-                            <span class="mint-checkbox-label">下次自动登录</span>
-                        </label>
-                        <a href="#/changepsd">重设密码</a>
+                    <div class="isError">
+                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
                     </div>
                 </div>
                 <div class="btn">
@@ -130,16 +119,16 @@
                 msg: '',
                 active: 'tab-container1',
                 ok: false,
-                line: 'ok',
                 count: "",
+                tabActive: true,
             };
         },
         methods: {
-            choosenP(){
-                this.line = 'ok';
+            choosenP() {
+                this.tabActive = true;
             },
-            choosenM(){
-                this.line = !this.line;
+            choosenM() {
+                this.tabActive = false;
             },
             //函数号码验证
             isPoneAvailable(str) {
@@ -209,101 +198,19 @@
     };
 </script>
 <style lang="scss" scoped>
-    .btn {
-        font-size: 18px;
-        margin-top: 30px;
-        div.redBtn {
-            background: #ffcb16;
-            box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
-            color: #000;
-        }
-        div {
-            width: 100%;
-            height: 46px;
-            line-height: 46px;
-            border-radius: 8px;
-            text-align: center;
-        }
-    }
-    .slide_son {
-        .normalLogin {
-            input {
-                /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
-                -moz-user-select: none;
-                -webkit-appearance: none;
-                outline: none;
-                border: none;
-                -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-                border: none;
-                background-color: transparent;
-                filter: alpha(opacity=0)
-            }
-            .isTip {
-                color: #ffcb16;
-                display: block;
-                img {
-                    width: 1.2rem;
-                    margin-right: 5px;
-                    margin-bottom: 0.1rem;
-                }
-            }
-            li {
-                padding: 5px 0;
-                border-bottom: 1px solid #d8d8d8;
-                box-sizing: border-box;
-                position: relative;
-                input {
-                    border: none;
-                    height: 40px;
-                    max-height: 40px;
-                    width: 70%;
-                    outline: 0;
-                    overflow: hidden;
-                    font-size: 16px;
-                }
-                .smsCode {
-                    right: 0;
-                    display: block;
-                    width: 108px;
-                    height: 20px;
-                    line-height: 20px;
-                    text-align: right;
-                    font-size: 14px;
-                    text-decoration: none;
-                    position: absolute;
-                    top: 13px;
-                    outline: 0;
-                    /* border-left: 1px solid #d8d8d8; */
-                    color: #ffcb16;
-                }
-            }
-        }
-        .forget {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            a {
-                font-size: 14px;
-                color: #ffcb16;
-            }
-            .mint-checklist-label {
-                display: block;
-                padding: 0;
-            }
-            .mint-checkbox-core {
-                border-radius: 3px;
-                background-color: transparent;
-            }
-            .mint-checkbox-input:checked+.mint-checkbox-core {
-                background-color: transparent;
-                border-color: #fff;
-            }
-            .mint-checkbox-input:checked+.mint-checkbox-core::after {
-                border-color: #ffcb16;
-            }
-        }
-    }
+    @import '../style/myform.scss';
     .password {
+        background-image: url("../assets/img/bg.png");
+        color: #fff;
+        height: 100%;
+        .normalTab {
+            margin-top: 36px;
+            font-size: 34px;
+            letter-spacing: 2px;
+        }
+        .mint-tab-container {
+            margin: 75px 81px 0 79px;
+        }
         hr {
             background: #ffcb16;
             height: 2px;
@@ -311,9 +218,9 @@
         }
         .mint-button--small {
             display: inline-block;
-            font-size: 16px;
+            font-size: 30px;
+            line-height: 30px;
             padding: 0 12px;
-            height: 33px;
         }
         .mint-button--default {
             color: #fff;
@@ -323,167 +230,21 @@
             box-shadow: none;
             width: 100%;
         }
-        .mint-button::after {
-            background-color: transparent;
-            border-bottom: 1px solid #ffcb16;
-            content: " ";
-            opacity: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            position: absolute;
-        }
         .nav {
             display: flex;
             justify-content: space-around;
+            margin-top: 61px;
             .nav-tab {
                 width: 50%;
             }
+            .tabActive {
+                padding-bottom: 27px;
+                border-bottom: 4px solid #ffcb16;
+                .mint-button--default {
+                    color: #ffcb16;
+                }
+            }
         }
-        .mint-tab-container {
-            margin: 30px 37px 0;
-        }
-    }
-    .content {
-        margin: 30px 37px 0;
-    }
-    .isTip {
-        color: #ffcb16;
-        display: block;
-        img {
-            width: 1.2rem;
-            margin-right: 5px;
-            margin-bottom: 0.1rem;
-        }
-    }
-    .btn div.redBtn {
-        background: #ffcb16;
-        box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
-        color: #000;
-    }
-    .btn div {
-        width: 100%;
-        height: 46px;
-        line-height: 46px;
-        border-radius: 8px;
-        text-align: center;
-    }
-    .slide_son li {
-        padding: 5px 0;
-        border-bottom: 1px solid #d8d8d8;
-        box-sizing: border-box;
-        position: relative;
-    }
-    .slide_son li input {
-        border: none;
-        height: 40px;
-        max-height: 40px;
-        width: 70%;
-        outline: 0;
-        overflow: hidden;
-        font-size: 16px;
-    }
-    .slide_son .forget {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-        a {
-            font-size: 14px;
-            color: #ffcb16;
-        }
-        .mint-checklist-label {
-            display: block;
-            padding: 0;
-        }
-        .mint-checkbox-core {
-            border-radius: 3px;
-            background-color: transparent;
-        }
-        .mint-checkbox-input:checked+.mint-checkbox-core {
-            background-color: transparent;
-            border-color: #fff;
-        }
-        .mint-checkbox-input:checked+.mint-checkbox-core::after {
-            border-color: #ffcb16;
-        }
-    }
-    .btn {
-        font-size: 18px;
-        margin-top: 30px;
-    }
-    .normalTab {
-        height: 32px;
-        font-size: 20px;
-        text-align: center;
-        letter-spacing: 2px;
-        margin-bottom:30px;
-    }
-    .logo img {
-        display: block;
-        width: 144px;
-        height: 108px;
-        margin: 0 auto;
-    }
-    .close {
-        height: 40px;
-        width: 100px;
-    }
-    .close img {
-        width: 18px;
-        height: 18px;
-        margin-left: 15px;
-        margin-top: 11px;
-        margin-bottom: 11px;
-    }
-    .icon-eye {
-        position: absolute;
-        height: 40px;
-        width: 40px;
-        right: 0;
-        bottom: 3px;
-    }
-    .icon-eye.eye-grey {
-        background: url("../assets/img/hide.png") 15px 18px no-repeat;
-        background-size: 50%;
-    }
-    .icon-eye.eye-red {
-        background: url("../assets/img/show.png") 15px 16px no-repeat;
-        background-size: 50%;
-    }
-    .el-message-box__wrapper .el-message-box {
-        width: 375px !important;
-    }
-    .password {
-        background-image: url("../assets/img/bg.png");
-        color: #fff;
-        height: 100%;
-    }
-    /* 消除手机端input高亮 */
-    .normalLogin input {
-        /* -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
-        -moz-user-select: none;
-        -webkit-appearance: none;
-        outline: none;
-        border: none;
-        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-        border: none;
-        background-color: transparent;
-        filter: alpha(opacity=0)
-    }
-    a {
-        -webkit-user-select: auto!important;
-    }
-    /* muze-ui */
-    .mu-raised-button.mu-raised-button-inverse {
-        width: 100%;
-        height: 100%;
-        background: none;
-        color: #000;
-        border: none;
-        letter-spacing: 5px;
-        border-radius: 100px;
-        color: #fff;
     }
 </style>
 

@@ -10,15 +10,16 @@ export const userRegister = params => { return axios.post(`${base}/member/regist
 
 export let loginApi = new Api('member','id',{
     login:{
-        url: '/login',
+        url: 'login',
         method: 'put'
     },
     register:{
-        url: '/register',
+        url: 'register',
         method: 'put' 
     }
 })
 export let getCodeApi = new Api('sms/validationCode','id',{
+    
 })
 
 

@@ -5,18 +5,18 @@
     <!-- 以下底部导航在登录和注册时display:none掉 -->
     <mt-tabbar fixed v-model="selected">
       <TabItem2 id="游戏厅" route="/gameCenter">
-        <img  v-if=" selected !== '游戏厅' " slot="icon" src="../../assets/img/youxiting.png" > 
-        <img v-else slot="icon" src="../../assets/img/youxiting2.png" > 
+        <img v-if=" selected !== '游戏厅' " slot="icon" src="../../assets/img/youxiting.png">
+        <img v-else slot="icon" src="../../assets/img/youxiting2.png">
         <span>游戏厅</span>
       </TabItem2>
       <TabItem2 id="奖品城" route="/prizeCity" @click="changeClass">
         <img v-if=" selected !== '奖品城' " slot="icon" src="../../assets/img/jiangpincheng.png">
-        <img v-else slot="icon" src="../../assets/img/jiangpincheng2.png" >
-        <span >奖品城</span>
+        <img v-else slot="icon" src="../../assets/img/jiangpincheng2.png">
+        <span>奖品城</span>
       </TabItem2>
       <TabItem2 id="我的" route="/main" @click="changeClass">
-        <img  v-if=" selected !== '我的' " slot="icon" src="../../assets/img/wode.png"> 
-        <img v-else slot="icon" src="../../assets/img/wode2.png" >
+        <img v-if=" selected !== '我的' " slot="icon" src="../../assets/img/wode.png">
+        <img v-else slot="icon" src="../../assets/img/wode2.png">
         <span>我的</span>
       </TabItem2>
     </mt-tabbar>
@@ -25,7 +25,6 @@
 
 <script>
   import TabItem2 from '@/common/tabItem';
-  
   export default {
     name: 'app',
     data() {
@@ -35,8 +34,8 @@
       }
     },
     watch: {
-      selected: function (val, oldVal) {
-          this.selected = val;
+      selected: function(val, oldVal) {
+        this.selected = val;
       }
     },
     methods: {
@@ -59,28 +58,33 @@
     height: 100%;
     .mint-tabbar>.mint-tab-item.is-selected {
       background-color: transparent;
-      span{
+      span {
         color: #ffcb16;
       }
     }
   }
-  a {
-    width: 100%;
-    height: 100%;
-    display: block;
-    text-decoration: none;
-    color: #fff;
-  }
-  a:visited {
-    // color:#ffcb16;
-  }
-  .test {
-    width: 100px;
-    height: 100px;
-    background: red;
-  }
-  .mint-tabbar {
+  .mint-tabbar.is-fixed {
     background: #2F323B;
+    height: 98px;
+    box-shadow: 0px -9px 9px 0px rgba(0, 0, 0, 0.1);
+    
   }
+  #app .mint-tabbar > .mint-tab-item {
+      padding: 0;
+      a {
+        .mint-tab-item-icon {
+          
+        }
+        .mint-tab-item-label {
+          span{
+            font-size:20px;
+          }
+        }
+      }
+    }
+    #app .mint-tabbar > .mint-tab-item > a >.mint-tab-item-icon {
+      height: 48px;
+      width: 48px;
+    }
 </style>
  
