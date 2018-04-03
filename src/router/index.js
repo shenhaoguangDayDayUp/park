@@ -21,7 +21,7 @@ export default new Router({
         {
           path: '/main',
           name: 'Main',
-          component: Main,
+          component: () => import('@/components/Main'),
         },
         {
           path: '/gameCenter',
