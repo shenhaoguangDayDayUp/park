@@ -16,6 +16,12 @@ export let loginApi = new Api('member','id',{
         method:'put'
     }
 })
+export let integralApi = new Api('account/balance','id',{
+    account:{
+        url: 'CRD',
+        method: 'get'
+    },
+})
 export let getCodeApi = new Api('sms/validationCode','id',{
 
 })
