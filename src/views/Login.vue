@@ -23,13 +23,13 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                                    <span class="mint-checkbox">
-                                      <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                                      <span class="mint-checkbox-core">
-                                      </span>
-                                    </span> 
-                                    <span class="mint-checkbox-label">下次自动登录</span>
-                                </label>
+              <span class="mint-checkbox">
+                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
+                <span class="mint-checkbox-core">
+                </span>
+              </span> 
+              <span class="mint-checkbox-label">下次自动登录</span>
+          </label>
           <a href="#/password">重置密码</a>
         </div>
         <div class="isError" v-if="isError">

@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
-                            <input @blur="blurPwd()" ref="normalPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input @blur="blurPwd()" ref="newPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
                             <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
@@ -65,9 +65,9 @@
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                                <span v-show="show">发送验证码</span>
-                                                <span v-show="!show">{{count}}秒后重发</span>
-                                            </button>
+                                                    <span v-show="show">发送验证码</span>
+                                                    <span v-show="!show">{{count}}秒后重发</span>
+                                                </button>
                         </li>
                         <li>
                             <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
@@ -84,7 +84,7 @@
                     </ul>
                     <!--账号登录end-->
                     <div class="isError">
-                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
+                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
                     </div>
                 </div>
                 <div class="btn">
@@ -103,7 +103,7 @@
     // sha1加密
     import sha1 from 'js-sha1'
     import {
-        requestLogin
+        loginApi
     } from '../api/api';
     export default {
         name: "Password",
@@ -121,6 +121,7 @@
                 ok: false,
                 count: "",
                 tabActive: true,
+                isError:''
             };
         },
         methods: {
@@ -182,16 +183,14 @@
                 //   })
                 // 发送请求
                 // 第一个请求
-                var loginParams = {
-                    mobileNumber: this.$refs.userName.value,
-                    password: sha1(this.$refs.normalPwd.value)
+                var resetParams = {
+                    password: sha1(this.$refs.normalPwd.value),
+                    code: this.$refs.newPwd.value,
                 };
-                requestLogin(loginParams).then(res => {
-                    console.log(res);
-                    $router.push({
-                        path: '/'
-                    });
-                    // // }
+                loginApi.reset(resetParams).then(res => {
+                    console.log(res)
+                }).catch(error => {
+                    this.isError = error.response.data
                 });
             }
         }
@@ -210,11 +209,6 @@
         }
         .mint-tab-container {
             margin: 75px 81px 0 79px;
-        }
-        hr {
-            background: #ffcb16;
-            height: 2px;
-            border: none;
         }
         .mint-button--small {
             display: inline-block;

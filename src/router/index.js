@@ -15,12 +15,13 @@ export default new Router({
     {
       path: '/',
       component: () => import('@/components/common/Layout.vue'),
+      // component: () => import('@/page/permission/MainLayout.vue'),
       redirect: '/main',
       children: [
         {
           path: '/main',
           name: 'Main',
-          component: () => import('@/components/Main'),
+          component: Main,
         },
         {
           path: '/gameCenter',
@@ -31,8 +32,24 @@ export default new Router({
           path: '/prizeCity',
           name: 'PrizeCity',
           component:   () => import('@/components/prizeCity'),
-        },
+        }
       ]
     },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
+    },
+    {
+      path: '/password',
+      name: 'Password',
+      component: Password,
+    },
+   
   ]
 })
