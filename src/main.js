@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+import './style/reset.css'
 // import './assets/css/my-mint.scss';//全局修改mint-UI样式 
 import 'lib-flexible/flexible.js'
 Vue.use(MintUI)

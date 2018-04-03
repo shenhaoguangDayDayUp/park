@@ -14,9 +14,32 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Main',
-      component: Main,
+      component: () => import('@/components/common/Layout.vue'),
+      // component: () => import('@/page/permission/MainLayout.vue'),
+      redirect: '/main',
+      children: [
+        {
+          path: '/main',
+          name: 'Main',
+          component: Main,
+        },
+        {
+          path: '/gameCenter',
+          name: 'gameCenter',
+          component: () => import('@/components/gameCenter'),
+        },
+        {
+          path: '/prizeCity',
+          name: 'PrizeCity',
+          component:   () => import('@/components/prizeCity'),
+        }
+      ]
     },
+    // {
+    //   path: '/',
+    //   name: 'Main',
+    //   component: Main,
+    // },
     {
       path: '/login',
       name: 'Login',
@@ -32,15 +55,6 @@ export default new Router({
       name: 'Password',
       component: Password,
     },
-    {
-      path: '/gameCenter',
-      name: 'gameCenter',
-      component: GameCenter,
-    },
-    {
-      path: '/prizeCity',
-      name: 'PrizeCity',
-      component: PrizeCity,
-    }
+   
   ]
 })
