@@ -20,12 +20,12 @@
                 <router-link :key="gidx" :to="{path:'/goods/detail',query: {id: good.goodsId}}" class="shop_item_3" tag="div">
                   <div class="shop_item_3_img">
                     <img v-lazy="good.url">
-                  </div> 
+                  </div>
                   <div class="shop_item_3_msg">
                     测试商品
                   </div>
                   <div class="shop_item_3_price">
-                    <span>¥100</span>
+                    <span><img src="../assets/img/big_gold@2x.png" alt=""></span>
                     <del>¥200</del>
                   </div>
                 </router-link>
@@ -43,7 +43,8 @@ import {
 export default {
   data() {
     return {
-      goodsList:[{url:'https://static.vux.li/demo/1.jpg'},{url:'https://static.vux.li/demo/2.jpg'},{url:'https://static.vux.li/demo/3.jpg'}],
+      goodsList:[{url:'https://static.vux.li/demo/1.jpg'},{url:'https://static.vux.li/demo/2.jpg'},{url:'https://static.vux.li/demo/3.jpg'},
+      {url:'https://static.vux.li/demo/1.jpg'},{url:'https://static.vux.li/demo/2.jpg'},{url:'https://static.vux.li/demo/3.jpg'}],
       bannerData: [{
   url: 'javascript:',
   img: 'https://static.vux.li/demo/1.jpg',
@@ -110,6 +111,7 @@ export default {
   font-size: 27px;
   color: #afb0b4
 }
+
 .hot-box{
   padding:0 20px;
 }
@@ -136,12 +138,32 @@ export default {
   width: 230px;
 }
 
+
 .shop_item_3_img {
   border: 1px solid #e6e6e6;
   height: 230px;
   width:230px;
   margin-bottom: 0.2rem;
+  position: relative;
 }
+.shop_item_3_img::after {
+  content: ' ';
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  right: -13px;
+  border-right: 2px solid red;
+  // transform: scaleX(0.5);
+  transform-origin: 100% 100%;  
+}
+.shop_item_3_img:last-child{
+  &::after {
+  content: none;
+
+}
+}
+ 
+
 
 .shop_item_3_img img {
   display: block;
@@ -150,17 +172,17 @@ export default {
 }
 
 .shop_item_3_msg {
-  height: 0.53333rem;
-  line-height: 0.53333rem;
-  font-size: 0.32rem;
-  color: #333333;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  // height: 0.53333rem;
+  // line-height: 0.53333rem;
+  // font-size: 0.32rem;
+  // color: #333333;
+  // text-align: center;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // word-break: break-all;
+  // display: -webkit-box;
+  // -webkit-line-clamp: 1;
+  // -webkit-box-orient: vertical;
 }
 
 .shop_item_3_price {
