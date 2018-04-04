@@ -8,6 +8,8 @@ import 'mint-ui/lib/style.css'
 import './style/reset.css'
 // import './assets/css/my-mint.scss';//全局修改mint-UI样式 
 import 'lib-flexible/flexible.js'
+import 'vux/src/styles/reset.less';
+
 Vue.use(MintUI)
 
 Vue.config.productionTip = false
