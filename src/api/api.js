@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Api from './Apis';
 let base = '/api'
+// let data = ''
+// data = data || {}
 
 export let loginApi = new Api('member','id',{
     login:{
@@ -14,12 +16,17 @@ export let loginApi = new Api('member','id',{
     reset:{
         url:'password',
         method:'put'
+    },
+    entity:{
+        url:'entity/session',
+        method: 'get'
     }
 })
 export let integralApi = new Api('account','id',{
     account:{
         url: 'balance/CRD',
-        method: 'get'
+        method: 'get',
+        // params:{}
     },
 })
 export let getCodeApi = new Api('sms/validationCode','id',{

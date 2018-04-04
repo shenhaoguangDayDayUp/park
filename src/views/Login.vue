@@ -11,9 +11,9 @@
           <ul class="normalLogin">
             <li>
               <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-              <i v-show="errors.has('phone')" class="fa fa-warning"></i>
-              <!-- <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent "> -->
-              <input name="phone" v-model="phone" v-validate="'required|phone'" data-first-as="Firsts Name" :class="{'input': true, 'is-danger': errors.has('phone') }" type="text" placeholder="手机">
+              <!-- <i v-show="errors.has('phone')" class="fa fa-warning"></i> -->
+              <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
+              <!-- <input name="phone" v-model="phone" v-validate="'required|phone'" data-first-as="Firsts Name" :class="{'input': true, 'is-danger': errors.has('phone') }" type="text" placeholder="手机"> -->
             </li>
             <li class="lg_border">
               <i class="isTip isPsw" v-if=judgePwd><img src="../assets/img/tishi@2x.png">登录密码有误</i>
@@ -58,9 +58,9 @@
 
 <script>
   //veevalidator
-  import {
-    Validator
-  } from 'vee-validate';
+  // import {
+  //   Validator
+  // } from 'vee-validate';
   // sweetalert
   import swal from 'sweetalert';
   // sha1加密
@@ -88,38 +88,38 @@
         phone: ''
       };
     },
-    created() {
-      const dictionary = {
-        zh_CN: {
-          messages: {
-            email: () => '邮箱格式错误。',
-            required: (field) => "不能为空" + field, //替换 “ 必须  ” 关键字
-          },
-          attributes: {
-            //email: '不能为空'
-          }
-        }
-      };
-      this.$validator.updateDictionary(dictionary);
-      Validator.extend('phone', {
-        messages: {
-          zh_CN: field => field + '必须是11位手机号码',
-        },
-        validate: value => {
-          return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value)
-        }
-      });
-    },
+    // created() {
+    //   const dictionary = {
+    //     zh_CN: {
+    //       messages: {
+    //         email: () => '邮箱格式错误。',
+    //         required: (field) => "不能为空" + field, //替换 “ 必须  ” 关键字
+    //       },
+    //       attributes: {
+    //         //email: '不能为空'
+    //       }
+    //     }
+    //   };
+    //   this.$validator.updateDictionary(dictionary);
+    //   Validator.extend('phone', {
+    //     messages: {
+    //       zh_CN: field => field + '必须是11位手机号码',
+    //     },
+    //     validate: value => {
+    //       return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value)
+    //     }
+    //   });
+    // },
     methods: {
-      validateBeforeSubmit() {
-        this.$validator.validateAll().then((result) => {
-          if (result) { // eslint-disable-next-line
-            alert('From Submitted!');
-            return;
-          }
-          alert('Correct them errors!');
-        });
-      },
+      // validateBeforeSubmit() {
+      //   this.$validator.validateAll().then((result) => {
+      //     if (result) { // eslint-disable-next-line
+      //       alert('From Submitted!');
+      //       return;
+      //     }
+      //     alert('Correct them errors!');
+      //   });
+      // },
       //函数号码验证
       isPoneAvailable(str) {
         var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -164,22 +164,18 @@
       },
       // 提交登录请求
       submits() { 
-        this.$options.methods.validateBeforeSubmit();
+        // this.$options.methods.validateBeforeSubmit();
         if (this.judgePhone == '' && this.judgePwd == '') {
           this.isActive = true;
           var loginParams = {
             mobileNumber: this.$refs.userName.value,
             password: sha1(this.$refs.normalPwd.value)
           };
-<<<<<<< HEAD
-          loginApi.login(loginParams).then(res => {
-=======
           loginApi.login(loginParams, {
             headers: {
               token: 31131313
             }
           }).then(res => {
->>>>>>> 0f1184baf34ad78ac029949917605241ee81a7de
             const {
               headers,
               data
