@@ -94,7 +94,6 @@ export default class Api {
         return send(url, data, otherOptions, 'delete');
     }
 }
-api.get({})
 function send(url, data, otherOptions, method = 'get') {
     return new Promise((resolve, reject) => {
         let config = {};

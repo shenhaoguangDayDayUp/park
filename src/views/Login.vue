@@ -171,19 +171,11 @@
             mobileNumber: this.$refs.userName.value,
             password: sha1(this.$refs.normalPwd.value)
           };
-          loginApi.login(loginParams, {
-            headers: {
-              token: 31131313
-            }
-          }).then(res => {
-            const {
-              headers,
-              data
-            } = res
-            var profile = Object.assign({}, headers, data)
+          loginApi.login(loginParams).then(res => {
+            const {headers} = res
+            var profile = Object.assign({},loginParams, headers)
             user.setLoginUser(profile)
             user.getLoginUser()
-            console.log(user)
           }).catch(error => {
             // this.isError = error.response
           });

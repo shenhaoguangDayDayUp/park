@@ -26,8 +26,11 @@ export let integralApi = new Api('account','id',{
         method: 'get',
     },
 })
-export let getCodeApi = new Api('sms/validationCode','id',{
-
+export let getCodeApi = new Api('sms','id',{
+    getcode:{
+        url:'validationCode/{id}',
+        method: 'get',
+    }
 })
 
 

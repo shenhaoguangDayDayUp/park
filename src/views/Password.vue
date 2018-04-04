@@ -40,7 +40,7 @@
                         </li>
                         <li>
                             <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
-                            <input @blur="blurPwd()" ref="normalPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input @blur="blurPwd()" ref="renewPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
                         </li>
                     </ul>
                     <!--账号登录end-->
@@ -60,24 +60,24 @@
                     <ul class="normalLogin">
                         <li>
                             <i class="isTip isTel"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-                            <input ref="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
+                            <input ref="userName_" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
                         </li>
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                                    <span v-show="show">发送验证码</span>
-                                                    <span v-show="!show">{{count}}秒后重发</span>
-                                                </button>
+                                                            <span v-show="show">发送验证码</span>
+                                                            <span v-show="!show">{{count}}秒后重发</span>
+                                                        </button>
                         </li>
                         <li>
                             <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
-                            <input ref="normalPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input ref="normalPwd1" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
                             <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
                         </li>
                         <li>
                             <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
-                            <input ref="normalPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input ref="normalPwd__" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
                             <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
                         </li>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="btn">
-                    <div class="redBtn" @click=submits()>
+                    <div class="redBtn" @click=submits_()>
                         提&nbsp;交
                     </div>
                 </div>
@@ -103,7 +103,11 @@
     // sha1加密
     import sha1 from 'js-sha1'
     import {
-        loginApi
+        user
+    } from '@/logic'
+    import {
+        loginApi,
+        getCodeApi
     } from '../api/api';
     export default {
         name: "Password",
@@ -121,7 +125,8 @@
                 ok: false,
                 count: "",
                 tabActive: true,
-                isError:''
+                isError: '',
+                TOKEN:JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
             };
         },
         methods: {
@@ -173,24 +178,50 @@
                     this.judgePwd = ''
                 }
             },
-            // 提交登录请求
+            // 旧密码提交登录请求
             submits() {
-                // swal("账户或密码有误!");
-                // 如果手机号验证通过
-                // if (this.$options.methods.isPoneAvailable(this.$refs.userName.value) && this.$options.methods.isNull(normalPwd)) {
-                //   this.$router.push({
-                //     name: 'Home'
-                //   })
-                // 发送请求
-                // 第一个请求
+                // const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
                 var resetParams = {
                     password: sha1(this.$refs.normalPwd.value),
-                    code: this.$refs.newPwd.value,
+                    code: sha1(this.$refs.newPwd.value),
                 };
-                loginApi.reset(resetParams).then(res => {
-                    console.log(res)
+                loginApi.reset(resetParams,{
+                    headers: {
+                        'x-auth-token': this.TOKEN
+                    }
+                }).then(res => {
+                    this.$router.push({
+                        name: 'Home'
+                    })
                 }).catch(error => {
                     this.isError = error.response.data
+                });
+            },
+            // 动态验证码修改密码
+            getCode() {
+                const mobileNumber = JSON.parse(localStorage.getItem('$LoginUser')).mobileNumber;
+                getCodeApi.getcode({id:mobileNumber},{
+                    data:{}
+                }).then(res=>{
+                }).catch(error=>{
+                })
+            },
+            submits_(){
+                // const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
+                var resetParams = {
+                    note: this.$refs.smsCode.value, //短信验证码
+                    code: sha1(this.$refs.normalPwd1.value),//新密码
+                };
+                loginApi.reset(resetParams,{
+                    headers: {
+                        'x-auth-token': this.TOKEN
+                    }
+                }).then(res => {
+                    this.$router.push({
+                        name: 'Home'
+                    })
+                }).catch(error => {
+                    // this.isError = error.response.data
                 });
             }
         }

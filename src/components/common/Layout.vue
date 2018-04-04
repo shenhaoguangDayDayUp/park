@@ -1,90 +1,79 @@
 <template>
-  <div id="app">
+  <div id="mytab">
     <router-view></router-view>
     <!-- 路由跳转必写 -->
-    <!-- 以下底部导航在登录和注册时display:none掉 -->
-    <mt-tabbar fixed v-model="selected">
-      <TabItem2 id="游戏厅" route="/gameCenter">
-        <img v-if=" selected !== '游戏厅' " slot="icon" src="../../assets/img/youxiting.png">
+    <tabbar v-model="selected">
+      <tabbar-item route="/gameCenter">
+        <img v-if=" selected !== 0 " slot="icon" src="../../assets/img/youxiting.png">
         <img v-else slot="icon" src="../../assets/img/youxiting2.png">
-        <span>游戏厅</span>
-      </TabItem2>
-      <TabItem2 id="奖品城" route="/prizeCity" @click="changeClass">
-        <img v-if=" selected !== '奖品城' " slot="icon" src="../../assets/img/jiangpincheng.png">
+        <span slot="label">游戏厅</span>
+      </tabbar-item>
+      <tabbar-item link="/prizeCity">
+        <img v-if=" selected !== 1 " slot="icon" src="../../assets/img/jiangpincheng.png">
         <img v-else slot="icon" src="../../assets/img/jiangpincheng2.png">
-        <span>奖品城</span>
-      </TabItem2>
-      <TabItem2 id="我的" route="/main" @click="changeClass">
-        <img v-if=" selected !== '我的' " slot="icon" src="../../assets/img/wode.png">
+        <span slot="label">奖品城</span>
+      </tabbar-item>
+      <tabbar-item selected link="/main">
+        <img v-if=" selected !== 2 " slot="icon" src="../../assets/img/wode.png">
         <img v-else slot="icon" src="../../assets/img/wode2.png">
-        <span>我的</span>
-      </TabItem2>
-    </mt-tabbar>
+        <span slot="label">我的</span>
+      </tabbar-item>
+    </tabbar>
   </div>
 </template>
-
 <script>
-  import TabItem2 from '@/common/tabItem';
+  import {
+    Tabbar,
+    TabbarItem,
+  } from 'vux'
   export default {
+    components: {
+      Tabbar,
+      TabbarItem,
+    },
     name: 'app',
     data() {
       return {
-        isActive: true,
-        selected: '我的',
+        selected: 2,
       }
     },
     watch: {
       selected: function(val, oldVal) {
         this.selected = val;
       }
-    },
-    methods: {
-      changeClass(index) {
-        // this.isActive = !this.isActive;
-        alert(1)
-      },
-    },
-    mounted() {
-      // console.log(this.$route.path)
-    },
-    components: {
-      TabItem2
     }
   }
 </script>
 
+
 <style lang="scss" scoped>
-  #app {
+  #mytab {
     height: 100%;
-    .mint-tabbar>.mint-tab-item.is-selected {
-      background-color: transparent;
-      span {
-        color: #ffcb16;
-      }
+    .weui-tabbar {
+      height: 98px;
+      background: #2f323b;
+      box-shadow: 0px -9px 9px 0px rgba(0, 0, 0, 0.1);
     }
-  }
-  .mint-tabbar.is-fixed {
-    background: #2F323B;
-    height: 98px;
-    box-shadow: 0px -9px 9px 0px rgba(0, 0, 0, 0.1);
-    
-  }
-  #app .mint-tabbar > .mint-tab-item {
+    .weui-tabbar:before {
+      border: none;
+    }
+    .weui-tabbar__item {
       padding: 0;
-      a {
-        .mint-tab-item-icon {
-          
-        }
-        .mint-tab-item-label {
-          span{
-            font-size:20px;
-          }
-        }
-      }
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
     }
-    #app .mint-tabbar > .mint-tab-item > a >.mint-tab-item-icon {
-      height: 48px;
-      width: 48px;
-    }
+  }
+</style>
+<style lang="scss">
+  .weui-tabbar__item>.weui-tabbar__icon {
+    height: 48px;
+    width: 48px;
+    margin: 0 auto;
+  }
+  .weui-tabbar__item>.weui-tabbar__label {
+    font-size: 20px;
+  }
 </style>
  

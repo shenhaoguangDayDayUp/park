@@ -15,7 +15,6 @@ export default new Router({
     {
       path: '/',
       component: () => import('@/components/common/Layout.vue'),
-      // component: () => import('@/page/permission/MainLayout.vue'),
       redirect: '/main',
       children: [
         {

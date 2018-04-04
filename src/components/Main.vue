@@ -11,9 +11,10 @@
                     <div class="cell-logo">
                         <img data-v-48713cc3="" src="../assets/img/toux@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
-                            <span>用户名</span>
-                            <span>138 3008 2550</span>
+                            <span>{{userName}}</span>
+                            <span>{{mobileNumber}}</span>
                         </div>
+                        <i data-v-1b0f58d8="" class="mint-cell-allow-right"></i>
                     </div>
                     <i class="mint-cell-allow-right"></i>
                 </div>
@@ -23,6 +24,7 @@
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>请登录</span>
                         </div>
+                        <i data-v-1b0f58d8="" class="mint-cell-allow-right"></i>
                     </div>
                     <i class="mint-cell-allow-right"></i>
                 </div>
@@ -91,8 +93,8 @@
         user
     } from '@/logic'
     import {
-        integralApi, loginApi,
-
+        integralApi,
+        loginApi,
     } from '../api/api';
     export default {
         name: "Login",
@@ -100,49 +102,38 @@
             return {
                 point: '== ==',
                 isActive: false,
-                userName: ''
+                userName: '',
+                mobileNumber: ''
             };
         },
         mounted() {
             const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
-            integralApi.account({},{
-                data:{},
-                headers: {
-                    'x-auth-token': TOKEN
-                }
-            }).then(res => {
-                const {
-                    headers,
-                    data
-                } = res
-            }).catch(error => {
-                this.isError = error.response
-            });
-            loginApi.entity({},{
-                data:{},
-                headers:{
-                    'x-auth-token': TOKEN
-                }
-            }).then(res=>{
-                
-            }).catch(error=>{
-
-            })
-            axios.get('/api/member/entity/session', {
+            if (TOKEN) {
+                integralApi.account({}, {
                     data: {},
                     headers: {
-                        "x-auth-token": TOKEN
+                        'x-auth-token': TOKEN
                     }
-                })
-                .then(res => {
-                    console.log(res)
-                    this.userName = res.data.name;
-                    console.log(this.userName)
-                    this.isActive = true;
-                })
-                .catch(error => {
-                    console.log(error)
+                }).then(res => {
+                    const {
+                        headers,
+                        data
+                    } = res
+                    this.point = data
+                }).catch(error => {
+                    this.isError = error.response
                 });
+                loginApi.entity({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    this.userName = res.data.name;
+                    this.mobileNumber = res.data.mobileNumber;
+                    this.isActive = true;
+                }).catch(error => {})
+            }
         },
         methods: {
             toLogin() {
@@ -174,11 +165,13 @@
             height: 118px;
             padding: 0;
             img {
+                height: 124px;
+                width: 124px;
                 border-radius: 100%;
                 border: solid #ffffff 2px;
             }
             .mint-cell-title {
-                margin-left: 56px;
+                align-items: center;
                 display: flex;
                 justify-content: space-between;
                 .cell-logo {
@@ -196,8 +189,21 @@
         .mint-cell.mint-cell-wrapper {
             background-origin: border-box;
             height: 224px;
+            padding: 0 53px;
+            display: flex;
+            position:relative;
         }
         .mint-cell-allow-right::after {
+            border: 2px solid #c8c8cd;
+            border-bottom-width: 0;
+            border-left-width: 0;
+            content: " ";
+            top: 50%;
+            right: 20px;
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            transform: translateY(-50%) rotate(45deg);
             right: 53px;
             height: 15px;
             width: 15px;
@@ -249,6 +255,8 @@
                 justify-content: center;
                 flex-direction: column;
                 .mint-tab-item-icon {
+                    display: flex;
+                    justify-content: center;
                     height: 48px;
                     margin-bottom: 18px;
                     img {
@@ -257,6 +265,8 @@
                     }
                 }
                 .mint-tab-item-label {
+                    display: flex;
+                    justify-content: center;
                     font-size: 28px;
                 }
             }
@@ -281,6 +291,7 @@
     .user-option span {
         font-size: 13px;
     }
+    .mint-cell-allow-right:after {}
 </style>
 
 
