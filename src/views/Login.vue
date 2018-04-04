@@ -23,13 +23,13 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-              <span class="mint-checkbox">
-                <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                <span class="mint-checkbox-core">
-                </span>
-              </span> 
-              <span class="mint-checkbox-label">下次自动登录</span>
-          </label>
+                    <span class="mint-checkbox">
+                      <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
+                      <span class="mint-checkbox-core">
+                      </span>
+                    </span> 
+                    <span class="mint-checkbox-label">下次自动登录</span>
+                </label>
           <a href="#/password">重置密码</a>
         </div>
         <div class="isError" v-if="isError">
@@ -56,10 +56,13 @@
   // sweetalert
   import swal from 'sweetalert';
   // sha1加密
-  import sha1 from 'js-sha1'
-  import {user} from '@/logic'
+  import sha1 from 'js-sha1';
   import {
-    loginApi
+    user
+  } from '@/logic'
+  import {
+    loginApi,
+    integralApi
   } from '../api/api';
   export default {
     name: "Login",
@@ -73,7 +76,7 @@
         seen: 'ok',
         msg: '',
         isActive: false,
-        isError:''
+        isError: ''
       };
     },
     methods: {
@@ -128,18 +131,20 @@
             password: sha1(this.$refs.normalPwd.value)
           };
           loginApi.login(loginParams).then(res => {
-            const {headers,data} = res
-            var profile = Object.assign({},headers,data)
-             user.setLoginUser(profile)
-             user.getLoginUser()
-             console.log(user)
+            const {
+              headers,
+              data
+            } = res
+            var profile = Object.assign({}, headers, data)
+            user.setLoginUser(profile)
+            user.getLoginUser()
+            console.log(user)
           }).catch(error => {
             // this.isError = error.response
           });
         }
       }
     },
-    mounted() {}
   };
 </script>
 <style lang="scss" scoped>

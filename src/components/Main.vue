@@ -103,50 +103,35 @@
             };
         },
         mounted() {
-            const TOKEN = localStorage.getItem('token');
-            if (TOKEN) {
-                var data = ''
-                axios.get('/api/account/balance/CRD', {
-                        // axios.get('http://192.168.1.192/gateway/mobile/account/balance/CRD', {
-                        data: data || {},
-                        headers: {
-                            "x-auth-token": TOKEN
-                        }
-                    })
-                    .then(res => {
-                        this.point = res.data;
-                    })
-                    .catch(error => {});
-                integralApi.account().then(res => {
-                    const {
-                        headers,
-                        data
-                    } = res
-                    var profile = Object.assign({}, headers, data)
-                    user.setLoginUser(profile)
-                    user.getLoginUser()
-                }).catch(error => {
-                    // this.isError = error.response
-                });
-                axios.get('/api/member/entity/session', {
-                        // axios.get('http://192.168.1.192/gateway/mobile/member/entity/session', {
-                        data: data || {},
-                        headers: {
-                            "x-auth-token": TOKEN
-                        }
-                    })
-                    .then(res => {
-                        console.log(res)
-                        this.userName = res.data.name;
-                        console.log(this.userName)
-                        this.isActive = true;
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    });
-            } else {
-                this.point = this.point;
-            }
+            var data ='' || {}
+            integralApi.account(data, {
+                headers: {
+                    'x-auth-token': JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
+                }
+            }).then(res => {
+                const {
+                    headers,
+                    data
+                } = res
+            }).catch(error => {
+                // this.isError = error.response
+            });
+            // axios.get('/api/member/entity/session', {
+            //         // axios.get('http://192.168.1.192/gateway/mobile/member/entity/session', {
+            //         data: data || {},
+            //         headers: {
+            //             "x-auth-token": TOKEN
+            //         }
+            //     })
+            //     .then(res => {
+            //         console.log(res)
+            //         this.userName = res.data.name;
+            //         console.log(this.userName)
+            //         this.isActive = true;
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     });
         },
         methods: {
             toLogin() {

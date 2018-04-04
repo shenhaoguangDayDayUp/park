@@ -16,9 +16,9 @@ export let loginApi = new Api('member','id',{
         method:'put'
     }
 })
-export let integralApi = new Api('account/balance','id',{
+export let integralApi = new Api('account','id',{
     account:{
-        url: 'CRD',
+        url: 'balance/CRD',
         method: 'get'
     },
 })
