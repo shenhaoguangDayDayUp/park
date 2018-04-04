@@ -104,10 +104,11 @@
             };
         },
         mounted() {
-            // const TOKEN = 
+            const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
             integralApi.account({},{
+                data:{},
                 headers: {
-                    'x-auth-token': JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
+                    'x-auth-token': TOKEN
                 }
             }).then(res => {
                 const {
@@ -117,31 +118,31 @@
             }).catch(error => {
                 this.isError = error.response
             });
-            // loginApi.entity({},{
-            //     headers:{
-            //         'x-auth-token': TOKEN
-            //     }
-            // }).then(res=>{
+            loginApi.entity({},{
+                data:{},
+                headers:{
+                    'x-auth-token': TOKEN
+                }
+            }).then(res=>{
                 
-            // }).catch(error=>{
+            }).catch(error=>{
 
-            // })
-            // axios.get('/api/member/entity/session', {
-            //         // axios.get('http://192.168.1.192/gateway/mobile/member/entity/session', {
-            //         data: data,
-            //         headers: {
-            //             "x-auth-token": TOKEN
-            //         }
-            //     })
-            //     .then(res => {
-            //         console.log(res)
-            //         this.userName = res.data.name;
-            //         console.log(this.userName)
-            //         this.isActive = true;
-            //     })
-            //     .catch(error => {
-            //         console.log(error)
-            //     });
+            })
+            axios.get('/api/member/entity/session', {
+                    data: {},
+                    headers: {
+                        "x-auth-token": TOKEN
+                    }
+                })
+                .then(res => {
+                    console.log(res)
+                    this.userName = res.data.name;
+                    console.log(this.userName)
+                    this.isActive = true;
+                })
+                .catch(error => {
+                    console.log(error)
+                });
         },
         methods: {
             toLogin() {
