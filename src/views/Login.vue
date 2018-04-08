@@ -1,8 +1,8 @@
 <template>
   <div class="login">
-    <div class="close">
+    <!-- <div class="close">
       <router-link to="/"><img src="../assets/img/close.png"></router-link>
-    </div>
+    </div> -->
     <div class="normalTab">L O G O</div>
     <div class="content">
       <div class="slide_son" style="display: inline-block;width: 100%;">
@@ -11,12 +11,10 @@
           <ul class="normalLogin">
             <li>
               <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-              <!-- <i v-show="errors.has('phone')" class="fa fa-warning"></i> -->
-              <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
-              <!-- <input name="phone" v-model="phone" v-validate="'required|phone'" data-first-as="Firsts Name" :class="{'input': true, 'is-danger': errors.has('phone') }" type="text" placeholder="手机"> -->
+              <input ref="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
             </li>
             <li class="lg_border">
-              <i class="isTip isPsw" v-if=judgePwd><img src="../assets/img/tishi@2x.png">登录密码有误</i>
+              <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
               <input @blur="blurPwd()" ref="normalPwd" id="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent ">
               <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
               <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
@@ -27,21 +25,25 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                    <span class="mint-checkbox">
-                      <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                      <span class="mint-checkbox-core">
-                      </span>
-                    </span> 
-                    <span class="mint-checkbox-label">下次自动登录</span>
-                </label>
+                      <span class="mint-checkbox" v-show="choosen" @click="ischoosen">
+                        <input type="checkbox" class="mint-checkbox-input" > 
+                        <span class="mint-checkbox-core">
+                        </span>
+                      </span> 
+                      <span class="mint-checkbox-label">下次自动登录</span>
+                  </label>
           <a href="#/password">重置密码</a>
         </div>
         <div class="isError" v-if="isError">
-          <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
+          <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
       </div>
+      <!-- 报错信息 -->
+      <div class="isError" v-show='tipActive'>
+        <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{errorTip}}</span>
+      </div>
       <div class="btn">
-        <div class="redBtn active" @click=submits() v-if="isActive">
+        <div class="redBtn active" @click=submits() v-if="submitActive">
           登&nbsp;录
         </div>
         <div class="redBtn" @click=submits() v-else>
@@ -57,11 +59,12 @@
 </template>
 
 <script>
-  //veevalidator
-  // import {
-  //   Validator
-  // } from 'vee-validate';
-  // sweetalert
+  // mint-ui
+  import Vue from 'vue'
+  import {
+    Checklist
+  } from 'mint-ui';
+  Vue.component(Checklist.name, Checklist);
   import swal from 'sweetalert';
   // sha1加密
   import sha1 from 'js-sha1'
@@ -83,43 +86,18 @@
         judgePwd: '',
         seen: 'ok',
         msg: '',
-        isActive: true,
+        submitActive: true,
         isError: '',
-        phone: ''
+        phone: '',
+        choosen: true,
+        tipActive: false,
+        errorTip: ''
       };
     },
-    // created() {
-    //   const dictionary = {
-    //     zh_CN: {
-    //       messages: {
-    //         email: () => '邮箱格式错误。',
-    //         required: (field) => "不能为空" + field, //替换 “ 必须  ” 关键字
-    //       },
-    //       attributes: {
-    //         //email: '不能为空'
-    //       }
-    //     }
-    //   };
-    //   this.$validator.updateDictionary(dictionary);
-    //   Validator.extend('phone', {
-    //     messages: {
-    //       zh_CN: field => field + '必须是11位手机号码',
-    //     },
-    //     validate: value => {
-    //       return value.length == 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/.test(value)
-    //     }
-    //   });
-    // },
     methods: {
-      // validateBeforeSubmit() {
-      //   this.$validator.validateAll().then((result) => {
-      //     if (result) { // eslint-disable-next-line
-      //       alert('From Submitted!');
-      //       return;
-      //     }
-      //     alert('Correct them errors!');
-      //   });
-      // },
+      ischoosen() {
+        this.choosen = !this.choosen;
+      },
       //函数号码验证
       isPoneAvailable(str) {
         var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -129,60 +107,72 @@
           return true;
         }
       },
-      //判断密码是否为空
-      isNull(psw) {
-        if (psw) {
-          return true;
-        } else {
-          return false;
-        }
+      // 密码验证
+        isPwd(pwd) {
+          var patrn = /^(\S){6,20}$/;
+          if (!patrn.exec(pwd)) return false;
+          return true
+        },
+        // 密码明暗 切换input type
+        toggle() {
+            if (this.seen == '') {
+              this.seen = 'ok'
+              this.$refs.normalPwd.type = 'password'
+            } else {
+              this.seen = '';
+              this.$refs.normalPwd.type = 'text'
+            }
+          },
+          // 表单判断
+          blurPhone() {
+            if (!this.$options.methods.isPoneAvailable(this.$refs.userName.value)) {
+              this.judgePhone = 'ok';
+            } else {
+              this.judgePhone = '';
+              if (this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
+                this.submitActive = true;
+              }
+            }
+          },
+          blurPwd() {
+            if (!this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
+              this.judgePwd = 'ok'
+            } else {
+              this.judgePwd = ''
+              if (this.$options.methods.isPoneAvailable(this.$refs.normalPwd.value)) {
+                this.submitActive = true;
+              }
+            }
+          },
+          // 提交登录请求
+          submits() {
+            if( this.$options.methods.isPwd(this.$refs.normalPwd.value) && this.$options.methods.isPoneAvailable(this.$refs.userName.value)) {
+              this.submitActive = true;
+              var loginParams = {
+                mobileNumber: this.$refs.userName.value,
+                password: sha1(this.$refs.normalPwd.value)
+              };
+              loginApi.login(loginParams).then(res => {
+                const {
+                  headers
+                } = res
+                // 判断用户下次是否直接登录
+                if (this.choosen) {
+                  var profile = Object.assign({}, loginParams, headers)
+                } else {
+                  var profile = Object.assign({}, headers)
+                }
+                user.setLoginUser(profile)
+                this.$router.push({
+                  name: 'Main'
+                })
+              }).catch(error => {
+                this.isError = error.response
+              });
+            }
+          }
       },
-      // 密码明暗 切换input type
-      toggle() {
-        if (this.seen == '') {
-          this.seen = 'ok'
-          this.$refs.normalPwd.type = 'password'
-        } else {
-          this.seen = '';
-          this.$refs.normalPwd.type = 'text'
-        }
-      },
-      // 表单判断
-      blurPhone() {
-        if (!this.$options.methods.isPoneAvailable(this.$refs.userName.value)) {
-          this.judgePhone = 'ok'
-        } else {
-          this.judgePhone = ''
-        }
-      },
-      blurPwd() {
-        if (!this.$options.methods.isNull(this.$refs.normalPwd.value)) {
-          this.judgePwd = 'ok'
-        } else {
-          this.judgePwd = ''
-        }
-      },
-      // 提交登录请求
-      submits() { 
-        // this.$options.methods.validateBeforeSubmit();
-        if (this.judgePhone == '' && this.judgePwd == '') {
-          this.isActive = true;
-          var loginParams = {
-            mobileNumber: this.$refs.userName.value,
-            password: sha1(this.$refs.normalPwd.value)
-          };
-          loginApi.login(loginParams).then(res => {
-            const {headers} = res
-            var profile = Object.assign({},loginParams, headers)
-            user.setLoginUser(profile)
-            user.getLoginUser()
-          }).catch(error => {
-            // this.isError = error.response
-          });
-        }
-      }
-    },
-  };
+    };
 </script>
 <style lang="scss" scoped>
   @import '../style/myform.scss';
@@ -207,4 +197,5 @@
     }
   }
 </style>
+
 

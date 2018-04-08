@@ -7,6 +7,8 @@ import Password from '@/views/Password'
 import GameCenter from '@/components/gameCenter'
 import Main from '@/components/Main'
 import PrizeCity from '@/components/prizeCity'
+import Message from '@/views/Message'
+import Receivers from '@/views/Receivers'
 
 Vue.use(Router)
 
@@ -31,7 +33,12 @@ export default new Router({
           path: '/prizeCity',
           name: 'PrizeCity',
           component:   () => import('@/components/prizeCity'),
-        }
+        },
+        {
+          path: '/message',
+          name: 'Message',
+          component: Message,
+        },
       ]
     },
     {
@@ -49,6 +56,10 @@ export default new Router({
       name: 'Password',
       component: Password,
     },
-   
+    {
+      path: '/receivers',
+      name: 'Receivers',
+      component: Receivers,
+    },
   ]
 })

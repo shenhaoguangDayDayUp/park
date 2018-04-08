@@ -9,7 +9,7 @@ export let loginApi = new Api('member','id',{
     },
     register:{
         url: 'register',
-        method: 'put' 
+        method: 'post' 
     },
     reset:{
         url:'password',

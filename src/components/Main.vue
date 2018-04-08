@@ -3,7 +3,7 @@
         <div class="mainContent">
             <div class="user-header">
                 <div class="user-mess">
-                    <img src="../assets/img/xinxiaoxi@2x.png" alt="">
+                    <router-link to="./message"><img src="../assets/img/xinxiaoxi@2x.png" alt=""></router-link>
                 </div>
             </div>
             <div class="mint-cell mint-cell-wrapper">
@@ -36,19 +36,19 @@
                 <!-- <hr /> -->
                 <div class="user-option-con mint-tabbar">
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon yue">
+                        <div class="mint-icon yue">
                             <span>{{point}}</span>
                         </div>
                         <div class="mint-tab-item-label">余额</div>
                     </div>
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon">
+                        <div class="mint-icon">
                             <img src="../assets/img/chongzhi.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">在线充值</div>
                     </div>
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon">
+                        <div class="mint-icon">
                             <img src="../assets/img/jiaoyimingxi.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">交易明细</div>
@@ -62,19 +62,19 @@
                 <!-- <hr/> -->
                 <div class="user-option-con mint-tabbar">
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon">
+                        <div class="mint-icon">
                             <img src="../assets/img/xinyuandan.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon">
+                        <div class="mint-icon">
                             <img src="../assets/img/daifukuan.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
                     <div class="mint-tab-item">
-                        <div class="mint-tab-item-icon">
+                        <div class="mint-icon">
                             <img src="../assets/img/daishouhuo.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
@@ -88,6 +88,7 @@
     </div>
 </template>
 <script>
+    import swal from 'sweetalert';
     import axios from 'axios';
     import {
         user
@@ -107,12 +108,11 @@
             };
         },
         mounted() {
-            const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
-            if (TOKEN) {
+            // var XTOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
                 integralApi.account({}, {
                     data: {},
                     headers: {
-                        'x-auth-token': TOKEN
+                        'x-auth-token': XTOKEN
                     }
                 }).then(res => {
                     const {
@@ -121,12 +121,45 @@
                     } = res
                     this.point = data
                 }).catch(error => {
-                    this.isError = error.response
+                    console.log(error.response)
+                });
+            const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))
+            // 如果用户账号密码在本地存在，则半个小时token过期后再发送请求。
+            if (TOKEN) {
+                var loginParams = {
+                    mobileNumber: JSON.parse(localStorage.getItem('$LoginUser'))['mobileNumber'],
+                    password: JSON.parse(localStorage.getItem('$LoginUser'))['password']
+                };
+                loginApi.login(loginParams).then(res => {
+                    const {
+                        headers
+                    } = res
+                    // 本地存储
+                    var profile = Object.assign({}, loginParams, headers)
+                    user.setLoginUser(profile)
+                }).catch(error => {
+                    sweetAlert("哎呦……", "出错了！", "error");
+                });
+                // 请求用户信息和积分信息 
+                var XTOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
+                integralApi.account({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': XTOKEN
+                    }
+                }).then(res => {
+                    const {
+                        headers,
+                        data
+                    } = res
+                    this.point = data
+                }).catch(error => {
+                    console.log(error.response.data)
                 });
                 loginApi.entity({}, {
                     data: {},
                     headers: {
-                        'x-auth-token': TOKEN
+                        'x-auth-token': XTOKEN
                     }
                 }).then(res => {
                     this.userName = res.data.name;
@@ -191,7 +224,7 @@
             height: 224px;
             padding: 0 53px;
             display: flex;
-            position:relative;
+            position: relative;
         }
         .mint-cell-allow-right::after {
             border: 2px solid #c8c8cd;
@@ -254,10 +287,9 @@
                 display: flex;
                 justify-content: center;
                 flex-direction: column;
-                .mint-tab-item-icon {
+                .mint-icon {
                     display: flex;
-                    justify-content: center;
-                    height: 48px;
+                    justify-content: center; // height: 48px;
                     margin-bottom: 18px;
                     img {
                         width: 55px;
@@ -276,6 +308,7 @@
             line-height: 48px;
             span {
                 font-size: 28px;
+                text-align: center;
             }
         }
         .mint-tab-item {
@@ -293,5 +326,11 @@
     }
     .mint-cell-allow-right:after {}
 </style>
+<style>
+    .mint-icon {
+        width: 100%;
+    }
+</style>
+
 
 
