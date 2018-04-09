@@ -19,8 +19,9 @@ Vue.use(VeeValidate,config);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+window.global = new Vue({
   el: '#app',
+  data:{eventHub: new Vue()},
   router,
   components: { App },
   template: '<App/>'

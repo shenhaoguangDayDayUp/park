@@ -1,13 +1,10 @@
 <template>
     <div class="password">
-        <div class="close">
+        <!-- <div class="close">
             <router-link to="/login">
                 <img src="../assets/img/close.png">
             </router-link>
-        </div>
-        <div class="logo">
-            <!-- <img src="../assets/img/images/logo.png" alt=""> -->
-        </div>
+        </div> -->
         <div class="normalTab">重置密码</div>
         <div class="nav">
             <div class="nav-tab " @click=choosenP() :class="{ 'tabActive': tabActive}">
@@ -27,25 +24,25 @@
                             <input ref="userName" @blur="blurPhone()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">当前密码不能为空</i>
+                            <i class="isTip isPwd" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
                             <input @blur="blurPwd()" ref="normalPwd" placeholder="当前密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
                             <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
+                            <i class="isTip isPwd" v-if="judgeNewPwd"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
                             <input @blur="blurPwd()" ref="newPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
-                            <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
+                            <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
+                            <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
                         <li>
-                            <i class="isTip isPsw" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
+                            <i class="isTip isPwd" v-if="judgeReNewPwd"><img src="../assets/img/tishi@2x.png">两次输入密码不一致</i>
                             <input @blur="blurPwd()" ref="renewPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
                         </li>
                     </ul>
                     <!--账号登录end-->
                     <div class="isError">
-                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
+                        <span class="isTip isPwd"><img src="../assets/img/tishi@2x.png">注册失败!请稍后重试!</span>
                     </div>
                 </div>
                 <div class="btn">
@@ -59,32 +56,32 @@
                     <!--账号登录begin-->
                     <ul class="normalLogin">
                         <li>
-                            <i class="isTip isTel"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-                            <input ref="userName_" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
+                            <i class="isTip isTel" v-if="judgePhone_"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
+                            <input ref="userName_" @blur="blurPhone_()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent ">
                         </li>
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                                            <span v-show="show">发送验证码</span>
-                                                            <span v-show="!show">{{count}}秒后重发</span>
-                                                        </button>
+                                <span v-show="show">发送验证码</span>
+                                <span v-show="!show">{{count}}秒后重发</span>
+                            </button>
                         </li>
                         <li>
-                            <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">新密码不能为空</i>
-                            <input ref="normalPwd1" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <i class="isTip isPwd" v-if="judgeNewPwd_"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
+                            <input ref="newPwd_" @blur="blurNewPwd_()" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
                             <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
                             <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
                         </li>
                         <li>
-                            <i class="isTip isPsw"><img src="../assets/img/tishi@2x.png">两次输入不一致</i>
-                            <input ref="normalPwd__" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            <i class="icon-eye eye-grey" v-show=seen @click=toggle()></i>
-                            <i class="icon-eye eye-red" v-show=!seen @click=toggle()></i>
+                            <i class="isTip isPwd" v-if="judgeReNewPwd_"><img src="../assets/img/tishi@2x.png">两次密码输入不一致</i>
+                            <input ref="reNewPwd_" @blur="blurReNewPwd_()" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
+                            <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span>
                         </li>
                     </ul>
                     <!--账号登录end-->
-                    <div class="isError">
-                        <span class="isTip isPsw"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
+                    <div class="isError" v-if="tipActive">
+                        <span class="isTip isPwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
                     </div>
                 </div>
                 <div class="btn">
@@ -92,6 +89,7 @@
                         提&nbsp;交
                     </div>
                 </div>
+                <div>手机动态码：{{sCode}}</div>
             </mt-tab-container-item>
         </mt-tab-container>
     </div>
@@ -126,15 +124,22 @@
                 res: "memberLogin=A&userPassword=B",
                 wise: 1,
                 judgePhone: '',
+                judgePhone_: '',
                 judgePwd: '',
+                judgeNewPwd:'',
+                judgeNewPwd_:'',
+                judgeReNewPwd:'',
+                judgeReNewPwd_:'',
                 seen: 'ok',
+                seen_:'ok',
                 msg: '',
                 active: 'tab-container1',
                 ok: false,
                 count: "",
                 tabActive: true,
                 isError: '',
-                TOKEN:JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
+                tipActive:false,
+                sCode:''
             };
         },
         methods: {
@@ -154,12 +159,10 @@
                 }
             },
             //判断密码是否为空
-            isNull(psw) {
-                if (psw) {
-                    return true;
-                } else {
-                    return false;
-                }
+            isPwd(pwd) {
+                var patrn = /^(\S){6,20}$/;
+                if (!patrn.exec(pwd)) return false;
+                return true
             },
             // 密码明暗 切换input type
             toggle() {
@@ -179,23 +182,44 @@
                     this.judgePhone = ''
                 }
             },
+            blurPhone_() {
+                if (!this.$options.methods.isPoneAvailable(this.$refs.userName_.value)) {
+                    this.judgePhone_ = 'ok'
+                } else {
+                    this.judgePhone_ = ''
+                }
+            },
             blurPwd() {
-                if (!this.$options.methods.isNull(this.$refs.normalPwd.value)) {
+                if (!this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
                     this.judgePwd = 'ok'
                 } else {
                     this.judgePwd = ''
                 }
             },
+            blurNewPwd_(){
+                if (!this.$options.methods.isPwd(this.$refs.newPwd_.value)) {
+                    this.judgeNewPwd_ = 'ok'
+                } else {
+                    this.judgeNewPwd_ = ''
+                }
+            },
+            blurReNewPwd_(){
+                if (this.$refs.reNewPwd_.value == this.$refs.newPwd_.value) {
+                    this.judgeReNewPwd_ = ''
+                } else {
+                    this.judgeReNewPwd_ = 'ok'
+                }
+            },
             // 旧密码提交登录请求
             submits() {
-                // const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
+                const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
                 var resetParams = {
                     password: sha1(this.$refs.normalPwd.value),
                     code: sha1(this.$refs.newPwd.value),
                 };
                 loginApi.reset(resetParams,{
                     headers: {
-                        'x-auth-token': this.TOKEN
+                        'x-auth-token': TOKEN
                     }
                 }).then(res => {
                     this.$router.push({
@@ -207,22 +231,23 @@
             },
             // 动态验证码修改密码
             getCode() {
-                const mobileNumber = JSON.parse(localStorage.getItem('$LoginUser')).mobileNumber;
+                const mobileNumber = this.$refs.userName_.value;
                 getCodeApi.getcode({id:mobileNumber},{
                     data:{}
                 }).then(res=>{
+                    this.sCode = res.data;
                 }).catch(error=>{
                 })
             },
             submits_(){
-                // const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
+                const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token'];
                 var resetParams = {
                     note: this.$refs.smsCode.value, //短信验证码
                     code: sha1(this.$refs.normalPwd1.value),//新密码
                 };
                 loginApi.reset(resetParams,{
                     headers: {
-                        'x-auth-token': this.TOKEN
+                        'x-auth-token': TOKEN
                     }
                 }).then(res => {
                     this.$router.push({
@@ -242,7 +267,7 @@
         color: #fff;
         height: 100%;
         .normalTab {
-            margin-top: 36px;
+            // margin-top: 36px;
             font-size: 34px;
             letter-spacing: 2px;
         }

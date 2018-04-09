@@ -65,6 +65,7 @@
           </div>
         </li>
       </ul>
+      <!-- 按钮 -->
       <div class="btn">
         <div class="redBtn active" @click=register() v-if="isActive">
           立&nbsp;即&nbsp;注&nbsp;册
@@ -237,8 +238,7 @@
               status
             } = res
             if(status == 200){
-              var profile = Object.assign({}, headers)
-              user.setLoginUser(profile)
+              sessionStorage.setItem("TOKEN", headers['x-auth-token']);
               this.$router.push({
                 name: 'Main'
               }) 

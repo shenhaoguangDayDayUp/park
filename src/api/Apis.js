@@ -104,13 +104,33 @@ function send(url, data, otherOptions, method = 'get') {
             // if (!res.data) res.data = { code: 200 };
             resolve(res);
         }).catch(({ response }) => {
+            console.log(response)
             let { data } = response;
             if(response.status == '401'){
-                // global.$moduleMain.$message.error('请先登录');
-                // window.loaction.href = '/portal';
+                // 报401要重新去拿token,但必须要有账户和密码才能去自动登录。
+                if(localStorage.getItem('$LoginUser')){
+                    axios.put('/member/login', JSON.parse(localStorage.getItem('$LoginUser')))
+                        .then(function (response) {
+                            sessionStorage.setItem("TOKEN", response.headers['x-auth-token']);
+                            window.global.$root.eventHub.$emit('notification')
+                            // window.global.$router.push({
+                            //     name: 'gameCenter'
+                            // })
+                            // window.global.$router.push({
+                            //     name: 'Main'
+                            // })
+                        })
+                        .catch(function (error) {
+                        console.log(error);
+                        });
+                }else{
+                    this.$router.push({
+                        name: 'Main'
+                    })
+                }
             }else {
                 // reject(data); //报错信息在response里面,故返回response就好
-                reject(response)
+                reject(response);
             }
         })
     })

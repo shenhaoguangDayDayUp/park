@@ -158,16 +158,17 @@
                 } = res
                 // 判断用户下次是否直接登录
                 if (this.choosen) {
-                  var profile = Object.assign({}, loginParams, headers)
+                  var profile = Object.assign({}, loginParams)
+                  sessionStorage.setItem("TOKEN", headers['x-auth-token']);
                 } else {
-                  var profile = Object.assign({}, headers)
+                  sessionStorage.setItem("TOKEN", headers['x-auth-token']);
                 }
                 user.setLoginUser(profile)
                 this.$router.push({
                   name: 'Main'
                 })
               }).catch(error => {
-                this.isError = error.response
+                this.isError = error.data
               });
             }
           }
