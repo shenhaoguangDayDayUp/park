@@ -108,7 +108,8 @@
             integralApi.account({},{
                 headers: {
                     'x-auth-token': JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
-                }
+                },
+                data:{}    
             }).then(res => {
                 const {
                     headers,

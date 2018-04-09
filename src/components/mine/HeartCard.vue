@@ -2,9 +2,9 @@
     <div>
         <div class='sd__quantity'>
             <div class='sd__quantity__btn '
-                 @click='doMinus'>
+                 @click.stop='doMinus'>
                 <img class='icon'
-                     src='../../assets/img/ic_minus.png'>
+                     src='../../assets/img/jianhao@1x.png'>
             </div>
             <div class='sd__quantity__input' :num.sync='quntity'>
                 {{quntity}}
@@ -12,9 +12,9 @@
             <!-- <input class='sd__quantity__input' @blur='onInputChange' v-model='value' type='number'/> -->
 
             <div class='sd__quantity__btn'
-                 @click='doPlus'>
+                 @click.stop='doPlus'>
                 <img class='icon'
-                     src='../../assets/img/ic_plus.png' />
+                     src='../../assets/img/jiahao@1x.png' />
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ export default {
   computed: {
     quntity: {
       get() {
-        return this.num;
+        return this.num||1;
       },
       set(val) {
         this.$emit("update:num", val);
@@ -77,7 +77,7 @@ export default {
 .sd__quantity {
   width: 164px;
   height: 52px;
-  background-color: #fff;
+  background-color:#2a2c35;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -90,7 +90,7 @@ export default {
   top: 0;
   width: 200%;
   height: 200%;
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   transform: scale(0.5);
   transform-origin: 0 0;
 }
@@ -104,7 +104,7 @@ export default {
   position: relative;
   &:hover {
     //   .sd__quantity__btn-hightlighted {
-    background-color: rgba(40, 40, 40, 0.1);
+    // background-color: rgba(40, 40, 40, 0.1);
     // }
   }
 }
@@ -118,11 +118,11 @@ export default {
   height: 100%;
   flex: 1;
   font-size: 24px;
-  color: #262626;
+  color: white;
   box-sizing: border-box;
   text-align: center;
   vertical-align: middle;
-  line-height: 1;
+  line-height: 2;
 }
 .sd__quantity__input::before {
   content: " ";
@@ -130,7 +130,7 @@ export default {
   left: 0;
   top: 0;
   bottom: 0;
-  border-left: 1px solid #ccc;
+  // border-left: 1px solid #ccc;
   transform: scaleX(0.5);
   transform-origin: 0 0;
 }
@@ -140,7 +140,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  border-right: 1px solid #ccc;
+  // border-right: 1px solid #ccc;
   transform: scaleX(0.5);
   transform-origin: 0 0;
 }

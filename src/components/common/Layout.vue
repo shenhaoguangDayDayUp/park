@@ -3,7 +3,7 @@
     <router-view></router-view>
     <!-- 路由跳转必写 -->
     <!-- 以下底部导航在登录和注册时display:none掉 -->
-    <mt-tabbar fixed v-model="selected">
+    <Tabbar fixed v-model="selected">
       <TabItem2 id="游戏厅" route="/gameCenter">
         <img v-if=" selected !== '游戏厅' " slot="icon" src="../../assets/img/youxiting.png">
         <img v-else slot="icon" src="../../assets/img/youxiting2.png">
@@ -19,12 +19,13 @@
         <img v-else slot="icon" src="../../assets/img/wode2.png">
         <span>我的</span>
       </TabItem2>
-    </mt-tabbar>
+    </Tabbar>
   </div>
 </template>
 
 <script>
   import TabItem2 from '@/common/tabItem';
+  import {Tabbar} from 'mint-ui'
   export default {
     name: 'app',
     data() {
@@ -48,7 +49,8 @@
       // console.log(this.$route.path)
     },
     components: {
-      TabItem2
+      TabItem2,
+      Tabbar
     }
   }
 </script>

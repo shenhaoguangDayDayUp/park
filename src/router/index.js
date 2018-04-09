@@ -32,8 +32,35 @@ export default new Router({
           path: '/prizeCity',
           name: 'PrizeCity',
           component:   () => import('@/components/prizeCity'),
-        }
+        },
+        
       ]
+    },
+    {
+      path: '/rightChange',
+      name: 'rightChange',
+      component:   () => import('@/components/priceCity/RightChange.vue'),
+    },
+    {
+      path: '/order',
+      name: 'order',
+      props: route => { return { showButton: false}},
+      component:   () => import('@/components/priceCity/order.vue'),
+    },
+    {
+      path: '/order/list',
+      name: 'orderLsit',
+      component:   () => import('@/components/priceCity/OrderList.vue'),
+    },  
+    {
+      path: '/prizeCity/detail/:id',
+      name: '商品详情',
+      component:   () => import('@/components/priceCity/PriceCityDetail.vue'),
+    },
+    {
+      path: '/heart/list',
+      name: 'heart',
+      component:   () => import('@/components/priceCity/heart/Heart.vue'),
     },
     {
       path: '/login',

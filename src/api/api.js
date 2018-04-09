@@ -25,8 +25,7 @@ export let loginApi = new Api('member','id',{
 export let integralApi = new Api('account','id',{
     account:{
         url: 'balance/CRD',
-        method: 'get',
-        // params:{}
+        method: 'get'
     },
 })
 export let getCodeApi = new Api('sms/validationCode','id',{
