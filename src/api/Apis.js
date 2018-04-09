@@ -30,8 +30,6 @@ let axios = Axios.create({
     }
 }
 */
-
-
 export default class Api {
     constructor(url, pkId, actions = {}) {
         if (!/\/$/.test(url)) {
@@ -107,18 +105,16 @@ function send(url, data, otherOptions, method = 'get') {
             resolve(res);
         }).catch(({ response }) => {
             let { data } = response;
-            console.log(response);
             if(response.status == '401'){
                 // global.$moduleMain.$message.error('请先登录');
                 // window.loaction.href = '/portal';
             }else {
-                reject(data);
+                // reject(data); //报错信息在response里面,故返回response就好
+                reject(response)
             }
         })
     })
 }
-
-
 
 function isFormatUrl(url) {
     return url.indexOf("{") !== -1 && url.indexOf("}") !== -1;

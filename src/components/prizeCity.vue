@@ -209,9 +209,36 @@ export default {
   .index_banner_1 {
     background: #23262b;
   }
-
-  .index_banner_1 > img {
-    display: block;
+  .box {
+    position: relative;
+    text-align: center;
+    height: 94px;
+    line-height: 94px;
+    font-size: 34px
+  }
+  .title {
+    margin: 0 15px;
+  }
+  .icon {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    line-height: 8px;
+    border-radius: 9px;
+    background-color: #fdcd00;
+  }
+  .span {
+    position: absolute;
+    right: 0;
+    font-size: 27px;
+    color: #afb0b4
+  }
+  .hot-box {
+    padding: 0 20px;
+  }
+  .hot {
+    box-sizing: border-box;
+    height: 360px;
     width: 100%;
     height: 100%;
     border: none;
