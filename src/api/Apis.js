@@ -96,7 +96,7 @@ function send(url, data, otherOptions, method = 'get') {
     return new Promise((resolve, reject) => {
         let config = {};
         if (method == 'get') {
-            config = Object.assign({}, { url: url, method: method, params: data}, otherOptions,);
+            config = Object.assign({}, { url: url, method: method, params: data}, otherOptions);
         } else {
             config = Object.assign({}, { url: url, method: method, data: data }, otherOptions);
         }

@@ -2,8 +2,8 @@
   <div id="mytab">
     <router-view></router-view>
     <!-- 路由跳转必写 -->
-    <tabbar v-model="selected">
-      <tabbar-item route="/gameCenter">
+    <tabbar v-model="selected" style="position:fixed;left:0;bottom:0">
+      <tabbar-item link="/gameCenter">
         <img v-if=" selected !== 0 " slot="icon" src="../../assets/img/youxiting.png">
         <img v-else slot="icon" src="../../assets/img/youxiting2.png">
         <span slot="label">游戏厅</span>
