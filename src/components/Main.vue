@@ -84,6 +84,9 @@
             <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
                 退出登录
             </div>
+            <div class="linshi" style="color:#fff;padding:10px;" @click="toResetPwd()">
+                重置密码
+            </div>
         </div>
     </div>
 </template>
@@ -108,65 +111,10 @@
             };
         },
         mounted() {
-            // var XTOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
-                integralApi.account({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': XTOKEN
-                    }
-                }).then(res => {
-                    const {
-                        headers,
-                        data
-                    } = res
-                    this.point = data
-                }).catch(error => {
-                    console.log(error.response)
-                });
-            const TOKEN = JSON.parse(localStorage.getItem('$LoginUser'))
-            // 如果用户账号密码在本地存在，则半个小时token过期后再发送请求。
-            if (TOKEN) {
-                var loginParams = {
-                    mobileNumber: JSON.parse(localStorage.getItem('$LoginUser'))['mobileNumber'],
-                    password: JSON.parse(localStorage.getItem('$LoginUser'))['password']
-                };
-                loginApi.login(loginParams).then(res => {
-                    const {
-                        headers
-                    } = res
-                    // 本地存储
-                    var profile = Object.assign({}, loginParams, headers)
-                    user.setLoginUser(profile)
-                }).catch(error => {
-                    sweetAlert("哎呦……", "出错了！", "error");
-                });
-                // 请求用户信息和积分信息 
-                var XTOKEN = JSON.parse(localStorage.getItem('$LoginUser'))['x-auth-token']
-                integralApi.account({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': XTOKEN
-                    }
-                }).then(res => {
-                    const {
-                        headers,
-                        data
-                    } = res
-                    this.point = data
-                }).catch(error => {
-                    console.log(error.response.data)
-                });
-                loginApi.entity({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': XTOKEN
-                    }
-                }).then(res => {
-                    this.userName = res.data.name;
-                    this.mobileNumber = res.data.mobileNumber;
-                    this.isActive = true;
-                }).catch(error => {})
-            }
+              this.$root.eventHub.$on('notification',()=>{
+                 this.Api();
+              })
+            this.Api();
         },
         methods: {
             toLogin() {
@@ -179,6 +127,49 @@
                 localStorage.removeItem('accountInfo')
                 this.$router.push({
                     path: '/login'
+                });
+            },
+            toResetPwd(){
+                this.$router.push({
+                    path: '/password'
+                });
+            },
+            Api(){
+                // var loginParams = {
+                //     mobileNumber: JSON.parse(localStorage.getItem('$LoginUser'))['mobileNumber'],
+                //     password: JSON.parse(localStorage.getItem('$LoginUser'))['password']
+                // }; 
+                const TOKEN = sessionStorage.getItem('TOKEN')
+                // 请求用户信息
+                loginApi.entity({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        data
+                    } = res;
+                    this.isActive = true;
+                    this.mobileNumber = data.mobileNumber;
+                    this.userName = data.name;
+                }).catch(error => {
+                    console.log(error.response.status)
+                });
+                // 请求积分信息
+                integralApi.account({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        headers,
+                        data
+                    } = res
+                    this.point = data
+                }).catch(error => {
+                    console.log(error)
                 });
             }
         }

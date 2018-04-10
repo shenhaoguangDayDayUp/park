@@ -16,14 +16,14 @@ export let loginApi = new Api('member','id',{
         method:'put'
     },
     entity:{
-        url:'entity/session',
+        url:'entity/session', // 会员详情
         method: 'get'
     }
 })
 export let integralApi = new Api('account','id',{
     account:{
-        url: 'balance/CRD',
-        method: 'get'
+        url: 'balance/CRD', // 积分
+        method: 'get',
     },
 })
 export let getCodeApi = new Api('sms','id',{
