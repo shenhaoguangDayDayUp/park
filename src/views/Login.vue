@@ -25,8 +25,8 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                      <span class="mint-checkbox" v-show="choosen" @click="ischoosen">
-                        <input type="checkbox" class="mint-checkbox-input" > 
+                      <span class="mint-checkbox"  @click.prevent="ischoosen">
+                        <input type="checkbox" v-model='choosen' class="mint-checkbox-input" > 
                         <span class="mint-checkbox-core">
                         </span>
                       </span> 
@@ -89,7 +89,7 @@
         submitActive: true,
         isError: '',
         phone: '',
-        choosen: true,
+        choosen: false,
         tipActive: false,
         errorTip: ''
       };
@@ -97,6 +97,7 @@
     methods: {
       ischoosen() {
         this.choosen = !this.choosen;
+        console.log(this.choosen)
       },
       //函数号码验证
       isPoneAvailable(str) {

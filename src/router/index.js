@@ -7,8 +7,6 @@ import Password from '@/views/Password'
 import GameCenter from '@/components/gameCenter'
 import Main from '@/components/Main'
 import PrizeCity from '@/components/prizeCity'
-import Message from '@/views/Message'
-import Receivers from '@/views/Receivers'
 
 Vue.use(Router)
 
@@ -38,7 +36,7 @@ export default new Router({
         {
           path: '/message',
           name: 'Message',
-          component: Message,
+          component: () => import('@/components/main/Message'),
         },
       ]
     },
@@ -86,7 +84,33 @@ export default new Router({
     {
       path: '/receivers',
       name: 'Receivers',
-      component: Receivers,
+      component: () => import('@/components/main/Receivers'),
     },
+    {
+      path: '/receiversUpdate',
+      name: 'ReceiversUpdate',
+      component: () => import('@/components/main/ReceiversUpdate'),
+    },
+    {
+      path: '/messageDetail',
+      name: 'MessageDetail',
+      component: () => import('@/components/main/MessageDetail'),
+    },
+    {
+      path: '/entity',
+      name: 'Entity',
+      component: () => import('@/components/main/Entity'),
+    },
+    {
+      path: '/rename',
+      name: 'Rename',
+      component: () => import('@/components/main/Rename'),
+    },
+    {
+      path: '/reMessage',
+      name: 'ReMessage',
+      component: () => import('@/components/main/ReMessage'),
+    },
+
   ]
 })

@@ -5,19 +5,19 @@ let base = '/api'
 export let loginApi = new Api('member','id',{
     login:{
         url: 'login',
-        method: 'put'
+        method: 'put',
     },
     register:{
         url: 'register',
-        method: 'post' 
+        method: 'post' ,
     },
     reset:{
         url:'password',
-        method:'put'
+        method:'put',
     },
     entity:{
         url:'entity/session', // 会员详情
-        method: 'get'
+        method: 'get',
     }
 })
 export let integralApi = new Api('account','id',{
