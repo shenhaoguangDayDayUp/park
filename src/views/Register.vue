@@ -1,8 +1,6 @@
 <template>
   <div class="changepsd">
-    <!-- <div class="close">
-      <a href="#/"><img src="../assets/img/close.png"></a>
-    </div> -->
+    <Header title="用户注册"></Header>
     <div class="logo">
       <!-- <img src="../assets/img/images/logo.png" alt=""> -->
     </div>
@@ -79,6 +77,7 @@
   </div>
 </template>
 <script>
+import Header from "@/components/common/Header.vue";
   // sha1加密
   import sha1 from 'js-sha1';
   import {
@@ -96,6 +95,9 @@
   } from '../common/isCode.js'
   export default {
     name: "Login",
+    components:{
+      Header
+    },
     data() {
       return {
         show: true,
@@ -190,7 +192,7 @@
       },
       // 点击获取动态码
       getCode() {
-        if (this.judgePhone == '') {
+        if (this.$refs.userTel.value) {
           this.timer = null; //打开倒计时开关
           var url = this.$refs.userTel.value;
           const mobileNumber = this.$refs.userTel.value;

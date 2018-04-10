@@ -1,9 +1,10 @@
 <template>
     <div id="my">
         <div class="mainContent">
+            <x-header :left-options="{showBack: false}">我的主页<router-link to="./message" slot="right"><img src="../assets/img/xinxiaoxi@2x.png" alt=""></router-link></x-header>
             <div class="user-header">
                 <div class="user-mess">
-                    <router-link to="./message"><img src="../assets/img/xinxiaoxi@2x.png" alt=""></router-link>
+                    
                 </div>
             </div>
             <div class="mint-cell mint-cell-wrapper">
@@ -14,21 +15,21 @@
                             <span>{{userName}}</span>
                             <span>{{mobileNumber}}</span>
                         </div>
-                        <i data-v-1b0f58d8="" class="mint-cell-allow-right"></i>
                     </div>
-                    <i class="mint-cell-allow-right"></i>
+                    <router-link to="/entity">
+                        <div class="right-arrow"></div>
+                    </router-link>
                 </div>
                 <div class="mint-cell-title" v-else>
-                    <div class="cell-logo"  @click=toLogin>
+                    <div class="cell-logo" @click=toLogin>
                         <img data-v-48713cc3="" src="../assets/img/touxiang2@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>请登录</span>
                         </div>
-                        <router-link to="/entity">
-                        <i data-v-1b0f58d8="" class="mint-cell-allow-right"></i>
-                        </router-link>    
                     </div>
-                    <i class="mint-cell-allow-right"></i>
+                    <router-link to="/login">
+                        <div class="right-arrow"></div>
+                    </router-link>
                 </div>
             </div>
             <div class="user-option">
@@ -53,7 +54,7 @@
                         <div class="mint-icon">
                             <img src="../assets/img/jiaoyimingxi.png" alt="">
                         </div>
-                        <div class="mint-tab-item-label" >交易明细</div>
+                        <div class="mint-tab-item-label">交易明细</div>
                     </div>
                 </div>
             </div>
@@ -86,13 +87,12 @@
             <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
                 退出登录
             </div>
-            <div class="linshi" style="color:#fff;padding:10px;" @click="toResetPwd()">
-                重置密码
-            </div>
         </div>
     </div>
 </template>
 <script>
+import '../style/header.scss';
+import { XHeader} from 'vux'
     import swal from 'sweetalert';
     import axios from 'axios';
     import {
@@ -104,6 +104,9 @@
     } from '../api/api';
     export default {
         name: "Login",
+        components:{
+            XHeader
+        },
         data() {
             return {
                 point: '== ==',
@@ -113,9 +116,9 @@
             };
         },
         mounted() {
-              this.$root.eventHub.$on('notification',()=>{
-                 this.Api();
-              })
+            this.$root.eventHub.$on('notification', () => {
+                this.Api();
+            })
             this.Api();
         },
         methods: {
@@ -131,16 +134,12 @@
                     path: '/login'
                 });
             },
-            toResetPwd(){
+            toResetPwd() {
                 this.$router.push({
                     path: '/password'
                 });
             },
-            Api(){
-                // var loginParams = {
-                //     mobileNumber: JSON.parse(localStorage.getItem('$LoginUser'))['mobileNumber'],
-                //     password: JSON.parse(localStorage.getItem('$LoginUser'))['password']
-                // }; 
+            Api() {
                 const TOKEN = sessionStorage.getItem('TOKEN')
                 // 请求用户信息
                 loginApi.entity({}, {
@@ -219,45 +218,19 @@
             display: flex;
             position: relative;
         }
-        .mint-cell-allow-right{
-            right: 20px;
-            position: absolute;
-            width:30%;
-            height: 224px;
-        }
-        .mint-cell-allow-right::after {
-            border: 2px solid #c8c8cd;
-            border-bottom-width: 0;
-            border-left-width: 0;
-            content: " ";
-            top: 50%;
-            right: 20px;
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            transform: translateY(-50%) rotate(45deg);
-            right: 53px;
-            height: 15px;
-            width: 15px;
+        .right-arrow {
+            display: inline-block;
+            border-right: 5px solid #ccc;
+            border-bottom: 5px solid #ccc;
+            width: 22px;
+            height: 22px;
+            transform: rotate(315deg);
+            -webkit-transform: rotate(315deg);
         }
     }
     .mainContent {
         display: flex;
         flex-direction: column;
-    }
-    .user-header {
-        padding: 0 10px;
-        height: 94px;
-        .user-mess {
-            float: right;
-            height: 36px;
-            width: 36px;
-            margin-top: 29px;
-            img {
-                height: 100%;
-                width: 100%;
-            }
-        }
     }
     .user-option {
         background-color: #2F323B;
@@ -323,11 +296,13 @@
     .user-option span {
         font-size: 13px;
     }
-    .mint-cell-allow-right:after {}
 </style>
 <style>
     .mint-icon {
         width: 100%;
+    }
+    .vux-header .vux-header-left, .vux-header .vux-header-right{
+        top:30px!important;
     }
 </style>
 

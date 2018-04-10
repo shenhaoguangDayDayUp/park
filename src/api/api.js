@@ -18,6 +18,10 @@ export let loginApi = new Api('member','id',{
     entity:{
         url:'entity/session', // 会员详情
         method: 'get',
+    },
+    receivers:{
+        url:'receivers', // 收货地址
+        method:'get'
     }
 })
 export let integralApi = new Api('account','id',{

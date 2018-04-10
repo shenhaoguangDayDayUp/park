@@ -11,7 +11,7 @@
             </li>
             <li>
                 <span>昵称</span>
-                <span>哆啦A梦</span>
+                <span>{{userName}}</span>
                 <router-link :to="{name:'Rename',query: {name: '哆啦A梦'}}">
                     <div class="right-arrow"></div>
                 </router-link>
@@ -20,12 +20,12 @@
         <ul class="messList">
             <li>
                 <span>姓名</span>
-                <span>赵文</span>
+                <span>{{userName}}</span>
                 <span></span>
             </li>
             <li>
                 <span>手机号</span>
-                <span>13830082550</span>
+                <span>{{mobileNumber}}</span>
                 <router-link to="./ReMessage">
                     <div class="right-arrow"></div>
                 </router-link>
@@ -57,6 +57,12 @@
 <script>
     import '../../style/header.scss';
     import {
+        user
+    } from '@/logic'
+    import {
+        loginApi,
+    } from '../../api/api';
+    import {
         XHeader
     } from 'vux'
     export default {
@@ -64,6 +70,32 @@
         components: {
             XHeader
         },
+        data(){
+            return{
+                userName:'',
+                mobileNumber:''
+            }
+        },
+        mounted(){
+            const TOKEN = sessionStorage.getItem('TOKEN')
+            // 请求用户信息
+            loginApi.entity({}, {
+                data: {},
+                headers: {
+                    'x-auth-token': TOKEN
+                }
+            }).then(res => {
+                const {
+                    data
+                } = res;
+                this.isActive = true;
+                this.mobileNumber = data.mobileNumber;
+                this.userName = data.name;
+            }).catch(error => {
+                console.log(error.response.status)
+            });
+        },
+        
     }
 </script>
 <style lang="scss" scoped>
