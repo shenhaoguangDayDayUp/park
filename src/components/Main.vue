@@ -43,17 +43,17 @@
                         </div>
                         <div class="mint-tab-item-label">余额</div>
                     </div>
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item" @click='$router.push({name:"charge"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/chongzhi.png" alt="">
                         </div>
                         <div class="mint-tab-item-label">在线充值</div>
                     </div>
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item" @click='$router.push({name:"change"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/jiaoyimingxi.png" alt="">
                         </div>
-                        <div class="mint-tab-item-label">交易明细</div>
+                        <div class="mint-tab-item-label" >交易明细</div>
                     </div>
                 </div>
             </div>

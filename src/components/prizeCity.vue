@@ -10,11 +10,11 @@
             <div class="right">
                <div class="heart" >
                      <img src="../assets/img/heart.png"
-                     alt="" @click.stop='$router.push({name:"orderLsit"})'>
-                      <img src="../assets/img/order.png"
+                     alt="" @click.stop='$router.push({name:"heart"})'>
+                      <img @click.stop='$router.push({name:"orderLsit"})'  src="../assets/img/order.png"
                      alt="">
                </div>
-               <div class="message"></div>
+               <div class="message" ></div>
             </div>
         </div>
     <div class="index_banner_1">
@@ -315,8 +315,8 @@ export default {
   // transform: scaleX(0.5);
   transform-origin: 100% 100%;
 }
-.shop_item_3_img:last-child {
-  &:after {
+.shop_item_3:last-child {
+  .shop_item_3_img::after {
     content: none;
   }
 }

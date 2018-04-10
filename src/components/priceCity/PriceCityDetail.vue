@@ -15,29 +15,30 @@
         </div>
         <div class="goods-detail-title">
             <div class="bar"></div>
-             <div class='title'>美的智能空调</div>
-             <div class="icon">
-                    <span><img src="../../assets/img/big_gold@2x.png"
-                       alt=""/></span>
+            <div class='title'>美的智能空调</div>
+            <div class="icon">
+                <span><img src="../../assets/img/big_gold@2x.png"
+                         alt="" /></span>
                 <div class="price">200</div>
-             </div>
+            </div>
         </div>
         <div class="goods-content">
-            
+          
         </div>
         <div class="goods-footer">
             <div class="btn-box">
-                   <div class="btn" @click='$router.push({name:"heart"})'>
-                     加入心愿单
-                   </div>
+                <div class="btn"
+                     @click='$router.push({name:"heart"})'>
+                    加入心愿单
+                </div>
             </div>
-             <div class="btn-box">
-                 <div class="btn" @click='rightChange'>
-                     立即兑换
-                 </div>
+            <div class="btn-box">
+                <div class="btn"
+                     @click='rightChange'>
+                    立即兑换
+                </div>
             </div>
 
-            
         </div>
 
     </div>
@@ -71,9 +72,9 @@ export default {
     };
   },
   methods: {
-      rightChange(){
-          this.$router.push({name:"rightChange"})
-      }
+    rightChange() {
+      this.$router.push({ name: "rightChange" });
+    }
   },
   components: {
     Swiper,
@@ -115,25 +116,24 @@ export default {
       color: white;
       margin-left: 20px;
     }
-    .icon{
-     flex: 1; 
-     text-align: right;
-     span{
-         img{
-            width: 35px;
-            height: 35px; 
-         }
-     }
-     .price{
-         display: inline-block;
-         font-size: 25px;
-         margin-left: 16px;
-         margin-right: 20px
-     }
-
+    .icon {
+      flex: 1;
+      text-align: right;
+      span {
+        img {
+          width: 35px;
+          height: 35px;
+        }
+      }
+      .price {
+        display: inline-block;
+        font-size: 25px;
+        margin-left: 16px;
+        margin-right: 20px;
+      }
     }
   }
-  .goods-footer{
+  .goods-footer {
     height: 124px;
     width: 100%;
     background: #2a2d36;
@@ -143,23 +143,22 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
-    &>.btn-box:last-child{
-       padding-right: 20px 
+    & > .btn-box:last-child {
+      padding-right: 20px;
     }
-    .btn-box{
-        flex: 1;
-        height: 80px;
-        padding-left: 20px;
-        .btn{
-            background:#ffcb16;
-            height: 100%;
-            border-radius: 10px;
-            text-align: center;
-            color: #000000;
-            font-size: 30px;
-            line-height: 80px;
-            
-        }
+    .btn-box {
+      flex: 1;
+      height: 80px;
+      padding-left: 20px;
+      .btn {
+        background: #ffcb16;
+        height: 100%;
+        border-radius: 10px;
+        text-align: center;
+        color: #000000;
+        font-size: 30px;
+        line-height: 80px;
+      }
     }
   }
 }

@@ -8,9 +8,14 @@
             23242424242
         </div>
         <div class="receive-detail">
-         
-            <span class='title'><span style="margin-right:20px">详细地址</span>:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:
-            </span>
+            <div class="address">
+                <span class='title'>
+                    <span style="margin-right:20px">详细地址</span>:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:
+                </span>
+            </div>
+            <div class="right-img">
+                    >
+            </div>
         </div>
     </div>
 </template>
@@ -52,14 +57,19 @@ export default {
     padding-right: 20px;
     padding-left: 20px;
     height: 122px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .right-img{
+        width: 30px;
+    }
     .title {
-     overflow: hidden;
+      flex: 1;
+      overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-    
-     
     }
   }
 }

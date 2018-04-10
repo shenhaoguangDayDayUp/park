@@ -32,7 +32,11 @@ export default new Router({
           name: 'PrizeCity',
           component:   () => import('@/components/prizeCity'),
         },
-        
+        {
+          path: '/change',
+          name: 'change',
+          component: () => import('@/components/change/Change.vue'),
+        },
         {
           path: '/message',
           name: 'Message',
@@ -111,6 +115,15 @@ export default new Router({
       name: 'ReMessage',
       component: () => import('@/components/main/ReMessage'),
     },
-
+    {
+      path: '/charge',
+      name: 'charge',
+      component: () => import('@/components/charge/Charge.vue'),
+    },
+    {
+      path: '/changeStatus',
+      name: 'changeStatus',
+      component: () => import('@/components/charge/ChargeStatus.vue'),
+    },
   ]
 })

@@ -26,6 +26,9 @@ export default {
 </script>
 <style lang="scss" scoped>
     .nav-bar{
+    //   position: fixed;
+    //   left: 0;
+    //   top: 0;
       font-size: 34px;
       display: flex;
       flex-direction: row;
@@ -38,8 +41,8 @@ export default {
       .left-back{
           flex: 1;
           img{
-            //   width: 34px;
-            //   height: 34px;
+              width: 20px;
+              height: 34px;
           }
       }
        .title{
