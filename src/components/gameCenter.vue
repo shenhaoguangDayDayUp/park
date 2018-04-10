@@ -10,7 +10,7 @@
                            :index="i"
                            @deleteItem="deleteItem"
                            @tachStart='tachStart'>
-                fdaafasd
+                <!-- fdaafasd -->
             </TableviewCell>
         </div>
 

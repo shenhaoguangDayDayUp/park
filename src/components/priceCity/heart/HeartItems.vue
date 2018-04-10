@@ -113,7 +113,7 @@ export default {
   background: #2a2c35;
 //   border-bottom: 1px solid #e5e5e5;
   height: 258px;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
 
   &-left {
     display: flex;

@@ -2,14 +2,9 @@
     <div class="heart">
         <Header title="心愿单"></Header>
         <HeartGrop>
-            <swipeout>
-                <swipeout-item transition-mode="follow" v-for="(item,index) in list" :key='index'>
-                    <div slot="right-menu">
-                        <swipeout-button @click.native="onButtonClick('delete')"
-                                         type="warn">删除</swipeout-button>
-                    </div>
-                         <div slot="content">
-                 <HeartItems 
+                  <TableviewCell ref='cell' v-for="(item,index) in list" :key='index'      @deleteItem="deleteItem" :index='index'
+                           @tachStart='tachStart' style="margin-bottom:20px">
+             <HeartItems 
                         :key="item.id"
                         :url="item.thumbImage"
                         :title="item.name"
@@ -21,16 +16,14 @@
                 <div slot="right">
                     <HeartCard @valueChange='valueChange'
                                :num.sync='item.quantity'
-                               :index='index'></HeartCard>
+                               :index='index' ></HeartCard>
                 </div>
             </HeartItems>
-        </div>
-                </swipeout-item>
-                  
-            </swipeout>
+        </TableviewCell>
       
             
         </HeartGrop>
+ 
         <FooterBar :amount='amount'
                    :total='total'
                    :allSelect.sync='allSelect'
@@ -44,6 +37,7 @@ import HeartCard from "@/components/mine/HeartCard.vue";
 import FooterBar from "./FooterBar.vue";
 import Header from "@/components/common/Header.vue";
 import { Swipeout, SwipeoutItem, SwipeoutButton } from "vux";
+import TableviewCell from "@/common/TableviewCell";
 
 export default {
   components: {
@@ -54,9 +48,24 @@ export default {
     Header,
     Swipeout,
     SwipeoutItem,
-    SwipeoutButton
+    SwipeoutButton,
+    TableviewCell
   },
   methods: {
+      deleteItem(index){
+          console.log(index);
+          this.list.splice(index,1)
+          this.tachStart()
+          this.getAmount();
+          this.getTotal();
+          
+      },
+      tachStart(){
+          var cell = this.$refs.cell
+         cell.map((item,idx)=>{
+             item._endEditing()
+         })
+      },
     selectAll() {
       if (this.allSelect) {
         this.list = this.list.map(item => {

@@ -7,7 +7,10 @@
              :style="txtStyle">
             <slot></slot>
         </div>
-        <div class="deleteIcon" :style="zIndex"  @click.prevent="deleteItem(index)">删除</div>
+        <div class="deleteIcon" :style="zIndex"  @click.prevent="deleteItem(index)">
+            <div class="deleteBtn">删除</div>
+            
+        </div>
     </div>
 </template>
 
@@ -79,25 +82,39 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
     .left-delete{
+        font-size: 28px;
+        box-sizing: border-box;
         width:100%;
         height:100%;
         position:relative;
         z-index:2;
+        /* display: flex;
+        flex-direction: row;
+        align-items: center; */
+  
+
+
     }
     .move{
-        background: red;
+        background: #23262b;
         position: relative;
         height: 100%;
     }
     .deleteIcon{
         width: 2rem;
         height:100%;
+        line-height: 100%;
         position: absolute;
         right:0;
         top:0;
-        background:url(../assets/img/ic_minus.png) no-repeat;
-        background-size: contain;
+        background: red;
+        text-align: center;
+        .deleteBtn{
+            line-height: 258px;
+        }
+        /* background:url(../assets/img/ic_minus.png) no-repeat;
+        background-size: contain; */
     }
 </style>
