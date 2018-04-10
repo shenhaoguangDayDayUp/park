@@ -17,7 +17,7 @@
               <input ref="userTel" id="userTel" type="number" @blur="blurPhone()" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent" oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
             </li>
             <!-- 短信验证码 -->
-            <li id="msg" class="errorTips">
+            <li id="msg" class="isErrors">
               <input ref="smsCode" id="lg_msg" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
               <button class="smsCode" @click="getCode()" :disabled="!show">
                                             <span v-show="show">发送验证码</span>
@@ -42,26 +42,26 @@
             <!-- 身份证号 -->
             <li class="lg_border">
               <i class="isTip" v-if=judgeCode><img src="../assets/img/tishi@2x.png">输入的身份证号有误</i>
-              <input ref="userCode" id="userCode" @blur="blurCode()" placeholder="身份证号" autocomplete="off" type="text" style="background-color:transparent ">
+              <input ref="userCode" id="userCode" @blur="blurCode()" placeholder="身份证号" autocomplete="off" type="text" style="background-color:transparent " oninput="if(value.length>18)value=value.slice(0,18)" maxlength="18">
               <i class="icon-eye eye-grey"></i>
               <i class="icon-eye eye-red" style="display:none;"></i>
             </li>
           </ul>
           <!-- 账号密码登录特有的忘记密码 -->
           <div class="forget">
-            <label class="mint-checklist-label">
-                                          <span class="mint-checkbox">
-                                            <input type="checkbox" class="mint-checkbox-input" value="choosen"> 
-                                            <span class="mint-checkbox-core">
-                                            </span>
-                                          </span> 
-                                          <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
-                                      </label>
+            <label class="mint-checklist-label"  @click.prevent="ischoosen">
+              <span class="mint-checkbox">
+                <input type="checkbox" v-model='choosen' class="mint-checkbox-input"> 
+                <span class="mint-checkbox-core">
+                </span>
+              </span> 
+              <span class="mint-checkbox-label"><span style="color:#fff;">同意</span> 长影娱乐服务条款</span>
+          </label>
           </div>
           <!--账号登录end-->
           <!-- 报错信息 -->
           <div class="isError" v-show='tipActive'>
-            <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{errorTip}}</span>
+            <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
           </div>
         </li>
       </ul>
@@ -111,10 +111,17 @@
         sCode: '',
         isActive: true,
         tipActive: false,
-        errorTip: ''
+        isError: '',
+        choosen: false,
       };
     },
     methods: {
+      ischoosen() {
+        this.choosen = !this.choosen;
+        if(this.choosen){
+          this.tipActive = false;
+        }
+      },
       //密码验证
       isPwd(pwd) {
         var patrn = /^(\S){6,20}$/;
@@ -194,7 +201,7 @@
             }).then(res => {
               this.sCode = res.data
             }).catch(error => {
-              this.errorTip = error.data
+              this.isError = error.data
               this.tipActive = true;
             })
           
@@ -228,9 +235,9 @@
           "idCardNumber": this.$refs.userCode.value,
           "note": this.$refs.smsCode.value,
         };
-        console.log(registerParams)
         const _this = this.$options.methods;
-        if(_this.isPoneAvailable(this.$refs.userTel.value) && _this.isPwd(this.$refs.normalPwd.value) && _this.isUsercode(this.$refs.userCode.value) && _this.isUsername(this.$refs.userName.value) && this.$refs.smsCode.value){
+        if(this.choosen){
+          if(_this.isPoneAvailable(this.$refs.userTel.value) && _this.isPwd(this.$refs.normalPwd.value) && _this.isUsercode(this.$refs.userCode.value) && _this.isUsername(this.$refs.userName.value) && this.$refs.smsCode.value){
           loginApi.register(registerParams).then(res => {
             console.log(res)
             const {
@@ -244,10 +251,14 @@
               }) 
             }
           }).catch(error => {
-            this.errorTip = error.data;
+            this.isError = error.data;
             this.tipActive = true;
             this.timer = null;
           });
+        }
+        }else{
+          this.tipActive = true;
+          this.isError = '请同意长影娱乐服务条款';
         }
       }
     },

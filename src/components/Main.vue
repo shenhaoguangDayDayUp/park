@@ -18,13 +18,15 @@
                     </div>
                     <i class="mint-cell-allow-right"></i>
                 </div>
-                <div class="mint-cell-title" v-else @click=toLogin>
-                    <div class="cell-logo">
+                <div class="mint-cell-title" v-else>
+                    <div class="cell-logo"  @click=toLogin>
                         <img data-v-48713cc3="" src="../assets/img/touxiang2@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>请登录</span>
                         </div>
+                        <router-link to="/entity">
                         <i data-v-1b0f58d8="" class="mint-cell-allow-right"></i>
+                        </router-link>    
                     </div>
                     <i class="mint-cell-allow-right"></i>
                 </div>
@@ -123,8 +125,8 @@
                 });
             },
             toLogout() {
-                localStorage.removeItem('token')
-                localStorage.removeItem('accountInfo')
+                localStorage.removeItem('$LoginUser')
+                sessionStorage.removeItem('TOKEN')
                 this.$router.push({
                     path: '/login'
                 });
@@ -216,6 +218,12 @@
             padding: 0 53px;
             display: flex;
             position: relative;
+        }
+        .mint-cell-allow-right{
+            right: 20px;
+            position: absolute;
+            width:30%;
+            height: 224px;
         }
         .mint-cell-allow-right::after {
             border: 2px solid #c8c8cd;

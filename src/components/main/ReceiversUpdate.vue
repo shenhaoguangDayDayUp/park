@@ -1,5 +1,5 @@
 <template>
-    <div class="receivers">
+    <div class="receiverUpdate">
         <!-- <div class="close">
                             <router-link to="/"><img src="../assets/img/close.png"></router-link>
                         </div> -->
@@ -29,7 +29,7 @@
         XButton
     } from 'vux';
     export default {
-        name: "Receivers",
+        name: "ReceiverUpdate",
         components: {
             XInput,
             XAddress,
@@ -48,7 +48,7 @@
     };
 </script>
 <style lang="scss" scoped>
-    .receivers {
+    .receiverUpdate {
         background-color: #23262b;
         height: 100%;
         color:#fff;

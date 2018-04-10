@@ -113,15 +113,9 @@ function send(url, data, otherOptions, method = 'get') {
                         .then(function (response) {
                             sessionStorage.setItem("TOKEN", response.headers['x-auth-token']);
                             window.global.$root.eventHub.$emit('notification')
-                            // window.global.$router.push({
-                            //     name: 'gameCenter'
-                            // })
-                            // window.global.$router.push({
-                            //     name: 'Main'
-                            // })
                         })
                         .catch(function (error) {
-                        console.log(error);
+                            console.log(error);
                         });
                 }else{
                     this.$router.push({
