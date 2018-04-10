@@ -1,7 +1,7 @@
 <template>
     <div class="list-item">
         <div class="list-item-left"
-             @click="leftClick">
+             @click.stop="leftClick">
             <div v-if="radio"
                  class="list-item-left__radio">
                 <div :class="{'radio-selected': selected}" />

@@ -1,7 +1,6 @@
 <template>
     <div class="heart">
-        <Header title="心愿单"></Header>
-      
+        <Header title="心愿单"></Header>     
      <HeartGrop>
         <HeartItems
             v-for="(item,index) in list"
@@ -56,6 +55,7 @@ export default {
       leftClick(){
          this.getAmount()
          this.getTotal()
+         this.checkAll()
       },
       valueChange(item){
           this.getAmount();
@@ -78,6 +78,22 @@ export default {
           return pre + cur
         }, 0)
       return this.total
+    },
+    checkAll(){
+       this.selectedList = this.list
+        .filter(item =>{
+            if(item.selected){
+                return  item
+            }
+        })
+        if(this.selectedList.length == this.list.length){
+            this.allSelect = true;
+        }else{
+              this.allSelect = false;
+        }
+        
+
+     
     }
   },
   computed:{
@@ -86,6 +102,7 @@ export default {
   },
   data(){
       return {
+         selectedList:[],
           allSelect:false,
           amount:0,
           total:0,
