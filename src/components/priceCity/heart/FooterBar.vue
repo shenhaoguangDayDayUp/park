@@ -14,13 +14,16 @@
             <span>{{total}}积分</span>
         </div>
         <div class="select-all-button">
-            <div class="select-all-pay" @click='$router.push({name:"rightChange"})'>兑换</div>
+            <div class="select-all-pay" @click.prevent='gotoChange'>兑换</div>
         </div>
     </div>
 </template>
 <script>
 export default {
    methods:{
+      gotoChange(){
+        this.$emit('gotoChange')
+      },
        selectClick(){
            this.$emit('update:allSelect', !this.allSelect)
     

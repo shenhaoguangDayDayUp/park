@@ -4,13 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 // import MintUI from 'mint-ui'
+import 'vux/src/styles/reset.less';
 import 'mint-ui/lib/style.css'
 // Vue.use(MintUI)
 import './style/reset.css'
 import 'lib-flexible/flexible.js'
-import 'vux/src/styles/reset.less';
-import './filter'
+import  './style/globle.scss'
 
+import './filter'
+import  { ToastPlugin } from 'vux'
+Vue.use(ToastPlugin)
 // Vue.use(MintUI)
 
 // vee-validator

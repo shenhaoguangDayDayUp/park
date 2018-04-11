@@ -1,11 +1,13 @@
 import Axios from 'axios';
 // import { Loading } from 'element-ui';
 import $config from './config';
-// import {user} from './logic';
+import {user} from '../logic';
 let baseUrl = $config.apiUrlPrefix[$config.env.NODE_ENV]
 
 let axios = Axios.create({
-    baseURL: baseUrl
+    baseURL: baseUrl,
+    data:{},
+    headers:{'Content-Type':'application/json'}
 })
 
 
@@ -99,7 +101,9 @@ function send(url, data, otherOptions, method = 'get') {
             config = Object.assign({}, { url: url, method: method, params: data}, otherOptions);
         } else {
             config = Object.assign({}, { url: url, method: method, data: data }, otherOptions);
-        }
+        }  
+        // config = Object.assign({},config,{data:{},headers:{'Content-Type':'application/json'}})
+
         axios.request(config).then((res) => {
             // if (!res.data) res.data = { code: 200 };
             resolve(res);
@@ -108,7 +112,7 @@ function send(url, data, otherOptions, method = 'get') {
             let { data } = response;
             if(response.status == '401'){
                 // 报401要重新去拿token,但必须要有账户和密码才能去自动登录。
-                if(localStorage.getItem('$LoginUser')){
+                if(user.getLoginUser('$LoginUser')){
                     axios.put('/member/login', JSON.parse(localStorage.getItem('$LoginUser')))
                         .then(function (response) {
                             sessionStorage.setItem("TOKEN", response.headers['x-auth-token']);
@@ -118,8 +122,10 @@ function send(url, data, otherOptions, method = 'get') {
                             console.log(error);
                         });
                 }else{
-                    this.$router.push({
-                        name: 'Main'
+                    // console.log(401,401)
+                    window.global.$router.push({
+             
+                        path:'/login'
                     })
                 }
             }else {

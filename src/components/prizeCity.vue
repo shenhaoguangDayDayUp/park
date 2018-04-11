@@ -72,7 +72,7 @@
            infinite-scroll-distance="10">
         <router-link class="list_item "
                      :class="{'linear_item_linear':!isGrid}"
-                     :to="{path:'/goods/detail',query: {id: item.goodsId}}"
+                     :to="{name:'商品详情',params: {id: item.code}}"
                      v-for="(item,index) in goods"
                      :key="index"
                      tag="a">
@@ -82,12 +82,12 @@
                  :src="item.url">
           </div>
           <div class="list_item_title">
-            测试商品
+              {{item.name}}
           </div>
           <div class="list_item_description">
                 <span><img src="../assets/img/big_gold@2x.png"
                        alt=""></span>
-                <del>¥200</del>
+                <span class="gold">{{item.price}}</span>
           </div>
         </router-link>
         
@@ -104,14 +104,16 @@
 <script>
 import { Swiper ,LoadMore} from "vux";
 import { InfiniteScroll } from "mint-ui";
+import {getAllProductApi} from '@/api/api'
 export default {
   data() {
     return {
+      page:0,
       goods: [
-        { url: "https://static.vux.li/demo/1.jpg", id: 1 },
-        { url: "https://static.vux.li/demo/1.jpg", id: 2 },
-        { url: "https://static.vux.li/demo/1.jpg", id: 3 },
-        { url: "https://static.vux.li/demo/1.jpg", id: 4 }
+        // { url: "https://static.vux.li/demo/1.jpg", id: 1 },
+        // { url: "https://static.vux.li/demo/1.jpg", id: 2 },
+        // { url: "https://static.vux.li/demo/1.jpg", id: 3 },
+        // { url: "https://static.vux.li/demo/1.jpg", id: 4 }
       ],
       loading: false,
       isGrid: true,
@@ -142,7 +144,19 @@ export default {
       ]
     };
   },
+  mounted(){
+    this.getList()
+  },
   methods: {
+   async getList(){
+    try{
+     const{data}= await getAllProductApi.getList({id:0})
+       this.goods = data
+    }catch(err){
+
+    }
+
+    },
     loadMore() {
       this.loading  = true
       console.log(13131);
@@ -161,6 +175,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .prizeCity {
+  .gold{
+     color:#ffcb16;
+  }
   color: #fff;
   background: #23262b;
   height: 100%;
