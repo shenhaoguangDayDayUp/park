@@ -13,16 +13,31 @@
                     </div>
                 </div>
                 <div class="receiversUpdate">
-                    <span><check-icon :value.sync="checker"> 默认操作</check-icon></span>
-                    <span><img src="../../assets/img/edit.png" alt="">编辑</span>
-                    <span><img src="../../assets/img/delete.png" alt="">删除</span>
+                    <span><check-icon :value.sync="checker"> 默认地址</check-icon></span>
+                    <div>
+                        <router-link to="./receiversUpdate"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
+                        <span @click="deleteList()"><img src="../../assets/img/delete.png" alt="">删除</span>
+                    </div>
                 </div>
             </li>
         </ul>
+        <!-- 按钮 -->
+        <div class="btn">
+            <div class="redBtn active">
+                <router-link to='/receiversUpdate'>添加一个新地址</router-link>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+    import '../../style/btn.scss';
     import '../../style/header.scss';
+    import {
+        user
+    } from '@/logic'
+    import {
+        loginApi,
+    } from '../../api/api';
     import {
         XHeader,
         CheckIcon
@@ -38,7 +53,29 @@
                 checker: true,
             };
         },
-        mounted() {}
+        mounted() {
+            const TOKEN = sessionStorage.getItem('TOKEN')
+                // 请求用户信息
+                loginApi.receivers({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        data
+                    } = res;
+                    this.isActive = true;
+                    this.mobileNumber = data.mobileNumber;
+                    this.userName = data.name;
+                }).catch(error => {
+                    console.log(error.response.status)
+                });
+        },
+        methods: {
+            deleteList() {
+            }
+        }
     };
 </script>
 <style lang="scss" scoped>
@@ -48,11 +85,12 @@
         color: #fff;
         .receiversList {
             li {
+                box-sizing: inherit;
                 height: 288px;
                 padding: 23px;
                 background: #2a2d36;
                 font-size: 30px;
-                margin-bottom:20px;
+                margin-bottom: 20px;
                 .receiversMsg {
                     height: 192px;
                     border-bottom: 2px solid #323540;
@@ -70,9 +108,18 @@
                         padding-right: 11px;
                     }
                 }
-                .receiversUpdate {}
+                .receiversUpdate {
+                    display: flex;
+                    justify-content: space-between;
+                    span {
+                        height: 94px;
+                        line-height: 94px;
+                    }
+                }
             }
-            
+        }
+        .btn {
+            margin: 71px 82px 0 78px;
         }
     }
 </style>
@@ -85,12 +132,12 @@
         .weui-icon-success {
             font-size: 28px;
         }
-        .vux-check-icon > span{
-            color:#fff;
+        .vux-check-icon>span {
+            color: #fff;
         }
-        .weui-icon-circle{
+        .weui-icon-circle {
             font-size: 28px;
-            color:#ffcb16;
+            color: #ffcb16;
         }
     }
 </style>

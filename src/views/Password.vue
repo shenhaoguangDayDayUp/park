@@ -1,6 +1,6 @@
 <template>
     <div class="password">
-        <div class="normalTab">重置密码</div>
+        <Header title="重置密码"></Header>
         <div class="nav">
             <div class="nav-tab " @click=choosenP() :class="{ 'tabActive': tabActive}">
                 <mt-button size="small" @click.native.prevent="active = 'tab-container1'">密码验证</mt-button>
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+    import Header from "@/components/common/Header.vue";
     // mint-ui
     import Vue from 'vue';
     import {
@@ -117,6 +118,9 @@
     } from '../api/api';
     export default {
         name: "Password",
+        components:{
+            Header
+        },
         data() {
             return {
                 show: true,
@@ -241,7 +245,7 @@
                         }
                     }).then(res => {
                         this.$router.push({
-                            name: 'Main'
+                            name: 'Entity'
                         })
                     }).catch(error => {
                         console.log(error)

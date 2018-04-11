@@ -8,7 +8,7 @@
                 {{title}}
             </div>
             <div class="right">
-          
+                
             </div>
    </div>
 </template>
@@ -26,18 +26,17 @@ export default {
 </script>
 <style lang="scss" scoped>
     .nav-bar{
-    //   position: fixed;
-    //   left: 0;
-    //   top: 0;
       font-size: 34px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center; 
-      height: 74px;
+      height: 94px;
       width: 100%;
       padding-left: 20px;
       background: #1b1a20;
+      box-shadow: 0px 9px 9px 0px 
+		rgba(0, 0, 0, 0.09);
       .left-back{
           flex: 1;
           img{

@@ -1,9 +1,6 @@
 <template>
     <div class="receiverUpdate">
-        <!-- <div class="close">
-                            <router-link to="/"><img src="../assets/img/close.png"></router-link>
-                        </div> -->
-        <div class="receiversTitle">编辑收货地址</div>
+        <x-header :left-options="{backText: ''}">编辑收货地址</x-header>
         <div class="addrForm">
             <x-input name="username" placeholder="请输入姓名" is-type="china-name" :show-clear="false"></x-input>
             <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" :show-clear="false"></x-input>
@@ -20,13 +17,15 @@
     </div>
 </template>
 <script>
+ import '../../style/header.scss';
     import {
         XInput,
         XAddress,
         ChinaAddressV4Data,
         XTextarea,
         Group,
-        XButton
+        XButton,
+        XHeader,
     } from 'vux';
     export default {
         name: "ReceiverUpdate",
@@ -35,7 +34,8 @@
             XAddress,
             XTextarea,
             Group,
-            XButton
+            XButton,
+            XHeader,
         },
         data() {
             return {
@@ -65,12 +65,6 @@
             margin-top: 11px;
             margin-bottom: 11px;
         }
-    }
-    .receiversTitle {
-        font-size: 34px;
-        color: #fff;
-        text-align: center;
-        padding: 26px 0 0 0;
     }
 </style>
 <style>

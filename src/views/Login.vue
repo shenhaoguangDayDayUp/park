@@ -1,8 +1,6 @@
 <template>
   <div class="login">
-    <!-- <div class="close">
-      <router-link to="/"><img src="../assets/img/close.png"></router-link>
-    </div> -->
+    <Header title="用户登录"></Header>
     <div class="normalTab">L O G O</div>
     <div class="content">
       <div class="slide_son" style="display: inline-block;width: 100%;">
@@ -59,6 +57,7 @@
 </template>
 
 <script>
+import Header from "@/components/common/Header.vue";
   // mint-ui
   import Vue from 'vue'
   import {
@@ -77,6 +76,9 @@
   } from '../api/api';
   export default {
     name: "Login",
+    components:{
+      Header
+    },
     data() {
       return {
         loading: true,
