@@ -163,10 +163,11 @@ import Header from "@/components/common/Header.vue";
                 if (this.choosen) {
                   var profile = Object.assign({}, loginParams)
                   sessionStorage.setItem("TOKEN", headers['x-auth-token']);
+                  user.setLoginUser(profile)
                 } else {
+                  console.log(headers['x-auth-token'])
                   sessionStorage.setItem("TOKEN", headers['x-auth-token']);
                 }
-                user.setLoginUser(profile)
                 this.$router.push({
                   name: 'Main'
                 })
@@ -176,6 +177,7 @@ import Header from "@/components/common/Header.vue";
               });
             }
           }
+          
       },
     };
 </script>
