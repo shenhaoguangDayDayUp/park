@@ -4,7 +4,7 @@ module.exports = {
     env: env,
     apiUrlPrefix: {
         development: '/api',
-        production: "http://192.168.1.192/gateway/mobile",
+        production: "http://changyingyule.cn/gateway/mobile",
         testing: "",
         static: ""
     },

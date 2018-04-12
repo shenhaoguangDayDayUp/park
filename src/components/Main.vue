@@ -119,7 +119,10 @@ import { XHeader} from 'vux'
             this.$root.eventHub.$on('notification', () => {
                 this.Api();
             })
-            this.Api();
+            // 如果用户信息存在(半小时后token过期了)或者token存在(登录时候没选下次自动登录)时再发请求
+            if(user.getLoginUser('$LoginUser') || sessionStorage.getItem('TOKEN')){
+                this.Api();
+            }
         },
         methods: {
             toLogin() {

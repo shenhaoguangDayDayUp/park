@@ -1,22 +1,26 @@
 <template>
     <div class="receivers">
         <x-header :left-options="{backText: ''}">收货地址</x-header>
-        <ul class="receiversList">
+        <!-- 报错信息 -->
+        <div class="isError" v-show='isError'>
+            <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
+        </div>
+        <ul class="receiversList" v-for="(v,i) in List">
             <li>
                 <div class="receiversMsg">
                     <div class="MsgTop">
-                        <span>张三</span>
-                        <span>13830082550</span>
+                        <span>{{v.name}}</span>
+                        <span>{{v.mobileNumber}}</span>
                     </div>
                     <div class="MsgBottom">
-                        贷记卡JFK打扫房间贷记卡时间flak上的飞机设计的疯狂撒djdjak大家坷拉激发拉开圣诞节放假地方
+                        {{v.province}}{{v.city}}{{v.district}}{{v.street}}
                     </div>
                 </div>
                 <div class="receiversUpdate">
                     <span><check-icon :value.sync="checker"> 默认地址</check-icon></span>
                     <div>
-                        <router-link to="./receiversUpdate"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
-                        <span @click="deleteList()"><img src="../../assets/img/delete.png" alt="">删除</span>
+                        <router-link  :to="{path:'/receiversUpdate',query: {code: v.code}}" ><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
+                        <span @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt="">删除</span>
                     </div>
                 </div>
             </li>
@@ -30,11 +34,9 @@
     </div>
 </template>
 <script>
+    import '../../style/isError.scss';
     import '../../style/btn.scss';
     import '../../style/header.scss';
-    import {
-        user
-    } from '@/logic'
     import {
         loginApi,
     } from '../../api/api';
@@ -50,30 +52,59 @@
         },
         data() {
             return {
-                checker: true,
+                checker: false,
+                isError:'',
+                List: []
             };
         },
         mounted() {
             const TOKEN = sessionStorage.getItem('TOKEN')
-                // 请求用户信息
-                loginApi.receivers({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': TOKEN
-                    }
-                }).then(res => {
-                    const {
-                        data
-                    } = res;
-                    this.isActive = true;
-                    this.mobileNumber = data.mobileNumber;
-                    this.userName = data.name;
-                }).catch(error => {
-                    console.log(error.response.status)
-                });
+            // 请求用户收货地址信息
+            loginApi.receivers({}, {
+                data: {},
+                headers: {
+                    'x-auth-token': TOKEN
+                }
+            }).then(res => {
+                const {
+                    data
+                } = res;
+                this.List = data
+            }).catch(error => {
+                console.log(error.response.status)
+            });
         },
         methods: {
-            deleteList() {
+            // 发送删除地址的请求
+            deleteList(e,i) {
+                const deleteItem = {
+                    "code": e
+                }
+                console.log(i)
+                loginApi.receiversDel({}, {
+                    data: deleteItem,
+                    headers: {
+                        'x-auth-token': sessionStorage.getItem('TOKEN')
+                    }
+                }).then(res => {
+                    if (res.status == 200) {
+                         this.List.splice(i, 1);  
+                    } else {
+                        this.isError = '出现异常!请重试!'
+                    }
+                }).catch(error => {
+                    switch (error.status) {
+                        case 456:
+                            this.isError = error.data
+                            break;
+                        case 567:
+                            this.isError = '系统错误!'
+                            break;
+                        default:
+                            this.isError = '请求错误!'
+                            break;
+                    }
+                });
             }
         }
     };

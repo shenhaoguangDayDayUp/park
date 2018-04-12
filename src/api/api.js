@@ -12,7 +12,7 @@ export let loginApi = new Api('member','id',{
         method: 'post' ,
     },
     reset:{
-        url:'password',
+        url:'password', // 修改密码
         method:'put',
     },
     entity:{
@@ -22,11 +22,27 @@ export let loginApi = new Api('member','id',{
     receivers:{
         url:'receivers', // 收货地址
         method:'get'
+    },
+    receiversUpdate:{
+        url:'receivers', // 增加收货地址
+        method:'post'
+    },
+    receiversDel:{
+        url:'receivers', // 删除收货地址
+        method:'delete'
+    },
+    receiversEdit:{
+        url:'receivers', // 编辑收货地址
+        method:'put'
+    },
+    receiversFind:{
+        url:'receivers/{id}', // 查询收货地址
+        method:'get'
     }
 })
 export let integralApi = new Api('account','id',{
     account:{
-        url: 'balance/CRD', // 积分
+        url: 'balance/CRD', // 积分查询
         method: 'get',
     },
 })

@@ -16,7 +16,7 @@
             </li>
             <!-- 短信验证码 -->
             <li id="msg" class="isErrors">
-              <input ref="smsCode" id="lg_msg" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
+              <input ref="smsCode" id="lg_msg" class="sms" maxlength="4" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " >
               <button class="smsCode" @click="getCode()" :disabled="!show">
                                             <span v-show="show">发送验证码</span>
                                             <span v-show="!show">{{count}}秒后重发</span>
@@ -26,7 +26,7 @@
             <!-- 输入新密码 -->
             <li class="lg_border">
               <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
-              <input ref="normalPwd" id="newPwd" @blur="blurPwd()" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent ">
+              <input ref="normalPwd" id="newPwd" @blur="blurPwd()" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(0,20)" maxlength="20">
               <i class="icon-eye eye-grey"></i>
               <i class="icon-eye eye-red" style="display:none;"></i>
             </li>
@@ -203,7 +203,7 @@ import Header from "@/components/common/Header.vue";
             }).then(res => {
               this.sCode = res.data
             }).catch(error => {
-              this.isError = error.data
+              this.isError = '获取验证码失败!'
               this.tipActive = true;
             })
           
@@ -253,7 +253,7 @@ import Header from "@/components/common/Header.vue";
               }) 
             }
           }).catch(error => {
-            this.isError = error.data;
+            this.isError = '注册失败';
             this.tipActive = true;
             this.timer = null;
           });
