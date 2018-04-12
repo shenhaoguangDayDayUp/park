@@ -10,17 +10,31 @@ let axios = Axios.create({
     headers:{'Content-Type':'application/json'}
 })
 
-// axios.interceptors.request.use(function (config) {
-//     // Do something before request is sent
-//     window.global.$vux.loading.show({
-//         text: 'Loading'
-//        })
-//     return config;
-// }, function (error) {
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    window.global.$vux.loading.show({
+        text: 'Loading'
+       })
+    return config;
+}, function (error) {
    
-//     // Do something with request error
-//     return Promise.reject(error);
-// });
+    // Do something with request error
+    return Promise.reject(error);
+});
+axios.interceptors.response.use(function (response) {
+    window.global.$vux.loading.hide()
+
+
+ 
+
+
+ return response;
+}, function (error) {
+  window.global.$vux.loading.hide()
+
+return Promise.reject(error);
+});
+
 
 
 /**

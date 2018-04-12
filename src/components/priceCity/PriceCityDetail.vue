@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     async addCart() {
+      console.log(232424)
       try {
         if (common.getCommon("TOKEN")) {
           var obj =  { product: { code: this.$route.params.id }, quantity: 1 }
@@ -95,15 +96,22 @@ export default {
       this.$router.push({ name: "rightChange" });
     },
     async getInfo() {
+       
       try {
         const { data } = await getAllProductApi.getDetail({
           id: this.$route.params.id
         });
         this.detail = data;
+       this.bannerData = String(data.banners).split(',').map(item=>{
+         return {url:'javascript',img:item,  fallbackImg: item}
+       })
+          
+        
       } catch (err) {}
     }
   },
   mounted() {
+
     this.getInfo();
   },
   components: {
