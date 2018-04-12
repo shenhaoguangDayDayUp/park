@@ -12,7 +12,8 @@ import 'lib-flexible/flexible.js'
 import  './style/globle.scss'
 
 import './filter'
-import  { ToastPlugin } from 'vux'
+import  { ToastPlugin,LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 // Vue.use(MintUI)
 

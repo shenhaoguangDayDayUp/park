@@ -19,7 +19,7 @@
       <div class="icon">
         <span><img src="../../assets/img/big_gold@2x.png"
                alt="" /></span>
-        <div class="price">200</div>
+        <div class="price">{{detail.price}}</div>
       </div>
     </div>
     <div class="goods-content"
@@ -88,7 +88,7 @@ export default {
           this.$router.push({name:'Login'})
         }
       } catch (error) {
-        // console.log(error)
+
       }
     },
     rightChange() {
@@ -133,10 +133,12 @@ export default {
     background: #2a2d36;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: top;;
     position: relative;
     justify-content: space-between;
+    box-sizing: border-box;
     .bar {
+      margin-top: 5px;
       width: 7px;
       height: 36px;
       margin-left: 20px;
@@ -149,14 +151,17 @@ export default {
       min-width: 300px;
     }
     .icon {
+      text-align: right;
       align-self: flex-start;
       padding-top: 10px;
       display: flex;
       flex-direction: row;
-      flex: 1;
+      justify-content:space-between; 
+      // flex: 1;
       // width: 250px;
       text-align: right;
       span {
+              align-self: center;
         img {
           width: 35px;
           height: 35px;

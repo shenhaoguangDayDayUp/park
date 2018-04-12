@@ -43,7 +43,7 @@ export default {
    
   color: #fff;
   background: #23262b;
-  height: 100%;
+  min-height: 100%;
   .order{
       width: 100%;
       box-sizing: border-box;
