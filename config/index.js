@@ -9,7 +9,7 @@ module.exports = {
     env: require('./dev.env'),
     port: 8080,
     autoOpenBrowser: true,
-    host:'192.168.1.156',
+    host:'0.0.0.0', //可以在手机端访问了
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {

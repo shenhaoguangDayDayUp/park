@@ -13,7 +13,7 @@
             </li>
             <li class="lg_border">
               <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
-              <input @blur="blurPwd()" ref="normalPwd" id="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent ">
+              <input @blur="blurPwd()" ref="normalPwd" id="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
               <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
               <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
             </li>
@@ -171,7 +171,8 @@ import Header from "@/components/common/Header.vue";
                   name: 'Main'
                 })
               }).catch(error => {
-                this.isError = error.data
+                this.tipActive = true;
+                this.isError = '登录失败!'
               });
             }
           }

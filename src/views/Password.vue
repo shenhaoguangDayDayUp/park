@@ -20,19 +20,19 @@
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
-                            <input @blur="blurPwd()" ref="normalPwd" placeholder="当前密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input @blur="blurPwd()" ref="normalPwd" placeholder="当前密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
-                            <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeNewPwd"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
-                            <input @blur="blurNewPwd()" ref="newPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input @blur="blurNewPwd()" ref="newPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
-                            <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeReNewPwd"><img src="../assets/img/tishi@2x.png">两次输入密码不一致</i>
-                            <input @blur="blurReNewPwd()" ref="reNewPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input @blur="blurReNewPwd()" ref="reNewPwd" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                         </li>
                     </ul>
                     <!--账号登录end-->
@@ -55,22 +55,21 @@
                             <input ref="userName_" @blur="blurPhone_()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
                         </li>
                         <li id="msg" class="errorTips">
-                            <input ref="smsCode" class="sms" maxlength="6" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent ">
+                            <input ref="smsCode" class="sms" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " maxlength="4">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                        <span v-show="show">发送验证码</span>
-                                        <span v-show="!show">{{count}}秒后重发</span>
-                                    </button>
+                                            <span v-show="show">发送验证码</span>
+                                            <span v-show="!show">{{count}}秒后重发</span>
+                                        </button>
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeNewPwd_"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
-                            <input ref="newPwd_" @blur="blurNewPwd_()" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent ">
+                            <input ref="newPwd_" @blur="blurNewPwd_()" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
-                            <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeReNewPwd_"><img src="../assets/img/tishi@2x.png">两次密码输入不一致</i>
-                            <input ref="reNewPwd_" @blur="blurReNewPwd_()" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent ">
-                            
+                            <input ref="reNewPwd_" @blur="blurReNewPwd_()" placeholder="确认新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                         </li>
                     </ul>
                     <!--账号登录end-->
@@ -118,7 +117,7 @@
     } from '../api/api';
     export default {
         name: "Password",
-        components:{
+        components: {
             Header
         },
         data() {
@@ -233,26 +232,28 @@
             // 旧密码提交登录请求
             submits() {
                 const TOKEN = sessionStorage.getItem('TOKEN')
-                console.log(TOKEN)
-                if(TOKEN){
-                    var resetParams = {
-                        password: sha1(this.$refs.normalPwd.value),
-                        code: sha1(this.$refs.newPwd.value),
-                    };
-                    loginApi.reset(resetParams, {
-                        headers: {
-                            'x-auth-token': TOKEN
-                        }
-                    }).then(res => {
-                        this.$router.push({
-                            name: 'Entity'
-                        })
-                    }).catch(error => {
-                        console.log(error)
-                    });
-                }else{
-                    this.tipActive = true;
-                    this.isError = '用户未登录!';
+                if (this.$options.methods.isPoneAvailable(this.$refs.userName.value) && this.$options.methods.isPwd(this.$refs.normalPwd.value) && this.$options.methods.isPwd(this.$refs.newPwd.value) && (this.$refs.newPwd.value == this.$refs.reNewPwd.value)) {
+                    if (TOKEN) {
+                        var resetParams = {
+                            password: sha1(this.$refs.normalPwd.value),
+                            code: sha1(this.$refs.newPwd.value),
+                        };
+                        loginApi.reset(resetParams, {
+                            headers: {
+                                'x-auth-token': TOKEN
+                            }
+                        }).then(res => {
+                            this.$router.push({
+                                name: 'Entity'
+                            })
+                        }).catch(error => {
+                            console.log(error)
+                        });
+                    } else {
+                        this.tipActive = true;
+                        this.isError = '修改失败!';
+                    }
+                } else {
                 }
             },
             // 动态验证码修改密码
@@ -267,11 +268,8 @@
                     }).then(res => {
                         this.sCode = res.data;
                     }).catch(error => {
-                        console.log(error)
                         this.tipActive_ = true;
-                        console.log(this.tipActive_);
-                        this.isError = error.data;
-                        console.log(this.isError);
+                        this.isError = '获取验证码失败!';
                     })
                 } else {
                     this.show = true; //打开可以重新获取验证码的开关
@@ -296,27 +294,30 @@
             },
             submits_() {
                 const TOKEN = sessionStorage.getItem('TOKEN');
-                if(TOKEN){
-                    var resetParams = {
-                    note: this.$refs.smsCode.value, //短信验证码
-                        code: sha1(this.$refs.newPwd_.value), //新密码
-                    };
-                    loginApi.reset(resetParams, {
-                        headers: {
-                            'x-auth-token': TOKEN
-                        }
-                    }).then(res => {
-                        this.$router.push({
-                            name: 'Home'
-                        })
-                    }).catch(error => {
-                        console.log(error);
-                    });
-                }else{
-                    this.tipActive_ = true;
-                    this.isError = '用户未登录!';
+                if (this.$options.methods.isPoneAvailable(this.$refs.userName_.value) && this.$options.methods.isPwd(this.$refs.newPwd_.value) && (this.$refs.reNewPwd_.value == this.$refs.newPwd_.value)) {
+                    if (TOKEN) {
+                        var resetParams = {
+                            note: this.$refs.smsCode.value, //短信验证码
+                            code: sha1(this.$refs.newPwd_.value), //新密码
+                        };
+                        loginApi.reset(resetParams, {
+                            headers: {
+                                'x-auth-token': TOKEN
+                            }
+                        }).then(res => {
+                            this.$router.push({
+                                name: 'Entity'
+                            })
+                        }).catch(error => {
+                            // console.log(error);
+                            this.tipActive_ = true;
+                            this.isError = '修改失败!';
+                        });
+                    } else {
+                        this.tipActive_ = true;
+                        this.isError = '修改失败!';
+                    }
                 }
-                
             }
         }
     };
