@@ -58,7 +58,7 @@ export default {
       }
      this.quntity = value
         console.log(this.quntity)
-      this.$emit('valueChange', { value: value, index: this.index });
+      this.$emit('valueChange', { value: value, index: this.index,type:-1 });
     },
     doPlus() {
      let value = parseInt(this.quntity);
@@ -68,7 +68,7 @@ export default {
         return;
       }
       this.quntity = value
-      this.$emit('valueChange', { value: value, index: this.index });
+      this.$emit('valueChange', { value: value, index: this.index,type:1 });
     }
   }
 };

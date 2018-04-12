@@ -42,7 +42,7 @@ export default {
 .order-list {
   color: #fff;
   background: #23262b;
-  height: 100%;
+   height: 100%;
   .nav-bar{
       font-size: 34px;
       display: flex;

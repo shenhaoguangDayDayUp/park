@@ -2,31 +2,35 @@
     <div class="heart">
         <Header title="心愿单"></Header>
         <HeartGrop>
-                  <TableviewCell ref='cell' v-for="(item,index) in list" :key='index'      @deleteItem="deleteItem" :index='index'
-                           @tachStart='tachStart' style="margin-bottom:20px">
-             <HeartItems 
-                        :key="item.id"
-                        :url="item.thumbImage"
-                        :title="item.name"
-                        :desc="item.specification"
-                        :price="item.salePrice"
-                        :selected.sync="item.selected"
-                        @left-click='leftClick'
-                        radio>
-                <div slot="right">
-                    <HeartCard @valueChange='valueChange'
-                               :num.sync='item.quantity'
-                               :index='index' ></HeartCard>
-                </div>
-            </HeartItems>
-        </TableviewCell>
-      
-            
+            <TableviewCell ref='cell'
+                           v-for="(item,index) in list"
+                           :key='index'
+                           @deleteItem="deleteItem"
+                           :index='index'
+                           @tachStart='tachStart'
+                           style="margin-bottom:20px">
+                <HeartItems :key="item.code"
+                            :url="item.imagePath"
+                            :title="item.name"
+                            :desc="item.specification"
+                            :price="item.price"
+                            :selected.sync="item.selected"
+                            @left-click='leftClick'
+                            radio>
+                    <div slot="right">
+                        <HeartCard @valueChange='valueChange'
+                                   :num.sync='item.quantity'
+                                   :index='index'></HeartCard>
+                    </div>
+                </HeartItems>
+            </TableviewCell>
+
         </HeartGrop>
- 
+    <!-- <toast v-model="showToast" type="text" :time="800" is-show-mask text="Hello World" :position="position">{{ $t('Basic Usage') }}</toast> -->
         <FooterBar :amount='amount'
                    :total='total'
                    :allSelect.sync='allSelect'
+                   @gotoChange='selectProduct'
                    @selectAll='selectAll'></FooterBar>
     </div>
 </template>
@@ -36,8 +40,11 @@ import HeartGrop from "./HeartGrop";
 import HeartCard from "@/components/mine/HeartCard.vue";
 import FooterBar from "./FooterBar.vue";
 import Header from "@/components/common/Header.vue";
-import { Swipeout, SwipeoutItem, SwipeoutButton } from "vux";
+import { Swipeout, SwipeoutItem, SwipeoutButton ,Toast} from "vux";
 import TableviewCell from "@/common/TableviewCell";
+import { heartCartApi } from "@/api/api";
+import { common } from "@/logic";
+
 
 export default {
   components: {
@@ -49,23 +56,89 @@ export default {
     Swipeout,
     SwipeoutItem,
     SwipeoutButton,
-    TableviewCell
+    TableviewCell,
+    Toast
+  },
+  mounted() {
+    this.getList();
+  },
+  watch: {
+    list: {
+      handler(val) {
+       this.gotoChangeBtn = val.filter(item => item.selected).length?true:false
+       console.log(this.gotoChangeBtn)
+      },
+      immediate: true,
+      deep: true
+    }
   },
   methods: {
-      deleteItem(index){
-          console.log(index);
-          this.list.splice(index,1)
-          this.tachStart()
+      selectProduct(){
+          console.log(this.gotoChangeBtn)
+          if(!this.gotoChangeBtn){
+              this.$vux.toast.show({
+          text: '请选择商品',
+          type:'text',
+          position:'middle',
+          time:2000,
+        }) 
+      }else{
+          this.$router.push({name:"rightChange"})
+      }
+    } ,  
+
+    async getList() {
+      try {
+        if (common.getCommon("TOKEN")) {
+          var token = {
+            headers: { "x-auth-token": common.getCommon("TOKEN") }
+          };
+          const { data } = await heartCartApi.entity({}, token);
+          this.list = data;
+          this.list = this.list.map(item => {
+            return {
+              ...item.product,
+              selected: false,
+              quantity: item.quantity
+            };
+          });
           this.getAmount();
           this.getTotal();
-          
-      },
-      tachStart(){
-          var cell = this.$refs.cell
-         cell.map((item,idx)=>{
-             item._endEditing()
-         })
-      },
+        } else {
+          this.$router.push({ name: "Login" });
+        }
+        console.log(this.list);
+      } catch (err) {}
+    },
+   async deleteItem(index) {
+       try {
+      var product =  this.list[index]
+     var token = {
+            headers: { "x-auth-token": common.getCommon("TOKEN") }
+          };
+      await  heartCartApi.deleteProduct({"product":{"code":product.code}},token)
+      this.list.splice(index, 1);
+      this.tachStart();
+      this.getAmount();
+      this.getTotal();
+         this.$vux.toast.show({
+          text: '删除成功',
+          type:'text',
+          position:'middle',
+          time:2000,
+        }) 
+       } catch (error) {
+           
+       }
+   
+    
+    },
+    tachStart() {
+      var cell = this.$refs.cell;
+      cell.map((item, idx) => {
+        item._endEditing();
+      });
+    },
     selectAll() {
       if (this.allSelect) {
         this.list = this.list.map(item => {
@@ -86,9 +159,24 @@ export default {
       this.getTotal();
       this.checkAll();
     },
-    valueChange(item) {
-      this.getAmount();
-      this.getTotal();
+   async valueChange(item) {
+       console.log(item)
+      try {
+        if (common.getCommon("TOKEN")) {
+          const product = this.list[item.index]
+          var obj =  { product: { code: product.code}, quantity: item.type}
+          var token =  {headers: { "x-auth-token": common.getCommon("TOKEN")}}
+          await heartCartApi.addOrdel(obj,token);
+        //   await this.getList();
+             this.getAmount();
+             this.getTotal();
+        }else{
+          this.$router.push({name:'Login'})
+        }
+      } catch (error) {
+        // console.log(error)
+      }  
+   
     },
     getAmount() {
       this.amount = this.list
@@ -102,7 +190,7 @@ export default {
     getTotal() {
       this.total = this.list
         .filter(item => item.selected)
-        .map(item => item.salePrice * Number(item.quantity))
+        .map(item => item.price * Number(item.quantity))
         .reduce((pre, cur) => {
           return pre + cur;
         }, 0);
@@ -124,31 +212,32 @@ export default {
   computed: {},
   data() {
     return {
+      gotoChangeBtn:false,
       selectedList: [],
       allSelect: false,
       amount: 0,
       total: 0,
       list: [
-        {
-          id: 1,
-          thumbImage: "2222444",
-          name:
-            "尖山发哈就是发放大发生法官法发电饭煲发多发点是发发发发发比较符合",
-          specification: "fadfdsa",
-          selected: false,
-          quantity: 1,
-          salePrice: 100
-        },
-        {
-          id: 2,
-          thumbImage: "2222444",
-          name:
-            "尖山发哈就是发放大发生法官法发电饭煲发多发点是发发发发发比较符合",
-          specification: "fadfdsa",
-          salePrice: 200,
-          selected: true,
-          quantity: 2
-        }
+        // {
+        //   id: 1,
+        //   thumbImage: "2222444",
+        //   name:
+        //     "尖山发哈就是发放大发生法官法发电饭煲发多发点是发发发发发比较符合",
+        //   specification: "fadfdsa",
+        //   selected: false,
+        //   quantity: 1,
+        //   price: 100
+        // },
+        // {
+        //   id: 2,
+        //   thumbImage: "2222444",
+        //   name:
+        //     "尖山发哈就是发放大发生法官法发电饭煲发多发点是发发发发发比较符合",
+        //   specification: "fadfdsa",
+        //   price: 200,
+        //   selected: true,
+        //   quantity: 2
+        // }
       ]
     };
   }

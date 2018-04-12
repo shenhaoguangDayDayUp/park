@@ -1,19 +1,13 @@
 export var setCommon = config => {
 
-    window.localStorage.setItem('$config', JSON.stringify(config));
+    sessionStorage.setItem('TOKEN', JSON.stringify(config));
 }
 
 export var getCommon = () => {
-    var config = window.localStorage.getItem('$config');
+    var config = sessionStorage.getItem('TOKEN');
     if (typeof config === "object") {
         return config;
-    } else if (typeof config === 'string') {
-        try {
-            config = JSON.parse(config);
-        } catch (error) {
-            config = null;
-        }
-    } else {
+    } else if (typeof config === 'string'&& config =='undefined') {
         config = null;
     }
     return config;
