@@ -2,10 +2,10 @@
     <div class="change-address">
         <div class="receive">
             <span class='title'>收货人:</span>
-            <span>赵雯</span>
+            <span>{{item.receiverName}}</span>
         </div>
         <div class="tel">
-            23242424242
+            {{item.receiverMobileNumber}}
         </div>
         <div class="receive-detail">
             <div class="address">
@@ -13,7 +13,7 @@
                     <span style="margin-right:20px">详细地址</span>:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:
                 </span>
             </div>
-            <div class="right-img">
+            <div class="right-img" @click='editAddress'>
                     >
             </div>
         </div>
@@ -21,7 +21,20 @@
 </template>
 <script>
 export default {
-  name: "RightChange"
+  name: "RightChange",
+  methods:{
+    editAddress(){
+      this.$router.push({name:'ReceiversUpdate',query:{code:3}}) 
+    }
+  },
+  props:{
+    item:{
+       type:[Object,String],
+       default(){
+         return ''
+       }
+    }
+  }
 };
 </script>
 <style lang='scss' scoped>

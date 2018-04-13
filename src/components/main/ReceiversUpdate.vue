@@ -1,6 +1,6 @@
 <template>
     <div class="receiverUpdate">
-        <x-header :left-options="{backText: ''}">编辑收货地址</x-header>
+        <Header title="编辑收货地址" :isShow="true"></Header>
         <div class="addrForm">
             <x-input name="username" placeholder="请输入姓名" is-type="china-name" :show-clear="false" v-model="userName" :icon-type="iconType"></x-input>
             <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" mask="999 9999 9999" :max="13" is-type="china-mobile" :show-clear="false" v-model="mobileNumber" :icon-type="iconType"></x-input>
@@ -28,7 +28,7 @@
     import {
         loginApi,
     } from '../../api/api';
-    import '../../style/header.scss';
+   import Header from '../common/Header'
     import MapsCoding from '../../common/MapsCoding.json'
     import {
         XInput,
@@ -36,7 +36,6 @@
         ChinaAddressV4Data,
         XTextarea,
         XButton,
-        XHeader,
         Value2nameFilter as value2name,
     } from 'vux';
     export default {
@@ -46,7 +45,7 @@
             XAddress,
             XTextarea,
             XButton,
-            XHeader,
+            Header,
         },
         data() {
             return {
@@ -128,9 +127,9 @@
                         }
                     }).then(res => {
                         if (res.status == 200) {
-                            this.$router.push({
-                                name: 'Receivers'
-                            })
+                       window.global.$root.eventHub.$emit('addressUpdate')
+                            this.$router.go(-1)
+
                         } else {
                             this.isError = '出现异常!请重试!'
                         }

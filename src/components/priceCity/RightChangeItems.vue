@@ -3,15 +3,15 @@
          <div class="right-img"></div>
          <div class="left-content">
              <div class="content">
-                 的发发答复放大发的撒v大师傅大神发大法师打发答复大神发多发点是
+                 {{item.product.name}}
              </div>
               <div class="price-box">
                     <div class="price-left">
                       <img src="../../assets/img/big_gold@2x.png"/>
-                    <span class='price'>500</span>
+                    <span class='price'>{{item.product.price}}</span>
                     </div>
                      <div class="price-quntity">
-                         x1
+                         x{{item.quantity}}
                     </div>
                          
                
@@ -20,7 +20,16 @@
     </div>
 </template>
 <script>
-export default {};
+export default {
+    props:{
+    item:{
+       type:[Object,String],
+       default(){
+         return ''
+       }
+    }
+  }
+};
 </script>
 <style lang='scss' scoped>
 .rigth-item {

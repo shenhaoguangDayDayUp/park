@@ -186,6 +186,7 @@ export default {
   .goods-content {
     width: 100%;
     overflow: hidden;
+    margin-bottom: 124px;
   }
   .goods-footer {
     height: 124px;

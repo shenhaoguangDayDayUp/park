@@ -1,14 +1,11 @@
 <template>
     <div id="my">
         <div class="mainContent">
-            <x-header :left-options="{showBack: false}">我的主页
+            <Header title="我的主页" :isShow="true" >
                 <router-link to="./message" slot="right">
                     <img src="../assets/img/xinxiaoxi@2x.png" alt="">
                     <badge :text=unreadMsg v-show="unreadMsg"></badge>
                 </router-link>
-            </x-header>
-            <Header title="我的主页">
-                <div slot='right'>7u7u8887</div>
             </Header>
             <div class="user-header">
                 <div class="user-mess">
@@ -96,7 +93,6 @@
 </template>
 <script>
 import Header from "./common/Header.vue";
-    import '../style/header.scss';
     import {
         XHeader,
         Badge

@@ -30,6 +30,12 @@ axios.interceptors.response.use(function (response) {
 
  return response;
 }, function (error) {
+    window.global.$vux.toast.show({
+        text: error.response.data,
+        type: "text",
+        position: "middle",
+        time: 2000
+      });
   window.global.$vux.loading.hide()
 
 return Promise.reject(error);

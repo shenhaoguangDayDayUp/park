@@ -1,6 +1,6 @@
 <template>
     <div class="password">
-        <Header title="重置密码"></Header>
+        <Header title="重置密码" isShow="true"></Header>
         <div class="nav">
             <div class="nav-tab " @click=choosenP() :class="{ 'tabActive': tabActive}">
                 <mt-button size="small" @click.native.prevent="active = 'tab-container1'">密码验证</mt-button>

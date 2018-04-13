@@ -14,7 +14,11 @@ import  './style/globle.scss'
 import './filter'
 import  { ToastPlugin,LoadingPlugin } from 'vux'
 Vue.use(LoadingPlugin)
-Vue.use(ToastPlugin)
+Vue.use(ToastPlugin,{
+  type: "text",
+  position: "middle",
+  time: 2000
+})
 // Vue.use(MintUI)
 
 // vee-validator

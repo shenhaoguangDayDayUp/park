@@ -1,6 +1,6 @@
 <template>
     <div class="entity">
-        <x-header :left-options="{backText: ''}">会员信息</x-header>
+         <Header title="会员信息" :isShow="true"></Header>
         <ul class="messList">
             <li class="logoIcon">
                 <span>头像</span>
@@ -58,20 +58,17 @@
     </div>
 </template>
 <script>
-    import '../../style/header.scss';
+     import Header from '../common/Header'
     import {
         user
     } from '@/logic'
     import {
         loginApi,
     } from '../../api/api';
-    import {
-        XHeader
-    } from 'vux'
     export default {
         name: "entity",
         components: {
-            XHeader
+            Header
         },
         data() {
             return {

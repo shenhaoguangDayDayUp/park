@@ -1,6 +1,6 @@
 <template>
     <div class="reMessage">
-        <x-header :left-options="{backText: ''}">修改信息</x-header>
+        <Header title="修改信息" :isShow="true"></Header>
         <x-input title="" name="username" placeholder="" is-type="china-name" v-model="userName" :should-toast-error='false'></x-input>
         <x-input title="" mask="999 9999 9999" v-model="mobileNumber" :max="13" is-type="china-mobile" ></x-input>
         <x-input title="" type="text" placeholder="" v-model="userCode" :min="18" :max="18"></x-input>
@@ -19,15 +19,14 @@
 <script>
     import '../../style/btn.scss';
     import '../../style/isError.scss';
-    import '../../style/header.scss';
+    import Header from '../common/Header'
     import {
-        XHeader,
         XInput
     } from 'vux'
     export default {
         name: 'ReMessage',
         components: {
-            XHeader,
+            Header,
             XInput,
         },
         data(){

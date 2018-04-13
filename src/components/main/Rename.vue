@@ -1,6 +1,6 @@
 <template>
     <div class="rename">
-        <x-header :left-options="{backText: ''}">修改用户昵称</x-header>
+        <Header title="修改用户昵称" :isShow="true"></Header>
         <x-input title="" placeholder="" :min="2" :max="20" :value="name" :icon-type="iconType"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
@@ -17,16 +17,15 @@
 <script>
     import '../../style/btn.scss';
     import '../../style/isError.scss';
-    import '../../style/header.scss';
+    import Header from '../common/Header'
     import {
-        XHeader,
         XInput
     } from 'vux'
     export default {
         name: 'Rename',
         components: {
-            XHeader,
             XInput,
+            Header
         },
         data() {
             return {

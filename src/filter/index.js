@@ -49,4 +49,13 @@ export function formatDate (date, fmt) {
 function padLeftZero (str) {
   return ('00' + str).substr(str.length)
 }
+Vue.filter('orderStatus', val => {
+  return {
+      "REQUEST": "待支付",
+      "PROCESS": "待收货",
+      "SUCCESS": "成功",
+      "CANCEL": "取消",
+  }[val]
+})
 
+Vue.prototype.$orderStatus = Vue.filter('orderStatus');

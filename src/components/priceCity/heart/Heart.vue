@@ -1,38 +1,38 @@
 <template>
-    <div class="heart">
-        <Header title="心愿单"></Header>
-        <HeartGrop>
-            <TableviewCell ref='cell'
-                           v-for="(item,index) in list"
-                           :key='index'
-                           @deleteItem="deleteItem"
-                           :index='index'
-                           @tachStart='tachStart'
-                           style="margin-bottom:20px">
-                <HeartItems :key="item.code"
-                            :url="item.imagePath"
-                            :title="item.name"
-                            :desc="item.specification"
-                            :price="item.price"
-                            :selected.sync="item.selected"
-                            @left-click='leftClick'
-                            radio>
-                    <div slot="right">
-                        <HeartCard @valueChange='valueChange'
-                                   :num.sync='item.quantity'
-                                   :index='index'></HeartCard>
-                    </div>
-                </HeartItems>
-            </TableviewCell>
+  <div class="heart">
+    <Header title="心愿单"></Header>
+    <HeartGrop>
+      <TableviewCell ref='cell'
+                     v-for="(item,index) in list"
+                     :key='index'
+                     @deleteItem="deleteItem"
+                     :index='index'
+                     @tachStart='tachStart'
+                     style="margin-bottom:20px">
+        <HeartItems :key="item.code"
+                    :url="item.imagePath"
+                    :title="item.name"
+                    :desc="item.specification"
+                    :price="item.price"
+                    :selected.sync="item.selected"
+                    @left-click='leftClick'
+                    radio>
+          <div slot="right">
+            <HeartCard @valueChange='valueChange'
+                       :num.sync='item.quantity'
+                       :index='index'></HeartCard>
+          </div>
+        </HeartItems>
+      </TableviewCell>
 
-        </HeartGrop>
+    </HeartGrop>
     <!-- <toast v-model="showToast" type="text" :time="800" is-show-mask text="Hello World" :position="position">{{ $t('Basic Usage') }}</toast> -->
-        <FooterBar :amount='amount'
-                   :total='total'
-                   :allSelect.sync='allSelect'
-                   @gotoChange='selectProduct'
-                   @selectAll='selectAll'></FooterBar>
-    </div>
+    <FooterBar :amount='amount'
+               :total='total'
+               :allSelect.sync='allSelect'
+               @gotoChange='selectProduct'
+               @selectAll='selectAll'></FooterBar>
+  </div>
 </template>
 <script>
 import HeartItems from "./HeartItems";
@@ -40,11 +40,10 @@ import HeartGrop from "./HeartGrop";
 import HeartCard from "@/components/mine/HeartCard.vue";
 import FooterBar from "./FooterBar.vue";
 import Header from "@/components/common/Header.vue";
-import { Swipeout, SwipeoutItem, SwipeoutButton ,Toast} from "vux";
+import { Swipeout, SwipeoutItem, SwipeoutButton, Toast } from "vux";
 import TableviewCell from "@/common/TableviewCell";
-import { heartCartApi } from "@/api/api";
+import { heartCartApi, orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
-
 
 export default {
   components: {
@@ -65,27 +64,56 @@ export default {
   watch: {
     list: {
       handler(val) {
-       this.gotoChangeBtn = val.filter(item => item.selected).length?true:false
-       console.log(this.gotoChangeBtn)
+        this.gotoChangeBtn = val.filter(item => item.selected).length
+          ? true
+          : false;
+        console.log(this.gotoChangeBtn);
       },
       immediate: true,
       deep: true
     }
   },
   methods: {
-      selectProduct(){
-          console.log(this.gotoChangeBtn)
-          if(!this.gotoChangeBtn){
-              this.$vux.toast.show({
-          text: '请选择商品',
-          type:'text',
-          position:'middle',
-          time:2000,
-        }) 
-      }else{
-          this.$router.push({name:"rightChange"})
+    async selectProduct() {
+      console.log(this.gotoChangeBtn);
+      if (!this.gotoChangeBtn) {
+        this.$vux.toast.show({
+          text: "请选择商品",
+          type: "text",
+          position: "middle",
+          time: 2000
+        });
+      } else {
+        var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+        var personalInfo = {
+          receiverName: "Lin",
+          receiverMobileNumber: "17717396576",
+          receiverProvince: 2,
+          receiverCity: 2822,
+          receiverDistrict: 51979,
+          receiverStreet: "中信廣場",
+          items: []
+        };
+        var productList=[...this.list];
+      productList =    productList.filter(item => item.selected).map(item =>{
+            return {product:{code:item.code},quantity:item.quantity}
+          })
+        personalInfo.items =  productList 
+        console.log(personalInfo)
+        try {
+       const  {data} =  await orderCheckOutApi.checkout(personalInfo, token);
+            var productInfo = JSON.stringify(data)
+            // console.log(JSON.stringify(data))
+            this.$router.push({ name: "rightChange",query:{product:productInfo} });
+        } catch (error) {
+          
+        }
+      
+      
       }
-    } ,  
+    },
 
     async getList() {
       try {
@@ -110,28 +138,27 @@ export default {
         console.log(this.list);
       } catch (err) {}
     },
-   async deleteItem(index) {
-       try {
-      var product =  this.list[index]
-     var token = {
-            headers: { "x-auth-token": common.getCommon("TOKEN") }
-          };
-      await  heartCartApi.deleteProduct({"product":{"code":product.code}},token)
-      this.list.splice(index, 1);
-      this.tachStart();
-      this.getAmount();
-      this.getTotal();
-         this.$vux.toast.show({
-          text: '删除成功',
-          type:'text',
-          position:'middle',
-          time:2000,
-        }) 
-       } catch (error) {
-           
-       }
-   
-    
+    async deleteItem(index) {
+      try {
+        var product = this.list[index];
+        var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+        await heartCartApi.deleteProduct(
+          { product: { code: product.code } },
+          token
+        );
+        this.list.splice(index, 1);
+        this.tachStart();
+        this.getAmount();
+        this.getTotal();
+        this.$vux.toast.show({
+          text: "删除成功",
+          type: "text",
+          position: "middle",
+          time: 2000
+        });
+      } catch (error) {}
     },
     tachStart() {
       var cell = this.$refs.cell;
@@ -159,24 +186,25 @@ export default {
       this.getTotal();
       this.checkAll();
     },
-   async valueChange(item) {
-       console.log(item)
+    async valueChange(item) {
+      console.log(item);
       try {
         if (common.getCommon("TOKEN")) {
-          const product = this.list[item.index]
-          var obj =  { product: { code: product.code}, quantity: item.type}
-          var token =  {headers: { "x-auth-token": common.getCommon("TOKEN")}}
-          await heartCartApi.addOrdel(obj,token);
-        //   await this.getList();
-             this.getAmount();
-             this.getTotal();
-        }else{
-          this.$router.push({name:'Login'})
+          const product = this.list[item.index];
+          var obj = { product: { code: product.code }, quantity: item.type };
+          var token = {
+            headers: { "x-auth-token": common.getCommon("TOKEN") }
+          };
+          await heartCartApi.addOrdel(obj, token);
+          //   await this.getList();
+          this.getAmount();
+          this.getTotal();
+        } else {
+          this.$router.push({ name: "Login" });
         }
       } catch (error) {
         // console.log(error)
-      }  
-   
+      }
     },
     getAmount() {
       this.amount = this.list
@@ -212,7 +240,7 @@ export default {
   computed: {},
   data() {
     return {
-      gotoChangeBtn:false,
+      gotoChangeBtn: false,
       selectedList: [],
       allSelect: false,
       amount: 0,
