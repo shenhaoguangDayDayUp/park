@@ -11,7 +11,7 @@
                 </x-address>
             <!-- 收货地址结束 -->
                 <x-textarea :max="200" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
-                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="show"></Checker>
+                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="show" @click='show=!show'></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -113,7 +113,7 @@
                     const editList = {
                         "code": this.$route.query.code,
                         "name": this.userName,
-                        "mobileNumber": this.mobileNumber,
+                        "mobileNumber": this.mobileNumber.replace(/\s+/g,""),
                         "province": arr[0],
                         "city": arr[1],
                         "district": arr[2],
@@ -154,7 +154,7 @@
                     // 增加用户收货地址信息
                     const addList = {
                         "name": this.userName,
-                        "mobileNumber": this.mobileNumber,
+                        "mobileNumber": this.mobileNumber.replace(/\s+/g,""),
                         "province": arr[0],
                         "city": arr[1],
                         "district": arr[2],
