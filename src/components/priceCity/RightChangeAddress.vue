@@ -2,17 +2,17 @@
     <div class="change-address">
         <div class="receive">
             <span class='title'>收货人:</span>
-            <span>{{item.receiverName}}</span>
+            <span>{{item.name}}</span>
         </div>
         <div class="tel">
-            {{item.receiverMobileNumber}}
+            {{item.mobileNumber}}
         </div>
         <div class="receive-detail">
-            <div class="address">
-                <span class='title'>
-                    <span style="margin-right:20px">详细地址</span>:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:
-                </span>
-            </div>
+            <!-- <div class="address"> -->
+                <div class='receive-detail-title'>
+                    <span style="margin-right:20px">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}
+                </div>
+            <!-- </div> -->
             <div class="right-img" @click='editAddress' v-if='show'>
                     >
             </div>
@@ -88,12 +88,18 @@ export default {
     padding-left: 20px;
     height: 122px;
     display: flex;
+    width: 100%;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    position: relative;
     .right-img{
         width: 30px;
+        // right: 0;
+        // top: 30px;
+        // position: absolute;
     }
-    .title {
+    .receive-detail-title{
       flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;

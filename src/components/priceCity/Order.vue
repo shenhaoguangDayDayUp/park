@@ -1,6 +1,9 @@
 <template>
     <div class="right-change">
-        <RightChange :item='detail' :showEidt.sync='showButton' ></RightChange>
+        <Header title="订单详情"
+                :isShow='true'></Header>
+        <RightChange :item='defaultAderess'
+                     :showEidt.sync='showButton'></RightChange>
         <RightChangeItems v-for='(item,index) in detail.items'
                           :item='item'
                           :key='index'
@@ -14,7 +17,7 @@
                     </div>
                 </div>
                 <div class="price">奖品小计:</div>
-                <div class="score">{{this.detail.grandTotal}}积分</div>
+                <div class="score">{{this.detail.itemsSubtotal}}积分</div>
             </div>
             <div class="right-price-box">
                 <div class="price">快递费:</div>
@@ -22,12 +25,14 @@
             </div>
             <div class="right-price-box">
                 <div class="price">订单合计:</div>
-                <div class="score color-gold">{{this.detail.itemsSubtotal}}积分</div>
+                <div class="score color-gold">{{this.detail.grandTotal}}积分</div>
             </div>
         </div>
         <div class="submit-box">
-            <div class="submit-cancel">取消</div>
-            <div class="submit-btn" @click='gotoPayment'>支付</div>
+            <div class="submit-cancel"
+                 @click='gotoCancel'>取消</div>
+            <div class="submit-btn"
+                 @click='gotoPayment'>支付</div>
         </div>
     </div>
 </template>
@@ -36,8 +41,12 @@ import RightChange from "./RightChangeAddress.vue";
 import RightChangeItems from "./RightChangeItems.vue";
 import { common } from "@/logic";
 import { orderCheckOutApi } from "@/api/api";
+import { mapGetters } from "vuex";
 
 export default {
+  computed: {
+    ...mapGetters(["defaultAderess"])
+  },
   data() {
     return {
       detail: {}
@@ -47,11 +56,23 @@ export default {
     this.getOrderInfo();
   },
   methods: {
-    async  gotoPayment(){
-     var token = {
+    async gotoCancel() {
+      var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-        await orderCheckOutApi.payment({id:this.$route.query.code},token)
+      try {
+         await orderCheckOutApi.cancel({id:this.$route.query.code },token);
+         this.$router.push({name:'PrizeCity'})  
+      } catch (error) {
+          
+      }
+
+    },
+    async gotoPayment() {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      await orderCheckOutApi.payment({ id: this.$route.query.code }, token);
     },
     async getOrderInfo() {
       var token = {
@@ -70,7 +91,7 @@ export default {
   props: {
     showButton: {
       type: Boolean,
-      default: true,
+      default: true
     }
   },
   components: {

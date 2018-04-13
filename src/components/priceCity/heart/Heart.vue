@@ -1,6 +1,6 @@
 <template>
   <div class="heart">
-    <Header title="心愿单"></Header>
+    <Header title="心愿单" :isShow="true"></Header>
     <HeartGrop>
       <TableviewCell ref='cell'
                      v-for="(item,index) in list"

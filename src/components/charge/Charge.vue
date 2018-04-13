@@ -1,6 +1,6 @@
 <template>
     <div class="charge">
-        <Header title="在线充值"></Header>
+        <Header title="在线充值" :isShow='true'></Header>
         <div class="content">
             <div class="price">
                 <div class="price-bar"></div>

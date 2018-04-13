@@ -1,6 +1,6 @@
 <template>
     <div class="order-list">
-        <Header title="订单清单"></Header>
+        <Header title="订单清单" :isShow='true'></Header>
         <tab v-model="tabActive"
              style="margin-top:20px;"
              prevent-default

@@ -11,7 +11,7 @@
       </div>
       <swiper :list="bannerData"
               auto
-              height="745px"></swiper>
+              height="500px"></swiper>
     </div>
     <div class="goods-detail-title">
       <div class="bar"></div>
@@ -46,7 +46,7 @@
 </template>
 <script>
 import { Swiper, XHeader } from "vux";
-import { getAllProductApi, heartCartApi } from "@/api/api";
+import { getAllProductApi, heartCartApi,orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
 
 export default {
@@ -92,9 +92,40 @@ export default {
 
       }
     },
-    rightChange() {
-      this.$router.push({ name: "rightChange" });
+   async rightChange() {
+      console.log(this.gotoChangeBtn);
+      if (!this.detail.code) {
+        this.$vux.toast.show({
+          text: "请选择商品",
+        });
+      } else {
+        var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+        var personalInfo = {
+          receiverName: "Lin",
+          receiverMobileNumber: "17717396576",
+          receiverProvince: 2,
+          receiverCity: 2822,
+          receiverDistrict: 51979,
+          receiverStreet: "中信廣場",
+          items: [{product:{code:this.detail.code},quantity:1}]
+        };
+  
+        try {
+       const  {data} =  await orderCheckOutApi.checkout(personalInfo, token);
+            var productInfo = JSON.stringify(data)
+            // console.log(JSON.stringify(data))
+            this.$router.push({ name: "rightChange",query:{product:productInfo} });
+        } catch (error) {
+          
+        }
+      
+      
+      }
     },
+ 
+
     async getInfo() {
        
       try {

@@ -7,10 +7,10 @@ import Password from '@/views/Password'
 import GameCenter from '@/components/gameCenter'
 import Main from '@/components/Main'
 import PrizeCity from '@/components/prizeCity'
-
+import store from '../store'
 Vue.use(Router)
 
-export default new Router({
+const route =new Router({
   routes: [
     {
       path: '/',
@@ -127,3 +127,18 @@ export default new Router({
     },
   ]
 })
+
+
+route.beforeEach(function (to, from, next) {
+  console.log(store)
+  store.dispatch('toggleLoadingStatus', {isLoading: true})
+  next()
+})
+
+route.afterEach(function (to) {
+  setTimeout(()=>{
+    store.dispatch('toggleLoadingStatus', {isLoading: false})
+  },1000)
+
+})
+export default route

@@ -58,6 +58,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .footer-bar {
+  z-index: 100000;
   width: 100%;
   color: white;
   padding-left: 20px;

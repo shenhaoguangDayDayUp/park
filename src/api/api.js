@@ -117,6 +117,10 @@ export let orderCheckOutApi = new Api('store/order','id',{
     payment:{
         url:'payment/{id}',
         method: 'put'    
+    },
+    cancel:{
+        url:'cancel/{id}',
+        method: 'put'     
     }
 })
 

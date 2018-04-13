@@ -1,6 +1,6 @@
 <template>
     <div class="change">
-        <Header title="交易明细"></Header>
+        <Header title="交易明细" :isShow='true'></Header>
         <div class="content">
             <div class="title">
                 <div class="title-left">余额</div>
