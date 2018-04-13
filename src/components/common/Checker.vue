@@ -1,9 +1,8 @@
 <template>
-    <label class="mint-checklist-label">
+    <label class="mint-checklist-label mychecker">
         <span class="mint-checkbox">
-        <input type="checkbox" :ischoosen.sync='isShow' class="mint-checkbox-input" > 
-        <span class="mint-checkbox-core">
-        </span>
+            <input type="checkbox" :ischoosen.sync='isShow' class="mint-checkbox-input" > 
+            <span class="mint-checkbox-core"></span>
         </span> 
         <span class="mint-checkbox-label">{{checkerTitle}}{{isShow}}</span>
     </label>
@@ -25,7 +24,6 @@
                 // ischoosen:'true'
             }
         },
-
         props: {
             checkerTitle: {
                 type: [String],
@@ -42,7 +40,7 @@
     };
 </script>
 <style lang="scss" scoped>
-    .mint-checklist-label {
+    .mint-checklist-label.mychecker{
         display: block;
         padding: 0;
     }
