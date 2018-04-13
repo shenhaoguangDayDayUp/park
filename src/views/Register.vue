@@ -58,7 +58,7 @@
           </div>
           <!--账号登录end-->
           <!-- 报错信息 -->
-          <div class="isError" v-show='tipActive'>
+          <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
           </div>
         </li>
@@ -77,7 +77,9 @@
   </div>
 </template>
 <script>
-import Header from "@/components/common/Header.vue";
+  import Header from "@/components/common/Header.vue";
+  // 验证
+  import myValidator from '@/common/myValidator.js' 
   // sha1加密
   import sha1 from 'js-sha1';
   import {
@@ -90,9 +92,6 @@ import Header from "@/components/common/Header.vue";
     getCodeApi
   } from '../api/api';
   import axios from 'axios';
-  import {
-    IdentityCodeValid
-  } from '../common/isCode.js'
   export default {
     name: "Login",
     components:{
@@ -112,43 +111,15 @@ import Header from "@/components/common/Header.vue";
         judgeCode: '',
         sCode: '',
         isActive: true,
-        tipActive: false,
         isError: '',
-        choosen: false,
+        choosen: true,
       };
     },
     methods: {
       ischoosen() {
         this.choosen = !this.choosen;
         if(this.choosen){
-          this.tipActive = false;
-        }
-      },
-      //密码验证
-      isPwd(pwd) {
-        var patrn = /^(\S){6,20}$/;
-          if (!patrn.exec(pwd)) return false;
-          return true
-      },
-      // 姓名验证
-      isUsername(name){
-        var regName =/^[\u4e00-\u9fa5]{2,4}$/;
-        if(!regName.test(name)) return false;
-        return true;
-      },
-      //身份证验证
-      isUsercode(code){
-        var regIdNo = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-        if(!regIdNo.test(code)) return false;
-        return true;
-      },
-      //函数号码验证
-      isPoneAvailable(str) {
-        var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
-        if (!myreg.test(str)) {
-          return false;
-        } else {
-          return true;
+          this.isError = '';
         }
       },
       // 密码明暗 切换input type
@@ -163,32 +134,33 @@ import Header from "@/components/common/Header.vue";
       },
       // 表单判断
       blurPhone() {
-        if (!this.$options.methods.isPoneAvailable(this.$refs.userTel.value)) {
+        if (!myValidator.isPoneAvailable(this.$refs.userTel.value)) {
           this.judgePhone = 'ok'
         } else {
           this.judgePhone = ''
         }
       },
       blurPwd() {
-        if (!this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
+        if (!myValidator.isPwd(this.$refs.normalPwd.value)) {
           this.judgePwd = 'ok'
         } else {
           this.judgePwd = ''
         }
       },
       blurName() {
-        if (!this.$options.methods.isUsername(this.$refs.userName.value)) {
+        if (!myValidator.isUsername(this.$refs.userName.value)) {
           this.judgeName = 'ok'
         } else {
           this.judgeName = ''
         }
       },
       blurCode() {
-        if (!this.$options.methods.isUsercode(this.$refs.userCode.value)) {
+         if (!myValidator.idCode(this.$refs.userCode.value)) {
           this.judgeCode = 'ok'
         } else {
           this.judgeCode = ''
         }
+        
       },
       // 点击获取动态码
       getCode() {
@@ -237,9 +209,9 @@ import Header from "@/components/common/Header.vue";
           "idCardNumber": this.$refs.userCode.value,
           "note": this.$refs.smsCode.value,
         };
-        const _this = this.$options.methods;
+        const _this = myValidator;
         if(this.choosen){
-          if(_this.isPoneAvailable(this.$refs.userTel.value) && _this.isPwd(this.$refs.normalPwd.value) && _this.isUsercode(this.$refs.userCode.value) && _this.isUsername(this.$refs.userName.value) && this.$refs.smsCode.value){
+          if(_this.isPoneAvailable(this.$refs.userTel.value) && _this.isPwd(this.$refs.normalPwd.value) && _this.idCode(this.$refs.userCode.value) && _this.isUsername(this.$refs.userName.value)){
           loginApi.register(registerParams).then(res => {
             console.log(res)
             const {
@@ -253,13 +225,20 @@ import Header from "@/components/common/Header.vue";
               }) 
             }
           }).catch(error => {
-            this.isError = '注册失败';
-            this.tipActive = true;
-            this.timer = null;
+            switch (error.status) {
+              case 456:
+                  this.isError = error.data
+                  break;
+              case 567:
+                  this.isError = '系统错误!'
+                  break;
+              default:
+                  this.isError = '系统错误!'
+                  break;
+            }
           });
         }
         }else{
-          this.tipActive = true;
           this.isError = '请同意长影娱乐服务条款';
         }
       }

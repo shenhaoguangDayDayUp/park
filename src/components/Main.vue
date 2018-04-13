@@ -1,10 +1,17 @@
 <template>
     <div id="my">
         <div class="mainContent">
-            <x-header :left-options="{showBack: false}">我的主页<router-link to="./message" slot="right"><img src="../assets/img/xinxiaoxi@2x.png" alt=""></router-link></x-header>
+            <x-header :left-options="{showBack: false}">我的主页
+                <router-link to="./message" slot="right">
+                    <img src="../assets/img/xinxiaoxi@2x.png" alt="">
+                    <badge :text=unreadMsg v-show="unreadMsg"></badge>
+                </router-link>
+            </x-header>
+            <Header title="我的主页">
+                <div slot='right'>7u7u8887</div>
+            </Header>
             <div class="user-header">
                 <div class="user-mess">
-                    
                 </div>
             </div>
             <div class="mint-cell mint-cell-wrapper">
@@ -38,7 +45,7 @@
                 </div>
                 <!-- <hr /> -->
                 <div class="user-option-con mint-tabbar">
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item" @click='viewPoint'>
                         <div class="mint-icon yue">
                             <span>{{point}}</span>
                         </div>
@@ -84,15 +91,16 @@
                     </div>
                 </div>
             </div>
-            <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
-                退出登录
-            </div>
         </div>
     </div>
 </template>
 <script>
-import '../style/header.scss';
-import { XHeader} from 'vux'
+import Header from "./common/Header.vue";
+    import '../style/header.scss';
+    import {
+        XHeader,
+        Badge
+    } from 'vux'
     import swal from 'sweetalert';
     import axios from 'axios';
     import {
@@ -101,18 +109,22 @@ import { XHeader} from 'vux'
     import {
         integralApi,
         loginApi,
+        getMsgApi
     } from '../api/api';
     export default {
         name: "Login",
-        components:{
-            XHeader
+        components: {
+            XHeader,
+            Badge,
+            Header
         },
         data() {
             return {
                 point: '== ==',
                 isActive: false,
                 userName: '',
-                mobileNumber: ''
+                mobileNumber: '',
+                unreadMsg: ''
             };
         },
         mounted() {
@@ -120,7 +132,7 @@ import { XHeader} from 'vux'
                 this.Api();
             })
             // 如果用户信息存在(半小时后token过期了)或者token存在(登录时候没选下次自动登录)时再发请求
-            if(user.getLoginUser('$LoginUser') || sessionStorage.getItem('TOKEN')){
+            if (user.getLoginUser('$LoginUser') || sessionStorage.getItem('TOKEN')) {
                 this.Api();
             }
         },
@@ -130,17 +142,25 @@ import { XHeader} from 'vux'
                     path: '/login'
                 });
             },
-            toLogout() {
-                localStorage.removeItem('$LoginUser')
-                sessionStorage.removeItem('TOKEN')
-                this.$router.push({
-                    path: '/login'
-                });
-            },
-            toResetPwd() {
-                this.$router.push({
-                    path: '/password'
-                });
+            viewPoint() {
+                if (this.point == '== ==') {
+                    const TOKEN = sessionStorage.getItem('TOKEN')
+                    // 请求积分信息
+                    integralApi.account({}, {
+                        data: {},
+                        headers: {
+                            'x-auth-token': TOKEN
+                        }
+                    }).then(res => {
+                        const {
+                            headers,
+                            data
+                        } = res
+                        this.point = data
+                    }).catch(error => {
+                        console.log(error)
+                    });
+                }
             },
             Api() {
                 const TOKEN = sessionStorage.getItem('TOKEN')
@@ -175,6 +195,25 @@ import { XHeader} from 'vux'
                 }).catch(error => {
                     console.log(error)
                 });
+                // 请求未读消息数
+                getMsgApi.getMsg({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        data,
+                        status
+                    } = res
+                    if (status == 200) {
+                        if (data > 0) {
+                            this.unreadMsg = data;
+                        }
+                    }
+                }).catch(error => {
+                    console.log(error)
+                });
             }
         }
     };
@@ -182,8 +221,7 @@ import { XHeader} from 'vux'
 
 <style scoped lang="scss">
     #my {
-        background: #23262B;
-        height: 100%;
+        background: #23262B; // height: 100%;
         .mint-cell:last-child {
             background-position-x: 10px;
         }
@@ -242,7 +280,7 @@ import { XHeader} from 'vux'
         .user-option-title {
             span {
                 border-left: 4px solid #ffcb16;
-                padding-left: 20px;
+                padding-left: 16px;
                 font-size: 30px;
                 margin-left: 24px;
             }
@@ -300,12 +338,25 @@ import { XHeader} from 'vux'
         font-size: 13px;
     }
 </style>
-<style>
-    .mint-icon {
-        width: 100%;
-    }
-    .vux-header .vux-header-left, .vux-header .vux-header-right{
-        top:30px!important;
+<style lang="scss">
+    #my {
+        .mint-icon {
+            width: 100%;
+        }
+        .vux-header .vux-header-left,
+        .vux-header .vux-header-right {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            /* 50%为自身尺寸的一半 */
+            height: 35px;
+            width: 36px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
 </style>
 

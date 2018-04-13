@@ -2,8 +2,8 @@
     <div class="receiverUpdate">
         <x-header :left-options="{backText: ''}">编辑收货地址</x-header>
         <div class="addrForm">
-            <x-input name="username" placeholder="请输入姓名" is-type="china-name" :show-clear="false" v-model="userName" novalidate :icon-type="iconType"></x-input>
-            <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" :show-clear="false" v-model="mobileNumber" novalidate :icon-type="iconType"></x-input>
+            <x-input name="username" placeholder="请输入姓名" is-type="china-name" :show-clear="false" v-model="userName" :icon-type="iconType"></x-input>
+            <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" mask="999 9999 9999" :max="13" is-type="china-mobile" :show-clear="false" v-model="mobileNumber" :icon-type="iconType"></x-input>
             <!-- 收货地址开始 -->
             <x-address :title="title" :list="addressData" placeholder="点击选择" v-model="areaValue">
                 <template slot="title" slot-scope="props">
@@ -29,6 +29,7 @@
         loginApi,
     } from '../../api/api';
     import '../../style/header.scss';
+    import MapsCoding from '../../common/MapsCoding.json'
     import {
         XInput,
         XAddress,
@@ -49,7 +50,7 @@
         },
         data() {
             return {
-                addressData: ChinaAddressV4Data,
+                addressData: MapsCoding,
                 title: '请选择收货地址',
                 areaValue: ['110000', '110100', '110101'],
                 userName: '',
@@ -59,16 +60,6 @@
                 iconType: '',
             };
         },
-        // city: "市辖区"
-        // cityID: "2822"
-        // code: "19"
-        // district: "东城区"
-        // districtID: "51979"
-        // mobileNumber: "13000000000"
-        // name: "再秀嘎"
-        // province: "北京市"
-        // provinceID: "2"
-        // street: "修改"
         mounted() {
             let code = this.$route.query.code
             if (code) {

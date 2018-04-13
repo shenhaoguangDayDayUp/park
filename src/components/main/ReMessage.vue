@@ -51,18 +51,21 @@
     }
 </style>
 <style lang="scss">
-    .vux-x-input.weui-cell {
+    .reMessage{
+        .vux-x-input.weui-cell {
         height: 92px;
         background: #2a2d36;
         font-size: 30px;
         padding-left: 23px;
+        }
+        .vux-x-input.weui-cell:before {
+            border: none;
+        }
+        .weui-icon.weui_icon_clear.weui-icon-clear{
+            font-size:20px;
+        }
     }
-    .vux-x-input.weui-cell:before {
-        border: none;
-    }
-    .weui-icon.weui_icon_clear.weui-icon-clear{
-        font-size:20px;
-    }
+    
 </style>
 
 
