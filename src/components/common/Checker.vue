@@ -20,12 +20,6 @@
                 }
             }
         },
-        data(){
-            return{
-                // ischoosen:'true'
-            }
-        },
-
         props: {
             checkerTitle: {
                 type: [String],
@@ -42,7 +36,7 @@
     };
 </script>
 <style lang="scss" scoped>
-    .mint-checklist-label {
+    .mint-checklist-label.mychecker{
         display: block;
         padding: 0;
     }
