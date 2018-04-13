@@ -13,7 +13,7 @@
                     <span style="margin-right:20px">详细地址</span>:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇上海市黄浦区梅山镇:上海市黄浦区梅山镇:上海市黄浦区梅山镇:
                 </span>
             </div>
-            <div class="right-img" @click='editAddress'>
+            <div class="right-img" @click='editAddress' v-if='show'>
                     >
             </div>
         </div>
@@ -27,7 +27,24 @@ export default {
       this.$router.push({name:'ReceiversUpdate',query:{code:3}}) 
     }
   },
+ computed: {
+    show: {
+      get() {
+        return this.showEidt;
+      },
+      set(val) {
+        this.$emit("update:showEidt", val);
+      }
+    }
+  },
   props:{
+    showEidt:{
+        type:[Boolean],
+       default(){
+         return true
+       }
+    },
+   
     item:{
        type:[Object,String],
        default(){

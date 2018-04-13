@@ -1,7 +1,10 @@
 <template>
     <div class="right-change">
-           <RightChange :item='detail'></RightChange>
-        <RightChangeItems v-for='(item,index) in detail.items' :item='item' :key='index' :class="[index==0?'m-t-20':'']"></RightChangeItems>
+        <RightChange :item='detail' :showEidt.sync='showButton' ></RightChange>
+        <RightChangeItems v-for='(item,index) in detail.items'
+                          :item='item'
+                          :key='index'
+                          :class="[index==0?'m-t-20':'']"></RightChangeItems>
         <div class="order">
             <div class="right-price-box">
                 <div class="status">
@@ -11,20 +14,20 @@
                     </div>
                 </div>
                 <div class="price">奖品小计:</div>
-                <div class="score">10000积分</div>
+                <div class="score">{{this.detail.grandTotal}}积分</div>
             </div>
             <div class="right-price-box">
                 <div class="price">快递费:</div>
-                <div class="score">10000积分</div>
+                <div class="score">{{this.detail.deliveryFee}}积分</div>
             </div>
             <div class="right-price-box">
                 <div class="price">订单合计:</div>
-                <div class="score color-gold">10000积分</div>
+                <div class="score color-gold">{{this.detail.itemsSubtotal}}积分</div>
             </div>
         </div>
         <div class="submit-box">
             <div class="submit-cancel">取消</div>
-            <div class="submit-btn">支付</div>
+            <div class="submit-btn" @click='gotoPayment'>支付</div>
         </div>
     </div>
 </template>
@@ -35,32 +38,39 @@ import { common } from "@/logic";
 import { orderCheckOutApi } from "@/api/api";
 
 export default {
-    data(){
-        return {
-            detail:{}
-        }
-    },
+  data() {
+    return {
+      detail: {}
+    };
+  },
   mounted() {
     this.getOrderInfo();
   },
   methods: {
+    async  gotoPayment(){
+     var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+        await orderCheckOutApi.payment({id:this.$route.query.code},token)
+    },
     async getOrderInfo() {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
       try {
- const {data} = await orderCheckOutApi.entity({ id: this.$route.query.code }, token);
+        const { data } = await orderCheckOutApi.entity(
+          { id: this.$route.query.code },
+          token
+        );
 
-      this.detail = data
-      } catch (error) {
-
-      }
+        this.detail = data;
+      } catch (error) {}
     }
   },
   props: {
     showButton: {
       type: Boolean,
-      default: true
+      default: true,
     }
   },
   components: {

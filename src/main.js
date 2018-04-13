@@ -10,7 +10,7 @@ import 'mint-ui/lib/style.css'
 import './style/reset.css'
 import 'lib-flexible/flexible.js'
 import  './style/globle.scss'
-
+import store from '@/store'
 import './filter'
 import  { ToastPlugin,LoadingPlugin } from 'vux'
 Vue.use(LoadingPlugin)
@@ -37,6 +37,7 @@ window.global = new Vue({
   el: '#app',
   data:{eventHub: new Vue()},
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

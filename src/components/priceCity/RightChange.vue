@@ -26,7 +26,7 @@
 <script>
 import RightChange from "./RightChangeAddress.vue";
 import RightChangeItems from "./RightChangeItems.vue";
-import {orderCheckOutApi} from '@/api/api'
+import {orderCheckOutApi,loginApi} from '@/api/api'
 import { common } from "@/logic";
 export default {
     data(){
@@ -38,8 +38,9 @@ export default {
       RightChange,
       RightChangeItems
   },
-  mounted(){
-      this.getInfo()
+ async mounted(){
+       this.getInfo()
+      this.getDefaultAddress()
       window.global.$root.eventHub.$on('addressUpdate',()=>{
           console.log('地址更新了')
          this.$vux.toast.show({
@@ -49,6 +50,19 @@ export default {
       
   },
   methods: {
+     async getDefaultAddress(){
+             var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+         try {
+          const {data} =   await loginApi.receiversDefault({},token)
+         this.$store.dispatch('toggleUpdateAddres',3333)
+    
+         } catch (error) {
+             console.log(error)
+         }
+ 
+    },
    async gotoSubmit(){
       var token = {
           headers: { "x-auth-token": common.getCommon("TOKEN") }
