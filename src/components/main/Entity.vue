@@ -52,6 +52,9 @@
                 </router-link>
             </li>
         </ul>
+        <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
+            退出登录
+        </div>
     </div>
 </template>
 <script>
@@ -70,13 +73,13 @@
         components: {
             XHeader
         },
-        data(){
-            return{
-                userName:'',
-                mobileNumber:''
+        data() {
+            return {
+                userName: '',
+                mobileNumber: ''
             }
         },
-        mounted(){
+        mounted() {
             const TOKEN = sessionStorage.getItem('TOKEN')
             // 请求用户信息
             loginApi.entity({}, {
@@ -95,7 +98,32 @@
                 console.log(error.response.status)
             });
         },
-        
+        methods: {
+            // 退出登录请求
+            toLogout() {
+                const TOKEN = sessionStorage.getItem('TOKEN')
+                loginApi.logout({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        data,
+                        status
+                    } = res;
+                    if (status == 200) {
+                        localStorage.removeItem('$LoginUser')
+                        sessionStorage.removeItem('TOKEN')
+                        this.$router.push({
+                            path: '/login'
+                        });
+                    }
+                }).catch(error => {
+                    console.log(error.response.status)
+                });
+            },
+        }
     }
 </script>
 <style lang="scss" scoped>
@@ -165,9 +193,7 @@
             }
         }
         .messList:nth-child(2) {
-            li {
-                
-            }
+            li {}
         }
     }
 </style>

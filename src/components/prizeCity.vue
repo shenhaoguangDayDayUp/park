@@ -1,8 +1,8 @@
 <template>
   <div class="prizeCity">
+    
       <div class="nav-bar">
             <div class="left-back">
-           
             </div>
             <div class="title">
                 长影平台

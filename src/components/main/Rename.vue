@@ -1,7 +1,7 @@
 <template>
     <div class="rename">
         <x-header :left-options="{backText: ''}">修改用户昵称</x-header>
-        <x-input title="" placeholder="" :min="2" :max="20" :value=name></x-input>
+        <x-input title="" placeholder="" :min="2" :max="20" :value="name" :icon-type="iconType"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -30,8 +30,9 @@
         },
         data() {
             return {
-                isError:'',
-                name:this.$route.query.name
+                isError: '',
+                name: this.$route.query.name,
+                iconType: '',
             }
         },
         mounted() {
@@ -44,23 +45,26 @@
         background-color: #23262b;
         height: 100%;
         color: #fff;
-        .btn, .isError{
+        .btn,
+        .isError {
             margin: 71px 82px 0 78px;
         }
     }
 </style>
 <style lang="scss">
-    .vux-x-input.weui-cell {
-        height: 92px;
-        background: #2a2d36;
-        font-size: 30px;
-        padding-left: 23px;
-    }
-    .vux-x-input.weui-cell:before {
-        border: none;
-    }
-    .weui-icon.weui_icon_clear.weui-icon-clear{
-        font-size:20px;
+    .rename {
+        .vux-x-input.weui-cell {
+            height: 92px;
+            background: #2a2d36;
+            font-size: 30px;
+            padding-left: 23px;
+        }
+        .vux-x-input.weui-cell:before {
+            border: none;
+        }
+        .weui-icon.weui_icon_clear.weui-icon-clear {
+            font-size: 20px;
+        }
     }
 </style>
 

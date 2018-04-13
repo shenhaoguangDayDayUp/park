@@ -11,6 +11,10 @@ export let loginApi = new Api('member','id',{
         url: 'register',
         method: 'post' ,
     },
+    logout:{
+        url: 'logout',
+        method: 'put' ,
+    },
     reset:{
         url:'password', // 修改密码
         method:'put',
@@ -48,7 +52,13 @@ export let integralApi = new Api('account','id',{
 })
 export let getCodeApi = new Api('sms','id',{
     getcode:{
-        url:'validationCode/{id}',
+        url:'validationCode/{id}', // 手机动态码
+        method: 'get',
+    }
+})
+export let getMsgApi = new Api('message/','id',{
+    getMsg:{
+        url:'size/unread', // 未读消息数量
         method: 'get',
     }
 })

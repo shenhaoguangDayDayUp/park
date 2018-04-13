@@ -32,13 +32,10 @@
                   </label>
           <a href="#/password">重置密码</a>
         </div>
+      <!-- 报错信息 -->
         <div class="isError" v-if="isError">
           <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
-      </div>
-      <!-- 报错信息 -->
-      <div class="isError" v-show='tipActive'>
-        <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{errorTip}}</span>
       </div>
       <div class="btn">
         <div class="redBtn active" @click=submits() v-if="submitActive">
@@ -49,9 +46,9 @@
         </div>
       </div>
     </div>
-    <div class="toRegister">
+    <div class="toRegister" @click="toRegister">
       没有账号？
-      <router-link to="/register" style="color:#ffcb16;">立即注册</router-link>
+      <span style="color:#ffcb16;">立即注册</span>
     </div>
   </div>
 </template>
@@ -91,7 +88,7 @@ import Header from "@/components/common/Header.vue";
         submitActive: true,
         isError: '',
         phone: '',
-        choosen: false,
+        choosen: true,
         tipActive: false,
         errorTip: ''
       };
@@ -100,6 +97,11 @@ import Header from "@/components/common/Header.vue";
       ischoosen() {
         this.choosen = !this.choosen;
         console.log(this.choosen)
+      },
+      toRegister(){
+        this.$router.push({
+          path:'/register'
+        })
       },
       //函数号码验证
       isPoneAvailable(str) {
@@ -159,6 +161,7 @@ import Header from "@/components/common/Header.vue";
                 const {
                   headers
                 } = res
+                console.log(res)
                 // 判断用户下次是否直接登录
                 if (this.choosen) {
                   var profile = Object.assign({}, loginParams)
@@ -192,8 +195,9 @@ import Header from "@/components/common/Header.vue";
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 32px;
+    text-align: center;
     font-size: 26px;
+    height: 90px;
     a {
       color: #ffcb16;
       height: 28px;
