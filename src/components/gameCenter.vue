@@ -5,13 +5,13 @@
     <div class="banner">
       <img src="../assets/img/banner.png" alt="">
     </div>
-    <div class="gameList" v-for="(v,i) in gameList">
+    <div class="gameList" v-for="(v,i) in gameList" :key='i'>
       <div class="gameListTitle">
         <span v-if="i == 0">为您推荐</span>
         <span v-if="i == 1">全部游戏</span>
       </div>
       <ul class="gameListCont">
-        <li v-for="(vv,ii) in v">
+        <li v-for="(vv,ii) in v" :key='ii'>
           <img :src="vv.url" alt="">
           <span>{{vv.name}}</span>
         </li>

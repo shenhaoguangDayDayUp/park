@@ -1,8 +1,9 @@
 <template>
-    <label class="mint-checklist-label mychecker">
+    <label class="mint-checklist-label" :ischoosen.sync='isShow' >
         <span class="mint-checkbox">
-            <input type="checkbox" :ischoosen.sync='isShow' class="mint-checkbox-input" > 
-            <span class="mint-checkbox-core"></span>
+        <input type="checkbox" v-model='isShow' class="mint-checkbox-input" > 
+        <span class="mint-checkbox-core">
+        </span>
         </span> 
         <span class="mint-checkbox-label">{{checkerTitle}}{{isShow}}</span>
     </label>

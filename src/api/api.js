@@ -42,8 +42,19 @@ export let loginApi = new Api('member','id',{
     receiversFind:{
         url:'receivers/{id}', // 查询收货地址
         method:'get'
+    },
+    receiversDefault:{
+        url:'receivers/favorite', // 获取默认地址
+        method:'get'
     }
+
 })
+
+// export let integralApi = new Api('receivers','id')
+// integralApi.create().then(re)
+// integralApi.delete().then(re)
+// integralApi.update
+
 export let integralApi = new Api('account','id',{
     account:{
         url: 'balance/CRD', // 积分查询
@@ -102,7 +113,11 @@ export let orderCheckOutApi = new Api('store/order','id',{
     place:{//订单提交
         url:'place',
         method: 'post'    
-    } 
+    },
+    payment:{
+        url:'payment/{id}',
+        method: 'put'    
+    }
 })
 
 //订单清单
