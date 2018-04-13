@@ -125,12 +125,16 @@ const route =new Router({
       name: 'changeStatus',
       component: () => import('@/components/charge/ChargeStatus.vue'),
     },
+    {
+      path: '/gameDetail',
+      name: 'gameDetail',
+      component: () => import('@/components/gameCenter/gameDetail.vue'),
+    },
   ]
 })
 
 
 route.beforeEach(function (to, from, next) {
-  console.log(store)
   store.dispatch('toggleLoadingStatus', {isLoading: true})
   next()
 })

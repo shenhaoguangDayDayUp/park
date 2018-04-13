@@ -2,7 +2,7 @@
     <div class="message">
         <Header title="消息清单" :isShow="true"></Header>
         <ul class="messList">
-            <li>
+            <li v-for="v in 20">
                 <router-link to="./messageDetail">
                     <span>2018.04.03<span>充值提醒</span></span>
                 </router-link>
@@ -11,23 +11,30 @@
                 <span>2018.04.03<span>充值提醒</span></span>
             </li>
         </ul>
+          <load-more v-if='loading' :tip="'正在加载'"></load-more>
     </div>
 </template>
 <script>
-   import Header from '../common/Header'
+    import Header from '../common/Header'
     import {
-        XHeader
+        LoadMore
     } from 'vux'
     export default {
         name: "Message",
         components: {
-            Header
+            Header,
+            LoadMore
         },
         data() {
-            return {};
+            return {
+                loading:false
+            };
         },
-        mounted() {
-            
+        methods: {
+            loadMore() {
+                this.loading = true
+                console.log(13131);
+            },
         }
     };
 </script>
@@ -51,11 +58,11 @@
                     margin-left: 27px;
                 }
             }
-            li:first-child a:link{
+            li:first-child a:link {
                 color: #ffcb16;
             }
-            li a:visited{
-                color:#fff;
+            li a:visited {
+                color: #fff;
             }
             li:last-child {
                 margin: 0;

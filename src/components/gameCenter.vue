@@ -12,7 +12,7 @@
       </div>
       <ul class="gameListCont">
         <li v-for="(vv,ii) in v" :key='ii'>
-          <img :src="vv.url" alt="">
+          <img :src="vv.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: vv.name}})'>
           <span>{{vv.name}}</span>
         </li>
       </ul>
@@ -30,7 +30,7 @@
         gameList: [
           [{
               url: '../static/game.png',
-              name: '欢乐花园'
+              name: '欢乐花园',
             },
             {
               url: '../static/game.png',
