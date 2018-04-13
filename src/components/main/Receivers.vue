@@ -1,6 +1,6 @@
 <template>
     <div class="receivers">
-        <x-header :left-options="{backText: ''}">收货地址</x-header>
+        <Header title="收货地址" :isShow="true"></Header>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -36,18 +36,17 @@
 <script>
     import '../../style/isError.scss';
     import '../../style/btn.scss';
-    import '../../style/header.scss';
+   import Header from '../common/Header'
     import {
         loginApi,
     } from '../../api/api';
     import {
-        XHeader,
         CheckIcon
     } from 'vux';
     export default {
         name: "Receivers",
         components: {
-            XHeader,
+            Header,
             CheckIcon
         },
         data() {

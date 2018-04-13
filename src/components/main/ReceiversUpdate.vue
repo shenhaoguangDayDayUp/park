@@ -1,6 +1,6 @@
 <template>
     <div class="receiverUpdate">
-        <x-header :left-options="{backText: ''}">编辑收货地址</x-header>
+        <Header title="编辑收货地址" :isShow="true"></Header>
         <div class="addrForm">
             <x-input name="username" placeholder="请输入姓名" is-type="china-name" :show-clear="false" v-model="userName" :icon-type="iconType"></x-input>
             <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" mask="999 9999 9999" :max="13" is-type="china-mobile" :show-clear="false" v-model="mobileNumber" :icon-type="iconType"></x-input>
@@ -11,7 +11,7 @@
                 </x-address>
             <!-- 收货地址结束 -->
                 <x-textarea :max="200" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
-                
+                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="show"></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -28,7 +28,8 @@
     import {
         loginApi,
     } from '../../api/api';
-    import '../../style/header.scss';
+   import Header from '../common/Header'
+   import Checker from '../common/Checker'
     import MapsCoding from '../../common/MapsCoding.json'
     import {
         XInput,
@@ -36,7 +37,6 @@
         ChinaAddressV4Data,
         XTextarea,
         XButton,
-        XHeader,
         Value2nameFilter as value2name,
     } from 'vux';
     export default {
@@ -46,10 +46,12 @@
             XAddress,
             XTextarea,
             XButton,
-            XHeader,
+            Header,
+            Checker
         },
         data() {
             return {
+                show:true,
                 addressData: MapsCoding,
                 title: '请选择收货地址',
                 areaValue: ['110000', '110100', '110101'],

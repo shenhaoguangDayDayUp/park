@@ -1,6 +1,6 @@
 <template>
   <div class="changepsd">
-    <Header title="用户注册"></Header>
+    <Header title="用户注册" :isShow="true"></Header>
     <div class="logo">
       <!-- <img src="../assets/img/images/logo.png" alt=""> -->
     </div>

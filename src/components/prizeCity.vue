@@ -1,22 +1,13 @@
 <template>
   <div class="prizeCity">
-    
-      <div class="nav-bar">
-            <div class="left-back">
-            </div>
-            <div class="title">
-                长影平台
-            </div>
-            <div class="right">
-               <div class="heart" >
+      <Header title="长影平台">
+        <span class="heart" slot="right">
                      <img src="../assets/img/heart.png"
                      alt="" @click.stop='$router.push({name:"heart"})'>
                       <img @click.stop='$router.push({name:"orderLsit"})'  src="../assets/img/order.png"
                      alt="">
-               </div>
-               <div class="message" ></div>
-            </div>
-        </div>
+               </span>
+      </Header>
     <div class="index_banner_1">
       <!-- <mt-swipe>
         <mt-swipe-item v-for="(banner, index)  in bannerData"
@@ -102,6 +93,7 @@
   </div>
 </template>
 <script>
+import Header from "./common/Header.vue";
 import { Swiper ,LoadMore} from "vux";
 import { InfiniteScroll } from "mint-ui";
 import {getAllProductApi} from '@/api/api'
@@ -165,8 +157,8 @@ export default {
   },
   components: {
     Swiper,
-    LoadMore
-    
+    LoadMore,
+    Header
   },
   directives: {
     InfiniteScroll
@@ -181,47 +173,12 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
-   .nav-bar{
-     box-sizing: border-box;
-      font-size: 34px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center; 
-      height: 74px;
-      width: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-      background: #1b1a20;
-      .left-back{
-          flex: 1;
-          img{
-            //   width: 34px;
-            //   height: 34px;
-          }
-      }
-       .title{
-            flex:1; 
-            text-align: center;
-       } 
-       .right{
-           flex: 1;
-           display: flex;
-           flex-direction: row;
-           align-items: center;
-          justify-content: flex-end;
-           .heart{
-             img{
-               margin-left: 20px;
-               height: 34px;
-               width: 34px;
-             }
-           }
-           .message{
-
-           }
-
-       }
+   .heart{
+     height:94px;
+     line-height:94px;
+     img{
+     vertical-align: middle;
+     }
     }
   .index_banner_1 {
     background: #23262b;
@@ -513,3 +470,5 @@ export default {
 </style>
 
 
+
+               

@@ -1,6 +1,6 @@
 <template>
     <div class="messageDetail">
-        <x-header :left-options="{backText: ''}">消息详情</x-header>
+         <Header title="消息详情" :isShow="true"></Header>
         <ul class="messList">
             <li>
                 <div class="listHeader">
@@ -16,14 +16,14 @@
     </div>
 </template>
 <script>
-    import '../../style/header.scss';
+    import Header from '../common/Header'
     import {
         XHeader
     } from 'vux'
     export default {
         name: "messageDetail",
         components: {
-            XHeader
+            Header
         },
         data() {
             return {};

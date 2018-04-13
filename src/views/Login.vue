@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <Header title="用户登录"></Header>
+    <Header title="用户登录" :isShow="true"></Header>
     <div class="normalTab">L O G O</div>
     <div class="content">
       <div class="slide_son" style="display: inline-block;width: 100%;">
