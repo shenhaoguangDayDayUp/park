@@ -177,7 +177,7 @@ export default {
      height:94px;
      line-height:94px;
      img{
-     line-height:94px;
+     vertical-align: middle;
      }
     }
   .index_banner_1 {

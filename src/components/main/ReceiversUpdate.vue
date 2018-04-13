@@ -11,7 +11,7 @@
                 </x-address>
             <!-- 收货地址结束 -->
                 <x-textarea :max="200" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
-                
+                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="show"></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -29,6 +29,7 @@
         loginApi,
     } from '../../api/api';
    import Header from '../common/Header'
+   import Checker from '../common/Checker'
     import MapsCoding from '../../common/MapsCoding.json'
     import {
         XInput,
@@ -46,9 +47,11 @@
             XTextarea,
             XButton,
             Header,
+            Checker
         },
         data() {
             return {
+                show:true,
                 addressData: MapsCoding,
                 title: '请选择收货地址',
                 areaValue: ['110000', '110100', '110101'],

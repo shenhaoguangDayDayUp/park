@@ -3,7 +3,7 @@
         <div class="mainContent">
             <Header title="我的主页" :isShow="true" >
                 <router-link to="./message" slot="right">
-                    <img src="../assets/img/xinxiaoxi@2x.png" alt="">
+                    <img src="../assets/img/xinxiaoxi.png" alt="" >
                     <badge :text=unreadMsg v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
