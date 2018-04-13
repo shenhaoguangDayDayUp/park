@@ -1,6 +1,5 @@
 <template>
     <div class="message">
-        <x-header :left-options="{backText: ''}"></x-header>
         <Header title="消息清单" :isShow="true"></Header>
         <ul class="messList">
             <li>
