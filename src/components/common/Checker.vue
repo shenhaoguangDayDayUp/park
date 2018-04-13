@@ -20,11 +20,6 @@
                 }
             }
         },
-        data(){
-            return{
-                // ischoosen:'true'
-            }
-        },
         props: {
             checkerTitle: {
                 type: [String],

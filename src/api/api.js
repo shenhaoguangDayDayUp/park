@@ -46,14 +46,21 @@ export let loginApi = new Api('member','id',{
     receiversDefault:{
         url:'receivers/favorite', // 获取默认地址
         method:'get'
+    },
+    receiversSetDefault:{
+        url:'receivers/favorite/{id}', // 设置默认地址
+        method:'put'
+    },
+    nickname:{
+        url:'nickname', // 修改昵称
+        method:'put'
     }
-
 })
 
-// export let integralApi = new Api('receivers','id')
+// 地址操作
+// export let receiverlApi = new Api('receivers','id')
 // integralApi.create().then(re)
 // integralApi.delete().then(re)
-// integralApi.update
 
 export let integralApi = new Api('account','id',{
     account:{

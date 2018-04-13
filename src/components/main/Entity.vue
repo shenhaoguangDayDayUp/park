@@ -11,8 +11,8 @@
             </li>
             <li>
                 <span>昵称</span>
-                <span>{{userName}}</span>
-                <router-link :to="{name:'Rename',query: {name: '哆啦A梦'}}">
+                <span>{{nickname}}</span>
+                <router-link :to="{name:'Rename',query: {name: nickname}}">
                     <div class="right-arrow"></div>
                 </router-link>
             </li>
@@ -52,6 +52,7 @@
                 </router-link>
             </li>
         </ul>
+        <input type="file" accept="image/*" />调用相机 图片或者相册
         <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
             退出登录
         </div>
@@ -73,7 +74,8 @@
         data() {
             return {
                 userName: '',
-                mobileNumber: ''
+                mobileNumber: '',
+                nickname:''
             }
         },
         mounted() {
@@ -85,12 +87,14 @@
                     'x-auth-token': TOKEN
                 }
             }).then(res => {
+                console.log(res)
                 const {
                     data
                 } = res;
                 this.isActive = true;
                 this.mobileNumber = data.mobileNumber;
                 this.userName = data.name;
+                this.nickname = data.nickname;
             }).catch(error => {
                 console.log(error.response.status)
             });

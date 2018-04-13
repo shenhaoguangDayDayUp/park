@@ -17,9 +17,11 @@
                     </div>
                 </div>
                 <div class="receiversUpdate">
-                    <span><check-icon :value.sync="checker"> 默认地址</check-icon></span>
+                    <span @click="chooseFav(v.code)">
+                                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>{{v.favorite}}
+                                        </span>
                     <div>
-                        <router-link  :to="{path:'/receiversUpdate',query: {code: v.code}}" ><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
+                        <router-link :to="{path:'/receiversUpdate',query: {code: v.code}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
                         <span @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt="">删除</span>
                     </div>
                 </div>
@@ -36,7 +38,7 @@
 <script>
     import '../../style/isError.scss';
     import '../../style/btn.scss';
-   import Header from '../common/Header'
+    import Header from '../common/Header'
     import {
         loginApi,
     } from '../../api/api';
@@ -51,43 +53,32 @@
         },
         data() {
             return {
-                checker: false,
-                isError:'',
-                List: []
+                isError: '',
+                List: [],
             };
         },
-        mounted() {
-            const TOKEN = sessionStorage.getItem('TOKEN')
-            // 请求用户收货地址信息
-            loginApi.receivers({}, {
-                data: {},
-                headers: {
-                    'x-auth-token': TOKEN
-                }
-            }).then(res => {
-                const {
-                    data
-                } = res;
-                this.List = data
-            }).catch(error => {
-                console.log(error.response.status)
-            });
+        mounted() {   
+                const TOKEN = sessionStorage.getItem('TOKEN');
+            this.$root.eventHub.$on('noteRcv', () => {
+                this.mountedApi(TOKEN);
+            })
+            this.mountedApi(TOKEN);
         },
         methods: {
-            // 发送删除地址的请求
-            deleteList(e,i) {
-                const deleteItem = {
-                    "code": e
-                }
-                console.log(i)
-                loginApi.receiversDel({}, {
-                    data: deleteItem,
+            // 修改默认地址的请求
+            chooseFav(code) {
+                loginApi.receiversSetDefault({
+                    id: code
+                }, {
                     headers: {
                         'x-auth-token': sessionStorage.getItem('TOKEN')
                     }
                 }).then(res => {
                     if (res.status == 200) {
-                         this.List.splice(i, 1);  
+                        this.$vux.toast.show({
+                            text: '修改成功',
+                        });
+                        this.$root.eventHub.$emit('noteRcv')
                     } else {
                         this.isError = '出现异常!请重试!'
                     }
@@ -103,6 +94,53 @@
                             this.isError = '请求错误!'
                             break;
                     }
+                });
+            },
+            // 发送删除地址的请求
+            deleteList(e, i) {
+                const deleteItem = {
+                    "code": e
+                }
+                console.log(i)
+                loginApi.receiversDel({}, {
+                    data: deleteItem,
+                    headers: {
+                        'x-auth-token': sessionStorage.getItem('TOKEN')
+                    }
+                }).then(res => {
+                    if (res.status == 200) {
+                        this.List.splice(i, 1);
+                    } else {
+                        this.isError = '出现异常!请重试!'
+                    }
+                }).catch(error => {
+                    switch (error.status) {
+                        case 456:
+                            this.isError = error.data
+                            break;
+                        case 567:
+                            this.isError = '系统错误!'
+                            break;
+                        default:
+                            this.isError = '请求错误!'
+                            break;
+                    }
+                });
+            },
+            mountedApi(TOKEN) {
+                // 请求用户收货地址信息
+                loginApi.receivers({}, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    const {
+                        data
+                    } = res;
+                    this.List = data
+                }).catch(error => {
+                    console.log(error.response.status)
                 });
             }
         }

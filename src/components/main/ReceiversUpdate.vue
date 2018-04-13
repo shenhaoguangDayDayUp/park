@@ -11,7 +11,8 @@
                 </x-address>
             <!-- 收货地址结束 -->
                 <x-textarea :max="200" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
-                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="show" @click='show=!show'></Checker>
+                <!-- <check-icon :value.sync="demo:v.favorite" type="plain"> 默认地址({{ demo}})</check-icon> -->
+                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="favShow" @click='favShow=!favShow'></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -20,6 +21,7 @@
         </div>
         {{areaValue}}
         {{getName(areaValue)}}
+        {{favShow}}
     </div>
 </template>
 <script>
@@ -28,8 +30,8 @@
     import {
         loginApi,
     } from '../../api/api';
-   import Header from '../common/Header'
-   import Checker from '../common/Checker'
+    import Header from '../common/Header'
+    import Checker from '../common/Checker'
     import MapsCoding from '../../common/MapsCoding.json'
     import {
         XInput,
@@ -51,7 +53,8 @@
         },
         data() {
             return {
-                show:true,
+                favShow: true,
+                demo:true,
                 addressData: MapsCoding,
                 title: '请选择收货地址',
                 areaValue: ['110000', '110100', '110101'],
@@ -65,7 +68,7 @@
         mounted() {
             let code = this.$route.query.code
             if (code) {
-                // 查询用户收货地址信息
+                // 获取地址信息(地址有code则为编辑用户收货地址信息)
                 loginApi.receiversFind({
                     id: this.$route.query.code
                 }, {
@@ -83,7 +86,7 @@
                         this.userName = data.name;
                         this.mobileNumber = data.mobileNumber;
                         this.street = data.street;
-                        this.areaValue = [data.provinceID,data.cityID,data.districtID]
+                        this.areaValue = [data.provinceID, data.cityID, data.districtID]
                     } else {
                         this.isError = '出现异常!请重试!'
                     }
@@ -111,9 +114,10 @@
                 // 修改地址
                 if (this.$route.query.code) {
                     const editList = {
+                        "favorite":this.favShow,
                         "code": this.$route.query.code,
                         "name": this.userName,
-                        "mobileNumber": this.mobileNumber.replace(/\s+/g,""),
+                        "mobileNumber": this.mobileNumber.replace(/\s+/g, ""),
                         "province": arr[0],
                         "city": arr[1],
                         "district": arr[2],
@@ -122,6 +126,7 @@
                         "cityID": "2822",
                         "districtID": "51979"
                     }
+                    console.log(editList)
                     // 修改用户收货地址信息
                     loginApi.receiversEdit({}, {
                         data: editList,
@@ -130,9 +135,8 @@
                         }
                     }).then(res => {
                         if (res.status == 200) {
-                       window.global.$root.eventHub.$emit('addressUpdate')
+                            window.global.$root.eventHub.$emit('addressUpdate')
                             this.$router.go(-1)
-
                         } else {
                             this.isError = '出现异常!请重试!'
                         }
@@ -153,8 +157,9 @@
                 } else {
                     // 增加用户收货地址信息
                     const addList = {
+                        "favorite":this.favShow,
                         "name": this.userName,
-                        "mobileNumber": this.mobileNumber.replace(/\s+/g,""),
+                        "mobileNumber": this.mobileNumber.replace(/\s+/g, ""),
                         "province": arr[0],
                         "city": arr[1],
                         "district": arr[2],

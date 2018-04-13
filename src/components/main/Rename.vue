@@ -8,7 +8,7 @@
         </div>
         <!-- 按钮 -->
         <div class="btn">
-            <div class="redBtn active" @click=register()>
+            <div class="redBtn active" @click=rename()>
                 立&nbsp;即&nbsp;修&nbsp;改
             </div>
         </div>
@@ -18,6 +18,9 @@
     import '../../style/btn.scss';
     import '../../style/isError.scss';
     import Header from '../common/Header'
+     import {
+        loginApi,
+    } from '../../api/api';
     import {
         XInput
     } from 'vux'
@@ -34,9 +37,38 @@
                 iconType: '',
             }
         },
-        mounted() {
-            console.log(this.$route.query.name)
-        },
+        methods: {
+            rename() {
+                // 修改用户昵称
+                const nickname = {"nickname": this.name}
+                loginApi.nickname({}, {
+                    data: nickname,
+                    headers: {
+                        'x-auth-token': sessionStorage.getItem('TOKEN')
+                    }
+                }).then(res => {
+                    if (res.status == 200) {
+                        this.$router.push({
+                            path:'/entity'
+                        })
+                    } else {
+                        this.isError = '出现异常!请重试!'
+                    }
+                }).catch(error => {
+                    switch (error.status) {
+                        case 456:
+                            this.isError = error.data
+                            break;
+                        case 567:
+                            this.isError = '系统错误!'
+                            break;
+                        default:
+                            this.isError = '请求错误!'
+                            break;
+                    }
+                });
+            }
+        }
     }
 </script>
 <style lang="scss" scoped>
