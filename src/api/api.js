@@ -79,6 +79,40 @@ export let heartCartApi = new Api('store/cart','id',{
     }
    
 })
+//订单相关
+export let orderCheckOutApi = new Api('store/order','id',{
+    checkout:{//订单结算
+        url:'checkout',
+        method: 'post'
+    },
+    entity:{//订性详情
+        url:'entity/{id}',
+        method: 'get'  
+    },
+    place:{//订单提交
+        url:'place',
+        method: 'post'    
+    } 
+})
+
+//订单清单
+
+export let orderListApi = new Api('store/order/list','id',{
+    all:{//订单结算
+        url:'all/{id}',
+        method: 'get'
+    },
+    unreceived:{
+        url:'unreceived/{id}',
+        method: 'get'  
+    },
+    unpaid:{
+        url:'unpaid/{id}',
+        method: 'get'    
+    }, 
+})
+
+
 
 
 

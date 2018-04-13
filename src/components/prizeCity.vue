@@ -328,7 +328,8 @@ export default {
   top: 20px;
   bottom: 20px;
   right: -13px;
-  border-right: 2px solid #282828;
+   border-right: 2px solid #666a74;
+  // border-right: 2px solid #282828;
   // transform: scaleX(0.5);
   transform-origin: 100% 100%;
 }
@@ -401,7 +402,7 @@ export default {
         top: 60px;
         bottom: 180px;
         right: -2px;
-        border-right: 2px solid #282828;
+       border-right: 2px solid #666a74;
         // transform: scaleX(0.5);
         transform-origin: 100% 100%;
       }

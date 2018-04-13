@@ -1,20 +1,21 @@
 <template>
     <div class="right-change">
-        <RightChange></RightChange>
-        <RightChangeItems class="m-t-20"></RightChangeItems>
-         <RightChangeItems></RightChangeItems>
+        <RightChange :item='detail'></RightChange>
+        
+        <RightChangeItems v-for='(item,index) in detail.items' :item='item' :key='index' :class="[index==0?'m-t-20':'']"></RightChangeItems>
+         <!-- <RightChangeItems></RightChangeItems> -->
          <div class="order">
              <div class="right-price-box">
                  <div class="price">奖品小计:</div>
-                 <div class="score">10000积分</div>
+                 <div class="score">{{detail.grandTotal}}积分</div>
              </div>
                  <div class="right-price-box">
                  <div class="price">快递费:</div>
-                 <div class="score">10000积分</div>
+                 <div class="score">{{detail.deliveryFee}}积分</div>
              </div>
             <div class="right-price-box">
                  <div class="price">订单合计:</div>
-                 <div class="score color-gold">10000积分</div>
+                 <div class="score color-gold">{{detail.itemsSubtotal}}积分</div>
              </div>
          </div>
           <div class="submit-box">
@@ -25,15 +26,60 @@
 <script>
 import RightChange from "./RightChangeAddress.vue";
 import RightChangeItems from "./RightChangeItems.vue";
-
+import {orderCheckOutApi} from '@/api/api'
+import { common } from "@/logic";
 export default {
+    data(){
+        return{
+            detail:{},
+        }
+    },
   components: {
       RightChange,
       RightChangeItems
   },
+  mounted(){
+      this.getInfo()
+      window.global.$root.eventHub.$on('addressUpdate',()=>{
+          console.log('地址更新了')
+         this.$vux.toast.show({
+        text: '地址更新了',
+      });
+      })
+      
+  },
   methods: {
-    gotoSubmit(){
-        this.$router.push({name:'order'})
+   async gotoSubmit(){
+      var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+        var personalInfo = {
+          receiverName: "Lin",
+          receiverMobileNumber: "17717396576",
+          receiverProvince: 2,
+          receiverCity: 2822,
+          receiverDistrict: 51979,
+          receiverStreet: "中信廣場",
+          items: []
+        };
+        var productList=[...this.detail.items];
+      productList =    productList.map(item =>{
+            return {product:{code:item.product.code},quantity:item.quantity}
+          })
+        personalInfo.items =  productList 
+        try {
+          const {data} =  await orderCheckOutApi.place(personalInfo,token)   
+            this.$router.push({name:'order',query:{code:data.code}})
+        } catch (error) {
+            
+        }
+
+        
+    },
+     getInfo(){
+         this.detail = JSON.parse(this.$route.query.product)
+         console.log(JSON.parse(this.$route.query.product)) 
+    //    await orderCheckOutApi({id})
     }
   }
 };

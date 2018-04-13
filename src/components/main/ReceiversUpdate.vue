@@ -137,9 +137,9 @@
                         }
                     }).then(res => {
                         if (res.status == 200) {
-                            this.$router.push({
-                                name: 'Receivers'
-                            })
+                       window.global.$root.eventHub.$emit('addressUpdate')
+                            this.$router.go(-1)
+
                         } else {
                             this.isError = '出现异常!请重试!'
                         }

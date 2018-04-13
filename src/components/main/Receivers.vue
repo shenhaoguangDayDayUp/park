@@ -5,7 +5,7 @@
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
-        <ul class="receiversList" v-for="(v,i) in List">
+        <ul class="receiversList" v-for="(v,i) in List" :key='i'>
             <li>
                 <div class="receiversMsg">
                     <div class="MsgTop">
