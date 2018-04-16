@@ -52,7 +52,7 @@
                 </router-link>
             </li>
         </ul>
-        <input type="file" accept="image/*" />
+        <input  name="imgLocal" type='file' accept="image/*" @change="selectImg"/>
         <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
             退出登录
         </div>
@@ -87,16 +87,15 @@
                     'x-auth-token': TOKEN
                 }
             }).then(res => {
-                console.log(res)
+                // console.log(res)
                 const {
                     data
                 } = res;
-                this.isActive = true;
                 this.mobileNumber = data.mobileNumber;
                 this.userName = data.name;
                 this.nickname = data.nickname;
             }).catch(error => {
-                console.log(error.response.status)
+                // console.log(error.response.status)
             });
         },
         methods: {
@@ -124,6 +123,10 @@
                     console.log(error.response.status)
                 });
             },
+            // 更改头像
+            selectImg(){
+                alert(1)
+            }
         }
     }
 </script>

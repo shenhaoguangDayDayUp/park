@@ -39,7 +39,6 @@
         </div>
         {{areaValue}}
         {{getName(areaValue)}}
-        {{favShow}}
     </div>
 </template>
 <script>

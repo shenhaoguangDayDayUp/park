@@ -18,7 +18,7 @@
                 </div>
                 <div class="receiversUpdate">
                     <span @click="chooseFav(v.code)">
-                                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>{{v.favorite}}
+                                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
                                         </span>
                     <div>
                         <router-link :to="{path:'/receiversUpdate',query: {code: v.code}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
