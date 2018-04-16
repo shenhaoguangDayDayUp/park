@@ -1,14 +1,21 @@
 <template>
     <div class="change-item">
-        <div>18-04-08 11:02</div>
-         <div>赛马</div>
-          <div>奖金</div>
-           <div>500</div>
+        <div>{{item.updateAt|dateFilter}}</div>
+         <div>{{item.note}}</div>
+          <div>{{item.type}}</div>
+           <div>{{item.amount}}</div>
     </div>
 </template>
 <script>
 export default {
-  
+    props:{
+        item:{
+            type:[Object],
+            default(){
+                return {}
+            }
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>

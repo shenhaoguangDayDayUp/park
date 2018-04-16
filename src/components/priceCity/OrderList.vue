@@ -8,78 +8,132 @@
              bar-active-color="#fdcd00"
              default-color='#ffffff'
              @on-before-index-change="switchTabItem">
-            <tab-item selected>待支付</tab-item>
+            <tab-item >待支付</tab-item>
             <tab-item>待发货</tab-item>
             <tab-item>全部订单</tab-item>
         </tab>
-        <div class="order-content">
+        <div v-infinite-scroll="loadMore"
+             infinite-scroll-disabled="loading"
+             infinite-scroll-distance="10">
+            <div class="order-content" @click='$router.push({name:"order",query:{code:item.code}})'
+               v-for="(item,key) in list" :key='key'>
             <div class="content-title">
-                <div class="title-left">2018.12.12</div>
-                <div class="title-center">已完成</div>
-                <div class="title-right">12323积分</div>
+                <div class="title-left">{{item.placeAt|dateFilter}}</div>
+                <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
+                <div class="title-right">{{item.grandTotal}}积分</div>
             </div>
-            <div class="content-list"
-                 @click='$router.push({name:"order"})'>
+            <div class="content-list">
                 <div class="img-content">
-                    <div class="content"></div>
-                    <div class="content"></div>
-                    <div class="content"></div>
+                    <div class="content"  v-for="(items,keys) in item.items" :key='keys' v-if='keys<3'>
+             <img :src="items.product.imagePath" alt="">
+                    </div>
                 </div>
                 <div class="content-right">
                     >
                 </div>
             </div>
+           </div>
+            <load-more v-if='loading'
+                   :tip="'正在加载'"></load-more>
+        <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
+           
         </div>
+        
     </div>
 </template>
 
 <script>
-import { Tab, TabItem } from "vux";
+import { Tab, TabItem,LoadMore,Divider } from "vux";
 import Header from "@/components/common/Header.vue";
 import { orderListApi } from "@/api/api";
 import { common } from "@/logic";
+import { InfiniteScroll } from "mint-ui";
 export default {
+   directives: {
+    InfiniteScroll
+  },
   data() {
     return {
-      tabActive: 0
+      loading:false,
+      tabActive: Number(this.$route.query.index)||0,
+      page:1,
+      count:0,
+      noMoreData:false,
+      list:[],
     };
   },
   mounted() {
-    this.getList(0);
+    this.getList();
   },
   components: {
     Tab,
     TabItem,
-    Header
+    Header,
+   LoadMore,
+   Divider
   },
   methods: {
-    async getList(idx) {
+    loadMore() {
+      if (this.list.length >= this.count) {
+        this.loading = false;
+        this.noMoreData = true;
+        return;
+      }
+      this.page += 1;
+      this.getList();
+    },
+    async getList() {
+       this.loading = true;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-      if (idx == 0) {
+      var dataList = [];
+      var count = 0;
+      if (this.tabActive == 0) {
         try {
-          await orderListApi.unpaid({ id: 0 }, token);
+       const {data} =   await orderListApi.unpaid({ id: this.page }, token);
+        dataList = data.records
+         this.count = data.count;
+         this.loading = false;
+        console.log(  dataList )
         } catch (error) {}
-      } else if (idx == 1) {
+      } else if (this.tabActive == 1) {
         try {
-          await orderListApi.unreceived({ id: 0 }, token);
+         const {data} =   await orderListApi.unreceived({ id: this.page }, token);
+        dataList = data.records
+         this.count = data.count;
+          this.loading = false;
         } catch (error) {}
       } else {
            try {
-          await orderListApi.all({ id: 0 }, token);
+          const {data} =   await orderListApi.all({ id: this.page }, token);
+           dataList = data.records
+             this.count = data.count;
+           this.loading = false;
         } catch (error) {}
       }
+        for (let index = 0; index < dataList.length; index++) {
+          const element = dataList[index];
+          this.list.push(element);
+        }
+     
+
     },
     switchTabItem(index) {
       this.tabActive = index;
-      this.getList(index)
+      this.page = 1;
+      this.list = [];
+      this.getList()
     }
   }
 };
 </script>
 
 <style lang='scss' scoped>
+.divider{
+  padding-top:40px;
+  padding-bottom: 40px;
+}
 .order-list {
   color: #fff;
   background: #23262b;
@@ -121,16 +175,17 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content:space-between;
       .title-left {
-        flex: 1;
+        // flex: 1;
         text-align: left;
       }
       .title-center {
-        flex: 1;
+        // flex: 1;
         text-align: center;
       }
       .title-right {
-        flex: 1;
+        // flex: 1;
         text-align: right;
       }
     }
@@ -149,10 +204,16 @@ export default {
         box-sizing: border-box;
         align-items: center;
         .content {
-          flex: 1;
-          background: red;
+          width: 200px;
+          // flex: 1;
+          // background: red;
           height: 100%;
           margin-right: 10px;
+          overflow: hidden;
+          img{
+            width: 100%;
+            height: 100%;
+          }
         }
       }
       .content-right {

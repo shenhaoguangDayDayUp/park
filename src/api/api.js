@@ -156,11 +156,20 @@ export let orderListApi = new Api('store/order/list','id',{
 })
 export let brandListApi = new Api ('brand/group/category','id')
 
-
-
-
-
-
+export let transactionsApi = new Api('account','id',{
+    CRD:{//获取交易明细
+        url:'transactions/CRD/{id}',
+        method: 'get'
+    },
+    remaind:{
+        url:'balance/CRD',
+        method: 'get'  
+    },
+    recharge:{
+        url:'recharge',
+        method: 'post'  
+    }
+})
 
 
 

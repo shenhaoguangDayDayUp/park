@@ -1,46 +1,47 @@
 <template>
-    <div class="right-change">
-        <Header title="订单详情"
-                :isShow='true'></Header>
-        <RightChange :item='defaultAderess'
-                     :showEidt.sync='showButton'></RightChange>
-        <RightChangeItems v-for='(item,index) in detail.items'
-                          :item='item'
-                          :key='index'
-                          :class="[index==0?'m-t-20':'']"></RightChangeItems>
-        <div class="order">
-            <div class="right-price-box">
-                <div class="status">
-                    <div>
-                        <span>状态:</span>
-                        <span class='stauts-detail'>待发货</span>
-                    </div>
-                </div>
-                <div class="price">奖品小计:</div>
-                <div class="score">{{this.detail.itemsSubtotal}}积分</div>
-            </div>
-            <div class="right-price-box">
-                <div class="price">快递费:</div>
-                <div class="score">{{this.detail.deliveryFee}}积分</div>
-            </div>
-            <div class="right-price-box">
-                <div class="price">订单合计:</div>
-                <div class="score color-gold">{{this.detail.grandTotal}}积分</div>
-            </div>
+  <div class="right-change">
+    <Header title="订单详情"
+            :isShow='true'></Header>
+    <RightChange :item='defaultAderess'
+                 :showEidt.sync='showButton'></RightChange>
+    <RightChangeItems v-for='(item,index) in detail.items'
+                      :item='item'
+                      :key='index'
+                      :class="[index==0?'m-t-20':'']"></RightChangeItems>
+    <div class="order">
+      <div class="right-price-box">
+        <div class="status">
+          <div>
+            <span>状态:</span>
+            <span class='stauts-detail'>待发货</span>
+          </div>
         </div>
-        <div class="submit-box">
-            <div class="submit-cancel"
-                 @click='gotoCancel'>取消</div>
-            <div class="submit-btn"
-                 @click='gotoPayment'>支付</div>
-        </div>
+        <div class="price">奖品小计:</div>
+        <div class="score">{{detail.itemsSubtotal}}积分</div>
+      </div>
+      <div class="right-price-box">
+        <div class="price">快递费:</div>
+        <div class="score">{{detail.deliveryFee}}积分</div>
+      </div>
+      <div class="right-price-box">
+        <div class="price">订单合计:</div>
+        <div class="score color-gold">{{detail.grandTotal}}积分</div>
+      </div>
     </div>
+    <div class="submit-box"
+         v-if='detail.status =="REQUEST"'>
+      <div class="submit-cancel"
+           @click='gotoCancel'>取消</div>
+      <div class="submit-btn"
+           @click='gotoPayment'>支付</div>
+    </div>
+  </div>
 </template>
 <script>
 import RightChange from "./RightChangeAddress.vue";
 import RightChangeItems from "./RightChangeItems.vue";
 import { common } from "@/logic";
-import { orderCheckOutApi } from "@/api/api";
+import { orderCheckOutApi, loginApi } from "@/api/api";
 import { mapGetters } from "vuex";
 
 export default {
@@ -53,26 +54,44 @@ export default {
     };
   },
   mounted() {
+    this.getDefaultAddress();
     this.getOrderInfo();
   },
   methods: {
+    async getDefaultAddress() {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      try {
+        const { data } = await loginApi.receiversDefault({}, token);
+        this.$store.dispatch("toggleUpdateAddres", data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async gotoCancel() {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
       try {
-         await orderCheckOutApi.cancel({id:this.$route.query.code },token);
-         this.$router.push({name:'PrizeCity'})  
-      } catch (error) {
-          
-      }
-
+        await orderCheckOutApi.cancel({ id: this.$route.query.code }, token);
+        this.$router.push({ name: "PrizeCity" });
+      } catch (error) {}
     },
     async gotoPayment() {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-      await orderCheckOutApi.payment({ id: this.$route.query.code }, token);
+      try {
+         await orderCheckOutApi.payment({ id: this.$route.query.code }, token);
+           this.$vux.toast.show({
+          text: "购买成功"
+        });
+        this.$router.push({ name: "orderLsit", query: { index: 1 } });
+      } catch (error) {
+        
+      }
+     
     },
     async getOrderInfo() {
       var token = {
@@ -83,7 +102,6 @@ export default {
           { id: this.$route.query.code },
           token
         );
-
         this.detail = data;
       } catch (error) {}
     }

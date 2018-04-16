@@ -11,6 +11,7 @@ import store from '../store'
 Vue.use(Router)
 
 const route =new Router({
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
       path: '/',

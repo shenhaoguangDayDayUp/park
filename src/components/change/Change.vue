@@ -1,36 +1,106 @@
 <template>
-    <div class="change">
-        <Header title="交易明细" :isShow='true'></Header>
-        <div class="content">
-            <div class="title">
-                <div class="title-left">余额</div>
-                <div class="title-right">1400</div>
-            </div>
-            <ChangeItem></ChangeItem>
-            <ChangeItem></ChangeItem>
-            <ChangeItem></ChangeItem>
-            <ChangeItem></ChangeItem>
-            <ChangeItem></ChangeItem>
-            <ChangeItem></ChangeItem>
-        </div>
+  <div class="change">
+    <Header title="交易明细"
+            :isShow='true'></Header>
+    <div class="content">
+      <div class="title">
+        <div class="title-left">余额</div>
+        <div class="title-right">{{remaind}}</div>
+      </div>
+      <div v-infinite-scroll="loadMore"
+           infinite-scroll-disabled="loading"
+           infinite-scroll-distance="10">
+        <ChangeItem :item='item'
+                    v-for=" (item,index) in list"
+                    :key='index'></ChangeItem>
+      <load-more v-if='loading'
+                   :tip="'正在加载'"></load-more>
+        <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
+         <br>
+        <br>
+      </div>
+       
     </div>
+  </div>
 </template>
 <script>
 import Header from "@/components/common/Header.vue";
 import ChangeItem from "./ChangeItem.vue";
+import { transactionsApi } from "@/api/api";
+import { common } from "@/logic";
+import { LoadMore, Divider } from "vux";
+import { InfiniteScroll } from "mint-ui";
 export default {
   name: "",
+  data() {
+    return {
+      page: 1,
+      loading: false,
+      noMoreData: false,
+      count: 0,
+      list: [],
+      remaind: 0
+    };
+  },
+  methods: {
+    loadMore() {
+      if (this.list.length >= this.count) {
+        this.loading = false;
+        this.noMoreData = true;
+        return;
+      }
+      this.page += 1;
+      this.getList();
+    },
+    async getRemaind() {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      try {
+        const { data } = await transactionsApi.remaind({}, token);
+        this.remaind = data;
+      } catch (error) {}
+    },
+    async getList() {
+      this.loading = true;
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      try {
+        const { data } = await transactionsApi.CRD({ id: this.page }, token);
+        this.loading = false;
+        for (let index = 0; index < data.records.length; index++) {
+          const element = data.records[index];
+          this.list.push(element);
+        }
+        this.count = data.count;
+      } catch (error) {}
+    }
+  },
+  mounted() {
+    this.getList();
+    this.getRemaind();
+  },
   components: {
     Header,
-    ChangeItem
+    ChangeItem,
+    LoadMore,
+    Divider
+  },
+  directives: {
+    InfiniteScroll
   }
 };
 </script>
 <style lang="scss" scoped>
+.divider{
+  padding-top:40px;
+  padding-bottom: 40px;
+}
 .change {
   color: #fff;
   background: #23262b;
-     height: 100%;
+  height: 100%;
   font-size: 28px;
   .content {
     padding-left: 20px;
