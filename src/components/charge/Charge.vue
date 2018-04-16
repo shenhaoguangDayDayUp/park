@@ -171,6 +171,7 @@ export default {
             flex: 1;
             background: #ffcb16;
             border-radius: 10px;
+            font-size: 28px;
             color: #000000
         }
     }

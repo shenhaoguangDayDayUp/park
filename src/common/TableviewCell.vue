@@ -32,7 +32,7 @@
         },
         methods: {
             _endEditing(){
-            this.txtStyle = "transform:translateX(0rem);transition:0.5s";
+     this.txtStyle = "transform:translateX(0rem);transition:0.5s;"+"-webkit-transform:translateX(0rem);-webkit-transition:0.5s";
             },
             _touchStart: function(ev) {
                 ev = ev || event;
@@ -53,12 +53,13 @@
                     // 如果是向右滑动或者只是点击，不改变滑动位置
                     if(this.disX < 0 || this.disX == 0) {
                         // console.log('没有移动');
-                        this.txtStyle = "transform:translateX(0rem);transition:0.5s";
+                        this.txtStyle = "transform:translateX(0rem);transition:0.5s;"+"-webkit-transform:translateX(0rem);-webkit-transition:0.5s;";
                     }else if (this.disX > 0) {
 
                         this.txtStyle = "transform:translateX(-" + this.disX/100 + "rem)";
                         if (this.disX >= this.delWidth/100) {
-                            this.txtStyle = "transform:translateX(-" + this.delWidth/100 + "rem);transition:0.5s" ;
+                            this.txtStyle = "transform:translateX(-" + this.delWidth/100 + "rem);transition:0.5s;"+
+                            "-webkit-transform:translateX(-" + this.delWidth/100 + "rem);-webkit-transition:0.5s;" ;
                             this.zIndex = "z-index:" + 10 + "rem";
                         }
                     }
