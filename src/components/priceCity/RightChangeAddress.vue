@@ -24,7 +24,7 @@ export default {
   name: "RightChange",
   methods:{
     editAddress(){
-      this.$router.push({name:'ReceiversUpdate',query:{code:3}}) 
+      this.$router.push({name:'ReceiversUpdate',query:{code:this.item.code}}) 
     }
   },
  computed: {

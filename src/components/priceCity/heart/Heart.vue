@@ -122,7 +122,7 @@ export default {
             headers: { "x-auth-token": common.getCommon("TOKEN") }
           };
           const { data } = await heartCartApi.entity({}, token);
-          this.list = data;
+          this.list = data.records;
           this.list = this.list.map(item => {
             return {
               ...item.product,

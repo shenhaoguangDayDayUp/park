@@ -7,6 +7,13 @@
   }
   .order-list .vux-tab-container .vux-tab{
     background-color:#23262b !important;
+    height:100%;
+  }
+  .order-list .vux-tab-container{
+    height: auto;
+    .vux-tab{
+      padding: 10px;
+    }
   }
   .order-list .vux-tab .vux-tab-item{
     font-size: 20px;
@@ -19,4 +26,7 @@
     .weui-loadmore__tips{
       font-size: 25px;
     }
+  }
+  .vux-divider{
+    color: white !important;
   }

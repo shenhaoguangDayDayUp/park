@@ -57,11 +57,6 @@ export let loginApi = new Api('member','id',{
     }
 })
 
-// 地址操作
-// export let receiverlApi = new Api('receivers','id')
-// integralApi.create().then(re)
-// integralApi.delete().then(re)
-
 export let integralApi = new Api('account','id',{
     account:{
         url: 'balance/CRD', // 积分查询
@@ -147,6 +142,7 @@ export let orderListApi = new Api('store/order/list','id',{
         method: 'get'    
     }, 
 })
+export let brandListApi = new Api ('brand/group/category','id')
 
 
 
