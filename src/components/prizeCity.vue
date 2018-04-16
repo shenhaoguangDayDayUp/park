@@ -171,6 +171,8 @@ export default {
           this.goods.push(element);
         }
         this.count = data.count;
+        console.log(data)
+        console.log(this.goods)
         // this.goods = data.items;
       } catch (err) {}
     },

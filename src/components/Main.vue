@@ -1,9 +1,9 @@
 <template>
     <div id="my">
         <div class="mainContent">
-            <Header title="我的主页" :isShow="true" >
+            <Header title="我的主页" :isShow="true">
                 <router-link to="./message" slot="right">
-                    <img src="../assets/img/xinxiaoxi.png" alt="" >
+                    <img src="../assets/img/xinxiaoxi.png" alt="">
                     <badge :text=unreadMsg v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
@@ -16,8 +16,8 @@
                     <div class="cell-logo">
                         <img data-v-48713cc3="" src="../assets/img/toux@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
-                            <span>{{userName}}</span>
-                            <span>{{mobileNumber}}</span>
+                            <span>{{list.userName}}</span>
+                            <span>{{list.mobileNumber}}</span>
                         </div>
                     </div>
                     <router-link to="/entity">
@@ -44,7 +44,7 @@
                 <div class="user-option-con mint-tabbar">
                     <div class="mint-tab-item" @click='viewPoint'>
                         <div class="mint-icon yue">
-                            <span>{{point}}</span>
+                            <span>{{list.point}}</span>
                         </div>
                         <div class="mint-tab-item-label">余额</div>
                     </div>
@@ -71,18 +71,21 @@
                     <div class="mint-tab-item">
                         <div class="mint-icon">
                             <img src="../assets/img/xinyuandan.png" alt="">
+                            <badge :text=wishList v-show="wishList"></badge>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
                     <div class="mint-tab-item">
                         <div class="mint-icon">
                             <img src="../assets/img/daifukuan.png" alt="">
+                            <badge :text=unpaid v-show="unpaid"></badge>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
                     <div class="mint-tab-item">
                         <div class="mint-icon">
                             <img src="../assets/img/daishouhuo.png" alt="">
+                        <badge :text=ungoods v-show="ungoods"></badge>
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
                     </div>
@@ -92,7 +95,7 @@
     </div>
 </template>
 <script>
-import Header from "./common/Header.vue";
+    import Header from "./common/Header.vue";
     import {
         XHeader,
         Badge
@@ -116,11 +119,16 @@ import Header from "./common/Header.vue";
         },
         data() {
             return {
-                point: '== ==',
                 isActive: false,
-                userName: '',
-                mobileNumber: '',
-                unreadMsg: ''
+                unreadMsg: '',
+                ungoods: '',
+                unpaid:'',
+                wishList:'',
+                list: {
+                    userName: '',
+                    mobileNumber: '',
+                    point: '== ==',
+                }
             };
         },
         mounted() {
@@ -160,8 +168,7 @@ import Header from "./common/Header.vue";
             },
             Api() {
                 const TOKEN = sessionStorage.getItem('TOKEN')
-                // 请求用户信息
-                loginApi.entity({}, {
+                loginApi.main({}, {
                     data: {},
                     headers: {
                         'x-auth-token': TOKEN
@@ -171,44 +178,17 @@ import Header from "./common/Header.vue";
                         data
                     } = res;
                     this.isActive = true;
-                    this.mobileNumber = data.mobileNumber;
-                    this.userName = data.name;
-                }).catch(error => {
-                    console.log(error.response.status)
-                });
-                // 请求积分信息
-                integralApi.account({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': TOKEN
-                    }
-                }).then(res => {
-                    const {
-                        headers,
-                        data
-                    } = res
-                    this.point = data
-                }).catch(error => {
-                    console.log(error)
-                });
-                // 请求未读消息数
-                getMsgApi.getMsg({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': TOKEN
-                    }
-                }).then(res => {
-                    const {
-                        data,
-                        status
-                    } = res
-                    if (status == 200) {
-                        if (data > 0) {
-                            this.unreadMsg = data;
-                        }
+                    this.unreadMsg = data['message.unread.count'];
+                    this.ungoods = data["order.process.count"],// 待收货
+                    this.unpaid = data[ "order.request.count"],// 待付款
+                    this.wishList = data['cart.item.count'],// 心愿单
+                    this.list = {
+                        userName: data['member.name'],
+                        mobileNumber: data['member.mobileNumber'],
+                        point:data['account.balance']
                     }
                 }).catch(error => {
-                    console.log(error)
+                    // console.log(error.response)
                 });
             }
         }
@@ -268,9 +248,9 @@ import Header from "./common/Header.vue";
     .mainContent {
         display: flex;
         flex-direction: column;
-        img{
-            width:36px;
-            height:35px;
+        img {
+            width: 36px;
+            height: 35px;
         }
     }
     .user-option {
