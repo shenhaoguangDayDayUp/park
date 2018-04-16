@@ -52,7 +52,7 @@
                 </router-link>
             </li>
         </ul>
-        <input type="file" accept="image/*" />调用相机 图片或者相册
+        <input type="file" accept="image/*" />
         <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
             退出登录
         </div>

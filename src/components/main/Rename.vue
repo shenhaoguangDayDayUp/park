@@ -1,7 +1,7 @@
 <template>
     <div class="rename">
         <Header title="修改用户昵称" :isShow="true"></Header>
-        <x-input title="" placeholder="" :min="2" :max="20" :value="name" :icon-type="iconType"></x-input>
+        <x-input title="" placeholder="" :min="2" :max="20" :icon-type="iconType" v-model="name"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
@@ -18,7 +18,7 @@
     import '../../style/btn.scss';
     import '../../style/isError.scss';
     import Header from '../common/Header'
-     import {
+    import {
         loginApi,
     } from '../../api/api';
     import {

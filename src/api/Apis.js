@@ -17,9 +17,8 @@ axios.interceptors.request.use(function (config) {
        })
     return config;
 }, function (error) {
-   
-    // Do something with request error
-    return Promise.reject(error);
+        return Promise.reject(error);
+    
 });
 axios.interceptors.response.use(function (response) {
     window.global.$vux.loading.hide()
