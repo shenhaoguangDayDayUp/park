@@ -7,9 +7,6 @@
                     <span>2018.04.03<span>充值提醒</span></span>
                 </router-link>
             </li>
-            <li>
-                <span>2018.04.03<span>充值提醒</span></span>
-            </li>
         </ul>
           <load-more v-if='loading' :tip="'正在加载'"></load-more>
     </div>

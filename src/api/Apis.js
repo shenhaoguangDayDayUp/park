@@ -22,21 +22,33 @@ axios.interceptors.request.use(function (config) {
 });
 axios.interceptors.response.use(function (response) {
     window.global.$vux.loading.hide()
-
-
- 
-
-
  return response;
 }, function (error) {
-    window.global.$vux.toast.show({
-        text: error.response.data,
-      });
-  window.global.$vux.loading.hide()
-
-return Promise.reject(error);
-});
-
+    switch (error.response.status) { //这里修改了，如果出现500/502之类的，页面弹框里会出现一大堆报错。
+        case 401:
+            window.global.$vux.toast.show({
+                text: error.response.data,
+            });
+            break;
+        case 456:
+            window.global.$vux.toast.show({
+                text: error.response.data,
+            });
+            break;
+        case 567:
+            window.global.$vux.toast.show({
+                text: error.response.data,
+            });
+            break;
+        default:
+            window.global.$vux.toast.show({ // 除去文档中的三种报错之外的东西全部报错'请求错误'
+                text: '请求错误!'
+            });
+            break;
+    }
+    window.global.$vux.loading.hide()
+    return Promise.reject(error);
+}); 
 
 
 /**
@@ -136,7 +148,6 @@ function send(url, data, otherOptions, method = 'get') {
             // if (!res.data) res.data = { code: 200 };
             resolve(res);
         }).catch(({ response }) => {
-            console.log(response)
             let { data } = response;
             if(response.status == '401'){
                 // 报401要重新去拿token,但必须要有账户和密码才能去自动登录。

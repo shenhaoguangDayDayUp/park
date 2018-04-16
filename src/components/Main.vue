@@ -268,6 +268,10 @@ import Header from "./common/Header.vue";
     .mainContent {
         display: flex;
         flex-direction: column;
+        img{
+            width:36px;
+            height:35px;
+        }
     }
     .user-option {
         background-color: #2F323B;

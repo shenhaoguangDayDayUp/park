@@ -21,7 +21,6 @@
         </div>
         {{areaValue}}
         {{getName(areaValue)}}
-        {{favShow}}
     </div>
 </template>
 <script>
@@ -86,7 +85,7 @@
                         this.userName = data.name;
                         this.mobileNumber = data.mobileNumber;
                         this.street = data.street;
-                        this.areaValue = [data.provinceID, data.cityID, data.districtID]
+                        this.areaValue = [data.province, data.city, data.district]
                     } else {
                         this.isError = '出现异常!请重试!'
                     }
