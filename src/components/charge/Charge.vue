@@ -1,38 +1,62 @@
 <template>
-    <div class="charge">
-        <Header title="在线充值" :isShow='true'></Header>
-        <div class="content">
-            <div class="price">
-                <div class="price-bar"></div>
-                <div class="title">请选择购买金额</div>
-            </div>
-            <div class="price-list">
-                <div @click='priceClick(index)'
-                     v-for="(items,index) in priceList"
-                     :class="['item',items.selected?'item-active':'']"
-                     :key=index>{{items.price }}元</div>
-            </div>
-            <div class="price">
-                <div class="price-bar"></div>
-                <div class="title">请选择支付方式</div>
-            </div>
-            <div class="price-list">
-                <div @click='payClick(index)'
-                     v-for="(items,index) in payList"
-                     :class="['item-pay',items.selected?'item-pay-active':'']"
-                     :key=index>{{items.title }}</div>
-            </div>
-            <div class="next">
-                <div class="btn">下一步</div>
-            </div>
-        </div>
-
+  <div class="charge">
+    <Header title="在线充值"
+            :isShow='true'></Header>
+    <div class="content">
+      <div class="price">
+        <div class="price-bar"></div>
+        <div class="title">请选择购买金额</div>
+      </div>
+      <div class="price-list">
+        <div @click='priceClick(index)'
+             v-for="(items,index) in priceList"
+             :class="['item',items.selected?'item-active':'']"
+             :key=index>{{items.price }}元</div>
+      </div>
+      <div class="price">
+        <div class="price-bar"></div>
+        <div class="title">请选择支付方式</div>
+      </div>
+      <div class="price-list">
+        <div @click='payClick(index)'
+             v-for="(items,index) in payList"
+             :class="['item-pay',items.selected?'item-pay-active':'']"
+             :key=index>{{items.title }}</div>
+      </div>
+      <div class="next"
+           @click='gotoCharge'>
+        <div class="btn">下一步</div>
+      </div>
     </div>
+
+  </div>
 </template>
 <script>
 import Header from "@/components/common/Header.vue";
+import { transactionsApi } from "@/api/api";
+import { common } from "@/logic";
 export default {
   methods: {
+    async gotoCharge() {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      var list = this.priceList.filter(item => item.selected);
+      try {
+        const { data } = await transactionsApi.recharge(
+          { method: "ALIPAY_PAGE", amount: list[0].price },
+          token
+        );
+        const div = document.createElement("div");
+        div.innerHTML = data.note;
+        document.body.appendChild(div);
+        document.forms.punchout_form.submit();
+      } catch (error) {
+             this.$vux.toast.show({
+          text: error
+        });
+      }
+    },
     payClick(idx) {
       this.payList.filter((item, index) => {
         if (index == idx) {
@@ -159,21 +183,21 @@ export default {
         border: 0 !important;
       }
     }
-    .next{
-        margin-top: 50px;
-        display: flex;
-        flex-direction: row;
-        height: 80px;
-        text-align: center;
-        .btn{
-            height: 100%;
-            line-height: 80px;
-            flex: 1;
-            background: #ffcb16;
-            border-radius: 10px;
-            font-size: 28px;
-            color: #000000
-        }
+    .next {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: row;
+      height: 80px;
+      text-align: center;
+      .btn {
+        height: 100%;
+        line-height: 80px;
+        flex: 1;
+        background: #ffcb16;
+        border-radius: 10px;
+        font-size: 28px;
+        color: #000000;
+      }
     }
   }
 }

@@ -22,7 +22,8 @@ import { mapGetters } from 'vuex'
   },
    components: {
      Loading
-   }
+   },
+   
  }
 </script>
 
