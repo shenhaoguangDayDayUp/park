@@ -184,7 +184,7 @@
                     this.wishList = data['cart.item.count'],// 心愿单
                     this.list = {
                         userName: data['member.name'],
-                        mobileNumber: data['member.mobileNumber'],
+                        mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
                         point:data['account.balance']
                     }
                 }).catch(error => {
@@ -337,6 +337,9 @@
                 height: 100%;
             }
         }
+        // .vux-badge{
+        //     bac
+        // }
     }
 </style>
 

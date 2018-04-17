@@ -3,10 +3,10 @@
         <Header title="消息清单" :isShow="true"></Header>
         <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
             <li v-for="(v,i) in msgsList" :key="i" >
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if = (!v.readAt) style="color:#fff;">
+                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if = (!v.readAt) style="color:#ffcb16;">
                     <span>{{v.sendAt}}<span>{{v.title}}</span></span>
                 </router-link>
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#ffcb16;"  v-else>
+                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;"  v-else>
                     <span>{{v.sendAt}}<span>{{v.title}}</span></span>
                 </router-link>
             </li>
