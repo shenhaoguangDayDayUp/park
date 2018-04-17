@@ -30,3 +30,16 @@
   .vux-divider{
     color: white !important;
   }
+  .weui-toast{
+    top:40% !important;
+    .weui-icon_toast.weui-loading{
+      margin: 40px 0 0 !important; 
+    }
+    .weui-toast__content{
+      font-size:25px !important; 
+    }
+    .weui-icon_toast.weui-loading{
+      width:50px;
+      height:50px;
+    }
+  }

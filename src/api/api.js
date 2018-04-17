@@ -153,11 +153,17 @@ export let transactionsApi = new Api('account','id',{
         url:'balance/CRD',
         method: 'get'  
     },
-    recharge:{
+    recharge:{ //充值
         url:'recharge',
         method: 'post'  
-    }
+    },
+    successCharge:{//完成充值
+        url:'recharge/{id}',
+        method: 'put'  
+    },
+    
 })
+
 
 
 

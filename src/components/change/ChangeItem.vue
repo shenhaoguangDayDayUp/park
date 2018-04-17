@@ -2,7 +2,7 @@
     <div class="change-item">
         <div>{{item.updateAt|dateFilter}}</div>
          <div>{{item.note}}</div>
-          <div>{{item.type}}</div>
+          <div>{{item.type|recordStatus}}</div>
            <div>{{item.amount}}</div>
     </div>
 </template>
