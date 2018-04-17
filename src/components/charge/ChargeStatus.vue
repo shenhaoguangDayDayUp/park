@@ -1,6 +1,6 @@
 <template>
     <div class="change-status">
-        <Header title='在线充值'></Header>
+        <!-- <Header title='在线充值'></Header> -->
         <div class="content">
             <img v-if='status'  src="../../assets/img/chongzhichengong@1x.png"
                  alt="">
