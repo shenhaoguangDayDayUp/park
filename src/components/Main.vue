@@ -68,21 +68,21 @@
                 </div>
                 <!-- <hr/> -->
                 <div class="user-option-con mint-tabbar">
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item" @click='$router.push({path:"/heart/list"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/xinyuandan.png" alt="">
                             <badge :text=wishList v-show="wishList"></badge>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item"  @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daifukuan.png" alt="">
                             <badge :text=unpaid v-show="unpaid"></badge>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
-                    <div class="mint-tab-item">
+                    <div class="mint-tab-item"  @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daishouhuo.png" alt="">
                         <badge :text=ungoods v-show="ungoods"></badge>
