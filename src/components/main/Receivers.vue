@@ -18,8 +18,8 @@
                 </div>
                 <div class="receiversUpdate">
                     <span @click="chooseFav(v.code)">
-                                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
-                                        </span>
+                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
+                    </span>
                     <div>
                         <router-link :to="{path:'/receiversUpdate',query: {code: v.code}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
                         <span @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt="">删除</span>
