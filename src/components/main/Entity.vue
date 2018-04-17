@@ -1,6 +1,6 @@
 <template>
     <div class="entity">
-         <Header title="会员信息" :isShow="true"></Header>
+        <Header title="会员信息" :isShow="true"></Header>
         <ul class="messList">
             <li class="logoIcon">
                 <span>头像</span>
@@ -9,12 +9,12 @@
                 </router-link>
                 <span></span>
             </li>
-            <li>
+            <li @click.stop='$router.push({name:"Rename",query: {name: nickname}})'>
                 <span>昵称</span>
                 <span>{{nickname}}</span>
-                <router-link :to="{name:'Rename',query: {name: nickname}}">
+                <div class="right">
                     <div class="right-arrow"></div>
-                </router-link>
+                </div>
             </li>
         </ul>
         <ul class="messList">
@@ -26,40 +26,45 @@
             <li>
                 <span>手机号</span>
                 <span>{{mobileNumber}}</span>
-                <router-link to="./ReMessage">
-                    <div class="right-arrow"></div>
-                </router-link>
+                <span></span>
             </li>
             <li>
                 <span>身份证号</span>
-                <span>123456789123456</span>
+                <span>{{idCardNumber}}</span>
                 <span></span>
             </li>
         </ul>
         <ul class="messList">
-            <li>
-                <span>重置密码</span>
-                <span></span>
-                <router-link to="./password">
-                    <div class="right-arrow"></div>
-                </router-link>
-            </li>
-            <li>
+            <li @click.stop='$router.push({name:"Receivers"})'>
                 <span>收货地址</span>
                 <span></span>
-                <router-link to="./receivers">
+                <div class="right">
                     <div class="right-arrow"></div>
-                </router-link>
+                </div>
             </li>
         </ul>
-        <input  name="imgLocal" type='file' accept="image/*" @change="selectImg"/>
-        <div class="linshi" style="color:#fff;padding:10px;" @click="toLogout()">
-            退出登录
-        </div>
+        <ul class="messList">
+            <li @click.stop='$router.push({name:"Password"})'>
+                <span>重置密码</span>
+                <span></span>
+                <div class="right">
+                    <div class="right-arrow"></div>
+                </div>
+            </li>
+        </ul>
+        <ul class="messList" style="margin-top:100px;">
+            <li @click="toLogout(e)" style="display:flex;
+    align-items:center;
+    justify-content:center;">
+                退出登录
+            </li>
+        </ul>
+        <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
     </div>
 </template>
 <script>
-     import Header from '../common/Header'
+    import Header from '../common/Header'
+    import axios from 'axios'
     import {
         user
     } from '@/logic'
@@ -75,7 +80,8 @@
             return {
                 userName: '',
                 mobileNumber: '',
-                nickname:''
+                nickname: '',
+                idCardNumber: ''
             }
         },
         mounted() {
@@ -91,9 +97,10 @@
                 const {
                     data
                 } = res;
-                this.mobileNumber = data.mobileNumber;
+                this.mobileNumber = data.mobileNumber.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
                 this.userName = data.name;
                 this.nickname = data.nickname;
+                this.idCardNumber = data.idCardNumber;
             }).catch(error => {
                 // console.log(error.response.status)
             });
@@ -124,8 +131,36 @@
                 });
             },
             // 更改头像
-            selectImg(){
-                alert(1)
+            selectImg(e) {
+                // console.log(e)
+                // const TOKEN = sessionStorage.getItem('TOKEN')
+                // let imgFile = e.srcElement.files[0]; //取到上传的图片
+                // console.log(imgFile); 
+                // let formData = new FormData(); //通过formdata上传
+                // formData.append('avatar', imgFile);
+                // axios.post('/api/gateway/mobile/member/avatar', , {
+                //     method: 'post',
+                //     headers: {
+                //         'Content-Type': 'form-data',
+                //         'x-auth-token': TOKEN
+                //     }
+                // }).then(function(res) {
+                //     console.log(res); //
+                // }).catch(function(error) {
+                //     console.log(error);
+                // })
+                // loginApi.avatar({},
+                // {
+                //     data: formData,
+                //     headers: {
+                //         'x-auth-token': TOKEN,
+                //         'Content-Type': 'form-data',
+                //     }
+                // }).then(function(res) {
+                //     console.log(res); //
+                // }).catch(function(error) {
+                //     console.log(error);
+                // })
             }
         }
     }
@@ -160,7 +195,7 @@
                 span:nth-child(3) {
                     width: 10%;
                 }
-                a {
+                .right {
                     width: 10%;
                     height: 100%;
                     line-height: 92px;
@@ -190,6 +225,10 @@
                     line-height: 119px;
                     width: 65%;
                     text-align: right;
+                    img{
+                        height:92px;
+                        width:92px;
+                    }
                 }
                 span {
                     line-height: 119px;

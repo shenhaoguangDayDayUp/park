@@ -9,7 +9,7 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active" @click=rename()>
-                立&nbsp;即&nbsp;修&nbsp;改
+                保&nbsp;存
             </div>
         </div>
     </div>
@@ -86,9 +86,11 @@
     .rename {
         .vux-x-input.weui-cell {
             height: 92px;
-            background: #2a2d36;
+            // background: #2a2d36;
             font-size: 30px;
-            padding-left: 23px;
+            margin: 0 23px;
+            // margin: 0 82px 0 78px;
+            border-bottom:1px solid #fff;
         }
         .vux-x-input.weui-cell:before {
             border: none;

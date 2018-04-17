@@ -58,6 +58,10 @@ export let loginApi = new Api('member','id',{
     nickname:{
         url:'nickname', // 修改昵称
         method:'put'
+    },
+    avatar:{
+        url:'avatar',// 头像
+        method:'post'
     }
 })
 

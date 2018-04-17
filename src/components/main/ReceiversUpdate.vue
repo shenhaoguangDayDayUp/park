@@ -37,8 +37,8 @@
           </div>
           <x-button type="primary" @click.native="rcvrSubmit">保存</x-button>
         </div>
-        {{areaValue}}
-        {{getName(areaValue)}}
+        <!-- {{areaValue}}
+        {{getName(areaValue)}} -->
     </div>
 </template>
 <script>
@@ -104,6 +104,8 @@ export default {
             this.mobileNumber = data.mobileNumber;
             this.street = data.street;
             this.areaValue = [data.provinceID, data.cityID, data.districtID];
+            // this.addressData = [data.province,data.city,data.district]
+            console.log(this.addressData)
           } else {
             this.isError = "出现异常!请重试!";
           }

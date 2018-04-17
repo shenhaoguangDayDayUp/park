@@ -151,11 +151,13 @@
         background-color: #23262b;
         height: 100%;
         color: #fff;
+        // margin-bottom:94px;
         .receiversList {
             li {
-                box-sizing: inherit;
-                height: 288px;
+                // box-sizing: inherit;
+                // height: 288px;
                 padding: 23px;
+                padding-bottom:0;
                 background: #2a2d36;
                 font-size: 30px;
                 margin-bottom: 20px;
@@ -188,6 +190,7 @@
         }
         .btn {
             margin: 71px 82px 0 78px;
+            margin-bottom:94px;
         }
     }
 </style>
