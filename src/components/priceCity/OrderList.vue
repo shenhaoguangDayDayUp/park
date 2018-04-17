@@ -12,7 +12,8 @@
             <tab-item>待发货</tab-item>
             <tab-item>全部订单</tab-item>
         </tab>
-        <div v-infinite-scroll="loadMore"
+        <div>
+           <div v-infinite-scroll="loadMore"
              infinite-scroll-disabled="loading"
              infinite-scroll-distance="10">
             <div class="order-content" @click='$router.push({name:"order",query:{code:item.code}})'
@@ -38,6 +39,8 @@
         <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
            
         </div>
+        </div>
+       
         
     </div>
 </template>
@@ -139,6 +142,9 @@ export default {
   background: #23262b;
   height: 100%;
   box-sizing: border-box;
+  .order-scoller{
+    min-height: 80%;
+  }
   .nav-bar {
     font-size: 34px;
     display: flex;

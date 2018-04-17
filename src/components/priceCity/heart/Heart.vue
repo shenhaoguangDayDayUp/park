@@ -1,7 +1,7 @@
 <template>
   <div class="heart">
     <Header title="心愿单" :isShow="true"></Header>
-    <HeartGrop>
+    <HeartGrop class='heart-group'>
       <TableviewCell ref='cell'
                      v-for="(item,index) in list"
                      :key='index'
@@ -276,6 +276,9 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
+  // .heart-group{
+  //   padding-bottom:122px;
+  // }
 }
 </style>
 
