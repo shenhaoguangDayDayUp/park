@@ -41,8 +41,8 @@ axios.interceptors.response.use(function (response) {
             });
             break;
         default:
-            window.global.$vux.toast.show({ // 除去文档中的三种报错之外的东西全部报错'请求错误'
-                text: '请求错误!'
+            window.global.$vux.toast.show({ // 除去文档中的三种报错之外的东西全部报错'系统错误!稍后重试!'
+                text: '系统错误!稍后重试!'
             });
             break;
     }

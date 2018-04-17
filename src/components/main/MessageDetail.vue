@@ -1,15 +1,13 @@
 <template>
     <div class="messageDetail">
-         <Header title="消息详情" :isShow="true"></Header>
+        <Header title="消息详情" :isShow="true"></Header>
         <ul class="messList">
-            <li>
+            <li >
                 <div class="listHeader">
-                    <router-link to="./messageDetail">
-                        <span>2018.04.03<span>充值提醒</span></span>
-                    </router-link>
+                    <span>{{msgDetail.sendAt}}<span>{{msgDetail.title}}</span></span>
                 </div>
                 <div class="listContent">
-                    大家我二姐佛i加多少积分发 的剑法开发接口撒地方就爱上了对方就 地方静安寺附近阿里山扩大飞机啊可是大家
+                    {{msgDetail.content}}
                 </div>
             </li>
         </ul>
@@ -20,13 +18,51 @@
     import {
         XHeader
     } from 'vux'
+    import {
+        getMsgApi
+    } from "@/api/api";
     export default {
         name: "messageDetail",
         components: {
             Header
         },
         data() {
-            return {};
+            return {
+                msgDetail:{},
+            };
+        },
+        mounted() {
+            this.getList();
+        },
+        methods: {
+            getList() {
+                const TOKEN = sessionStorage.getItem('TOKEN');
+                getMsgApi.msgDetail({
+                    id: this.$route.query.id,
+                }, {
+                    data: {},
+                    headers: {
+                        'x-auth-token': TOKEN
+                    }
+                }).then(res => {
+                    this.loading = false;
+                    const {
+                        data
+                    } = res;
+                    data.sendAt = this.timeStamp(data.sendAt);
+                    this.msgDetail = data;
+                }).catch(error => {})
+            },
+            timeStamp(t) {
+                var date = new Date(t);
+                const Y = date.getFullYear() + '-';
+                const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                const D = date.getDate() + ' ';
+                const h = date.getHours() + ':';
+                const m = date.getMinutes() + ':';
+                const s = date.getSeconds();
+                return (Y + M + D + h + m + s);
+            }
         }
     };
 </script>

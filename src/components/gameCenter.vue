@@ -13,7 +13,7 @@
       <ul class="gameListCont">
         <li v-for="(vv,ii) in v" :key='ii'>
           <img :src="vv.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: vv.name}})'>
-          <span>{{vv.name}}</span>
+          <div>{{vv.name}}</div>
         </li>
       </ul>
     </div>
@@ -78,17 +78,24 @@
         ]
       };
     },
+    mounted(){
+
+    },
+    methods:{
+
+    }
   };
 </script>
 <style lang="scss" scoped>
   .gameCenter {
     color: #fff;
+    margin-bottom:94px;
     img {
       width: 100%;
       height: 100%;
     }
     .banner {
-      width: 750px;
+      width: 100%;
       height: 330px;
     }
     .gameList {
@@ -103,17 +110,22 @@
         }
       }
       ul.gameListCont {
-        padding: 0 27px 0 28px;
+        // padding: 0 27px 0 28px;
         display: flex;
+        display: -webkit-flex;
         justify-content: flex-start;
         flex-wrap: wrap;
+        box-sizing: border-box;
         li {
-          width: 140px;
+          // width: 140px;
+          width:25%;
           margin-bottom:55px;
           text-align: center;
-          margin-right:45px;
+          // margin-right:45px;
+          box-sizing: border-box;
           img {
             height: 140px;
+            width:140px;
             margin-bottom:24px;
           }
           span {
@@ -122,13 +134,13 @@
             text-align: center;
           }
         }
-        li:nth-child(4n){
-          margin-right:0;
-        }
+        // li:nth-child(4n){
+        //   margin-right:0;
+        // }
       }
     }
     .gameList:last-child{
-      margin-top:-52px; // -55+3
+      margin-top:-55px; // -55+3
     }
   }
 </style>

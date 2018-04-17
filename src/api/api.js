@@ -23,6 +23,10 @@ export let loginApi = new Api('member','id',{
         url:'entity/session', // 会员详情
         method: 'get',
     },
+    main:{
+        url:'main', //'我的'页面请求
+        method:'get',
+    },
     receivers:{
         url:'receivers', // 收货地址
         method:'get'
@@ -73,6 +77,14 @@ export let getMsgApi = new Api('message/','id',{
     getMsg:{
         url:'size/unread', // 未读消息数量
         method: 'get',
+    },
+    msgList:{
+        url:'list/{id}',// 消息列表
+        method:'get'
+    },
+    msgDetail:{
+        url:'entity/{id}',// 消息详情
+        method:'get'
     }
 })
 //商品首页相关
