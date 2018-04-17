@@ -57,5 +57,24 @@ Vue.filter('orderStatus', val => {
       "CANCEL": "取消",
   }[val]
 })
+Vue.filter('recordStatus', val => {
+  return {
+      "BONUS": "赠送",
+      "PAYMENT": "消费",
+      "PAYOUT": "奖金",
+      "RECHARGE": "充值",
+  }[val]
+})
+
 
 Vue.prototype.$orderStatus = Vue.filter('orderStatus');
+Vue.prototype.$recordStatus = Vue.filter('recordStatus');
+
+String.prototype.queryParameters = function () {
+  var obj = {};
+  var reg = /([^?=&]+)=([^?=&]+)/g;
+  this.replace(reg, function () {
+      obj[arguments[1]] = arguments[2];
+  });
+  return obj;
+}

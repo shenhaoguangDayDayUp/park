@@ -63,10 +63,10 @@
                        :key="index"
                        tag="a">
             <div class="list_item_imgBox">
-              <img class="list_logo"
-                   src="static/img/list_logo.png">
+              <!-- <img class="list_logo"
+                   src="static/img/list_logo.png"> -->
               <img class="list_img"
-                   :src="item.url">
+                   :src="item.imagePath">
             </div>
             <div class="list_item_title">
               {{item.name}}
@@ -146,11 +146,12 @@ export default {
     };
   },
   mounted() {
+  
     this.getList();
   },
   methods: {
     needData(data) {
-      console.log(1111111);
+
     },
     loadBottom() {
       // this.allLoaded = true;

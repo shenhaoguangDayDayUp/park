@@ -13,7 +13,7 @@ let axios = Axios.create({
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     window.global.$vux.loading.show({
-        text: 'Loading'
+        text: '正在加载....'
        })
     return config;
 }, function (error) {

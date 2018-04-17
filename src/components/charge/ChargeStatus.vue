@@ -1,11 +1,14 @@
 <template>
     <div class="change-status">
-        <Header title='在线充值'></Header>
+        <!-- <Header title='在线充值'></Header> -->
         <div class="content">
-            <img src="../../assets/img/chongzhichengong@1x.png"
+            <img v-if='status'  src="../../assets/img/chongzhichengong@1x.png"
+                 alt="">
+           <img v-else  src="../../assets/img/chongzhishibai@1x.png"
                  alt="">
                  <!--取消 chongzhishibai@1x -->
-            <div class="message-tip">恭喜您,充值成功!</div>
+            <div v-if='status' class="message-tip">恭喜您,充值成功!</div>
+            <div v-else class="message-tip">很抱歉,充值失败!</div>
         </div>
         <div class="button-box">
             <div class="game-center-button">游戏厅</div>
@@ -16,9 +19,40 @@
 </template>
 <script>
 import Header from "@/components/common/Header.vue";
+import {transactionsApi} from '@/api/api'
+import { common } from "@/logic";
 export default {
   components: {
     Header
+  },
+  computed:{
+    status(){
+      return window.location.hash.queryParameters().trade_status == 'TRADE_SUCCESS'?true:false
+    }
+  },
+  mounted(){
+    this.$nextTick(res=>{
+      if(this.status){
+          this.rechargeCallBack()
+      }
+    
+    })
+  },
+  methods: {
+     async rechargeCallBack(){
+       try {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+         var code =  window.location.hash.queryParameters().out_trade_no
+            await  transactionsApi.successCharge({id:code},token)
+           
+       } catch (error) {
+         alert(error)
+       }
+       
+     
+      }
   }
 };
 </script>

@@ -1,6 +1,8 @@
 <template>
     <div class="rigth-item">
-         <div class="right-img"></div>
+         <div class="right-img">
+             <img :src="item.product.imagePath" alt="">
+         </div>
          <div class="left-content">
              <div class="content">
                  {{item.product.name}}
@@ -49,7 +51,13 @@ export default {
         margin-right:30px;
         width: 198px;
         height: 198px;
-        background: red
+        // background: red
+        img{
+           width: 100%;
+           height: 100%;
+        }
+    
+
     }
     .left-content{
         font-size: 27px;

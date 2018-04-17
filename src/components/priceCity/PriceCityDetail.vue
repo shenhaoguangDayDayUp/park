@@ -164,6 +164,8 @@ export default {
       position: absolute;
       top: 40px;
       left: 20px;
+      width: 20px;
+      height: 20px;
     }
   }
   .goods-detail-title {
