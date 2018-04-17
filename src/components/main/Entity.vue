@@ -4,9 +4,11 @@
         <ul class="messList">
             <li class="logoIcon">
                 <span>头像</span>
-                <router-link to="./messageDetail">
-                    <img data-v-48713cc3="" src="../../assets/img/touxiang2@2x.png" height="60" width="60">
-                </router-link>
+                <!-- <router-link to="./messageDetail"> -->
+                <span>
+                        <img data-v-48713cc3="" src="../../assets/img/touxiang2@2x.png" height="60" width="60">
+                    </span>
+                <!-- </router-link> -->
                 <span></span>
             </li>
             <li @click.stop='$router.push({name:"Rename",query: {name: nickname}})'>
@@ -54,15 +56,23 @@
         </ul>
         <ul class="messList" style="margin-top:100px;">
             <li @click="toLogout(e)" style="display:flex;
-    align-items:center;
-    justify-content:center;">
+        align-items:center;
+        justify-content:center;">
                 退出登录
             </li>
         </ul>
         <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
+        <!-- <vue-core-image-upload class="btn btn-primary" 
+         :crop="false"
+         @imageuploaded="imageuploaded"  
+         :max-file-size="5242880" 
+         :data="data"
+         url="/api/member/avatar">
+        </vue-core-image-upload> -->
     </div>
 </template>
 <script>
+    import VueCoreImageUpload from 'vue-core-image-upload';
     import Header from '../common/Header'
     import axios from 'axios'
     import {
@@ -74,14 +84,17 @@
     export default {
         name: "entity",
         components: {
-            Header
+            Header,
+            'vue-core-image-upload': VueCoreImageUpload,
         },
         data() {
             return {
                 userName: '',
                 mobileNumber: '',
                 nickname: '',
-                idCardNumber: ''
+                idCardNumber: '',
+                src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
+                data:sessionStorage.getItem('TOKEN'),
             }
         },
         mounted() {
@@ -132,23 +145,23 @@
             },
             // 更改头像
             selectImg(e) {
-                // console.log(e)
-                // const TOKEN = sessionStorage.getItem('TOKEN')
-                // let imgFile = e.srcElement.files[0]; //取到上传的图片
-                // console.log(imgFile); 
-                // let formData = new FormData(); //通过formdata上传
-                // formData.append('avatar', imgFile);
-                // axios.post('/api/gateway/mobile/member/avatar', , {
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type': 'form-data',
-                //         'x-auth-token': TOKEN
-                //     }
-                // }).then(function(res) {
-                //     console.log(res); //
-                // }).catch(function(error) {
-                //     console.log(error);
-                // })
+                console.log(e)
+                const TOKEN = sessionStorage.getItem('TOKEN')
+                let imgFile = e.srcElement.files[0]; //取到上传的图片
+                console.log(imgFile);
+                let formData = new FormData(); //通过formdata上传
+                formData.append('avatar', imgFile);
+                axios.post('/api/member/avatar', formData, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'form-data',
+                        'x-auth-token': TOKEN
+                    }
+                }).then(function(res) {
+                    console.log(res); //
+                }).catch(function(error) {
+                    console.log(error);
+                })
                 // loginApi.avatar({},
                 // {
                 //     data: formData,
@@ -161,7 +174,13 @@
                 // }).catch(function(error) {
                 //     console.log(error);
                 // })
-            }
+            },
+            // imageuploaded(res) {
+            //     console.log(res)
+            //     if (res.errcode == 0) {
+            //         this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
+            //     }
+            // }
         }
     }
 </script>
@@ -225,9 +244,9 @@
                     line-height: 119px;
                     width: 65%;
                     text-align: right;
-                    img{
-                        height:92px;
-                        width:92px;
+                    img {
+                        height: 92px;
+                        width: 92px;
                     }
                 }
                 span {
