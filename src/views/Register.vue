@@ -248,7 +248,7 @@
 <style scoped lang="scss">
   @import '../style/myform.scss';
   .changepsd {
-    background-image: url("../assets/img/bg.png");
+    background-image: url("../assets/img/bg.jpg");
     color: #fff;
     height: 100%;
   }

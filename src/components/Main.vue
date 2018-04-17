@@ -337,11 +337,16 @@
                 height: 100%;
             }
         }
-        // .vux-badge{
-        //     bac
-        // }
     }
 </style>
+<style lang="scss">
+#mytab{
+.vux-badge{
+    backgroud:transparent;
+}
+}
+</style>
+
 
 
 

@@ -33,4 +33,5 @@ import { mapGetters } from 'vuex'
   }
  
 </style>
+
  

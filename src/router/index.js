@@ -117,6 +117,11 @@ const route =new Router({
       component: () => import('@/components/main/ReMessage'),
     },
     {
+      path: '/avatar',
+      name: 'Avatar',
+      component: () => import('@/components/main/avatar'),
+    },
+    {
       path: '/charge',
       name: 'charge',
       component: () => import('@/components/charge/Charge.vue'),
