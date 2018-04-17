@@ -1,9 +1,9 @@
 <template>
     <div class="change-item">
-        <div>{{item.updateAt|dateFilter}}</div>
-         <div>{{item.note}}</div>
-          <div>{{item.type|recordStatus}}</div>
-           <div>{{item.amount}}</div>
+        <div class="item-time">{{item.updateAt|dateFilter}}</div>
+         <div class="item">{{item.note}}</div>
+          <div class="item">{{item.type|recordStatus}}</div>
+           <div class="item">{{item.amount}}</div>
     </div>
 </template>
 <script>
@@ -29,6 +29,14 @@ export default {
         justify-content: space-between;
         height: 87px;
         border-bottom: 2px solid #323540;
+        .item-time{
+            width: 40%;
+           text-align: center;
+        }
+        .item{
+            flex: 1;
+            text-align: center;
+        }
     }
 </style>
 
