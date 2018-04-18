@@ -5,19 +5,28 @@
     <div class="banner">
       <img src="../assets/img/banner.png" alt="">
     </div>
-    <div class="gameList" v-for="(v,i) in gameList" :key='i'>
+    <div class="gameList" >
       <div class="gameListTitle">
-        <span v-if="i == 0">为您推荐</span>
-        <span v-if="i == 1">全部游戏</span>
+        <span>为您推荐</span>
       </div>
       <ul class="gameListCont">
-        <li v-for="(vv,ii) in v" :key='ii'>
-          <img :src="vv.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: vv.name}})'>
-          <div>{{vv.name}}</div>
+        <li v-for="(v,i) in rcmList" :key='i'>
+          <img :src="v.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <div>{{v.name}}</div>
         </li>
       </ul>
     </div>
-    
+    <div class="gameList wholeGame">
+      <div class="gameListTitle">
+        <span>全部游戏</span>
+      </div>
+      <ul class="gameListCont">
+        <li v-for="(v,i) in gameList" :key='i'>
+          <img :src="v.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <div>{{v.name}}</div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -28,68 +37,59 @@
     },
     data() {
       return {
-        gameList: [
-          [{
-              url: '../static/game.png',
-              name: '欢乐花园',
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-          ],
-          [{
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-            {
-              url: '../static/game.png',
-              name: '欢乐花园'
-            },
-          ]
-        ]
+        // gameList: [
+        //   [{
+        //     url: '../static/game.png',
+        //     name: '欢乐花园',
+        //   }, ],
+        //   [{
+        //     url: '../static/game.png',
+        //     name: '欢乐花园'
+        //   }, ]
+        // ],
+        rtn:{},
+        rcmList: [],
+        gameList: [],
+        
       };
     },
-    mounted(){
-
+    mounted() {
+      this.rtn = {
+          "特别推荐": [{
+              "code": "180312000000014",
+              "status": "VALID",
+              "name": "激情足球"
+            },
+            {
+              "code": "180320000000015",
+              "status": "PAUSE",
+              "name": "鸟"
+            }
+          ],
+          "全部游戏": [{
+              "code": "180224000000002",
+              "status": "VALID",
+              "name": "赛马"
+            },
+            {
+              "code": "180224000000008",
+              "status": "VALID",
+              "name": "射箭"
+            },
+          ]
+        }
+        this.rcmList = this.rtn["特别推荐"];
+        this.gameList = this.rtn["全部游戏"];
+        console.log(this.rtn)
     },
-    methods:{
-
+    methods: {
     }
   };
 </script>
 <style lang="scss" scoped>
   .gameCenter {
     color: #fff;
-    margin-bottom:94px;
+    margin-bottom: 94px;
     img {
       width: 100%;
       height: 100%;
@@ -118,29 +118,27 @@
         box-sizing: border-box;
         li {
           // width: 140px;
-          width:25%;
-          margin-bottom:55px;
-          text-align: center;
-          // margin-right:45px;
+          width: 33.33333333333%;
+          margin-bottom: 55px;
+          text-align: center; // margin-right:45px;
           box-sizing: border-box;
           img {
-            height: 140px;
-            width:140px;
-            margin-bottom:24px;
+            height: 190px;
+            width: 190px;
+            margin-bottom: 24px;
           }
           span {
             font-size: 28px;
             width: 100%;
             text-align: center;
           }
-        }
-        // li:nth-child(4n){
+        } // li:nth-child(4n){
         //   margin-right:0;
         // }
       }
     }
-    .gameList:last-child{
-      margin-top:-55px; // -55+3
+    .gameList.wholeGame{
+      margin-top: -55px; // -55+3
     }
   }
 </style>

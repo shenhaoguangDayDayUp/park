@@ -2,14 +2,12 @@
     <div class="entity">
         <Header title="会员信息" :isShow="true"></Header>
         <ul class="messList">
-            <li class="logoIcon">
+            <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: "../../assets/img/touxiang2@2x.png"}})'>
                 <span>头像</span>
-                <!-- <router-link to="./messageDetail"> -->
                 <span>
-                        <img data-v-48713cc3="" src="../../assets/img/touxiang2@2x.png" height="60" width="60">
+    <img  :src= avatar height="60" width="60">
                     </span>
-                <!-- </router-link> -->
-                <span></span>
+                <span> </span>
             </li>
             <li @click.stop='$router.push({name:"Rename",query: {name: nickname}})'>
                 <span>昵称</span>
@@ -62,17 +60,9 @@
             </li>
         </ul>
         <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
-        <!-- <vue-core-image-upload class="btn btn-primary" 
-         :crop="false"
-         @imageuploaded="imageuploaded"  
-         :max-file-size="5242880" 
-         :data="data"
-         url="/api/member/avatar">
-        </vue-core-image-upload> -->
     </div>
 </template>
 <script>
-    import VueCoreImageUpload from 'vue-core-image-upload';
     import Header from '../common/Header'
     import axios from 'axios'
     import {
@@ -84,8 +74,7 @@
     export default {
         name: "entity",
         components: {
-            Header,
-            'vue-core-image-upload': VueCoreImageUpload,
+            Header
         },
         data() {
             return {
@@ -93,8 +82,7 @@
                 mobileNumber: '',
                 nickname: '',
                 idCardNumber: '',
-                src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
-                data:sessionStorage.getItem('TOKEN'),
+                avatar:''
             }
         },
         mounted() {
@@ -114,6 +102,7 @@
                 this.userName = data.name;
                 this.nickname = data.nickname;
                 this.idCardNumber = data.idCardNumber;
+                // this.avatar = /api/data.avatar;
             }).catch(error => {
                 // console.log(error.response.status)
             });
@@ -174,13 +163,7 @@
                 // }).catch(function(error) {
                 //     console.log(error);
                 // })
-            },
-            // imageuploaded(res) {
-            //     console.log(res)
-            //     if (res.errcode == 0) {
-            //         this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
-            //     }
-            // }
+            }
         }
     }
 </script>
@@ -240,10 +223,10 @@
             }
             li.logoIcon {
                 height: 119px;
-                a {
-                    line-height: 119px;
-                    width: 65%;
-                    text-align: right;
+                span {
+                    // line-height: 119px;
+                    // width: 65%;
+                    // text-align: right;
                     img {
                         height: 92px;
                         width: 92px;

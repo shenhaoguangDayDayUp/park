@@ -187,7 +187,7 @@ import Header from "@/components/common/Header.vue";
 <style lang="scss" scoped>
   @import '../style/myform.scss';
   .login {
-    background-image: url("../assets/img/bg.png");
+    background-image: url("../assets/img/bg.jpg");
     color: #fff;
     height: 100%;
   }

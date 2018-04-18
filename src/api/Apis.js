@@ -5,7 +5,7 @@ import {user} from '../logic';
 let baseUrl = $config.apiUrlPrefix[$config.env.NODE_ENV]
 
 let axios = Axios.create({
-    baseURL: baseUrl,
+    baseURL: baseUrl+'/gateway/mobile', // 因为后台返回图片地址没有/gateway/mobile而修改
     data:{},
     headers:{'Content-Type':'application/json'}
 })

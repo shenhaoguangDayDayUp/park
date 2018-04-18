@@ -180,6 +180,15 @@ export let transactionsApi = new Api('account','id',{
     
 })
 
+// 游戏相关
+export let gameApi = new Api('game','id',{
+    entity:{
+        url:'entity/{id}', // 游戏详情
+        method: 'get'
+    }
+    
+})
+
 
 
 

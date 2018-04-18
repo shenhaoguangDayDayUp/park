@@ -325,7 +325,7 @@
 <style lang="scss" scoped>
     @import '../style/myform.scss';
     .password {
-        background-image: url("../assets/img/bg.png");
+        background-image: url("../assets/img/bg.jpg");
         color: #fff;
         height: 100%;
         .normalTab {

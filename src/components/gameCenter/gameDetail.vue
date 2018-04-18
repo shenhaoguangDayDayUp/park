@@ -4,7 +4,7 @@
     <div class="gameTitle">
       <img class="gameImg" src="../../assets/img/qieshuiguo.png" alt="">
       <div class="gameRight">
-        <p>水果切切乐</p>
+        <p>{{showData.name}}</p>
         <p>放假啊打开JFK打算减肥了</p>
         <!-- 按钮 -->
         <div class="btn">
@@ -19,7 +19,7 @@
       <span class="winnerTitle">中奖榜</span>
     </div>
     <ul class="winnersList">
-      <li v-for ='(v,i) in winnersList' :key="i">
+      <li v-for='(v,i) in winnersList' :key="i">
         <span>{{v.mobileNumber}}</span>
         <span>{{v.money}}</span>
       </li>
@@ -29,6 +29,9 @@
 <script>
   import '../../style/btn.scss';
   import Header from "../common/Header.vue";
+  import {
+    gameApi
+  } from '../../api/api';
   import {
     Swiper
   } from 'vux';
@@ -51,38 +54,47 @@
     data() {
       return {
         demo01_list: baseList,
-        winnersList:[
-          {
-            mobileNumber:'177****5678',
-            money:'123,456'
+        winnersList: [{
+            mobileNumber: '177****5678',
+            money: '123,456'
           },
           {
-            mobileNumber:'177****5678',
-            money:'123,456'
+            mobileNumber: '177****5678',
+            money: '123,456'
           },
           {
-            mobileNumber:'177****5678',
-            money:'123,456'
+            mobileNumber: '177****5678',
+            money: '123,456'
           },
           {
-            mobileNumber:'177****5678',
-            money:'123,456'
+            mobileNumber: '177****5678',
+            money: '123,456'
           },
           {
-            mobileNumber:'177****5678',
-            money:'123,456'
+            mobileNumber: '177****5678',
+            money: '123,456'
           },
           {
-            mobileNumber:'177****5678',
-            money:'123,456'
+            mobileNumber: '177****5678',
+            money: '123,456'
           }
-        ]
+        ],
+        showData:{}
       };
+    },
+    mounted() {
+      this.getList()
     },
     methods: {
       demo01_onIndexChange(index) {
         this.demo01_index = index
       },
+      async getList() {
+      try {
+        const { data } = await gameApi.entity({id: this.$route.query.code});
+        this.showData = data;
+      } catch (err) {}
+    },
     }
   };
 </script>
@@ -120,15 +132,15 @@
         font-size: 30px; // margin-left: 24px;
       }
     }
-    .winnersList{
-      padding:0 12px 0 45px;
-      li{
+    .winnersList {
+      padding: 0 12px 0 45px;
+      li {
         display: flex;
         display: -webkit-flex;
         justify-content: space-between;
-        border-top:1px solid #4a4e5a;
-        span{
-          padding:27px 31px 24px 23px;
+        border-top: 1px solid #4a4e5a;
+        span {
+          padding: 27px 31px 24px 23px;
         }
       }
     }
