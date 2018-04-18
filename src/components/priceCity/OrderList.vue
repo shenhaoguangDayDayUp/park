@@ -34,9 +34,9 @@
                 </div>
             </div>
            </div>
-            <load-more v-if='loading'
+            <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
-        <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
+        <divider class="divider" v-if='noMoreData&&list.length'>我是有底线的</divider>
            
         </div>
         </div>

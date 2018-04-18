@@ -22,7 +22,7 @@
         <span class="icon"></span>
         <span class="title">热门推荐</span>
         <span class="icon"></span>
-        <span class="span">更多></span>
+        <!-- <span class="span">更多></span> -->
       </div>
       <div class="hot-box">
         <div class='hot'>
@@ -48,7 +48,7 @@
           <span class="icon"></span>
           <span class="title">全部商品</span>
           <span class="icon"></span>
-          <span class="span">更多></span>
+          <!-- <span class="span">更多></span> -->
         </div>
       </div>
       <div class="list-goods">
@@ -65,8 +65,7 @@
             <div class="list_item_imgBox">
               <!-- <img class="list_logo"
                    src="static/img/list_logo.png"> -->
-              <img class="list_img"
-                   :src="item.imagePath">
+              <img v-lazy="item.imagePath" class="list_img"/>
             </div>
             <div class="list_item_title">
               {{item.name}}
@@ -79,9 +78,9 @@
           </router-link>
 
         </div>
-        <load-more v-if='loading'
+        <load-more v-if='loading&&goods.length'
                    :tip="'正在加载'"></load-more>
-        <divider v-if='noMoreData'>我是有底线的</divider>
+        <divider v-if='noMoreData&&goods.length'>我是有底线的</divider>
         <br>
         <br>
       </div>

@@ -54,7 +54,7 @@
                     if(this.disX < 0 || this.disX == 0) {
                         // console.log('没有移动');
                         this.txtStyle = "transform:translateX(0rem);transition:0.5s;"+"-webkit-transform:translateX(0rem);-webkit-transition:0.5s;";
-                    }else if (this.disX > 0) {
+                    }else if (this.disX > 50) {
 
                         this.txtStyle = "transform:translateX(-" + this.disX/100 + "rem)";
                         if (this.disX >= this.delWidth/100) {
@@ -104,6 +104,8 @@
         height: 100%;
     }
     .deleteIcon{
+        border-top: 2px solid #23262b;
+        border-bottom: 2px solid #23262b;
         width: 2rem;
         height:100%;
         line-height: 100%;
@@ -114,6 +116,7 @@
         text-align: center;
         .deleteBtn{
             line-height: 258px;
+       
         }
         /* background:url(../assets/img/ic_minus.png) no-repeat;
         background-size: contain; */
