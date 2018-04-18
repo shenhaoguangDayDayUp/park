@@ -16,7 +16,11 @@ export let loginApi = new Api('member','id',{
         method: 'put' ,
     },
     reset:{
-        url:'password', // 修改密码
+        url:'password/update', // 重置密码
+        method:'put',
+    },
+    resetNo:{
+        url:'password/reset', // 忘记密码(不用token)
         method:'put',
     },
     entity:{

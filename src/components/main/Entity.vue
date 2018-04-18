@@ -44,7 +44,7 @@
             </li>
         </ul>
         <ul class="messList">
-            <li @click.stop='$router.push({name:"Password"})'>
+            <li @click.stop='$router.push({name:"Password",query:{title:"重置密码"}})'>
                 <span>重置密码</span>
                 <span></span>
                 <div class="right">

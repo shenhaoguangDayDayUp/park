@@ -30,7 +30,7 @@
                       </span> 
                       <span class="mint-checkbox-label">下次自动登录</span>
                   </label>
-          <router-link :to="{path:'/password',query: {code: 1}}">忘记密码</router-link>
+          <router-link :to="{path:'/password',query: {code: 1,title:'找回密码'}}">忘记密码</router-link>
         </div>
       <!-- 报错信息 -->
         <div class="isError" v-if="isError">
