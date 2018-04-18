@@ -2,10 +2,10 @@
   <div class="gameDetail">
     <Header :title="this.$route.query.name" :isShow="true"></Header>
     <div class="gameTitle">
-      <img class="gameImg" src="../../assets/img/qieshuiguo.png" alt="">
+      <img class="gameImg" :src= "'/api'+ showData.icon" alt="">
       <div class="gameRight">
         <p>{{showData.name}}</p>
-        <p>放假啊打开JFK打算减肥了</p>
+        <p>{{showData.description}}</p>
         <!-- 按钮 -->
         <div class="btn">
           <div class="redBtn active" @click=rename()>
@@ -35,17 +35,18 @@
   import {
     Swiper
   } from 'vux';
-  const baseList = [{
-    url: 'javascript:',
-    img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
-  }, {
-    url: 'javascript:',
-    img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-  }, {
-    url: 'javascript:',
-    img: 'https://static.vux.li/demo/5.jpg',
-    fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
-  }]
+  // const baseList = [{
+  //   url: 'javascript:',
+  //   img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
+  // }, {
+  //   url: 'javascript:',
+  //   img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
+  // }, {
+  //   url: 'javascript:',
+  //   img: 'https://static.vux.li/demo/5.jpg',
+  //   fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
+  // }]
+  const baseList = []
   export default {
     components: {
       Header,
@@ -79,7 +80,8 @@
             money: '123,456'
           }
         ],
-        showData:{}
+        showData:{},
+        demo01_index: 0,
       };
     },
     mounted() {
@@ -91,8 +93,14 @@
       },
       async getList() {
       try {
-        const { data } = await gameApi.entity({id: this.$route.query.code});
+        const { data } = await gameApi.gameDetail({id: this.$route.query.code});
         this.showData = data;
+        this.showData.banners = this.showData.banners.split(',');
+        for (let index = 0; index < this.showData.banners.length; index++) {
+          const element ={ url: 'javascript:',img:'/api'+this.showData.banners[index]};
+          baseList.push(element);
+        }
+        console.log(baseList)
       } catch (err) {}
     },
     }

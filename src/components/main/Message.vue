@@ -90,7 +90,6 @@
         components: {
             Header,
             LoadMore,
-            loading: false,
             Divider
         },
         directives: {

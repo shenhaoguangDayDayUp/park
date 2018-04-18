@@ -183,9 +183,17 @@ export let transactionsApi = new Api('account','id',{
 // 游戏相关
 export let gameApi = new Api('game','id',{
     entity:{
-        url:'entity/{id}', // 游戏详情
+        url:'list/all/{id}', // 全部游戏
         method: 'get'
-    }
+    },
+    rec:{
+        url:'list/recommendation',// 游戏推荐
+        method:'get'
+    },
+    gameDetail:{
+        url:'entity/{id}', // 全部游戏
+        method: 'get'
+    },
     
 })
 

@@ -2,16 +2,31 @@
     <div class="avatar">
         <Header title="我的头像" :isShow="true"></Header>
         <div class="imgCont">
-            <!-- <img :src="querySrc" alt="" height="60" width="60"> -->
-            <img  src="../../assets/img/touxiang2@2x.png">
+            <img :src="querySrc" alt="">
+            <!-- <img  src="../../assets/img/touxiang2@2x.png"> -->
         </div>
-        <vue-core-image-upload class="btn btn-primary" :crop="true" resize="local" inputOfFile='avatar' @imageuploaded="imageuploaded" :max-file-size="5242880" :headers="data" crop-ratio="1:1" text='修改头像' url="/api/member/avatar">
+        <vue-core-image-upload 
+        class="btn btn-primary" 
+        :crop="true" 
+        inputOfFile='avatar' 
+        @imageuploaded="imageuploaded" 
+        :max-file-size="1048576" 
+        :headers="data" 
+        text='修改头像' 
+        url="/api/gateway/mobile/member/avatar">
         </vue-core-image-upload>
+        <!-- <form name="imgForm" id="imgForm" enctype="multipart/form-data" action="图片上传接口" method='post'>
+            <input class="input-loc-img"  name="imgLocal" id="imgLocal" type='file' accept="image/*" @change="selectImg" />
+        </form>  -->
     </div>
 </template>
 <script>
     import Header from '../common/Header'
     import VueCoreImageUpload from 'vue-core-image-upload';
+    import {
+        loginApi,
+    } from '../../api/api';
+    import axios from 'axios'
     export default {
         name: 'Avatar',
         data() {
@@ -25,15 +40,32 @@
         },
         methods: {
             imageuploaded(res) {
-                console.log(res)
+               this.querySrc = '/api'+ res + '?r=' + new Date().getTime(); // 头像加时间戳
                 if (res.errcode == 0) {
                     this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
-                    
                 }
+            },
+             // 更改头像
+            selectImg(e) {
+                const TOKEN = sessionStorage.getItem('TOKEN')
+                let imgFile = e.srcElement.files[0]; //取到上传的图片
+                let formData = new FormData(); //通过formdata上传
+                formData.append('avatar', imgFile);
+                axios.post('/api/gateway/mobile/member/avatar', formData, {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'form-data',
+                        'x-auth-token': TOKEN
+                    }
+                }).then(function(res) {
+                    this.querySrc = res.data;
+                }).catch(function(error) {
+                    console.log(error);
+                })
             }
         },
         mounted() {
-            console.log(this.querySrc)
+            console.log(this.$route.query.src)
         },
         components: {
             'vue-core-image-upload': VueCoreImageUpload,

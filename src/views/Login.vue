@@ -30,7 +30,7 @@
                       </span> 
                       <span class="mint-checkbox-label">下次自动登录</span>
                   </label>
-          <a href="#/password">重置密码</a>
+          <router-link :to="{path:'/password',query: {code: 1}}">忘记密码</router-link>
         </div>
       <!-- 报错信息 -->
         <div class="isError" v-if="isError">
@@ -45,6 +45,8 @@
           登&nbsp;录
         </div>
       </div>
+      <!-- <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>        -->
+
     </div>
     <div class="toRegister" @click="toRegister">
       没有账号？
@@ -55,6 +57,7 @@
 
 <script>
 import Header from "@/components/common/Header.vue";
+import Submit from "@/components/common/Button.vue";
   // mint-ui
   import Vue from 'vue'
   import {
@@ -74,7 +77,8 @@ import Header from "@/components/common/Header.vue";
   export default {
     name: "Login",
     components:{
-      Header
+      Header,
+      Submit
     },
     data() {
       return {
@@ -90,7 +94,7 @@ import Header from "@/components/common/Header.vue";
         phone: '',
         choosen: true,
         tipActive: false,
-        errorTip: ''
+        errorTip: '',
       };
     },
     methods: {

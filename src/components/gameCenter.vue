@@ -5,7 +5,7 @@
     <div class="banner">
       <img src="../assets/img/banner.png" alt="">
     </div>
-    <div class="gameList" >
+    <div class="gameList">
       <div class="gameListTitle">
         <span>为您推荐</span>
       </div>
@@ -20,76 +20,93 @@
       <div class="gameListTitle">
         <span>全部游戏</span>
       </div>
-      <ul class="gameListCont">
+      <ul class="gameListCont" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <li v-for="(v,i) in gameList" :key='i'>
           <img :src="v.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
           <div>{{v.name}}</div>
         </li>
+        <load-more v-if='loading' :tip="'正在加载'"></load-more>
+        <divider v-if='noMoreData'>没有更多游戏了</divider>
       </ul>
     </div>
   </div>
 </template>
 <script>
   import Header from "./common/Header.vue";
+  import {
+    gameApi,
+  } from '../api/api';
+  import {
+    InfiniteScroll
+  } from "mint-ui";
+  import Vue from 'vue';
+  Vue.use(InfiniteScroll); // 使用Vue的分页
+  import {
+    LoadMore,
+    Divider
+  } from 'vux'
   export default {
-    components: {
-      Header
-    },
     data() {
       return {
-        // gameList: [
-        //   [{
-        //     url: '../static/game.png',
-        //     name: '欢乐花园',
-        //   }, ],
-        //   [{
-        //     url: '../static/game.png',
-        //     name: '欢乐花园'
-        //   }, ]
-        // ],
-        rtn:{},
+        loading: false,
         rcmList: [],
         gameList: [],
-        
+        count: 0,
+        page: 1,
+        noMoreData: false,
       };
     },
     mounted() {
-      this.rtn = {
-          "特别推荐": [{
-              "code": "180312000000014",
-              "status": "VALID",
-              "name": "激情足球"
-            },
-            {
-              "code": "180320000000015",
-              "status": "PAUSE",
-              "name": "鸟"
-            }
-          ],
-          "全部游戏": [{
-              "code": "180224000000002",
-              "status": "VALID",
-              "name": "赛马"
-            },
-            {
-              "code": "180224000000008",
-              "status": "VALID",
-              "name": "射箭"
-            },
-          ]
-        }
-        this.rcmList = this.rtn["特别推荐"];
-        this.gameList = this.rtn["全部游戏"];
-        console.log(this.rtn)
+      this.recList();
+      this.wholeList();
     },
     methods: {
-    }
+      async recList() {
+        try {
+          const {
+            data
+          } = await gameApi.rec();
+          this.rcmList = data
+        } catch (err) {}
+      },
+      async wholeList() {
+        this.loading = true;
+        try {
+          const {
+            data
+          } = await gameApi.entity({
+            id: this.page
+          });
+          this.loading = false;
+          for (let index = 0; index < data.records.length; index++) {
+            const element = data.records[index];
+            this.gameList.push(element);
+          }
+          this.count = data.count;
+        } catch (err) {}
+      },
+      loadMore() {
+        if (this.gameList.length >= this.count) { //当拉到底的时候
+          this.loading = false;
+          this.noMoreData = true;
+          return;
+        }
+        this.page += 1;
+        this.wholeList();
+      },
+    },
+    components: {
+      Header,
+      LoadMore,
+      loading: false,
+      Divider
+    },
   };
 </script>
 <style lang="scss" scoped>
   .gameCenter {
     color: #fff;
-    margin-bottom: 94px;
+    margin-bottom: 100px;
     img {
       width: 100%;
       height: 100%;
@@ -137,7 +154,7 @@
         // }
       }
     }
-    .gameList.wholeGame{
+    .gameList.wholeGame {
       margin-top: -55px; // -55+3
     }
   }

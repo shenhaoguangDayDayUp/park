@@ -2,8 +2,8 @@
     <div id="my">
         <div class="mainContent">
             <Header title="我的主页" :isShow="true">
-                <router-link to="./message" slot="right">
-                    <img src="../assets/img/xinxiaoxi.png" alt="">
+                <router-link to="./message" slot="right" class="msgWrap">
+                    <img src="../assets/img/xinxiaoxi.png"  alt="">
                     <badge :text=unreadMsg v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
@@ -14,7 +14,7 @@
             <div class="mint-cell mint-cell-wrapper">
                 <div class="mint-cell-title" v-if=isActive>
                     <div class="cell-logo">
-                        <img data-v-48713cc3="" src="../assets/img/toux@2x.png" height="60" width="60">
+                        <img :src = avatar height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>{{list.userName}}</span>
                             <span>{{list.mobileNumber}}</span>
@@ -128,7 +128,8 @@
                     userName: '',
                     mobileNumber: '',
                     point: '== ==',
-                }
+                },
+                avatar:''
             };
         },
         mounted() {
@@ -187,8 +188,8 @@
                         mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
                         point:data['account.balance']
                     }
+                    this.avatar = '/api'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
                 }).catch(error => {
-                    // console.log(error.response)
                 });
             }
         }
@@ -243,6 +244,16 @@
             height: 22px;
             transform: rotate(315deg);
             -webkit-transform: rotate(315deg);
+        }
+        .msgWrap{
+            position: relative;
+            .vux-badge{
+            position: absolute;
+            right:-5px;
+            top:-5px;
+            background: #000;
+            color:#fff;
+            }
         }
     }
     .mainContent {
@@ -342,7 +353,15 @@
 <style lang="scss">
 #mytab{
 .vux-badge{
-    backgroud:transparent;
+    background:#2F323B;
+    border-radius:100%;
+    border:1px solid #fff;
+    width:25px;
+    height:25px;
+    box-sizing:border-box;
+    line-height:25px;
+    text-align:center;
+    padding:0;
 }
 }
 </style>

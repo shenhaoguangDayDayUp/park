@@ -2,10 +2,10 @@
     <div class="entity">
         <Header title="会员信息" :isShow="true"></Header>
         <ul class="messList">
-            <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: "../../assets/img/touxiang2@2x.png"}})'>
+            <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: avatar}})'>
                 <span>头像</span>
                 <span>
-    <img  :src= avatar height="60" width="60">
+                    <img :src= avatar>
                     </span>
                 <span> </span>
             </li>
@@ -101,8 +101,8 @@
                 this.mobileNumber = data.mobileNumber.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
                 this.userName = data.name;
                 this.nickname = data.nickname;
-                this.idCardNumber = data.idCardNumber;
-                // this.avatar = /api/data.avatar;
+                this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
+                this.avatar = '/api'+ data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
             }).catch(error => {
                 // console.log(error.response.status)
             });

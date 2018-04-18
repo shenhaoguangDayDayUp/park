@@ -1,7 +1,7 @@
 <template>
     <div class="rename">
         <Header title="修改用户昵称" :isShow="true"></Header>
-        <x-input title="" placeholder="" :min="2" :max="20" :icon-type="iconType" v-model="name"></x-input>
+        <x-input title="" placeholder="请填写你的昵称" :min="2" :max="20" :icon-type="iconType" v-model="name"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>

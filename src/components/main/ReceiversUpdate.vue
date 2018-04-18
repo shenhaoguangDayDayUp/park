@@ -1,12 +1,13 @@
 <template>
     <div class="receiverUpdate">
-        <Header title="编辑收货地址"
+        <Header :title= rcvTitle
                 :isShow="true"></Header>
         <div class="addrForm">
             <x-input name="username"
                      placeholder="请输入姓名"
                      is-type="china-name"
                      :show-clear="false"
+                     :required = true
                      v-model="userName"
                      :icon-type="iconType"></x-input>
             <x-input name="mobile"
@@ -77,7 +78,8 @@ export default {
       mobileNumber: "",
       street: "",
       isError: "",
-      iconType: ""
+      iconType: "",
+      rcvTitle: this.$route.query.title,
     };
   },
   mounted() {
@@ -99,13 +101,11 @@ export default {
         .then(res => {
           let { status, data } = res;
           if (res.status == 200) {
-            console.log(res);
             this.userName = data.name;
             this.mobileNumber = data.mobileNumber;
             this.street = data.street;
             this.areaValue = [data.provinceID, data.cityID, data.districtID];
             // this.addressData = [data.province,data.city,data.district]
-            console.log(this.addressData)
           } else {
             this.isError = "出现异常!请重试!";
           }
@@ -124,7 +124,7 @@ export default {
           }
         });
     } else {
-      console.log("else");
+      // console.log("else");
     }
   },
   methods: {

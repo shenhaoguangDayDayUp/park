@@ -37,7 +37,7 @@ axios.interceptors.response.use(function (response) {
             break;
         case 567:
             window.global.$vux.toast.show({
-                text: error.response.data,
+                text: '系统错误!稍后重试!',
             });
             break;
         default:
@@ -162,10 +162,9 @@ function send(url, data, otherOptions, method = 'get') {
                         });
                 }else{
                     // console.log(401,401)
-                    window.global.$router.push({
-             
-                        path:'/login'
-                    })
+                    // window.global.$router.push({
+                    //     path:'/login'
+                    // })
                 }
             }else {
                 // reject(data); //报错信息在response里面,故返回response就好

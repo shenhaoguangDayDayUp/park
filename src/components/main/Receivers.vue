@@ -21,7 +21,7 @@
                         <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
                     </span>
                     <div>
-                        <router-link :to="{path:'/receiversUpdate',query: {code: v.code}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
+                        <router-link :to="{path:'/receiversUpdate',query: {code: v.code,title:'编辑收货地址'}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
                         <span @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt="">删除</span>
                     </div>
                 </div>
@@ -30,15 +30,18 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active">
-                <router-link to='/receiversUpdate'>添加一个新地址</router-link>
+                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址'}}">添加一个新地址</router-link>
             </div>
         </div>
+        <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
+        <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>       
     </div>
 </template>
 <script>
     import '../../style/isError.scss';
     import '../../style/btn.scss';
-    import Header from '../common/Header'
+    import Header from '../common/Header';
+    import Submit from '../common/Button';
     import {
         loginApi,
     } from '../../api/api';
@@ -47,14 +50,13 @@
     } from 'vux';
     export default {
         name: "Receivers",
-        components: {
-            Header,
-            CheckIcon
-        },
         data() {
             return {
                 isError: '',
                 List: [],
+                submit:'添加一个新地址',
+                disabled:true,
+                classes:'btn_disabled'
             };
         },
         mounted() {   
@@ -142,8 +144,17 @@
                 }).catch(error => {
                     console.log(error.response.status)
                 });
+            },
+            //去修改
+            addRcv(){
+                alert(2)
             }
-        }
+        },
+        components: {
+            Header,
+            CheckIcon,
+            Submit
+        },
     };
 </script>
 <style lang="scss" scoped>
