@@ -26,7 +26,7 @@
             <div class="content-list">
                 <div class="img-content">
                     <div class="content"  v-for="(items,keys) in item.items" :key='keys' v-if='keys<3'>
-             <img :src="items.product.imagePath" alt="">
+             <img v-lazy="items.product.imagePath" alt="">
                     </div>
                 </div>
                 <div class="content-right">

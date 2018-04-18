@@ -191,10 +191,17 @@ export default {
       this.checkAll();
     },
     async valueChange(item) {
-      console.log(item);
+        const product = this.list[item.index];
+          if(product.quantity == 1 && item.type == -1){
+          return  this.$vux.toast.show({
+              text:'不能再少了'
+            })
+          }
+          
+     
+     
       try {
         if (common.getCommon("TOKEN")) {
-          const product = this.list[item.index];
           var obj = { product: { code: product.code }, quantity: item.type };
           var token = {
             headers: { "x-auth-token": common.getCommon("TOKEN") }

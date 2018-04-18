@@ -2,7 +2,6 @@ import Vue from 'vue'
 const outside = Vue.directive('outside', {
     bind: function (el, { value }) {
         let onClickOutside = value
-        console.log(el )
         el.handler = function (e) {
             if (el && !el.contains(e.target)) {
                 onClickOutside(e)

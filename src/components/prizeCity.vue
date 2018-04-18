@@ -26,20 +26,20 @@
       </div>
       <div class="hot-box">
         <div class='hot'>
-          <template v-for="(good,gidx) in goodsList">
+          <template v-for="(good,gidx) in recommodList">
             <router-link :key="gidx"
-                         :to="{name:'商品详情',params: {id: 1}}"
+                         :to="{name:'商品详情',params: {id: good.code}}"
                          class="shop_item_3">
               <div class="shop_item_3_img">
-                <img :src="good.url">
+                <img  v-lazy='good.imagePath'>
               </div>
               <div class="shop_item_3_msg">
-                测试商品
+                {{good.name}}
               </div>
               <div class="shop_item_3_price">
                 <span><img src="../assets/img/big_gold@2x.png"
                        alt=""></span>
-                <del>¥200</del>
+                <span>{{good.price}}</span>
               </div>
             </router-link>
           </template>
@@ -93,12 +93,13 @@
 import Header from "./common/Header.vue";
 import { Swiper, LoadMore, Divider } from "vux";
 import { InfiniteScroll } from "mint-ui";
-import { getAllProductApi, brandListApi } from "@/api/api";
+import { getAllProductApi, brandListApi,rewordRecommenApi } from "@/api/api";
 import Vue from "vue";
 
 export default {
   data() {
     return {
+      recommodList:[],
       hasMore: true,
       allLoaded: false,
       noMoreData: false,
@@ -147,8 +148,18 @@ export default {
   mounted() {
   
     this.getList();
+    this.getRecommondList()
   },
   methods: {
+   async getRecommondList(){
+     try {
+     const {data} = await rewordRecommenApi.get();
+     this.recommodList = data
+     } catch (error) {
+       
+     }
+     
+    },
     needData(data) {
 
     },
@@ -354,6 +365,7 @@ export default {
 }
 
 .shop_item_3_price {
+  color: #ffcb16;
   height: 25px;
   // line-height: 64px;
   text-align: center;
@@ -361,7 +373,6 @@ export default {
 
 .shop_item_3_price span {
   font-size: 22px;
-  color: #333;
   img {
     width: 25px;
     height: 25px;

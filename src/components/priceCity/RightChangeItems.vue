@@ -1,7 +1,7 @@
 <template>
     <div class="rigth-item">
          <div class="right-img">
-             <img :src="item.product.imagePath" alt="">
+             <img v-lazy="item.product.imagePath" alt="">
          </div>
          <div class="left-content">
              <div class="content">

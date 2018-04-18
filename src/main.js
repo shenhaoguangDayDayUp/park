@@ -19,8 +19,8 @@ import outside from './directives/outside.js';
 
 
 Vue.use(VueLazyLoad,{
-    error:'../static/game.png',
-    loading:'./static/game.png',
+    error:'../static/zhanwei2@1x.png',
+    loading:'./static/zhanwei2@1x.png',
     preLoad: 1.3,
     attempt: 1,
     try: 2
