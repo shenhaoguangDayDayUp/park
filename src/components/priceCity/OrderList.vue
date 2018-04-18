@@ -26,7 +26,7 @@
             <div class="content-list">
                 <div class="img-content">
                     <div class="content"  v-for="(items,keys) in item.items" :key='keys' v-if='keys<3'>
-             <img :src="items.product.imagePath" alt="">
+             <img v-lazy="items.product.imagePath" alt="">
                     </div>
                 </div>
                 <div class="content-right">
@@ -34,9 +34,9 @@
                 </div>
             </div>
            </div>
-            <load-more v-if='loading'
+            <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
-        <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
+        <divider class="divider" v-if='noMoreData&&list.length'>我是有底线的</divider>
            
         </div>
         </div>

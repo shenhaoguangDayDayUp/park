@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
     <router-view></router-view>
     <!-- 路由跳转必写 -->
      <div v-transfer-dom>
@@ -23,6 +23,12 @@ import { mapGetters } from 'vuex'
    components: {
      Loading
    },
+   methods:{
+   },
+   mounted(){
+       document.getElementById('app').style.display = 'block';
+        document.getElementById('appLoading').style.display = 'none';
+   }
    
  }
 </script>

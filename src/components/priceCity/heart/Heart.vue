@@ -1,6 +1,7 @@
 <template>
   <div class="heart">
-    <Header title="心愿单" :isShow="true"></Header>
+    <Header title="心愿单"
+            :isShow="true"></Header>
     <HeartGrop class='heart-group'>
       <TableviewCell ref='cell'
                      v-for="(item,index) in list"
@@ -9,7 +10,7 @@
                      :index='index'
                      @tachStart='tachStart'
                      style="margin-bottom:20px">
-        <HeartItems :key="item.code"
+        <HeartItems v-outside='outside' :key="item.code"
                     :url="item.imagePath"
                     :title="item.name"
                     :desc="item.specification"
@@ -46,6 +47,7 @@ import { heartCartApi, orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
 
 export default {
+ 
   components: {
     HeartGrop,
     HeartItems,
@@ -74,6 +76,9 @@ export default {
     }
   },
   methods: {
+    outside(e){
+      this.tachStart()
+    },
     async selectProduct() {
       console.log(this.gotoChangeBtn);
       if (!this.gotoChangeBtn) {
@@ -96,22 +101,21 @@ export default {
           receiverStreet: "中信廣場",
           items: []
         };
-        var productList=[...this.list];
-      productList =    productList.filter(item => item.selected).map(item =>{
-            return {product:{code:item.code},quantity:item.quantity}
-          })
-        personalInfo.items =  productList 
-        console.log(personalInfo)
+        var productList = [...this.list];
+        productList = productList.filter(item => item.selected).map(item => {
+          return { product: { code: item.code }, quantity: item.quantity };
+        });
+        personalInfo.items = productList;
+        console.log(personalInfo);
         try {
-       const  {data} =  await orderCheckOutApi.checkout(personalInfo, token);
-            var productInfo = JSON.stringify(data)
-            // console.log(JSON.stringify(data))
-            this.$router.push({ name: "rightChange",query:{product:productInfo} });
-        } catch (error) {
-          
-        }
-      
-      
+          const { data } = await orderCheckOutApi.checkout(personalInfo, token);
+          var productInfo = JSON.stringify(data);
+          // console.log(JSON.stringify(data))
+          this.$router.push({
+            name: "rightChange",
+            query: { product: productInfo }
+          });
+        } catch (error) {}
       }
     },
 
@@ -187,10 +191,17 @@ export default {
       this.checkAll();
     },
     async valueChange(item) {
-      console.log(item);
+        const product = this.list[item.index];
+          if(product.quantity == 1 && item.type == -1){
+          return  this.$vux.toast.show({
+              text:'不能再少了'
+            })
+          }
+          
+     
+     
       try {
         if (common.getCommon("TOKEN")) {
-          const product = this.list[item.index];
           var obj = { product: { code: product.code }, quantity: item.type };
           var token = {
             headers: { "x-auth-token": common.getCommon("TOKEN") }

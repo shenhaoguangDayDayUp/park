@@ -22,24 +22,24 @@
         <span class="icon"></span>
         <span class="title">热门推荐</span>
         <span class="icon"></span>
-        <span class="span">更多></span>
+        <!-- <span class="span">更多></span> -->
       </div>
       <div class="hot-box">
         <div class='hot'>
-          <template v-for="(good,gidx) in goodsList">
+          <template v-for="(good,gidx) in recommodList">
             <router-link :key="gidx"
-                         :to="{name:'商品详情',params: {id: 1}}"
+                         :to="{name:'商品详情',params: {id: good.code}}"
                          class="shop_item_3">
               <div class="shop_item_3_img">
-                <img :src="good.url">
+                <img  v-lazy='good.imagePath'>
               </div>
               <div class="shop_item_3_msg">
-                测试商品
+                {{good.name}}
               </div>
               <div class="shop_item_3_price">
                 <span><img src="../assets/img/big_gold@2x.png"
                        alt=""></span>
-                <del>¥200</del>
+                <span>{{good.price}}</span>
               </div>
             </router-link>
           </template>
@@ -48,7 +48,7 @@
           <span class="icon"></span>
           <span class="title">全部商品</span>
           <span class="icon"></span>
-          <span class="span">更多></span>
+          <!-- <span class="span">更多></span> -->
         </div>
       </div>
       <div class="list-goods">
@@ -65,8 +65,7 @@
             <div class="list_item_imgBox">
               <!-- <img class="list_logo"
                    src="static/img/list_logo.png"> -->
-              <img class="list_img"
-                   :src="item.imagePath">
+              <img v-lazy="item.imagePath" class="list_img"/>
             </div>
             <div class="list_item_title">
               {{item.name}}
@@ -79,9 +78,9 @@
           </router-link>
 
         </div>
-        <load-more v-if='loading'
+        <load-more v-if='loading&&goods.length'
                    :tip="'正在加载'"></load-more>
-        <divider v-if='noMoreData'>我是有底线的</divider>
+        <divider v-if='noMoreData&&goods.length'>我是有底线的</divider>
         <br>
         <br>
       </div>
@@ -94,12 +93,13 @@
 import Header from "./common/Header.vue";
 import { Swiper, LoadMore, Divider } from "vux";
 import { InfiniteScroll } from "mint-ui";
-import { getAllProductApi, brandListApi } from "@/api/api";
+import { getAllProductApi, brandListApi,rewordRecommenApi } from "@/api/api";
 import Vue from "vue";
 
 export default {
   data() {
     return {
+      recommodList:[],
       hasMore: true,
       allLoaded: false,
       noMoreData: false,
@@ -148,8 +148,18 @@ export default {
   mounted() {
   
     this.getList();
+    this.getRecommondList()
   },
   methods: {
+   async getRecommondList(){
+     try {
+     const {data} = await rewordRecommenApi.get();
+     this.recommodList = data
+     } catch (error) {
+       
+     }
+     
+    },
     needData(data) {
 
     },
@@ -355,6 +365,7 @@ export default {
 }
 
 .shop_item_3_price {
+  color: #ffcb16;
   height: 25px;
   // line-height: 64px;
   text-align: center;
@@ -362,7 +373,6 @@ export default {
 
 .shop_item_3_price span {
   font-size: 22px;
-  color: #333;
   img {
     width: 25px;
     height: 25px;

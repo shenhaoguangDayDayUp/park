@@ -196,6 +196,8 @@ export let gameApi = new Api('game','id',{
     },
     
 })
+//奖品特别推荐
+export let rewordRecommenApi = new Api('store/product/list/recommendation','id')
 
 
 

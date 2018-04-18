@@ -6,7 +6,7 @@
                  class="list-item-left__radio">
                 <div :class="{'radio-selected': selected}" />
             </div>
-            <img :src="url"
+            <img v-lazy="url"
                  alt=""
                  class="list-item-left__img" />
             <div class='list-item-right'></div>

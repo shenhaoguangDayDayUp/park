@@ -14,7 +14,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-      //  target:"http://changyingyule.cn/",//设置你调用的接口域名和端口号 别忘了加http
+      // target:"http://changyingyule.cn/",//设置你调用的接口域名和端口号 别忘了加http
         target:"http://192.168.1.198/",
         changeOrigin:true,//是否需要跨域
         pathRewrite:{
