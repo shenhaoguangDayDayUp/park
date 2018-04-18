@@ -3,19 +3,19 @@
         <Header :title= rcvTitle
                 :isShow="true"></Header>
         <div class="addrForm">
-            <x-input name="username"
+            <x-input name="username" ref="userName"
                      placeholder="请输入姓名"
-                     is-type="china-name"
+                     :is-type="isTypeUserName"
                      :show-clear="false"
                      :required = true
                      v-model="userName"
+                     @on-change="userNameChange"
                      :icon-type="iconType"></x-input>
             <x-input name="mobile"
                      placeholder="请输入手机号码"
                      keyboard="number"
-                     mask="999 9999 9999"
-                     :max="13"
-                     is-type="china-mobile"
+                     :max="11"
+                     :is-type= "isTypeMobileNumber"
                      :show-clear="false"
                      v-model="mobileNumber"
                      :icon-type="iconType"></x-input>
@@ -29,16 +29,18 @@
                 </template>
                 </x-address>
             <!-- 收货地址结束 -->
-                <x-textarea :max="200" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
+                <x-textarea :max="100" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
                 <!-- <check-icon :value.sync="demo:v.favorite" type="plain"> 默认地址({{ demo}})</check-icon> -->
                 <Checker checkerTitle="设置为默认地址" :ischoosen.sync="favShow" @click='favShow=!favShow'></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
           </div>
-          <x-button type="primary" @click.native="rcvrSubmit">保存</x-button>
+          <!-- <x-button type="primary" :disabled="submitBtnDisabled" @click.native="rcvrSubmit">保存</x-button> -->
+          <submit text="保存" :disabled="submitBtnDisabled" @click.native="rcvrSubmit"></submit>       
+
         </div>
-        <!-- {{areaValue}}
+        <!-- {{areaValue}} 
         {{getName(areaValue)}} -->
     </div>
 </template>
@@ -47,6 +49,7 @@ import "../../style/btn.scss";
 import "../../style/isError.scss";
 import { loginApi } from "../../api/api";
 import Header from "../common/Header";
+ import Submit from '../common/Button';
 import Checker from "../common/Checker";
 import MapsCoding from "../../common/MapsCoding.json";
 import {
@@ -65,7 +68,21 @@ export default {
     XTextarea,
     XButton,
     Header,
-    Checker
+    Checker,
+    Submit
+  },
+  computed:{
+    submitBtnDisabled(){
+      // console.log('userName1')
+      // if(!('userName' in this.$refs)) return true;
+      // const {userName} = this.$refs;
+      // console.log(this.$refs)
+      // const flagUserName = userName.$el.className.includes('weui-cell_warn')
+      // console.log(flagUserName)
+      // return flagUserName;
+     if(this.isUserName && this.isMobileNumber && this.street) return false;
+     return true;
+    }
   },
   data() {
     return {
@@ -80,6 +97,9 @@ export default {
       isError: "",
       iconType: "",
       rcvTitle: this.$route.query.title,
+      isUserName:false,
+      isMobileNumber:false
+      
     };
   },
   mounted() {
@@ -128,7 +148,30 @@ export default {
     }
   },
   methods: {
+    userNameChange(value){
+      console.log(value)
+      console.log(this.submitBtnDisabled)
+    },
+    isTypeUserName(value) {
+       var regName =/^[\u4e00-\u9fa5]{2,4}$/;
+       if(!regName.test(value)){
+         this.isUserName = false;
+         return {valid:false,msg:'输入姓名格式有误'};
+       }
+         this.isUserName = true;
+         return {valid:true};
+    },
+    isTypeMobileNumber(value){
+        var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+        if (!myreg.test(value)) {
+          this.isMobileNumber = false;
+          return {valid:false,msg:'输入手机号有误'};
+        } 
+          this.isMobileNumber = true;
+          return {valid:true};
+    },
     rcvrSubmit() {
+      // true
       const areaName = this.$options.methods.getName(this.areaValue);
       var arr = areaName.split(" ");
       // 修改地址

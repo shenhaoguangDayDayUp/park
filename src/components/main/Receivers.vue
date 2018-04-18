@@ -34,7 +34,7 @@
             </div>
         </div>
         <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
-        <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>       
+        <!-- <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>        -->
     </div>
 </template>
 <script>
