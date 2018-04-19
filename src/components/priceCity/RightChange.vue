@@ -72,7 +72,12 @@ export default {
         }
         this.$store.dispatch("toggleUpdateAddres", data);
       } catch (error) {
-        console.log(error);
+        if(error.status == 567){
+            this.$vux.toast.show({
+              text:'请选择收获地址',
+              time:4000
+            })
+        }
       }
     },
     async gotoSubmit() {
