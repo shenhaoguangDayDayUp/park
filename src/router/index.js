@@ -136,6 +136,10 @@ const route =new Router({
       name: 'gameDetail',
       component: () => import('@/components/gameCenter/gameDetail.vue'),
     },
+    { 
+      path: '*', 
+      component: () => import('@/components/NotFound.vue') 
+    },
   ]
 })
 

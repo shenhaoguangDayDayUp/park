@@ -133,6 +133,8 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         box-sizing: border-box;
+        // margin-bottom:94px;
+        margin-bottom:130px;
         li {
           // width: 140px;
           width: 33.33333333333%;
@@ -159,5 +161,11 @@
     }
   }
 </style>
+<style>
+.gameCenter .vux-divider:after, .gameCenter .vux-divider:before{
+  top:0;
+}
+</style>
+
 
 

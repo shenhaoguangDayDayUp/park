@@ -2,11 +2,11 @@
     <div class="message">
         <Header title="消息清单" :isShow="true"></Header>
         <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <li v-for="(v,i) in msgsList" :key="i" >
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if = (!v.readAt) style="color:#ffcb16;">
+            <li v-for="(v,i) in msgsList" :key="i">
+                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
                     <span>{{v.sendAt}}<span>{{v.title}}</span></span>
                 </router-link>
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;"  v-else>
+                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
                     <span>{{v.sendAt}}<span>{{v.title}}</span></span>
                 </router-link>
             </li>
@@ -78,13 +78,12 @@
             },
             timeStamp(t) {
                 var date = new Date(t);
-                const Y = date.getFullYear() + '-';
-                const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-                const D = date.getDate() + ' ';
-                const h = date.getHours() + ':';
-                const m = date.getMinutes() + ':';
-                const s = date.getSeconds();
-                return (Y + M + D + h + m + s);
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+                var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+                var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+                return (Y + M + D + h + m);
             }
         },
         components: {
@@ -117,8 +116,7 @@
                 span span {
                     margin-left: 27px;
                 }
-            }
-            // li:first-child a:link {
+            } // li:first-child a:link {
             //     color: #ffcb16;
             // }
             // li a:visited {
@@ -141,9 +139,9 @@
     }
 </style>
 <style lang="scss">
-.vux-loadmore>.weui-loadmore__tips{
-    color:#fff;
-}
+    .vux-loadmore>.weui-loadmore__tips {
+        color: #fff;
+    }
 </style>
 
 

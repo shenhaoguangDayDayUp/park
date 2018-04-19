@@ -9,8 +9,10 @@
         class="btn btn-primary" 
         :crop="true" 
         inputOfFile='avatar' 
+        inputAccept='image/jpg,image/jpeg,image/png'
         @imageuploaded="imageuploaded" 
         :max-file-size="1048576" 
+        compress="90" 
         :headers="data" 
         text='修改头像' 
         url="/api/gateway/mobile/member/avatar">
@@ -97,19 +99,30 @@
     }
 </style>
 <style>
-/* .avatar .g-core-image-corp-container .info-aside{
+.avatar .g-core-image-upload-btn{
+    font-size:30px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+.avatar .image-mask{
+    position: absolute;
+    z-index: 999;
+    /* background: #000; */
+}
+.avatar .g-core-image-corp-container .info-aside{
     position: absolute;
     bottom:0;
     left:0;
     background: #000;
 }
-.avatar .image-aside{
-    position: absolute;
-    top:0;
+.avatar .g-core-image-corp-container .btn-upload{
+    background: #ffcb16;
+    border-color: #ffcb16;
+    width:100px;
 }
-.avatar .g-crop-image-principal{
-    background: #000;
-} */
+.avatar .image-mask .mask{
+    background: #000!important;
+}
 </style>
 
 

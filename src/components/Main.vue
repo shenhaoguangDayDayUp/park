@@ -148,24 +148,24 @@
                 });
             },
             viewPoint() {
-                if (this.point == '== ==') {
-                    const TOKEN = sessionStorage.getItem('TOKEN')
-                    // 请求积分信息
-                    integralApi.account({}, {
-                        data: {},
-                        headers: {
-                            'x-auth-token': TOKEN
-                        }
-                    }).then(res => {
-                        const {
-                            headers,
-                            data
-                        } = res
-                        this.point = data
-                    }).catch(error => {
-                        console.log(error)
-                    });
-                }
+                // if (this.point == '== ==') {
+                //     const TOKEN = sessionStorage.getItem('TOKEN')
+                //     // 请求积分信息
+                //     integralApi.account({}, {
+                //         data: {},
+                //         headers: {
+                //             'x-auth-token': TOKEN
+                //         }
+                //     }).then(res => {
+                //         const {
+                //             headers,
+                //             data
+                //         } = res
+                //         this.point = data
+                //     }).catch(error => {
+                //         console.log(error)
+                //     });
+                // }
             },
             Api() {
                 const TOKEN = sessionStorage.getItem('TOKEN')
@@ -186,10 +186,9 @@
                     this.list = {
                         userName: data['member.name'],
                         mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
-                        point:data['account.balance']
+                        point:data['account.balance'].toLocaleString()
                     }
-                    // this.avatar = '/api'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
-                    this.avatar = '/api'+ data["member.avatar"]
+                    this.avatar = '/api'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
                 }).catch(error => {
                 });
             }
