@@ -370,7 +370,7 @@
                     loginApi.resetNo(fgtParams, {
                     }).then(res => {
                         this.$router.push({
-                            name: 'Entity'
+                            name: 'Login'
                         })
                     }).catch(error => {
                         // console.log(error);
