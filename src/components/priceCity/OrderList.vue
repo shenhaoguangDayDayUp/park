@@ -41,7 +41,15 @@
         </div>
         </div>
        
-        
+         <Dialog :visible.sync='showToast' @success='success' @cancel='cancel'>
+      <template slot="header">
+            您还没有登录
+      </template>
+        <template slot="content">
+          是否前往登录?
+        </template>
+          <!-- <template slot="footer"></template> -->
+    </Dialog> 
     </div>
 </template>
 
@@ -51,12 +59,14 @@ import Header from "@/components/common/Header.vue";
 import { orderListApi } from "@/api/api";
 import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
+import { timingSafeEqual } from 'crypto';
 export default {
    directives: {
     InfiniteScroll
   },
   data() {
     return {
+      showToast:false,
       loading:false,
       tabActive: Number(this.$route.query.index)||0,
       page:1,
@@ -76,6 +86,12 @@ export default {
    Divider
   },
   methods: {
+    cancel(){
+
+    },
+    success(){
+     this.$router.push({name:'Login'})
+    },
     loadMore() {
       if (this.list.length >= this.count) {
         this.loading = false;
@@ -87,9 +103,12 @@ export default {
     },
     async getList() {
        this.loading = true;
-      var token = {
-        headers: { "x-auth-token": common.getCommon("TOKEN") }
-      };
+       var token = {
+          headers: { "x-auth-token": common.getCommon("TOKEN") }
+        };
+      if(!common.getCommon("TOKEN")){
+        this.showToast = true;
+       }else{
       var dataList = [];
       var count = 0;
       if (this.tabActive == 0) {
@@ -119,7 +138,7 @@ export default {
           const element = dataList[index];
           this.list.push(element);
         }
-     
+       }
 
     },
     switchTabItem(index) {

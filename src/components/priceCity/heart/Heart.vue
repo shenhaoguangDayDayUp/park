@@ -10,7 +10,8 @@
                      :index='index'
                      @tachStart='tachStart'
                      style="margin-bottom:20px">
-        <HeartItems v-outside='outside' :key="item.code"
+        <HeartItems v-outside='outside'
+                    :key="item.code"
                     :url="item.imagePath"
                     :title="item.name"
                     :desc="item.specification"
@@ -33,6 +34,27 @@
                :allSelect.sync='allSelect'
                @gotoChange='selectProduct'
                @selectAll='selectAll'></FooterBar>
+    <!-- <x-dialog v-model="showToast">
+      <div class="my-dialog">
+        <div class="title">是否前往登录</div>
+        <div class="content">是否前往登录</div>
+        <div class='bottom'>
+          <div class="left" @click='gotoCancel'>取消</div>
+          <div class="right" @click='gotoConfirm'>确定</div>
+        </div>
+      </div>
+    </x-dialog> -->
+    <!-- :visible.sync='showToast' -->
+    <Dialog :visible.sync='showToast' @success='success' @cancel='cancel'>
+      <template slot="header">
+            您还没有登录
+      </template>
+        <template slot="content">
+          是否前往登录?
+        </template>
+          <!-- <template slot="footer"></template> -->
+    </Dialog>
+
   </div>
 </template>
 <script>
@@ -41,14 +63,14 @@ import HeartGrop from "./HeartGrop";
 import HeartCard from "@/components/mine/HeartCard.vue";
 import FooterBar from "./FooterBar.vue";
 import Header from "@/components/common/Header.vue";
-import { Swipeout, SwipeoutItem, SwipeoutButton, Toast } from "vux";
+import { Swipeout, SwipeoutItem, SwipeoutButton, Toast, XDialog } from "vux";
 import TableviewCell from "@/common/TableviewCell";
 import { heartCartApi, orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
 
 export default {
- 
   components: {
+    XDialog,
     HeartGrop,
     HeartItems,
     HeartCard,
@@ -76,15 +98,21 @@ export default {
     }
   },
   methods: {
-    outside(e){
-      this.tachStart()
+    success(){
+      this.$router.push({name:'Login'})
+    },
+    cancel(){
+       
+    },
+    outside(e) {
+      this.tachStart();
     },
     async selectProduct() {
-       if(!this.list.length){
-       return  this.$vux.toast.show({
-          text: "心愿单为空",
+      if (!this.list.length) {
+        return this.$vux.toast.show({
+          text: "心愿单为空"
         });
-       }
+      }
       if (!this.gotoChangeBtn) {
         this.$vux.toast.show({
           text: "请选择商品",
@@ -141,9 +169,10 @@ export default {
           this.getAmount();
           this.getTotal();
         } else {
-          this.$vux.toast.show({
-            text:'会员没有登录请先登录'
-          })
+          this.showToast = true;
+          // this.$vux.toast.show({
+          //   text: "会员没有登录请先登录"
+          // });
         }
         console.log(this.list);
       } catch (err) {}
@@ -177,11 +206,11 @@ export default {
       });
     },
     selectAll() {
-       if(this.list.length == 0){
-         return this.$vux.toast.show({
-           text:'请先添加心愿'
-         })
-       }
+      if (this.list.length == 0) {
+        return this.$vux.toast.show({
+          text: "请先添加心愿"
+        });
+      }
       if (this.allSelect) {
         this.list = this.list.map(item => {
           item.selected = true;
@@ -202,15 +231,13 @@ export default {
       this.checkAll();
     },
     async valueChange(item) {
-        const product = this.list[item.index];
-          if(product.quantity == 1 && item.type == -1){
-          return  this.$vux.toast.show({
-              text:'不能再少了'
-            })
-          }
-          
-     
-     
+      const product = this.list[item.index];
+      if (product.quantity == 1 && item.type == -1) {
+        return this.$vux.toast.show({
+          text: "不能再少了"
+        });
+      }
+
       try {
         if (common.getCommon("TOKEN")) {
           var obj = { product: { code: product.code }, quantity: item.type };
@@ -262,6 +289,7 @@ export default {
   computed: {},
   data() {
     return {
+      showToast: false,
       gotoChangeBtn: false,
       selectedList: [],
       allSelect: false,
@@ -298,6 +326,51 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
+  // .my-dialog {
+  //   font-size: 32px;
+  //   height: 368px;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   justify-content: center;
+  //   .title {
+  //     height: 60px;
+  //     padding: 10px;
+  //     width: 100%;
+  //     text-align: center;
+  //     border-bottom: 1px solid #cccccc;
+  //   }
+  //   .content {
+  //     flex: 2;
+  //     display:flex;
+  //     align-items:center;
+  //     justify-content: center;
+  //   }
+  //   .bottom {
+  //     flex: 1;
+  //     display: flex;
+  //     flex-direction: row;
+  //     width: 100%;
+  //     align-items: center;
+      
+  //     .left{
+  //       padding:10px;
+  //       flex: 1;
+  //       margin-left: 20px;
+  //       border: 1px solid #ffcb16;
+  //       margin-right: 10px;
+  //       border-radius: 5px;
+  //     }
+  //     .right{
+  //        padding:10px;
+  //        flex: 1;
+  //        background: #ffcb16;
+  //       margin-right: 20px;
+  //         margin-left: 10px;
+  //                 border-radius: 5px;
+  //     } 
+  //   }
+  // }
   // .heart-group{
   //   padding-bottom:122px;
   // }
