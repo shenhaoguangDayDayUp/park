@@ -113,7 +113,7 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 36px;
-    height: 100%;
+    // height: 100%;
     .price {
       display: flex;
       flex-direction: row;

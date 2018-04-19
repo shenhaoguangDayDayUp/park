@@ -25,10 +25,11 @@ export default {
         this.$emit('gotoChange')
       },
        selectClick(){
-           this.$emit('update:allSelect', !this.allSelect)
-    
-
+      
+             this.$emit('update:allSelect', !this.allSelect)
                this.$emit("selectAll");
+    
+          
   
  
        }

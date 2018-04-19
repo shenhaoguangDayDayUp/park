@@ -175,9 +175,7 @@ import Submit from "@/components/common/Button.vue";
                   console.log(headers['x-auth-token'])
                   sessionStorage.setItem("TOKEN", headers['x-auth-token']);
                 }
-                this.$router.push({
-                  name: 'Main'
-                })
+                this.$router.go(-1)
               }).catch(error => {
                 this.tipActive = true;
                 this.isError = '登录失败!'
