@@ -105,7 +105,7 @@ export default {
   .content {
     padding-left: 20px;
     padding-right: 20px;
-    height: 100%;
+    // height: 100%;
     .title {
       display: flex;
       flex-direction: row;

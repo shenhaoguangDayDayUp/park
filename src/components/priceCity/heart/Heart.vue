@@ -80,7 +80,11 @@ export default {
       this.tachStart()
     },
     async selectProduct() {
-      console.log(this.gotoChangeBtn);
+       if(!this.list.length){
+       return  this.$vux.toast.show({
+          text: "心愿单为空",
+        });
+       }
       if (!this.gotoChangeBtn) {
         this.$vux.toast.show({
           text: "请选择商品",
@@ -137,7 +141,9 @@ export default {
           this.getAmount();
           this.getTotal();
         } else {
-          this.$router.push({ name: "Login" });
+          this.$vux.toast.show({
+            text:'会员没有登录请先登录'
+          })
         }
         console.log(this.list);
       } catch (err) {}
@@ -171,6 +177,11 @@ export default {
       });
     },
     selectAll() {
+       if(this.list.length == 0){
+         return this.$vux.toast.show({
+           text:'请先添加心愿'
+         })
+       }
       if (this.allSelect) {
         this.list = this.list.map(item => {
           item.selected = true;

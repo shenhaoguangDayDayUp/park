@@ -1,5 +1,5 @@
 .vux-toast .weui-toast{
-    width: 250px !important;
+    width: 350px !important;
   }
   .weui-toast_text .weui-toast__content{
     padding:30px !important;
@@ -7,6 +7,7 @@
   }
   .order-list .vux-tab-container .vux-tab{
     background-color:#23262b !important;
+    border-bottom: #23262b 1px solid;
     height:100%;
   }
   .order-list .vux-tab-container{
@@ -14,9 +15,13 @@
     .vux-tab{
       padding: 10px;
     }
+    // .vux-tab .vux-tab-item{
+      
+    // }
   }
   .order-list .vux-tab .vux-tab-item{
     font-size: 28px;
+    background:none;
   }
   .vux-loadmore{
     .weui-loading {

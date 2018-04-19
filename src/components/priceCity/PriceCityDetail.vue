@@ -46,7 +46,7 @@
 </template>
 <script>
 import { Swiper, XHeader } from "vux";
-import { getAllProductApi, heartCartApi,orderCheckOutApi } from "@/api/api";
+import { getAllProductApi, heartCartApi, orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
 
 export default {
@@ -78,25 +78,27 @@ export default {
   },
   methods: {
     async addCart() {
-      console.log(232424)
       try {
         if (common.getCommon("TOKEN")) {
-          var obj =  { product: { code: this.$route.params.id }, quantity: 1 }
-          var token =  {headers: { "x-auth-token": common.getCommon("TOKEN")}}
-          await heartCartApi.addOrdel(obj,token);
+          var obj = { product: { code: this.$route.params.id }, quantity: 1 };
+          var token = {
+            headers: { "x-auth-token": common.getCommon("TOKEN") }
+          };
+          await heartCartApi.addOrdel(obj, token);
           this.$router.push({ name: "heart" });
-        }else{
-          this.$router.push({name:'Login'})
+        } else {
+          this.$vux.toast.show({
+            text: "请先请先登录",
+            time: 3000
+          });
+          this.$router.push({ name: "Login" });
         }
-      } catch (error) {
-
-      }
+      } catch (error) {}
     },
-   async rightChange() {
-      console.log(this.gotoChangeBtn);
+    async rightChange() {
       if (!this.detail.code) {
         this.$vux.toast.show({
-          text: "请选择商品",
+          text: "请选择商品"
         });
       } else {
         var token = {
@@ -109,40 +111,46 @@ export default {
           receiverCity: 2822,
           receiverDistrict: 51979,
           receiverStreet: "中信廣場",
-          items: [{product:{code:this.detail.code},quantity:1}]
+          items: [{ product: { code: this.detail.code }, quantity: 1 }]
         };
-  
+
         try {
-       const  {data} =  await orderCheckOutApi.checkout(personalInfo, token);
-            var productInfo = JSON.stringify(data)
-            // console.log(JSON.stringify(data))
-            this.$router.push({ name: "rightChange",query:{product:productInfo} });
-        } catch (error) {
-          
-        }
-      
-      
+          if (common.getCommon("TOKEN")) {
+            const { data } = await orderCheckOutApi.checkout(
+              personalInfo,
+              token
+            );
+            var productInfo = JSON.stringify(data);
+            this.$router.push({
+              name: "rightChange",
+              query: { product: productInfo }
+            });
+          } else {
+            this.$vux.toast.show({
+              text: "请先登录商品",
+                time: 3000
+            });
+            this.$router.push({ name: "Login" });
+          }
+        } catch (error) {}
       }
     },
- 
 
     async getInfo() {
-       
       try {
         const { data } = await getAllProductApi.getDetail({
           id: this.$route.params.id
         });
         this.detail = data;
-       this.bannerData = String(data.banners).split(',').map(item=>{
-         return {url:'javascript',img:item,  fallbackImg: item}
-       })
-          
-        
+        this.bannerData = String(data.banners)
+          .split(",")
+          .map(item => {
+            return { url: "javascript", img: item, fallbackImg: item };
+          });
       } catch (err) {}
     }
   },
   mounted() {
-
     this.getInfo();
   },
   components: {
@@ -174,7 +182,7 @@ export default {
     background: #2a2d36;
     display: flex;
     flex-direction: row;
-    align-items: top;;
+    align-items: top;
     position: relative;
     justify-content: space-between;
     box-sizing: border-box;
@@ -197,12 +205,12 @@ export default {
       padding-top: 10px;
       display: flex;
       flex-direction: row;
-      justify-content:space-between; 
+      justify-content: space-between;
       // flex: 1;
       // width: 250px;
       text-align: right;
       span {
-              align-self: center;
+        align-self: center;
         img {
           width: 35px;
           height: 35px;
@@ -222,7 +230,6 @@ export default {
     padding-bottom: 124px;
   }
   .goods-footer {
-  
     height: 124px;
     width: 100%;
     background: #2a2d36;

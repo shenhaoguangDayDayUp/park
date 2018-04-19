@@ -54,7 +54,7 @@
                     if(this.disX < 0 || this.disX == 0) {
                         // console.log('没有移动');
                         this.txtStyle = "transform:translateX(0rem);transition:0.5s;"+"-webkit-transform:translateX(0rem);-webkit-transition:0.5s;";
-                    }else if (this.disX > 50) {
+                    }else if (this.disX > 100) {
 
                         this.txtStyle = "transform:translateX(-" + this.disX/100 + "rem)";
                         if (this.disX >= this.delWidth/100) {
