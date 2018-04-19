@@ -90,6 +90,10 @@
                 // height:200px;
             }
         }
+        .g-core-image-upload-form input[name="avatar"]{
+            font-size:30px;
+            text-align: center;
+        }
     }
 </style>
 <style>

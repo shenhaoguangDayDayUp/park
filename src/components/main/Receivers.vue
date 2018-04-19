@@ -103,7 +103,6 @@
                 const deleteItem = {
                     "code": e
                 }
-                console.log(i)
                 loginApi.receiversDel({}, {
                     data: deleteItem,
                     headers: {

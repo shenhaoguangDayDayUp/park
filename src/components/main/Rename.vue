@@ -1,22 +1,29 @@
 <template>
     <div class="rename">
         <Header title="修改用户昵称" :isShow="true"></Header>
-        <x-input title="" placeholder="请填写你的昵称" :min="2" :max="20" :icon-type="iconType" v-model="name"></x-input>
+        <x-input 
+        title="" 
+        placeholder="请填写你的昵称" 
+        :min="2" :max="20" 
+        :icon-type="iconType" 
+        v-model="name"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
         <!-- 按钮 -->
-        <div class="btn">
+        <!-- <div class="btn">
             <div class="redBtn active" @click=rename()>
                 保&nbsp;存
             </div>
-        </div>
+        </div> -->
+        <submit text="保存" :disabled="submitBtnDisabled" @click.native="rename()"></submit>
     </div>
 </template>
 <script>
     import '../../style/btn.scss';
     import '../../style/isError.scss';
+    import Submit from '../common/Button';
     import Header from '../common/Header'
     import {
         loginApi,
@@ -28,7 +35,14 @@
         name: 'Rename',
         components: {
             XInput,
-            Header
+            Header,
+            Submit
+        },
+        computed: {
+            submitBtnDisabled() {
+                if (this.name) return false;
+                return true;
+            }
         },
         data() {
             return {
@@ -40,7 +54,9 @@
         methods: {
             rename() {
                 // 修改用户昵称
-                const nickname = {"nickname": this.name}
+                const nickname = {
+                    "nickname": this.name
+                }
                 loginApi.nickname({}, {
                     data: nickname,
                     headers: {
@@ -49,7 +65,7 @@
                 }).then(res => {
                     if (res.status == 200) {
                         this.$router.push({
-                            path:'/entity'
+                            path: '/entity'
                         })
                     } else {
                         this.isError = '出现异常!请重试!'
@@ -85,12 +101,10 @@
 <style lang="scss">
     .rename {
         .vux-x-input.weui-cell {
-            height: 92px;
-            // background: #2a2d36;
+            height: 92px; // background: #2a2d36;
             font-size: 30px;
-            margin: 0 23px;
-            // margin: 0 82px 0 78px;
-            border-bottom:1px solid #fff;
+            margin: 0 23px; // margin: 0 82px 0 78px;
+            border-bottom: 1px solid #fff;
         }
         .vux-x-input.weui-cell:before {
             border: none;

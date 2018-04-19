@@ -149,8 +149,8 @@ export default {
   },
   methods: {
     userNameChange(value){
-      console.log(value)
-      console.log(this.submitBtnDisabled)
+      // console.log(value)
+      // console.log(this.submitBtnDisabled)
     },
     isTypeUserName(value) {
        var regName =/^[\u4e00-\u9fa5]{2,4}$/;
@@ -189,7 +189,7 @@ export default {
           cityID: "2822",
           districtID: "51979"
         };
-        console.log(editList);
+        // console.log(editList);
         // 修改用户收货地址信息
         loginApi
           .receiversEdit(
