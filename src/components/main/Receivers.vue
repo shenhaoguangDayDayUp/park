@@ -2,9 +2,9 @@
     <div class="receivers">
         <Header title="收货地址" :isShow="true"></Header>
         <!-- 报错信息 -->
-        <div class="isError" v-show='isError'>
+        <!-- <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
-        </div>
+        </div> -->
         <ul class="receiversList" v-for="(v,i) in List" :key='i'>
             <li>
                 <div class="receiversMsg">
@@ -17,12 +17,12 @@
                     </div>
                 </div>
                 <div class="receiversUpdate">
-                    <span @click="chooseFav(v.code)">
-                        <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
-                    </span>
-                    <div>
-                        <router-link :to="{path:'/receiversUpdate',query: {code: v.code,title:'编辑收货地址'}}"><span><img src="../../assets/img/edit.png" alt="">编辑</span></router-link>
-                        <span @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt="">删除</span>
+                    <div @click="chooseFav(v.code)" class="rcvDefault">
+                            <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
+                    </div>
+                    <div class="rcvDone">
+                        <div @click='$router.push({path:"/receiversUpdate",query: {code: v.code,title:"编辑收货地址"}})'><img src="../../assets/img/edit.png" alt=""><span>编辑</span></div>
+                        <div @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt=""><span >删除</span></div>
                     </div>
                 </div>
             </li>
@@ -30,11 +30,11 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active">
-                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址'}}">添加一个新地址</router-link>
+                <router-link :to="{path:' /receiversUpdate ',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>
             </div>
         </div>
         <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
-        <!-- <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>        -->
+        <!-- <submit :text="submit"  @click.native='$router.push({name: "ReceiversUpdate",query: {title: "添加收货地址"}}) ' :disabled="disabled"></submit>        -->
     </div>
 </template>
 <script>
@@ -54,13 +54,13 @@
             return {
                 isError: '',
                 List: [],
-                submit:'添加一个新地址',
-                disabled:true,
-                classes:'btn_disabled'
+                submit: '添加一个新地址',
+                disabled: true,
+                classes: 'btn_disabled'
             };
         },
-        mounted() {   
-                const TOKEN = sessionStorage.getItem('TOKEN');
+        mounted() {
+            const TOKEN = sessionStorage.getItem('TOKEN');
             this.$root.eventHub.$on('noteRcv', () => {
                 this.mountedApi(TOKEN);
             })
@@ -145,7 +145,7 @@
                 });
             },
             //去修改
-            addRcv(){
+            addRcv() {
                 alert(2)
             }
         },
@@ -160,14 +160,13 @@
     .receivers {
         background-color: #23262b;
         height: 100%;
-        color: #fff;
-        // margin-bottom:94px;
+        color: #fff; // margin-bottom:94px;
         .receiversList {
             li {
                 // box-sizing: inherit;
                 // height: 288px;
                 padding: 23px;
-                padding-bottom:0;
+                padding-bottom: 0;
                 background: #2a2d36;
                 font-size: 30px;
                 margin-bottom: 20px;
@@ -191,16 +190,36 @@
                 .receiversUpdate {
                     display: flex;
                     justify-content: space-between;
-                    span {
-                        height: 94px;
+                            font-size: 24px;
+                    .rcvDone {
+                        display: flex;
+                        justify-content: flex-start;
+                    }
+                    .rcvDefault {
                         line-height: 94px;
+                    }
+                    div {
+                        height: 94px;
+                        margin-right: 36px;
+                        img {
+                            height: 28px;
+                            width: 28px;
+                            vertical-align: middle;
+                            margin-right: 14px;
+                        }
+                        span {
+                            line-height: 94px;
+                        }
+                    }
+                    div:nth-child(2){
+                        margin-right:0;
                     }
                 }
             }
         }
         .btn {
             margin: 71px 82px 0 78px;
-            margin-bottom:94px;
+            margin-bottom: 94px;
         }
     }
 </style>
