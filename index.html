@@ -41,7 +41,7 @@
   var winHeight = document.documentElement.clientHeight; //获取当前页面高度  
   window.onresize = resize
   function resize(){
-    console.log('start resize')
+    // console.log('start resize')
 		var thisHeight = window.innerHeight; //可视页面高度
 		if (winHeight - thisHeight > 50) {
       //当软键盘弹出,在这里面操作
@@ -63,3 +63,18 @@
 	// 	}
 	// });  
 </script>
+<style>
+  .vux-popup-dialog{
+    font-size:30px;
+  }
+  .vux-popup-picker-container{
+    /* background: #000!important; */
+  }
+  .vux-popup-header{
+    /* background: #000!important; */
+    font-size:28px;
+  }
+  .scroller-item{
+    font-size:28px;
+  }
+  </style>
