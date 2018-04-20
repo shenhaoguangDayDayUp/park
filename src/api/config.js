@@ -8,10 +8,10 @@ module.exports = {
         testing: "",
         static: ""
     },
-    // apiUrlPrefix: {
-    //     development: 'http://www.jumax-sh.dev.sudaotech.com/api/wechat',
-    //     production: "http://changyingyule.cn/gateway/mobile",
-    //     testing: "",
-    //     static: ""
-    // },
+    imgUrl:{
+        development: 'http://192.168.1.198',
+        production: "http://changyingyule.cn",
+        testing: "",
+        static: ""
+    },
 };

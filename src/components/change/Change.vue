@@ -15,7 +15,7 @@
                     :key='index'></ChangeItem>
       <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
-        <divider class="divider" v-if='noMoreData'>没有更多的数据了</divider>
+        <divider class="divider" v-if='noMoreData'>没有更多交易明细了</divider>
          <br>
         <br>
       </div>
