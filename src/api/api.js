@@ -98,13 +98,19 @@ export let getMsgApi = new Api('message/','id',{
 //商品首页相关
 export let getAllProductApi = new Api('store/product','id',{ 
     getList:{
-        url:'list/{id}',
+        url:'list/all/{id}',
         method: 'get',
     },
     getDetail:{
         url:'entity/{id}',
         method: 'get',
-    }
+    },
+    getBanner:{
+        url:'list/banner ',
+        method: 'get',
+    },
+       
+ 
 })
 //心愿单相关
 export let heartCartApi = new Api('store/cart','id',{

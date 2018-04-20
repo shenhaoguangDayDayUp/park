@@ -13,11 +13,14 @@
       </span>
     </Header>
     <div class="index_banner_1">
-      <swiper :list="bannerData"
+      <div @click='indexToDetail'>
+         <swiper :list="bannerList" v-model="index" 
               auto
               height="328px"
               dots-class="custom-bottom"
               dots-position="center"></swiper>
+      </div>
+     
       <div class="box">
         <span class="icon"></span>
         <span class="title">热门推荐</span>
@@ -31,7 +34,7 @@
                          :to="{name:'商品详情',params: {id: good.code}}"
                          class="shop_item_3">
               <div class="shop_item_3_img">
-                <img  v-lazy='good.imagePath'>
+                <img v-lazy='good.imagePath'>
               </div>
               <div class="shop_item_3_msg">
                 {{good.name}}
@@ -65,7 +68,8 @@
             <div class="list_item_imgBox">
               <!-- <img class="list_logo"
                    src="static/img/list_logo.png"> -->
-              <img v-lazy="item.imagePath" class="list_img"/>
+              <img v-lazy="item.imagePath"
+                   class="list_img" />
             </div>
             <div class="list_item_title">
               {{item.name}}
@@ -92,13 +96,15 @@
 import Header from "./common/Header.vue";
 import { Swiper, LoadMore, Divider } from "vux";
 import { InfiniteScroll } from "mint-ui";
-import { getAllProductApi, brandListApi,rewordRecommenApi } from "@/api/api";
+import { getAllProductApi, brandListApi, rewordRecommenApi } from "@/api/api";
 import Vue from "vue";
-
+import config from "@/api/config";
 export default {
   data() {
     return {
-      recommodList:[],
+      index:0,
+      bannerList:[],
+      recommodList: [],
       hasMore: true,
       allLoaded: false,
       noMoreData: false,
@@ -145,23 +151,38 @@ export default {
     };
   },
   mounted() {
-  
+    // this.$$message.confirm.show({confirm(){
+    //   console.log(1111)
+    // },title:'您还没有登录',content:'是否前往登录12131313',rightBtnText:'随便看看',leftBtnText:'确定'})
+
     this.getList();
-    this.getRecommondList()
+    this.getRecommondList();
+    this.getBanner();
+
   },
   methods: {
-   async getRecommondList(){
-     try {
-     const {data} = await rewordRecommenApi.get();
-     this.recommodList = data
-     } catch (error) {
-       
-     }
-     
+      indexToDetail(){
+      
+      },
+    async getBanner() {
+      try {
+        const { data } = await getAllProductApi.getBanner();
+        var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+        var bannerList = data.split(',').map(item=>{
+          config
+          return {img:imgPrifex+item}
+        })
+        this.bannerList = bannerList
+ 
+      } catch (error) {}
     },
-    needData(data) {
-
+    async getRecommondList() {
+      try {
+        const { data } = await rewordRecommenApi.get();
+        this.recommodList = data;
+      } catch (error) {}
     },
+    needData(data) {},
     loadBottom() {
       // this.allLoaded = true;
       // this.$refs.loadmore.onBottomLoaded();
@@ -181,8 +202,8 @@ export default {
           this.goods.push(element);
         }
         this.count = data.count;
-        console.log(data)
-        console.log(this.goods)
+        console.log(data);
+        console.log(this.goods);
         // this.goods = data.items;
       } catch (err) {}
     },

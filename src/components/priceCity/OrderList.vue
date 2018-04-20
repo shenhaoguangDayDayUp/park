@@ -1,78 +1,88 @@
 <template>
-    <div class="order-list">
-        <Header title="订单清单" :isShow='true'></Header>
-        <tab v-model="tabActive"
-             style="margin-top:20px;"
-             prevent-default
-             active-color='#fdcd00'
-             bar-active-color="#fdcd00"
-             default-color='#ffffff'
-             @on-before-index-change="switchTabItem">
-            <tab-item >待支付</tab-item>
-            <tab-item>待发货</tab-item>
-            <tab-item>全部订单</tab-item>
-        </tab>
-        <div>
-           <div v-infinite-scroll="loadMore"
-             infinite-scroll-disabled="loading"
-             infinite-scroll-distance="10">
-            <div class="order-content" @click='$router.push({name:"order",query:{code:item.code}})'
-               v-for="(item,key) in list" :key='key'>
-            <div class="content-title">
-                <div class="title-left">{{item.placeAt|dateFilter}}</div>
-                <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
-                <div class="title-right">{{item.grandTotal}}积分</div>
+  <div class="order-list">
+    <Header title="订单清单"
+            :isShow='true'></Header>
+    <tab v-model="tabActive"
+         style="margin-top:20px;"
+         prevent-default
+         active-color='#fdcd00'
+         bar-active-color="#fdcd00"
+         default-color='#ffffff'
+         @on-before-index-change="switchTabItem">
+      <tab-item>待支付</tab-item>
+      <tab-item>待发货</tab-item>
+      <tab-item>全部订单</tab-item>
+    </tab>
+    <div>
+      <div v-infinite-scroll="loadMore"
+           infinite-scroll-disabled="loading"
+           infinite-scroll-distance="10">
+        <div class="order-content"
+             @click='$router.push({name:"order",query:{code:item.code}})'
+             v-for="(item,key) in list"
+             :key='key'>
+          <div class="content-title">
+            <div class="title-left">{{item.placeAt|dateFilter}}</div>
+            <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
+            <div class="title-right">{{item.grandTotal}}积分</div>
+          </div>
+          <div class="content-list">
+            <div class="img-content">
+              <div class="content"
+                   v-for="(items,keys) in item.items"
+                   :key='keys'
+                   v-if='keys<3'>
+                <img v-lazy="items.product.imagePath"
+                     alt="">
+              </div>
             </div>
-            <div class="content-list">
-                <div class="img-content">
-                    <div class="content"  v-for="(items,keys) in item.items" :key='keys' v-if='keys<3'>
-             <img v-lazy="items.product.imagePath" alt="">
-                    </div>
-                </div>
-                <div class="content-right">
-                    >
-                </div>
+            <div class="content-right">
+              >
             </div>
-           </div>
-            <load-more v-if='loading&&list.length'
+          </div>
+        </div>
+        <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
-        <divider class="divider" v-if='noMoreData&&list.length'>我是有底线的</divider>
-           
-        </div>
-        </div>
-       
-         <Dialog :visible.sync='showToast' @success='success' @cancel='cancel'>
-      <template slot="header">
-            您还没有登录
-      </template>
-        <template slot="content">
-          是否前往登录?
-        </template>
-          <!-- <template slot="footer"></template> -->
-    </Dialog> 
+        <divider class="divider"
+                 v-if='noMoreData&&list.length'>我是有底线的</divider>
+
+      </div>
     </div>
+
+    <Dialog :visible.sync='showToast'
+            @success='success'
+            @cancel='cancel'>
+      <template slot="header">
+        您还没有登录
+      </template>
+      <template slot="content">
+        是否前往登录?
+      </template>
+      <!-- <template slot="footer"></template> -->
+    </Dialog>
+  </div>
 </template>
 
 <script>
-import { Tab, TabItem,LoadMore,Divider } from "vux";
+import { Tab, TabItem, LoadMore, Divider } from "vux";
 import Header from "@/components/common/Header.vue";
 import { orderListApi } from "@/api/api";
 import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
-import { timingSafeEqual } from 'crypto';
+import { timingSafeEqual } from "crypto";
 export default {
-   directives: {
+  directives: {
     InfiniteScroll
   },
   data() {
     return {
-      showToast:false,
-      loading:false,
-      tabActive: Number(this.$route.query.index)||0,
-      page:1,
-      count:0,
-      noMoreData:false,
-      list:[],
+      showToast: false,
+      loading: false,
+      tabActive: Number(this.$route.query.index) || 0,
+      page: 1,
+      count: 0,
+      noMoreData: false,
+      list: []
     };
   },
   mounted() {
@@ -82,15 +92,13 @@ export default {
     Tab,
     TabItem,
     Header,
-   LoadMore,
-   Divider
+    LoadMore,
+    Divider
   },
   methods: {
-    cancel(){
-
-    },
-    success(){
-     this.$router.push({name:'Login'})
+    cancel() {},
+    success() {
+      this.$router.push({ name: "Login" });
     },
     loadMore() {
       if (this.list.length >= this.count) {
@@ -102,58 +110,76 @@ export default {
       this.getList();
     },
     async getList() {
-       this.loading = true;
-       var token = {
-          headers: { "x-auth-token": common.getCommon("TOKEN") }
-        };
-      if(!common.getCommon("TOKEN")){
-        this.showToast = true;
-       }else{
-      var dataList = [];
-      var count = 0;
-      if (this.tabActive == 0) {
-        try {
-       const {data} =   await orderListApi.unpaid({ id: this.page }, token);
-        dataList = data.records
-         this.count = data.count;
-         this.loading = false;
-        console.log(  dataList )
-        } catch (error) {}
-      } else if (this.tabActive == 1) {
-        try {
-         const {data} =   await orderListApi.unreceived({ id: this.page }, token);
-        dataList = data.records
-         this.count = data.count;
-          this.loading = false;
-        } catch (error) {}
+      this.loading = true;
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      if (!common.getCommon("TOKEN")) {
+        this.$$message.confirm.show({
+          confirm(vm,resolve) {
+            vm.$router.push({ name: "Login" });
+            resolve()
+          },
+          cancel(vm,resolve) {
+            vm.$router.push({ name: "PrizeCity" });
+            resolve()
+          },
+          title: "您还没有登录",
+          content: "是否前往登录?",
+          rightBtnText: "随便看看",
+          leftBtnText: "确定"
+        });
       } else {
-           try {
-          const {data} =   await orderListApi.all({ id: this.page }, token);
-           dataList = data.records
-             this.count = data.count;
-           this.loading = false;
-        } catch (error) {}
-      }
+        var dataList = [];
+        var count = 0;
+        if (this.tabActive == 0) {
+          try {
+            const { data } = await orderListApi.unpaid(
+              { id: this.page },
+              token
+            );
+            dataList = data.records;
+            this.count = data.count;
+            this.loading = false;
+            console.log(dataList);
+          } catch (error) {}
+        } else if (this.tabActive == 1) {
+          try {
+            const { data } = await orderListApi.unreceived(
+              { id: this.page },
+              token
+            );
+            dataList = data.records;
+            this.count = data.count;
+            this.loading = false;
+          } catch (error) {}
+        } else {
+          try {
+            const { data } = await orderListApi.all({ id: this.page }, token);
+            dataList = data.records;
+            this.count = data.count;
+            this.loading = false;
+          } catch (error) {}
+        }
         for (let index = 0; index < dataList.length; index++) {
           const element = dataList[index];
           this.list.push(element);
         }
-       }
-
+      }
     },
     switchTabItem(index) {
       this.tabActive = index;
       this.page = 1;
       this.list = [];
-      this.getList()
+      this.getList();
     }
   }
 };
 </script>
 
 <style lang='scss' scoped>
-.divider{
-  padding-top:40px;
+.divider {
+  padding-top: 40px;
   padding-bottom: 40px;
 }
 .order-list {
@@ -161,7 +187,7 @@ export default {
   background: #23262b;
   height: 100%;
   box-sizing: border-box;
-  .order-scoller{
+  .order-scoller {
     min-height: 80%;
   }
   .nav-bar {
@@ -200,7 +226,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content:space-between;
+      justify-content: space-between;
       .title-left {
         // flex: 1;
         text-align: left;
@@ -235,7 +261,7 @@ export default {
           height: 100%;
           margin-right: 10px;
           overflow: hidden;
-          img{
+          img {
             width: 100%;
             height: 100%;
           }

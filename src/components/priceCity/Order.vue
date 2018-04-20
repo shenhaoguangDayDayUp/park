@@ -3,7 +3,7 @@
     <Header title="订单详情"
             :isShow='true'></Header>
     <RightChange :item='defaultAderess'
-                 :showEidt.sync='showButton'></RightChange>
+                 :showEidt.sync='shows'></RightChange>
     <RightChangeItems v-for='(item,index) in detail.items'
                       :item='item'
                       :key='index'
@@ -46,7 +46,10 @@ import { mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(["defaultAderess"])
+    ...mapGetters(["defaultAderess"]),
+    shows(){
+      return this.detail.status =="REQUEST"?true:false
+    }
   },
   data() {
     return {
@@ -64,6 +67,11 @@ export default {
       };
       try {
         const { data } = await loginApi.receiversDefault({}, token);
+        if(!data){
+          this.$vux.toast.show({
+            text:'请先填写收货地址'
+          })
+        }
         this.$store.dispatch("toggleUpdateAddres", data);
       } catch (error) {
         console.log(error);

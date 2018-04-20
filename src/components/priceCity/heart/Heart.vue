@@ -45,15 +45,15 @@
       </div>
     </x-dialog> -->
     <!-- :visible.sync='showToast' -->
-    <Dialog :visible.sync='showToast' @success='success' @cancel='cancel'>
+    <!-- <Dialog :visible.sync='showToast' @success='success' @cancel='cancel'>
       <template slot="header">
             您还没有登录
       </template>
         <template slot="content">
           是否前往登录?
         </template>
-          <!-- <template slot="footer"></template> -->
-    </Dialog>
+
+    </Dialog> -->
 
   </div>
 </template>
@@ -98,12 +98,10 @@ export default {
     }
   },
   methods: {
-    success(){
-      this.$router.push({name:'Login'})
+    success() {
+      this.$router.push({ name: "Login" });
     },
-    cancel(){
-       
-    },
+    cancel() {},
     outside(e) {
       this.tachStart();
     },
@@ -169,7 +167,20 @@ export default {
           this.getAmount();
           this.getTotal();
         } else {
-          this.showToast = true;
+          this.$$message.confirm.show({
+            confirm(vm, resolve) {
+              vm.$router.push({ name: "Login" });
+              resolve();
+            },
+            cancel(vm, resolve) {
+              vm.$router.push({ name: "PrizeCity" });
+              resolve();
+            },
+            title: "您还没有登录",
+            content: "是否前往登录?",
+            rightBtnText: "随便看看",
+            leftBtnText: "确定"
+          });
           // this.$vux.toast.show({
           //   text: "会员没有登录请先登录"
           // });
@@ -352,7 +363,7 @@ export default {
   //     flex-direction: row;
   //     width: 100%;
   //     align-items: center;
-      
+
   //     .left{
   //       padding:10px;
   //       flex: 1;
@@ -368,7 +379,7 @@ export default {
   //       margin-right: 20px;
   //         margin-left: 10px;
   //                 border-radius: 5px;
-  //     } 
+  //     }
   //   }
   // }
   // .heart-group{
