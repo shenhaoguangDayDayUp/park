@@ -13,11 +13,14 @@
       </span>
     </Header>
     <div class="index_banner_1">
-      <swiper :list="bannerList"
+      <div @click='indexToDetail'>
+         <swiper :list="bannerList" v-model="index" 
               auto
               height="328px"
               dots-class="custom-bottom"
               dots-position="center"></swiper>
+      </div>
+     
       <div class="box">
         <span class="icon"></span>
         <span class="title">热门推荐</span>
@@ -100,6 +103,7 @@ import config from "@/api/config";
 export default {
   data() {
     return {
+      index:0,
       bannerList:[],
       recommodList: [],
       hasMore: true,
@@ -158,6 +162,9 @@ export default {
 
   },
   methods: {
+      indexToDetail(){
+      
+      },
     async getBanner() {
       try {
         const { data } = await getAllProductApi.getBanner();
