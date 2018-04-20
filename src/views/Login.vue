@@ -23,13 +23,13 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                          <span class="mint-checkbox"  @click.prevent="ischoosen">
-                            <input type="checkbox" v-model='choosen' class="mint-checkbox-input" > 
-                            <span class="mint-checkbox-core">
-                            </span>
-                          </span> 
-                          <span class="mint-checkbox-label">下次自动登录</span>
-                      </label>
+                            <span class="mint-checkbox"  @click.prevent="ischoosen">
+                              <input type="checkbox" v-model='choosen' class="mint-checkbox-input" > 
+                              <span class="mint-checkbox-core">
+                              </span>
+                            </span> 
+                            <span class="mint-checkbox-label">下次自动登录</span>
+                        </label>
           <router-link :to="{path:'/password',query: {code: 1,title:'找回密码'}}">忘记密码</router-link>
         </div>
         <!-- 报错信息 -->
@@ -79,8 +79,8 @@
         isError: '',
         choosen: true,
         // v-model
-        userName:'',
-        normalPwd:''
+        userName: '',
+        normalPwd: ''
       };
     },
     computed: {
@@ -141,26 +141,32 @@
       },
       // 提交登录请求
       submits() {
-          var loginParams = {
-            mobileNumber: this.userName,
-            password: sha1(this.normalPwd)
-          };
-          loginApi.login(loginParams).then(res => {
-            const {
-              headers
-            } = res
-            // 判断用户下次是否直接登录
-            if (this.choosen) {
-              var profile = Object.assign({}, loginParams)
-              sessionStorage.setItem("TOKEN", headers['x-auth-token']);
-              user.setLoginUser(profile)
-            } else {
-              sessionStorage.setItem("TOKEN", headers['x-auth-token']);
-            }
+        var loginParams = {
+          mobileNumber: this.userName,
+          password: sha1(this.normalPwd)
+        };
+        loginApi.login(loginParams).then(res => {
+          const {
+            headers
+          } = res
+          // 判断用户下次是否直接登录
+          if (this.choosen) {
+            var profile = Object.assign({}, loginParams)
+            sessionStorage.setItem("TOKEN", headers['x-auth-token']);
+            user.setLoginUser(profile)
+          } else {
+            sessionStorage.setItem("TOKEN", headers['x-auth-token']);
+          }
+          if (this.$route.query.forgetPwd == 1) {
+            this.$router.push({
+              path: '/main'
+            })
+          } else {
             this.$router.go(-1)
-          }).catch(error => {
-            this.isError = '登录失败!'
-          });
+          }
+        }).catch(error => {
+          this.isError = '登录失败!'
+        });
       }
     },
   };

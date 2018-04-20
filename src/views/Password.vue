@@ -371,7 +371,8 @@
                         };
                         loginApi.resetNo(fgtParams, {}).then(res => {
                             this.$router.push({
-                                name: 'Login'
+                                name: 'Login',
+                                query: {forgetPwd: 1}
                             })
                         }).catch(error => {
                             this.isError = '修改失败!';

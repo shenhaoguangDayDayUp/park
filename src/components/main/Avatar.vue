@@ -10,7 +10,7 @@
         inputOfFile='avatar' 
         inputAccept='image/jpg,image/jpeg,image/png' 
         @imageuploaded="imageuploaded" 
-        :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="/api/gateway/mobile/member/avatar">
+        :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="/gateway/mobile/member/avatar">
         </vue-core-image-upload>
     </div>
 </template>

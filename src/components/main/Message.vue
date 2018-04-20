@@ -4,10 +4,10 @@
         <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
             <li v-for="(v,i) in msgsList" :key="i">
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
-                    <span>{{v.sendAt}}<span>{{v.title}}</span></span>
+                    <span><span style="width:50%;">{{v.sendAt}}</span><span>{{v.title}}</span></span>
                 </router-link>
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
-                    <span>{{v.sendAt}}<span>{{v.title}}</span></span>
+                    <span><span style="width:50%;">{{v.sendAt}}</span><span>{{v.title}}</span></span>
                 </router-link>
             </li>
             <load-more v-if='loading' :tip="'正在加载'"></load-more>
