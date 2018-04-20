@@ -2,16 +2,19 @@
   <div class="gameDetail">
     <Header :title="this.$route.query.name" :isShow="true"></Header>
     <div class="gameTitle">
-      <img class="gameImg" :src= "'/api'+ showData.icon" alt="">
+      <div class="gameImg">
+        <img :src="'http://changyingyule.cn'+ showData.icon" alt="">
+      </div> 
       <div class="gameRight">
         <p>{{showData.name}}</p>
         <p>{{showData.description}}</p>
         <!-- 按钮 -->
-        <div class="btn">
-          <div class="redBtn active" @click=rename()>
-            开始游戏
-          </div>
-        </div>
+        <!-- <div class="btn">
+                <div class="redBtn" @click=rename()>
+                  开始游戏
+                </div>
+              </div> -->
+        <submit text="开始游戏" @click.native="rename()"></submit>
       </div>
     </div>
     <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" :show-dots="false"></swiper>
@@ -27,8 +30,10 @@
   </div>
 </template>
 <script>
-  import '../../style/btn.scss';
+  // import '../../style/btn.scss';
   import Header from "../common/Header.vue";
+  import Submit from '../common/Button';
+  import config from '../../api/config.js';
   import {
     gameApi
   } from '../../api/api';
@@ -48,10 +53,6 @@
   // }]
   const baseList = []
   export default {
-    components: {
-      Header,
-      Swiper
-    },
     data() {
       return {
         demo01_list: baseList,
@@ -80,7 +81,7 @@
             money: '123,456'
           }
         ],
-        showData:{},
+        showData: {},
         demo01_index: 0,
       };
     },
@@ -92,18 +93,30 @@
         this.demo01_index = index
       },
       async getList() {
-      try {
-        const { data } = await gameApi.gameDetail({id: this.$route.query.code});
-        this.showData = data;
-        this.showData.banners = this.showData.banners.split(',');
-        for (let index = 0; index < this.showData.banners.length; index++) {
-          const element ={ url: 'javascript:',img:'/api'+this.showData.banners[index]};
-          baseList.push(element);
-        }
-        console.log(baseList)
-      } catch (err) {}
+        try {
+          const {
+            data
+          } = await gameApi.gameDetail({
+            id: this.$route.query.code
+          });
+          this.showData = data;
+          this.showData.banners = this.showData.banners.split(',');
+          for (let index = 0; index < this.showData.banners.length; index++) {
+            const element = {
+              url: 'javascript:',
+              img: config.apiUrlPrefix[process.env.NODE_ENV]+ this.showData.banners[index] + '?r=' + new Date().getTime(),// 头像加时间戳
+            };
+            baseList.push(element);
+          }
+          console.log(baseList)
+        } catch (err) {}
+      },
     },
-    }
+    components: {
+      Header,
+      Swiper,
+      Submit
+    },
   };
 </script>
 <style lang="scss" scoped>
@@ -124,13 +137,18 @@
         height: 196px;
       }
       .gameRight {
-        width: 54.8%; // display: -webkit-flex;
-        // display: flex;
-        // justify-content: space-between;
+        // width: 54.8%;
+        margin-left: 36px;
+        p:nth-child(1) {
+          font-size: 36px;
+          line-height: 41px;
+          letter-spacing: 2px;
+        }
+        p:nth-child(2) {
+          font-size: 26px;
+          line-height: 37px;
+        }
       }
-    }
-    .btn {
-      border-radius: 31px;
     }
     .gameWinners {
       padding: 42px 12px 29px 45px;
@@ -151,6 +169,16 @@
           padding: 27px 31px 24px 23px;
         }
       }
+    }
+    button {
+      width: 300px;
+      height: 62px;
+      line-height: 62px;
+      // margin-top:29px;
+      margin-top:20px;
+      background-color: #ffcb16;
+      box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
+      border-radius: 31px;
     }
   }
 </style>

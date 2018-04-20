@@ -9,11 +9,11 @@
           <ul class="normalLogin">
             <li>
               <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-              <input  ref="userName" @change="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
+              <input v-model="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
             </li>
             <li class="lg_border">
               <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
-              <input  @change="blurPwd()" ref="normalPwd" id="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
+              <input @blur="blurPwd()" v-model="normalPwd" ref="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
               <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
               <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
             </li>
@@ -23,13 +23,13 @@
         <!-- 账号密码登录特有的忘记密码 -->
         <div class="forget">
           <label class="mint-checklist-label">
-                        <span class="mint-checkbox"  @click.prevent="ischoosen">
-                          <input type="checkbox" v-model='choosen' class="mint-checkbox-input" > 
-                          <span class="mint-checkbox-core">
-                          </span>
-                        </span> 
-                        <span class="mint-checkbox-label">下次自动登录</span>
-                    </label>
+                          <span class="mint-checkbox"  @click.prevent="ischoosen">
+                            <input type="checkbox" v-model='choosen' class="mint-checkbox-input" > 
+                            <span class="mint-checkbox-core">
+                            </span>
+                          </span> 
+                          <span class="mint-checkbox-label">下次自动登录</span>
+                      </label>
           <router-link :to="{path:'/password',query: {code: 1,title:'找回密码'}}">忘记密码</router-link>
         </div>
         <!-- 报错信息 -->
@@ -37,16 +37,7 @@
           <span class="isTip ispwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
       </div>
-      <div class="btn">
-        <div class="redBtn active" @click=submits() v-if="submitActive">
-          登&nbsp;录
-        </div>
-        <div class="redBtn" @click=submits() v-else>
-          登&nbsp;录
-        </div>
-      </div>
-      <!-- <submit :text="submit"  @click.native='$router.push({name:"ReceiversUpdate",query: {title:"添加收货地址"}})' :disabled="disabled"></submit>        -->
-      <!-- <submit text="保存" :disabled="submitBtnDisabled" @click.native="submits()"></submit> -->
+      <submit text="登录" :disabled="submitBtnDisabled" @click.native="submits()"></submit>
     </div>
     <div class="toRegister" @click="toRegister">
       没有账号？
@@ -82,37 +73,25 @@
     },
     data() {
       return {
-        loading: true,
-        res: "memberLogin=A&userPassword=B",
-        wise: 1,
         judgePhone: '',
         judgePwd: '',
         seen: 'ok',
-        msg: '',
-        submitActive: true,
         isError: '',
-        phone: '',
         choosen: true,
-        tipActive: false,
-        errorTip: '',
-        checkOut:{
-          userName:false,
-          normalPwd:false
-        }
+        // v-model
+        userName:'',
+        normalPwd:''
       };
     },
     computed: {
       submitBtnDisabled() {
-        console.log(this.checkOut.normalPwd && this.checkOut.userName)
-
-        if (this.checkOut.normalPwd && this.checkOut.userName) return false;
+        if (this.$options.methods.isPwd(this.normalPwd) && this.$options.methods.isPoneAvailable(this.userName)) return false;
         return true;
-      } 
+      }
     },
     methods: {
       ischoosen() {
         this.choosen = !this.choosen;
-        console.log(this.choosen)
       },
       toRegister() {
         this.$router.push({
@@ -146,56 +125,42 @@
       },
       // 表单判断
       blurPhone() {
-        if (!this.$options.methods.isPoneAvailable(this.$refs.userName.value)) {
+        if (!this.$options.methods.isPoneAvailable(this.userName)) {
           this.judgePhone = 'ok';
         } else {
           this.judgePhone = '';
-          if (this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
-            this.submitActive = true;
-          }
-          this.checkOut.userName = true;
         }
       },
       blurPwd() {
-        console.log('密码检测')
-        if (!this.$options.methods.isPwd(this.$refs.normalPwd.value)) {
+        // console.log('密码检测')
+        if (!this.$options.methods.isPwd(this.normalPwd)) {
           this.judgePwd = 'ok'
         } else {
           this.judgePwd = ''
-          if (this.$options.methods.isPoneAvailable(this.$refs.normalPwd.value)) {
-            this.submitActive = true;
-          }
-          this.checkOut.normalPwd = true;
         }
       },
       // 提交登录请求
       submits() {
-        if (this.$options.methods.isPwd(this.$refs.normalPwd.value) && this.$options.methods.isPoneAvailable(this.$refs.userName.value)) {
-          this.submitActive = true;
           var loginParams = {
-            mobileNumber: this.$refs.userName.value,
-            password: sha1(this.$refs.normalPwd.value)
+            mobileNumber: this.userName,
+            password: sha1(this.normalPwd)
           };
           loginApi.login(loginParams).then(res => {
             const {
               headers
             } = res
-            console.log(res)
             // 判断用户下次是否直接登录
             if (this.choosen) {
               var profile = Object.assign({}, loginParams)
               sessionStorage.setItem("TOKEN", headers['x-auth-token']);
               user.setLoginUser(profile)
             } else {
-              console.log(headers['x-auth-token'])
               sessionStorage.setItem("TOKEN", headers['x-auth-token']);
             }
             this.$router.go(-1)
           }).catch(error => {
-            this.tipActive = true;
             this.isError = '登录失败!'
           });
-        }
       }
     },
   };

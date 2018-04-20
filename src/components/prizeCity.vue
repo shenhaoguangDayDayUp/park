@@ -76,7 +76,6 @@
               <span class="gold">{{item.price}}</span>
             </div>
           </router-link>
-
         </div>
         <load-more v-if='loading&&goods.length'
                    :tip="'正在加载'"></load-more>

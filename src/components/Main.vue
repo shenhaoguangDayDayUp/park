@@ -14,7 +14,7 @@
             <div class="mint-cell mint-cell-wrapper">
                 <div class="mint-cell-title" v-if=isActive>
                     <div class="cell-logo">
-                        <img :src = avatar height="60" width="60">
+                        <img :src = "avatar" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>{{list.userName}}</span>
                             <span>{{list.mobileNumber}}</span>
@@ -188,7 +188,8 @@
                         mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
                         point:data['account.balance'].toLocaleString()
                     }
-                    this.avatar = require('/api'+ data["member.avatar"] + '?r=' + new Date().getTime()); // 头像加时间戳
+                    this.avatar = process.env.NODE_ENV === 'development'? 'api'+ data["member.avatar"] + '?r=' + new Date().getTime():'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime();
+                    // this.avatar = 'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
                 }).catch(error => {
                 });
             }
