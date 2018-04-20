@@ -32,16 +32,6 @@ Vue.use(ToastPlugin,{
   time: 2000
 })
 import  './components/common'
-// Vue.use(MintUI)
-
-// vee-validator
-import VeeValidate, {Validator}  from 'vee-validate';
-import zh from 'vee-validate/dist/locale/zh_CN'; 
-Validator.addLocale(zh);
-const config = {
-  locale: 'zh_CN'
-}; 
-Vue.use(VeeValidate,config);
 
 Vue.config.productionTip = false
 

@@ -89,7 +89,7 @@ export default {
       favShow: true,
       demo: true,
       addressData: MapsCoding,
-      title: "请选择收货地址",
+      title: "选择收货地址",
       areaValue: ["110000", "110100", "110101"],
       userName: "",
       mobileNumber: "",
@@ -347,6 +347,8 @@ export default {
   }
 }
 </style>
+
+
 
 
 
