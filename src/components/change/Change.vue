@@ -13,9 +13,9 @@
         <ChangeItem :item='item'
                     v-for=" (item,index) in list"
                     :key='index'></ChangeItem>
-      <load-more v-if='loading'
+      <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
-        <divider class="divider" v-if='noMoreData'>我是有底线的</divider>
+        <divider class="divider" v-if='noMoreData'>没有更多的数据了</divider>
          <br>
         <br>
       </div>
@@ -36,7 +36,7 @@ export default {
     return {
       page: 1,
       loading: false,
-      noMoreData: false,
+      noMoreData: true,
       count: 0,
       list: [],
       remaind: 0

@@ -127,7 +127,7 @@ export default {
             });
           } else {
             this.$vux.toast.show({
-              text: "请先登录商品",
+              text: "请先登录",
                 time: 3000
             });
             this.$router.push({ name: "Login" });

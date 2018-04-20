@@ -146,7 +146,10 @@ export default {
     };
   },
   mounted() {
-  
+    // this.$$message.confirm.show({confirm(){
+    //   console.log(1111)
+    // },title:'您还没有登录',content:'是否前往登录12131313',rightBtnText:'随便看看',leftBtnText:'确定'})
+      
     this.getList();
     this.getRecommondList()
   },
