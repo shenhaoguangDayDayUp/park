@@ -188,7 +188,7 @@
                         mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
                         point:data['account.balance'].toLocaleString()
                     }
-                    this.avatar = '/api'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
+                    this.avatar = require('/api'+ data["member.avatar"] + '?r=' + new Date().getTime()); // 头像加时间戳
                 }).catch(error => {
                 });
             }

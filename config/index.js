@@ -11,7 +11,7 @@ module.exports = {
     autoOpenBrowser: true,
     host:'0.0.0.0',//可以在手机端访问了
     assetsSubDirectory: 'static',
-    assetsPublicPath: './',
+    assetsPublicPath: '/',
     proxyTable: {
       '/api':{
       target:"http://changyingyule.cn/",
