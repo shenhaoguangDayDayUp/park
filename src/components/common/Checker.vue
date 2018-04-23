@@ -5,7 +5,7 @@
         <span class="mint-checkbox-core">
         </span>
         </span> 
-        <span class="mint-checkbox-label">{{checkerTitle}}{{isShow}}</span>
+        <span class="mint-checkbox-label">{{checkerTitle}}</span>
     </label>
 </template>
 <script>

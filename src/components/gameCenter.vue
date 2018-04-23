@@ -11,7 +11,7 @@
       </div>
       <ul class="gameListCont">
         <li v-for="(v,i) in rcmList" :key='i'>
-          <img :src="v.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <img :src="v.icon" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
           <div>{{v.name}}</div>
         </li>
       </ul>
@@ -22,7 +22,7 @@
       </div>
       <ul class="gameListCont" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <li v-for="(v,i) in gameList" :key='i'>
-          <img :src="v.url" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <img :src="v.icon" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
           <div>{{v.name}}</div>
         </li>
         <load-more v-if='loading' :tip="'正在加载'"></load-more>
@@ -33,6 +33,7 @@
 </template>
 <script>
   import Header from "./common/Header.vue";
+  import config from '@/api/config'
   import {
     gameApi,
   } from '../api/api';
@@ -66,6 +67,10 @@
           const {
             data
           } = await gameApi.rec();
+          var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+          var imgList = data.forEach(v => {
+            v.icon = imgPrifex + v.icon
+          });
           this.rcmList = data
         } catch (err) {}
       },
@@ -78,8 +83,10 @@
             id: this.page
           });
           this.loading = false;
+          var imgPrifex = config.imgUrl[config.env.NODE_ENV]
           for (let index = 0; index < data.records.length; index++) {
             const element = data.records[index];
+            element.icon = imgPrifex + element.icon
             this.gameList.push(element);
           }
           this.count = data.count;
@@ -132,9 +139,8 @@
         display: -webkit-flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        box-sizing: border-box;
-        // margin-bottom:94px;
-        margin-bottom:130px;
+        box-sizing: border-box; // margin-bottom:94px;
+        // margin-bottom: 130px;
         li {
           // width: 140px;
           width: 33.33333333333%;
@@ -162,9 +168,10 @@
   }
 </style>
 <style>
-.gameCenter .vux-divider:after, .gameCenter .vux-divider:before{
-  top:0;
-}
+  .gameCenter .vux-divider:after,
+  .gameCenter .vux-divider:before {
+    top: 0;
+  }
 </style>
 
 

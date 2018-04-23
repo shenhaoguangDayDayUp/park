@@ -2,7 +2,6 @@
     <div :visible.sync="show">
         <x-dialog v-model="show">
             <div class="my-dialog">
-                
                 <div class="title" slot="header">
                     <slot  name='header'></slot>
                 </div>
@@ -11,9 +10,11 @@
                 </div>
                 <div class='bottom'>
                     <div class="left"
-                         @click='gotoCancel'>取消</div>
+                         @click='gotoCancel'>取消
+                    </div>
                     <div class="right"
-                         @click='gotoConfirm'>确定</div>
+                         @click='gotoConfirm'>确定
+                    </div>
                 </div>
             </div>
         </x-dialog>
@@ -56,10 +57,7 @@ export default {
         return {
             showToast:true
         }
-    }
-    
-
-    
+    }  
 }
 </script>
 <style lang="scss" scoped>

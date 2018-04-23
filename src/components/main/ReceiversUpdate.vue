@@ -31,7 +31,7 @@
             <!-- 收货地址结束 -->
                 <x-textarea :max="100" name="detail" placeholder="街道" :show-counter="false" v-model="street"></x-textarea>
                 <!-- <check-icon :value.sync="demo:v.favorite" type="plain"> 默认地址({{ demo}})</check-icon> -->
-                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="favShow" @click='favShow=!favShow'></Checker>
+                <Checker checkerTitle="设置为默认地址" :ischoosen.sync="favShow"  @click='favShow=!favShow'></Checker>
         <!-- 报错信息 -->
           <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>

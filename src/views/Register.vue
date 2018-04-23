@@ -12,11 +12,11 @@
           <ul class="normalLogin">
             <li>
               <i class="isTip isTel" v-if=judgePhone><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-              <input ref="userTel" id="userTel" type="number" @blur="blurPhone()" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent" oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
+              <input ref="userTel" v-model="userTel" id="userTel" type="number" @blur="blurPhone()" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent" oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
             </li>
             <!-- 短信验证码 -->
             <li id="msg" class="isErrors">
-              <input ref="smsCode" id="lg_msg" class="sms" maxlength="4" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " >
+              <input ref="smsCode" v-model="smsCode" id="lg_msg" class="sms" maxlength="4" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " >
               <button class="smsCode" @click="getCode()" :disabled="!show">
                                             <span v-show="show">发送验证码</span>
                                             <span v-show="!show">{{count}}秒后重发</span>
@@ -25,22 +25,22 @@
             </li>
             <!-- 输入新密码 -->
             <li class="lg_border">
-              <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
-              <input ref="normalPwd" id="newPwd" @blur="blurPwd()" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(0,20)" maxlength="20">
+              <i class="isTip ispwd"  v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
+              <input ref="normalPwd" v-model="normalPwd" id="newPwd" @blur="blurPwd()" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(0,20)" maxlength="20">
               <i class="icon-eye eye-grey"></i>
               <i class="icon-eye eye-red" style="display:none;"></i>
             </li>
             <!-- 姓名 -->
             <li class="lg_border">
               <i class="isTip" v-if=judgeName><img src="../assets/img/tishi@2x.png">输入姓名有误</i>
-              <input ref="userName" id="userName" @blur="blurName()" placeholder="姓名" autocomplete="off" type="text" style="background-color:transparent ">
+              <input ref="userName" v-model="userName" id="userName" @blur="blurName()" placeholder="姓名" autocomplete="off" type="text" style="background-color:transparent ">
               <i class="icon-eye eye-grey"></i>
               <i class="icon-eye eye-red" style="display:none;"></i>
             </li>
             <!-- 身份证号 -->
             <li class="lg_border">
               <i class="isTip" v-if=judgeCode><img src="../assets/img/tishi@2x.png">输入的身份证号有误</i>
-              <input ref="userCode" id="userCode" @blur="blurCode()" placeholder="身份证号" autocomplete="off" type="text" style="background-color:transparent " oninput="if(value.length>18)value=value.slice(0,18)" maxlength="18">
+              <input ref="userCode"  v-model="userCode" id="userCode" @blur="blurCode()" placeholder="身份证号" autocomplete="off" type="text" style="background-color:transparent " oninput="if(value.length>18)value=value.slice(0,18)" maxlength="18">
               <i class="icon-eye eye-grey"></i>
               <i class="icon-eye eye-red" style="display:none;"></i>
             </li>
@@ -64,20 +64,23 @@
         </li>
       </ul>
       <!-- 按钮 -->
-      <div class="btn">
+      <!-- <div class="btn">
         <div class="redBtn active" @click=register() v-if="isActive">
           立&nbsp;即&nbsp;注&nbsp;册
         </div>
         <div class="redBtn" @click=submits() v-else>
           立&nbsp;即&nbsp;注&nbsp;册
         </div>
-      </div>
+      </div> -->
+      <submit text="注册" :disabled="submitBtnDisabled" @click.native="register"></submit>
       <div>手机动态码：{{sCode}}</div>
     </div>
+    
   </div>
 </template>
 <script>
   import Header from "@/components/common/Header.vue";
+  import Submit from "@/components/common/Button.vue";
   // 验证
   import myValidator from '@/common/myValidator.js' 
   // sha1加密
@@ -91,12 +94,8 @@
     loginApi,
     getCodeApi
   } from '../api/api';
-  import axios from 'axios';
   export default {
     name: "Login",
-    components:{
-      Header
-    },
     data() {
       return {
         show: true,
@@ -113,7 +112,19 @@
         isActive: true,
         isError: '',
         choosen: true,
+        userTel:'',
+        normalPwd:'',
+        userCode:'',
+        userName:'',
+        smsCode:'',
       };
+    },
+    computed: {
+      submitBtnDisabled() {
+        const _this = myValidator;
+        if(_this.isPoneAvailable(this.userTel) && _this.isPwd(this.normalPwd) && _this.idCode(this.userCode) && _this.isUsername(this.userName)) return false;  
+          return true;
+      }
     },
     methods: {
       ischoosen() {
@@ -209,39 +220,41 @@
           "idCardNumber": this.$refs.userCode.value,
           "note": this.$refs.smsCode.value,
         };
-        const _this = myValidator;
         if(this.choosen){
-          if(_this.isPoneAvailable(this.$refs.userTel.value) && _this.isPwd(this.$refs.normalPwd.value) && _this.idCode(this.$refs.userCode.value) && _this.isUsername(this.$refs.userName.value)){
           loginApi.register(registerParams).then(res => {
-            console.log(res)
-            const {
-              headers,
-              status
-            } = res
-            if(status == 200){
-              sessionStorage.setItem("TOKEN", headers['x-auth-token']);
-              this.$router.push({
-                name: 'Main'
-              }) 
-            }
-          }).catch(error => {
-            switch (error.status) {
-              case 456:
-                  this.isError = error.data
-                  break;
-              case 567:
-                  this.isError = '系统错误!'
-                  break;
-              default:
-                  this.isError = '系统错误!'
-                  break;
-            }
-          });
-        }
+          console.log(res)
+          const {
+            headers,
+            status
+          } = res
+          if(status == 200){
+            sessionStorage.setItem("TOKEN", headers['x-auth-token']);
+            this.$router.push({
+              name: 'Main'
+            }) 
+          }
+        }).catch(error => {
+          switch (error.status) {
+            case 456:
+                this.isError = error.data
+                break;
+            case 567:
+                this.isError = '系统错误!'
+                break;
+            default:
+                this.isError = '系统错误!'
+                break;
+          }
+        });
         }else{
           this.isError = '请同意长影娱乐服务条款';
         }
+        
       }
+    },
+    components:{
+      Header,
+      Submit
     },
   }
 </script>

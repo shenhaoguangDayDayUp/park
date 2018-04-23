@@ -37,7 +37,7 @@ axios.interceptors.response.use(function (response) {
             break;
         case 567:
             window.global.$vux.toast.show({
-                text: '系统错误!稍后重试!',
+                text: '系统错误!',
             });
             break;
         default:

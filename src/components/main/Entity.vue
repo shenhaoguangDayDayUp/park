@@ -5,7 +5,7 @@
             <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: avatar}})'>
                 <span>头像</span>
                 <span>
-                    <img :src= avatar>
+                    <img :src= "avatar">
                     </span>
                 <span> </span>
             </li>
@@ -54,8 +54,8 @@
         </ul>
         <ul class="messList" style="margin-top:100px;">
             <li @click="toLogout(e)" style="display:flex;
-        align-items:center;
-        justify-content:center;">
+                align-items:center;
+                justify-content:center;">
                 退出登录
             </li>
         </ul>
@@ -65,6 +65,7 @@
 <script>
     import Header from '../common/Header'
     import axios from 'axios'
+    import config from '../../api/config.js'
     import {
         user
     } from '@/logic'
@@ -102,9 +103,9 @@
                 this.userName = data.name;
                 this.nickname = data.nickname;
                 this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
-                this.avatar = '/api'+ data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
+                this.avatar = config.apiUrlPrefix[process.env.NODE_ENV]+ data.avatar + '?r=' + new Date().getTime();// 头像加时间戳
             }).catch(error => {
-                // console.log(error.response.status)
+                console.log(error.response.status)
             });
         },
         methods: {
@@ -140,7 +141,7 @@
                 console.log(imgFile);
                 let formData = new FormData(); //通过formdata上传
                 formData.append('avatar', imgFile);
-                axios.post('/api/member/avatar', formData, {
+                axios.post('/api/gateway/mobile/member/avatar', formData, {
                     method: 'post',
                     headers: {
                         'Content-Type': 'form-data',
