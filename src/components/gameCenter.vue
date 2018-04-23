@@ -67,6 +67,7 @@
             data
           } = await gameApi.rec();
           this.rcmList = data
+          console.log(this.rcmList);
         } catch (err) {}
       },
       async wholeList() {
@@ -82,6 +83,7 @@
             const element = data.records[index];
             this.gameList.push(element);
           }
+          console.log(this.gameList);
           this.count = data.count;
         } catch (err) {}
       },

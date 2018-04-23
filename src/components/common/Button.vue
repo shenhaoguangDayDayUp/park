@@ -72,8 +72,6 @@
         margin-top: 43px;
     }
     button:active {
-        // box-shadow: 0 0 0 1px rgba(0,0,0,.15) inset, 0 0 6px rgba(0,0,0,.2) inset;
-        // color: #fff;
         background: linear-gradient(90deg, rgb(255, 203, 22), rgb(250, 238, 196));
     }
 </style>

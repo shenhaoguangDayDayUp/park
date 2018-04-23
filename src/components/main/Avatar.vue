@@ -10,6 +10,7 @@
         inputOfFile='avatar' 
         inputAccept='image/jpg,image/jpeg,image/png' 
         @imageuploaded="imageuploaded" 
+        @errorUpload="errorUpload" 
         :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="/gateway/mobile/member/avatar">
         </vue-core-image-upload>
     </div>
@@ -35,15 +36,9 @@
         methods: {
             // imageuploaded(res, data,done,errorUpload,isBinary,) {
             imageuploaded(res, data) {
-                // console.log(res.contains(200)) 
                 // if (res.errcode == 500) {
                 //     this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
                 // }
-                // console.log('done'+done)
-                // console.log('isBinary'+isBinary)
-                // console.log('errorUpload'+errorUpload)
-                // console.log('data'+data)
-                // console.log(res.indexOf('images'))
                 if (res.indexOf('images') !== -1) {
                     this.querySrc = config.apiUrlPrefix[process.env.NODE_ENV]+ res + '?r=' + new Date().getTime();// 头像加时间戳
                     this.$vux.toast.show({
@@ -55,6 +50,9 @@
                     });
                 }
             },
+            errorUpload(res){
+                console.log(res)
+            }
         },
         components: {
             'vue-core-image-upload': VueCoreImageUpload,

@@ -1,10 +1,6 @@
 <template>
     <div class="receivers">
         <Header title="收货地址" :isShow="true"></Header>
-        <!-- 报错信息 -->
-        <!-- <div class="isError" v-show='isError'>
-            <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
-        </div> -->
         <ul class="receiversList" v-for="(v,i) in List" :key='i'>
             <li>
                 <div class="receiversMsg">
@@ -18,11 +14,11 @@
                 </div>
                 <div class="receiversUpdate">
                     <div @click="chooseFav(v.code)" class="rcvDefault">
-                            <check-icon :value.sync="v.favorite" > 默认地址</check-icon>
+                        <check-icon :value.sync="v.favorite"> 默认地址</check-icon>
                     </div>
                     <div class="rcvDone">
                         <div @click='$router.push({path:"/receiversUpdate",query: {code: v.code,title:"编辑收货地址"}})'><img src="../../assets/img/edit.png" alt=""><span>编辑</span></div>
-                        <div @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt=""><span >删除</span></div>
+                        <div @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt=""><span>删除</span></div>
                     </div>
                 </div>
             </li>
@@ -38,7 +34,6 @@
     </div>
 </template>
 <script>
-    import '../../style/isError.scss';
     import '../../style/btn.scss';
     import Header from '../common/Header';
     import Submit from '../common/Button';
@@ -103,29 +98,44 @@
                 const deleteItem = {
                     "code": e
                 }
-                loginApi.receiversDel({}, {
-                    data: deleteItem,
-                    headers: {
-                        'x-auth-token': sessionStorage.getItem('TOKEN')
-                    }
-                }).then(res => {
-                    if (res.status == 200) {
-                        this.List.splice(i, 1);
-                    } else {
-                        this.isError = '出现异常!请重试!'
-                    }
-                }).catch(error => {
-                    switch (error.status) {
-                        case 456:
-                            this.isError = error.data
-                            break;
-                        case 567:
-                            this.isError = '系统错误!'
-                            break;
-                        default:
-                            this.isError = '请求错误!'
-                            break;
-                    }
+                this.$$message.confirm.show({
+                    confirm(vm, resolve) {
+                        loginApi.receiversDel({}, {
+                            data: deleteItem,
+                            headers: {
+                                'x-auth-token': sessionStorage.getItem('TOKEN')
+                            }
+                        }).then(res => {
+                            if (res.status == 200) {
+                                this.List.splice(i, 1);
+                            } else {
+                                this.isError = '出现异常!请重试!'
+                            }
+                        }).catch(error => {
+                            switch (error.status) {
+                                case 456:
+                                    this.isError = error.data
+                                    break;
+                                case 567:
+                                    this.isError = '系统错误!'
+                                    break;
+                                default:
+                                    this.isError = '请求错误!'
+                                    break;
+                            }
+                        });
+                        resolve();
+                    },
+                    cancel(vm, resolve) {
+                        vm.$router.push({
+                            name: "Receivers"
+                        });
+                        resolve();
+                    },
+                    title: "",
+                    content: "确认要删除该收货地址吗?",
+                    rightBtnText: "取消",
+                    leftBtnText: "确定"
                 });
             },
             mountedApi(TOKEN) {
@@ -190,7 +200,7 @@
                 .receiversUpdate {
                     display: flex;
                     justify-content: space-between;
-                            font-size: 24px;
+                    font-size: 24px;
                     .rcvDone {
                         display: flex;
                         justify-content: flex-start;
@@ -211,8 +221,8 @@
                             line-height: 94px;
                         }
                     }
-                    div:nth-child(2){
-                        margin-right:0;
+                    div:nth-child(2) {
+                        margin-right: 0;
                     }
                 }
             }

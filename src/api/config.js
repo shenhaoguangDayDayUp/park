@@ -9,7 +9,8 @@ module.exports = {
         static: ""
     },
     imgUrl:{
-        development: 'http://192.168.1.198',
+        // development: 'http://192.168.1.198',
+        development: '/api',
         production: "http://changyingyule.cn",
         testing: "",
         static: ""

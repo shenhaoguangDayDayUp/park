@@ -18,11 +18,11 @@ export default {
 }
 </script>
 <style scoped>
-  .imgs{
-        background-color:#e3e3e3;
-        position:relative;
-        overflow: hidden;
-    }
+.imgs{
+      background-color:#e3e3e3;
+      position:relative;
+      overflow: hidden;
+  }
 .sd__imgview__content {
   position: relative;
   z-index: 10;

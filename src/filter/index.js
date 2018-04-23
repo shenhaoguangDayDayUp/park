@@ -32,11 +32,17 @@ export function formatDate (date, fmt) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }
   let o = {
-    'M+': date.getMonth() + 1,
-    'd+': date.getDate(),
-    'h+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds()
+    // 'M+': date.getMonth() + 1,
+    // 'd+': date.getDate(),
+    // 'h+': date.getHours(),
+    // 'm+': date.getMinutes(),
+    // 's+': date.getSeconds(),
+    // 这里修改了,全部改成两位数显示
+    'M+': date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
+    'd+':date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate(),
+    'h+': date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
+    'm+': date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
+    's+': date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
   }
   for (let k in o) {
     if (new RegExp(`(${k})`).test(fmt)) {
