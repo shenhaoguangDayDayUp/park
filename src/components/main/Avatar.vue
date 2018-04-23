@@ -8,9 +8,8 @@
         <vue-core-image-upload 
         :crop="false" 
         inputOfFile='avatar' 
-        inputAccept='image/jpg,image/jpeg,image/png' 
-        @imageuploaded="imageuploaded" 
-        @errorUpload="errorUpload" 
+        inputAccept='image/jpg,image/jpeg,image/png'
+        @imagechanged="imagechanged"
         :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="/gateway/mobile/member/avatar">
         </vue-core-image-upload>
     </div>
@@ -34,8 +33,18 @@
             }
         },
         methods: {
+             imagechanged(code) {
+                 console.log(code)
+             },
+             imageuploading(res) {
+                console.log(res)
+             },
             // imageuploaded(res, data,done,errorUpload,isBinary,) {
             imageuploaded(res, data) {
+                console.log(res)
+                console.log('data')
+                console.log(data)
+                // console.log(res.contains(200)) 
                 // if (res.errcode == 500) {
                 //     this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
                 // }
@@ -50,12 +59,14 @@
                     });
                 }
             },
-            errorUpload(res){
-                console.log(res)
+            // 异常处理
+            errorhandle(err) {  
+                console.log(111)
+                console.log(err.response);
             }
         },
         components: {
-            'vue-core-image-upload': VueCoreImageUpload,
+           'vue-core-image-upload': VueCoreImageUpload,
             Header
         },
     }

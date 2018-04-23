@@ -303,7 +303,7 @@
             },
             // 动态验证码修改密码
             getCode() {
-                if (this.judgePhone_ == '') {
+                if (this.userName_) {
                     this.timer = null; //打开倒计时开关
                     const mobileNumber = this.$refs.userName_.value;
                     getCodeApi.getcode({

@@ -39,9 +39,9 @@
       </div>
       <submit text="登录" :disabled="submitBtnDisabled" @click.native="submits()"></submit>
     </div>
-    <div class="toRegister" @click="toRegister">
-      没有账号？
-      <span style="color:#ffcb16;">立即注册</span>
+    <div class="toRegister" >
+      <span>没有账号？</span>
+      <span style="color:#ffcb16;" @click="toRegister">立即注册</span>
     </div>
   </div>
 </template>

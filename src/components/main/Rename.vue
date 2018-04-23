@@ -4,7 +4,7 @@
         <x-input 
         title="" 
         placeholder="请填写你的昵称" 
-        :min="2" :max="20" 
+        :min="2" :max="10" 
         :icon-type="iconType" 
         v-model="name"></x-input>
         <!-- 报错信息 -->
