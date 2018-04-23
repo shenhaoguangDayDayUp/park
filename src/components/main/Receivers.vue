@@ -30,7 +30,7 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active">
-                <router-link :to="{path:' /receiversUpdate ',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>
+                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>       
             </div>
         </div>
         <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
@@ -61,26 +61,24 @@
         },
         mounted() {
             const TOKEN = sessionStorage.getItem('TOKEN');
-            this.$root.eventHub.$on('noteRcv', () => {
-                this.mountedApi(TOKEN);
-            })
-            this.mountedApi(TOKEN);
+            this.getList(TOKEN);
         },
         methods: {
             // 修改默认地址的请求
             chooseFav(code) {
+                const TOKEN = sessionStorage.getItem('TOKEN');
                 loginApi.receiversSetDefault({
                     id: code
                 }, {
                     headers: {
-                        'x-auth-token': sessionStorage.getItem('TOKEN')
+                        'x-auth-token': TOKEN
                     }
                 }).then(res => {
                     if (res.status == 200) {
                         this.$vux.toast.show({
                             text: '修改成功',
                         });
-                        this.$root.eventHub.$emit('noteRcv')
+                        this.getList(TOKEN);
                     } else {
                         this.isError = '出现异常!请重试!'
                     }
@@ -128,7 +126,7 @@
                     }
                 });
             },
-            mountedApi(TOKEN) {
+            getList(TOKEN) {
                 // 请求用户收货地址信息
                 loginApi.receivers({}, {
                     data: {},

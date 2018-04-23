@@ -82,6 +82,7 @@
             const element = data.records[index];
             this.gameList.push(element);
           }
+          console.log(this.gamList)
           this.count = data.count;
         } catch (err) {}
       },
