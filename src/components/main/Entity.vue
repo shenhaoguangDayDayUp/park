@@ -105,7 +105,7 @@
                 this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
                 this.avatar = config.apiUrlPrefix[process.env.NODE_ENV]+ data.avatar + '?r=' + new Date().getTime();// 头像加时间戳
             }).catch(error => {
-                // console.log(error.response.status)
+                console.log(error.response.status)
             });
         },
         methods: {

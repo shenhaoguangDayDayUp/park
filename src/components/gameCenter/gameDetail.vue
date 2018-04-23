@@ -3,7 +3,7 @@
     <Header :title="this.$route.query.name" :isShow="true"></Header>
     <div class="gameTitle">
       <div class="gameImg">
-        <img :src="'http://changyingyule.cn'+ showData.icon" alt="">
+        <img :src="showData.icon" alt="">
       </div> 
       <div class="gameRight">
         <p>{{showData.name}}</p>
@@ -17,7 +17,7 @@
         <submit text="开始游戏" @click.native="rename()"></submit>
       </div>
     </div>
-    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" :show-dots="false"></swiper>
+    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" width=80% margin= '0 auto' :show-dots="false"></swiper>
     <div class="gameWinners">
       <span class="winnerTitle">中奖榜</span>
     </div>
@@ -99,16 +99,17 @@
           } = await gameApi.gameDetail({
             id: this.$route.query.code
           });
+          var imgPrifex = config.imgUrl[config.env.NODE_ENV];
+          data.icon = imgPrifex + data.icon;
           this.showData = data;
           this.showData.banners = this.showData.banners.split(',');
           for (let index = 0; index < this.showData.banners.length; index++) {
             const element = {
               url: 'javascript:',
-              img: config.apiUrlPrefix[process.env.NODE_ENV]+ this.showData.banners[index] + '?r=' + new Date().getTime(),// 头像加时间戳
+              img: imgPrifex + this.showData.banners[index] + '?r=' + new Date().getTime(),// 头像加时间戳
             };
             baseList.push(element);
           }
-          console.log(baseList)
         } catch (err) {}
       },
     },
@@ -135,6 +136,10 @@
       .gameImg {
         width: 196px;
         height: 196px;
+        img{
+          width: 196px;
+        height: 196px;
+        }
       }
       .gameRight {
         // width: 54.8%;
