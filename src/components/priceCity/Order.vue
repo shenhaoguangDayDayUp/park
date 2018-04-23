@@ -13,7 +13,7 @@
         <div class="status">
           <div>
             <span>状态:</span>
-            <span class='stauts-detail'>待发货</span>
+            <span class='stauts-detail'>{{detail.status|orderStatus}}</span>
           </div>
         </div>
         <div class="price">奖品小计:</div>

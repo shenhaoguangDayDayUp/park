@@ -203,7 +203,7 @@ export default {
           )
           .then(res => {
             if (res.status == 200) {
-              window.global.$root.eventHub.$emit("addressUpdate");
+              // window.global.$root.eventHub.$emit("addressUpdate");
               this.$router.go(-1);
             } else {
               this.isError = "出现异常!请重试!";

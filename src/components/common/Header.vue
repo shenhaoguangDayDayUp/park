@@ -3,6 +3,9 @@
     <span class="left-back" v-if="isShow">
         <img src="../../assets/img/close.png" alt="" @click.stop='$router.go(-1)'> 
     </span>
+     <span class="left-back" v-else>
+        
+    </span>
     <div class="nav-title">
         {{title}}
     </div>
@@ -39,26 +42,43 @@
     width: 100%;
     background: #1b1a20;
     box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.09);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-right: 20px;
+    padding-left: 20px;
     .left-back {
-      position: absolute;
-      left: 22px;
-      height:100%;
-      line-height: 94px;
+      flex: 1;
+      // position: absolute;
+      // left: 22px;
+      // height:100%;
+      // line-height: 94px;
       img {
         width: 20px;
         height: 34px;
       }
     }
     .nav-title {
-      text-align: center;
-      letter-spacing: 2px;
-      line-height: 94px;
+       flex: 1;
+       text-align: center;
+      // text-align: center;
+      // letter-spacing: 2px;
+      // line-height: 94px;
     }
     .nav-right {
-      position:absolute;
-      right:22px;
-      top:0;
-      line-height: 94px;
+        flex: 1;
+        text-align: right;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        // padding-right: 10px;
+      //  align-self: flex-end;
+      // position:absolute;
+      // right:22px;
+      // top:0;
+      // line-height: 94px;
     }
   }
 </style>

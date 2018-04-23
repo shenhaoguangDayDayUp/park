@@ -26,14 +26,18 @@ const plugin = {
             })
             document.body.appendChild($vm.$el)
         }
-
         const confirm = {
             show(options) {
                 $vm.showToast = true
-                $vm = Object.assign($vm, options)
+                for (let prop in options) {
+                    if (options.hasOwnProperty(prop)) {
+                        $vm[prop] = options[prop];
+                    }
+                  }
+                // $vm = Object.assign($vm, options)
                 $vm.$off('cancel')
                 $vm.$off('success')
-                $vm.$on('cancel', () => {
+                $vm.$on('cancel',() => {
                     return new Promise((resolve, reject) => {
                         if (options.cancel) {
                             options.cancel(window.global, resolve)
@@ -42,7 +46,7 @@ const plugin = {
                         $vm.showToast = false;
                     })
                 })
-                $vm.$on('success', msg => {
+                $vm.$on('success',msg => {
                     return new Promise((resolve, reject) => {
                         options.confirm(window.global, resolve)
                     }).then(() => {

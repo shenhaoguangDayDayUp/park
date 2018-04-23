@@ -51,12 +51,12 @@ export default {
   async mounted() {
     this.getInfo();
     this.getDefaultAddress();
-    window.global.$root.eventHub.$on("addressUpdate", () => {
-      console.log("地址更新了");
-      this.$vux.toast.show({
-        text: "地址更新了"
-      });
-    });
+    // window.global.$root.eventHub.$on("addressUpdate", () => {
+    //   console.log("地址更新了");
+    //   this.$vux.toast.show({
+    //     text: "地址更新了"
+    //   });
+    // });
   },
   methods: {
     async getDefaultAddress() {
@@ -67,7 +67,7 @@ export default {
         const { data } = await loginApi.receiversDefault({}, token);
         if (!data) {
           return this.$vux.toast.show({
-            text: "地址更新了"
+            text: "收货地址为空"
           });
         }
         this.$store.dispatch("toggleUpdateAddres", data);

@@ -15,9 +15,9 @@
            class="message-tip">很抱歉,充值失败!</div>
     </div>
     <div class="button-box">
-      <div class="game-center-button">游戏厅</div>
+      <div class="game-center-button" @click="$router.push({name:'gameCenter'})">游戏厅</div>
       <div class="change-tip"
-           @click="$router.push({name:'change'})">交易明细</div>
+           @click="$router.push({name:'change',query:{show:false}})">交易明细</div>
     </div>
 
   </div>

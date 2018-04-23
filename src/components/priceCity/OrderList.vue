@@ -1,7 +1,9 @@
 <template>
   <div class="order-list">
-    <Header title="订单清单"
-            :isShow='true'></Header>
+        <Header title="订单清单"
+            :isShow="true"></Header>
+    <!-- <Header title="订单清单"
+            :isShow='true'></Header> -->
     <tab v-model="tabActive"
          style="margin-top:20px;"
          prevent-default
@@ -49,7 +51,7 @@
       </div>
     </div>
 
-    <Dialog :visible.sync='showToast'
+    <!-- <Dialog :visible.sync='showToast'
             @success='success'
             @cancel='cancel'>
       <template slot="header">
@@ -58,8 +60,8 @@
       <template slot="content">
         是否前往登录?
       </template>
-      <!-- <template slot="footer"></template> -->
-    </Dialog>
+      
+    </Dialog> -->
   </div>
 </template>
 

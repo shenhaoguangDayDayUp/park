@@ -239,6 +239,7 @@ export default {
   background: #23262b;
   height: 100%;
   .heart {
+    // padding-right: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -343,7 +344,7 @@ export default {
 }
 
 .shop_item_3_img {
-  border: 1px solid #e6e6e6;
+  // border: 1px solid #e6e6e6;
   height: 230px;
   width: 230px;
   position: relative;
@@ -353,7 +354,7 @@ export default {
   position: absolute;
   top: 20px;
   bottom: 20px;
-  right: -13px;
+  right: -12px;
   border-right: 2px solid #666a74;
   // border-right: 2px solid #282828;
   // transform: scaleX(0.5);

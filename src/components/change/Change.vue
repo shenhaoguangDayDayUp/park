@@ -1,7 +1,7 @@
 <template>
   <div class="change">
-    <Header title="交易明细"
-            :isShow='true'></Header>
+    <Header  title="交易明细"
+            :isShow='show'></Header>
     <div class="content">
       <div class="title">
         <div class="title-left">余额</div>
@@ -32,6 +32,11 @@ import { LoadMore, Divider } from "vux";
 import { InfiniteScroll } from "mint-ui";
 export default {
   name: "",
+  computed:{
+    show(){
+      return this.$route.query.hasOwnProperty('show')?false:true
+    }
+  },
   data() {
     return {
       page: 1,
