@@ -3,7 +3,7 @@
     <Header :title="this.$route.query.name" :isShow="true"></Header>
     <div class="gameTitle">
       <div class="gameImg">
-        <img :src="showData.icon" alt="">
+        <img v-lazy="showData.icon" alt="">
       </div>
       <div class="gameRight">
         <p>{{showData.name}}</p>
