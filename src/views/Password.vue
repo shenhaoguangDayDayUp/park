@@ -289,7 +289,7 @@
                         }
                     }).then(res => {
                         this.$router.push({
-                            name: 'Entity'
+                            name: 'Main'
                         })
                     }).catch(error => {
                         console.log(error)
@@ -331,6 +331,7 @@
                 }
                 // 出现的问题是如果上面的请求失败的话,时间还在倒计时，所以要打开开关！
             },
+            // 动态码重置密码
             submits_() {
                 const TOKEN = sessionStorage.getItem('TOKEN');
                 if (this.$refs.smsCode.value) {
@@ -345,7 +346,7 @@
                             }
                         }).then(res => {
                             this.$router.push({
-                                name: 'Entity'
+                                name: 'Main'
                             })
                         }).catch(error => {
                             this.isError = '修改失败!';
