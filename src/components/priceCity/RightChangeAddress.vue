@@ -1,5 +1,5 @@
 <template>
-    <div class="change-address">
+    <div class="change-address" @click='editAddress'>
         <div class="receive">
             <span class='title'>收货人:</span>
             <span>{{item.name}}</span>
@@ -13,7 +13,7 @@
                     <span style="margin-right:20px">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}
                 </div>
             <!-- </div> -->
-            <div class="right-img" @click='editAddress' v-if='show'>
+            <div class="right-img"  v-if='show'>
                     >
             </div>
         </div>
@@ -24,7 +24,10 @@ export default {
   name: "RightChange",
   methods:{
     editAddress(){
-      this.$router.push({name:'ReceiversUpdate',query:{code:this.item.code}}) 
+      if(this.showEidt){
+         this.$router.push({name:'Receivers',query:{code:this.item.code}}) 
+      }
+     
     }
   },
  computed: {

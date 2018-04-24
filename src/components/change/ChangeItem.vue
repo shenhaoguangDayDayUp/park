@@ -1,6 +1,6 @@
 <template>
     <div class="change-item">
-        <div class="item-time">{{item.updateAt|dateFilter}}</div>
+        <div class="item-time">{{item.updateAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
          <div class="item">{{item.note}}</div>
           <div class="item">{{item.type|recordStatus}}</div>
            <div class="item">{{item.amount}}</div>

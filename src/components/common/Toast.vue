@@ -54,7 +54,7 @@ export default {
       this.$emit("cancel");
     },
     onConfirm() {
-        
+        console.log(this.$root)
       //  this.showToast = false
       this.$emit("success");
     }

@@ -67,7 +67,7 @@ export default {
         const { data } = await loginApi.receiversDefault({}, token);
         if (!data) {
           return this.$vux.toast.show({
-            text: "收货地址为空"
+            text: "收货信息为空"
           });
         }
         this.$store.dispatch("toggleUpdateAddres", data);

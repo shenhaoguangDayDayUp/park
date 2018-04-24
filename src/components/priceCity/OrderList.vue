@@ -24,7 +24,7 @@
              v-for="(item,key) in list"
              :key='key'>
           <div class="content-title">
-            <div class="title-left">{{item.placeAt|dateFilter}}</div>
+            <div class="title-left">{{item.placeAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
             <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
             <div class="title-right">{{item.grandTotal}}积分</div>
           </div>

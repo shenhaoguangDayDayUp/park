@@ -38,6 +38,7 @@ const plugin = {
                 $vm.$off('cancel')
                 $vm.$off('success')
                 $vm.$on('cancel',() => {
+                 
                     return new Promise((resolve, reject) => {
                         if (options.cancel) {
                             options.cancel(window.global, resolve)
@@ -47,8 +48,9 @@ const plugin = {
                     })
                 })
                 $vm.$on('success',msg => {
+                    // console.log($vm.confirm())
                     return new Promise((resolve, reject) => {
-                        options.confirm(window.global, resolve)
+                        $vm.confirm(window.global, resolve)
                     }).then(() => {
                         $vm.showToast = false;
                     })
@@ -73,6 +75,7 @@ const plugin = {
         vue.mixin({
             created: function () {
                 this.$$message = vue.$$message
+                // console.log(this)
             }
         })
     }

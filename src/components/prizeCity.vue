@@ -457,7 +457,7 @@ export default {
         line-height: 30px;
         font-size: 24px;
         color: rgb(51, 51, 51);
-        padding: 15px 0px;
+        padding: 15px 15px;
         // border-bottom: 1px solid rgb(230, 230, 230);
         overflow: hidden;
         text-overflow: ellipsis;
