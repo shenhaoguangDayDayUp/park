@@ -54,6 +54,9 @@ export default {
       value = isNaN(value) ? 0 : value;
       value -= 1;
       if(value <= 0){
+        this.$vux.toast.show({
+          text: "不能再少了"
+        });
         value = 1;
       }
      this.quntity = value

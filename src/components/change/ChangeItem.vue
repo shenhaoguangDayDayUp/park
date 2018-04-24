@@ -2,8 +2,8 @@
     <div class="change-item">
         <div class="item-time">{{item.updateAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
          <div class="item">{{item.note}}</div>
-          <div class="item">{{item.type|recordStatus}}</div>
-           <div class="item">{{item.amount}}</div>
+          <div :class="['item-type',item.type=='PAYMENT'?'':'gold']">{{item.type|recordStatus}}</div>
+           <div class="item-amount">{{item.amount}}</div>
     </div>
 </template>
 <script>
@@ -29,13 +29,24 @@ export default {
         justify-content: space-between;
         height: 87px;
         border-bottom: 2px solid #323540;
+        .gold{
+            color:#ffcb16;
+        }
         .item-time{
             width: 40%;
-           text-align: center;
+           text-align: left;
         }
         .item{
             flex: 1;
             text-align: center;
+        }
+        .item-type{
+              flex: 1;
+            text-align: center;
+        }
+        .item-amount{
+             flex: 1;
+            text-align: right;
         }
     }
 </style>

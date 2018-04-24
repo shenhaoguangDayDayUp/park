@@ -11,7 +11,7 @@
       </div>
       <swiper :list="bannerData"
               auto
-              height="500px"></swiper>
+               height="5rem"></swiper>
     </div>
     <div class="goods-detail-title">
       <div class="bar"></div>
@@ -22,7 +22,7 @@
         <div class="price">{{detail.price}}</div>
       </div>
     </div>
-    <div class="goods-content"
+    <div class="goods-content" ref='goods-content'
          v-html='detail.detail'>
 
     </div>
@@ -76,6 +76,15 @@ export default {
       ]
     };
   },
+
+
+updated() {
+ var nodeList = this.$refs['goods-content'].querySelectorAll('img')
+  for(var i=0;i<nodeList.length;i++){
+    nodeList[i].style.width='100%'
+  }
+
+ },
   methods: {
     async addCart() {
       try {
@@ -152,6 +161,7 @@ export default {
   },
   mounted() {
     this.getInfo();
+   
   },
   components: {
     Swiper,
@@ -160,6 +170,7 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+
 .goods {
   color: #fff;
   background: #23262b;
@@ -228,6 +239,18 @@ export default {
     width: 100%;
     overflow: hidden;
     padding-bottom: 124px;
+    .content_tpl{
+      .formwork{
+        .formwork_img{
+          img{
+            width: 100% !important;
+          }
+        }
+      }
+    }
+    img{
+      width: 100% !important;
+    }
   }
   .goods-footer {
     height: 124px;

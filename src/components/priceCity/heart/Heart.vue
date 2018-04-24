@@ -245,9 +245,10 @@ export default {
     async valueChange(item) {
       const product = this.list[item.index];
       if (product.quantity == 1 && item.type == -1) {
-        return this.$vux.toast.show({
-          text: "不能再少了"
-        });
+        return
+        // return this.$vux.toast.show({
+        //   text: "不能再少了"
+        // });
       }
 
       try {

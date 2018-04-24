@@ -16,7 +16,7 @@
       <div @click='indexToDetail'>
          <swiper :list="bannerList" v-model="index" 
               auto
-              height="328px"
+              height="5rem"
               dots-class="custom-bottom"
               dots-position="center"></swiper>
       </div>

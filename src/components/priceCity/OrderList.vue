@@ -198,7 +198,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    height: 74px;
+    // height: 74px;
     width: 100%;
     padding-left: 20px;
     background: #1b1a20;
