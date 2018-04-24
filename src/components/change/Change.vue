@@ -1,12 +1,22 @@
 <template>
   <div class="change">
-    <Header  title="交易明细"
+        <Header  title="交易明细"
             :isShow='show'></Header>
+
+
+    <!-- <Header  title="交易明细"
+            :isShow='show'></Header> -->
     <div class="content">
-      <div class="title">
+      <div class="sticky-content">
+               <sticky :offset="0" :check-sticky-support="false">
+  <div class="title">
         <div class="title-left">余额</div>
         <div class="title-right">{{remaind}}</div>
       </div>
+</sticky>
+      </div>
+ 
+    
       <div v-infinite-scroll="loadMore"
            infinite-scroll-disabled="loading"
            infinite-scroll-distance="10">
@@ -28,7 +38,7 @@ import Header from "@/components/common/Header.vue";
 import ChangeItem from "./ChangeItem.vue";
 import { transactionsApi } from "@/api/api";
 import { common } from "@/logic";
-import { LoadMore, Divider } from "vux";
+import { LoadMore, Divider,  Sticky } from "vux";
 import { InfiniteScroll } from "mint-ui";
 export default {
   name: "",
@@ -41,7 +51,7 @@ export default {
     return {
       page: 1,
       loading: false,
-      noMoreData: true,
+      noMoreData: false,
       count: 0,
       list: [],
       remaind: 0
@@ -90,7 +100,8 @@ export default {
     Header,
     ChangeItem,
     LoadMore,
-    Divider
+    Divider,
+    Sticky,
   },
   directives: {
     InfiniteScroll
@@ -101,17 +112,28 @@ export default {
 .divider{
   padding-top:40px;
   padding-bottom: 40px;
+  font-size: 25px;
 }
 .change {
   color: #fff;
   background: #23262b;
   height: 100%;
   font-size: 28px;
+  box-sizing: border-box;
   .content {
     padding-left: 20px;
     padding-right: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    .sticky-content{
+      height: 100px;
+    }
+    .vux-fixed{
+      width: 95% !important;
+    }
     // height: 100%;
     .title {
+      background: #23262b;
       display: flex;
       flex-direction: row;
       height: 94px;

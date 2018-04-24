@@ -184,8 +184,9 @@ export default {
           // this.$vux.toast.show({
           //   text: "会员没有登录请先登录"
           // });
+         
         }
-        console.log(this.list);
+
       } catch (err) {}
     },
     async deleteItem(index) {

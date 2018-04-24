@@ -52,9 +52,9 @@ export default {
         document.body.appendChild(div);
         document.forms.punchout_form.submit();
       } catch (error) {
-             this.$vux.toast.show({
-          text: error
-        });
+        //      this.$vux.toast.show({
+        //   text: error
+        // });
       }
     },
     payClick(idx) {
