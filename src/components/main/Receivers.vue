@@ -26,7 +26,7 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active">
-                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>       
+                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>
             </div>
         </div>
         <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
@@ -96,6 +96,7 @@
                 const deleteItem = {
                     "code": e
                 }
+                var that = this ;
                 this.$$message.confirm.show({
                     confirm(vm, resolve) {
                         loginApi.receiversDel({}, {
@@ -104,11 +105,7 @@
                                 'x-auth-token': sessionStorage.getItem('TOKEN')
                             }
                         }).then(res => {
-                            if (res.status == 200) {
-                                this.List.splice(i, 1);
-                            } else {
-                                this.isError = '出现异常!请重试!'
-                            }
+                            that.List.splice(i, 1);
                         }).catch(error => {
                             switch (error.status) {
                                 case 456:

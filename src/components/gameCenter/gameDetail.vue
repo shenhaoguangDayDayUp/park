@@ -1,23 +1,23 @@
 <template>
-  <div class="gameDetail">
+  <div class="gameDetail" id="gameDetail">
     <Header :title="this.$route.query.name" :isShow="true"></Header>
     <div class="gameTitle">
       <div class="gameImg">
         <img :src="showData.icon" alt="">
-      </div> 
+      </div>
       <div class="gameRight">
         <p>{{showData.name}}</p>
         <p>{{showData.description}}</p>
         <!-- 按钮 -->
         <!-- <div class="btn">
-                <div class="redBtn" @click=rename()>
-                  开始游戏
-                </div>
-              </div> -->
+                  <div class="redBtn" @click=rename()>
+                    开始游戏
+                  </div>
+                </div> -->
         <submit text="开始游戏" @click.native="rename()"></submit>
       </div>
     </div>
-    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" width=80% margin= '0 auto' :show-dots="false"></swiper>
+    <swiper id="swiper" :list="demo01_list" loop auto v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" style="width:80%;margin:0 auto;overflow: visible!important;" :show-dots="false"></swiper>
     <div class="gameWinners">
       <span class="winnerTitle">中奖榜</span>
     </div>
@@ -106,7 +106,7 @@
           for (let index = 0; index < this.showData.banners.length; index++) {
             const element = {
               url: 'javascript:',
-              img: imgPrifex + this.showData.banners[index] + '?r=' + new Date().getTime(),// 头像加时间戳
+              img: imgPrifex + this.showData.banners[index] + '?r=' + new Date().getTime(), // 头像加时间戳
             };
             baseList.push(element);
           }
@@ -132,13 +132,14 @@
       padding: 38px 6% 24px;
       display: -webkit-flex;
       display: flex;
+      margin-bottom:64px;
       justify-content: space-between;
       .gameImg {
         width: 196px;
         height: 196px;
-        img{
+        img {
           width: 196px;
-        height: 196px;
+          height: 196px;
         }
       }
       .gameRight {
@@ -178,21 +179,29 @@
     button {
       width: 300px;
       height: 62px;
-      line-height: 62px;
-      // margin-top:29px;
-      margin-top:20px;
+      line-height: 62px; // margin-top:29px;
+      margin-top: 20px;
       background-color: #ffcb16;
       box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
       border-radius: 31px;
     }
   }
 </style>
-<style lang="scss" scoped>
+<style lang="scss">
+  #gameDetail > #swiper > .vux-swiper {
+    overflow: visible!important;
+  }
   .gameDetail {
     .vux-slider {
-      margin-top: 44px;
+      overflow: visible;
+    }
+    .vux-slider>.vux-swiper>.vux-swiper-item {
+      padding: 0 30px;
     }
   }
+  #gameDetail > .vux-slider>.vux-swiper>.vux-swiper-item {
+      padding: 0 30px!important;
+    }
 </style>
 
 

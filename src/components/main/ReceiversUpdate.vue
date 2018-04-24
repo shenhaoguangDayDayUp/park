@@ -8,6 +8,8 @@
                      :is-type="isTypeUserName"
                      :show-clear="false"
                      :required = true
+                     :min="2" 
+                     :max="12"
                      v-model="userName"
                      @on-change="userNameChange"
                      :icon-type="iconType"></x-input>
@@ -51,11 +53,11 @@ import { loginApi } from "../../api/api";
 import Header from "../common/Header";
  import Submit from '../common/Button';
 import Checker from "../common/Checker";
+import MapCoding from "../../common/MapCoding.json";
 import MapsCoding from "../../common/MapsCoding.json";
 import {
   XInput,
   XAddress,
-  ChinaAddressV4Data,
   XTextarea,
   XButton,
   Value2nameFilter as value2name
@@ -88,7 +90,8 @@ export default {
     return {
       favShow: true,
       demo: true,
-      addressData: MapsCoding,
+      addressData: MapCoding,
+      MapsCoding:MapsCoding,
       title: "选择收货地址",
       areaValue: ["110000", "110100", "110101"],
       userName: "",
@@ -99,24 +102,22 @@ export default {
       rcvTitle: this.$route.query.title,
       isUserName:false,
       isMobileNumber:false
-      
     };
   },
   mounted() {
     let code = this.$route.query.code;
     if (code) {
       // 获取地址信息(地址有code则为编辑用户收货地址信息)
-      loginApi
-        .receiversFind(
-          {
-            id: this.$route.query.code
-          },
-          {
-            data: {},
-            headers: {
-              "x-auth-token": sessionStorage.getItem("TOKEN")
-            }
+      loginApi.receiversFind(
+        {
+          id: this.$route.query.code
+        },
+        {
+          data: {},
+          headers: {
+            "x-auth-token": sessionStorage.getItem("TOKEN")
           }
+        }
         )
         .then(res => {
           let { status, data } = res;
@@ -125,7 +126,6 @@ export default {
             this.mobileNumber = data.mobileNumber;
             this.street = data.street;
             this.areaValue = [data.provinceID, data.cityID, data.districtID];
-            // this.addressData = [data.province,data.city,data.district]
           } else {
             this.isError = "出现异常!请重试!";
           }
@@ -153,7 +153,8 @@ export default {
       // console.log(this.submitBtnDisabled)
     },
     isTypeUserName(value) {
-       var regName =/^[\u4e00-\u9fa5]{2,4}$/;
+      //  var regName =/^[\u4e00-\u9fa5]{2,4}$/;
+       var regName = /^[\u4E00-\u9FA5A-Za-z0-9]{2,12}$/; //2-20位中文、英文、数字但不包括下划线等符号
        if(!regName.test(value)){
          this.isUserName = false;
          return {valid:false,msg:'输入姓名格式有误'};
@@ -171,8 +172,7 @@ export default {
           return {valid:true};
     },
     rcvrSubmit() {
-      // true
-      const areaName = this.$options.methods.getName(this.areaValue);
+      const areaName = this.getName(this.areaValue);
       var arr = areaName.split(" ");
       // 修改地址
       if (this.$route.query.code) {
@@ -185,9 +185,9 @@ export default {
           city: arr[1],
           district: arr[2],
           street: this.street,
-          provinceID: "2",
-          cityID: "2822",
-          districtID: "51979"
+          provinceID: this.areaValue[0],
+          cityID:this.areaValue[1],
+          districtID: this.areaValue[2]
         };
         // console.log(editList);
         // 修改用户收货地址信息
@@ -233,9 +233,9 @@ export default {
           city: arr[1],
           district: arr[2],
           street: this.street,
-          provinceID: "2",
-          cityID: "2822",
-          districtID: "51979"
+          provinceID: this.areaValue[0],
+          cityID:this.areaValue[1],
+          districtID: this.areaValue[2]
         };
         loginApi
           .receiversUpdate(
@@ -272,7 +272,7 @@ export default {
       }
     },
     getName(areaValue) {
-      return value2name(areaValue, ChinaAddressV4Data);
+      return value2name(areaValue, this.addressData);
     }
   }
 };
