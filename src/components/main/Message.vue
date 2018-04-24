@@ -4,10 +4,10 @@
         <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
             <li v-for="(v,i) in msgsList" :key="i">
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
-                    <span><span style="width:50%;">{{v.sendAt}}</span><span>{{v.title}}</span></span>
+                    <div class="msgItem"><div style="width:40%;">{{v.sendAt}}</div><div>{{v.title}}</div></div>
                 </router-link>
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
-                    <span><span style="width:50%;">{{v.sendAt}}</span><span>{{v.title}}</span></span>
+                    <div class="msgItem"><div style="width:40%;">{{v.sendAt}}</div><div>{{v.title}}</div></div>
                 </router-link>
             </li>
             <load-more v-if='loading' :tip="'正在加载'"></load-more>
@@ -16,7 +16,7 @@
     </div>
 </template>
 <script>
-    import Header from '../common/Header'
+    import Header from '../common/Header'   
     import {
         InfiniteScroll
     } from "mint-ui";
@@ -78,8 +78,8 @@
             },
             timeStamp(t) {
                 var date = new Date(t);
-                var Y = date.getFullYear() + '-';
-                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+                var Y = date.getFullYear() + '.';
+                var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
                 var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
                 var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
                 var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
@@ -115,6 +115,11 @@
                 flex-direction: column;
                 span span {
                     margin-left: 27px;
+                }
+                .msgItem{
+                    display:flex;
+                    display: -webkit-flex;
+                    justify-content: flex-start;
                 }
             } // li:first-child a:link {
             //     color: #ffcb16;

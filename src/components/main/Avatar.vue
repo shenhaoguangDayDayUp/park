@@ -10,13 +10,13 @@
         inputOfFile='avatar' 
         inputAccept='image/jpg,image/jpeg,image/png'
         @imagechanged="imagechanged"
-        :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="/api/gateway/mobile/member/avatar">
+        :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="http://139.198.176.248/gateway/mobile/member/avatar">
         </vue-core-image-upload>
     </div>
 </template>
 <script>
     import Header from '../common/Header'
-    import config from '../../api/config.js'
+    import config from '@/api/config'
     import VueCoreImageUpload from 'vue-core-image-upload';
     import {
         loginApi,
@@ -25,11 +25,10 @@
         name: 'Avatar',
         data() {
             return {
-                src: 'http://img1.vued.vanthink.cn/vued0a233185b6027244f9d43e653227439a.png',
                 data: {
                     'x-auth-token': sessionStorage.getItem('TOKEN')
                 },
-                querySrc: this.$route.query.src
+                querySrc: this.$route.query.src,
             }
         },
         methods: {

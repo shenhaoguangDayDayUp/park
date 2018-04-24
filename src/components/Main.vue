@@ -12,9 +12,10 @@
                 </div>
             </div>
             <div class="mint-cell mint-cell-wrapper">
+                <!-- 已登陆状态下 -->
                 <div class="mint-cell-title" v-if=isActive>
-                    <div class="cell-logo">
-                        <img :src = "isAvatar?avatar:require('../assets/img/touxiang2@2x.png')" height="60" width="60">
+                    <div class="cell-logo" @click='$router.push({name:"Entity"})'>
+                        <img :src = "avatar" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>{{list.userName}}</span>
                             <span>{{list.mobileNumber}}</span>
@@ -24,6 +25,7 @@
                         <div class="right-arrow"></div>
                     </router-link>
                 </div>
+                <!-- 未登录状态下 -->
                 <div class="mint-cell-title" v-else>
                     <div class="cell-logo" @click=toLogin>
                         <img data-v-48713cc3="" src="../assets/img/touxiang2@2x.png" height="60" width="60">
@@ -96,6 +98,7 @@
 </template>
 <script>
     import Header from "./common/Header.vue";
+    import config from '@/api/config.js'
     import {
         XHeader,
         Badge
@@ -189,8 +192,8 @@
                         mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
                         point:data['account.balance'].toLocaleString()
                     }
-                    this.isAvatar = data["member.avatar"]
-                    this.avatar = process.env.NODE_ENV === 'development'? 'api'+ data["member.avatar"] + '?r=' + new Date().getTime():'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime();
+                     var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+                     this.avatar = imgPrifex + data["member.avatar"] +'?r=' + new Date().getTime();
                     // this.avatar = 'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
                 }).catch(error => {
                 });

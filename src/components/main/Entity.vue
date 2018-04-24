@@ -5,8 +5,8 @@
             <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: avatar}})'>
                 <span>头像</span>
                 <span>
-                    <img :src= "avatar">
-                    </span>
+                        <img :src= "avatar">
+                        </span>
                 <span> </span>
             </li>
             <li @click.stop='$router.push({name:"Rename",query: {name: nickname}})'>
@@ -44,7 +44,7 @@
             </li>
         </ul>
         <ul class="messList">
-            <li @click.stop='$router.push({name:"Password",query:{title:"重置密码"}})'>
+            <li @click.stop='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
                 <span>重置密码</span>
                 <span></span>
                 <div class="right">
@@ -54,8 +54,8 @@
         </ul>
         <ul class="messList" style="margin-top:100px;">
             <li @click="toLogout(e)" style="display:flex;
-                align-items:center;
-                justify-content:center;">
+                    align-items:center;
+                    justify-content:center;">
                 退出登录
             </li>
         </ul>
@@ -81,9 +81,10 @@
             return {
                 userName: '',
                 mobileNumber: '',
+                mobileNumberFullname: '',
                 nickname: '',
                 idCardNumber: '',
-                avatar:''
+                avatar: ''
             }
         },
         mounted() {
@@ -99,11 +100,12 @@
                 const {
                     data
                 } = res;
+                this.mobileNumberFullname = data.mobileNumber;
                 this.mobileNumber = data.mobileNumber.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
                 this.userName = data.name;
                 this.nickname = data.nickname;
                 this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
-                this.avatar = config.apiUrlPrefix[process.env.NODE_ENV]+ data.avatar + '?r=' + new Date().getTime();// 头像加时间戳
+                this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
             }).catch(error => {
                 console.log(error.response.status)
             });
@@ -111,26 +113,41 @@
         methods: {
             // 退出登录请求
             toLogout() {
-                const TOKEN = sessionStorage.getItem('TOKEN')
-                loginApi.logout({}, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': TOKEN
-                    }
-                }).then(res => {
-                    const {
-                        data,
-                        status
-                    } = res;
-                    if (status == 200) {
-                        localStorage.removeItem('$LoginUser')
-                        sessionStorage.removeItem('TOKEN')
-                        this.$router.push({
-                            path: '/login'
+                var that = this;
+                this.$$message.confirm.show({
+                    confirm(vm, resolve) {
+                        loginApi.logout({}, {
+                            data: {},
+                            headers: {
+                                'x-auth-token': sessionStorage.getItem('TOKEN')
+                            }
+                        }).then(res => {
+                            const {
+                                data,
+                                status
+                            } = res;
+                            if (status == 200) {
+                                localStorage.removeItem('$LoginUser')
+                                sessionStorage.removeItem('TOKEN')
+                                that.$router.push({
+                                    path: '/login'
+                                });
+                            }
+                        }).catch(error => {
+                            console.log(error)
                         });
-                    }
-                }).catch(error => {
-                    console.log(error.response.status)
+                        resolve();
+                    },
+                    cancel(vm, resolve) {
+                        vm.$router.push({
+                            name: "Entity"
+                        });
+                        resolve();
+                    },
+                    title: "提示",
+                    content: "确认要退出登录吗?",
+                    rightBtnText: "取消",
+                    leftBtnText: "确定"
                 });
             },
             // 更改头像

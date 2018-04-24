@@ -122,7 +122,7 @@
     computed: {
       submitBtnDisabled() {
         const _this = myValidator;
-        if(_this.isPoneAvailable(this.userTel) && _this.isPwd(this.normalPwd) && _this.idCode(this.userCode) && _this.isUsername(this.userName)) return false;  
+        if(_this.isPoneAvailable(this.userTel) && _this.isPwd(this.normalPwd) && _this.idCode(this.userCode) && _this.isUsername(this.userName) && this.choosen) return false;  
           return true;
       }
     },

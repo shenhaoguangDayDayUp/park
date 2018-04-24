@@ -50,7 +50,7 @@
 <style lang="scss" scoped>
     button {
         background: #ffcb16;
-        box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
+        // box-shadow: 0 2px 6px 0 rgba(0, 32, 99, 0.4);
         color: #000;
         height: 78px;
         width: 590px;
@@ -61,7 +61,7 @@
         margin-top: 43px;
     }
     button:disabled{
-        background: #fff;
+        background: #666;
         color: #000;
         height: 78px;
         width: 590px;

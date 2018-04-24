@@ -17,7 +17,7 @@
                     <ul class="normalLogin">
                         <li>
                             <i class="isTip isTel" v-if="judgePhone"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-                            <input ref="userName" v-model="userName" @blur="blurPhone()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
+                            <input ref="userName" readonly="readonly" v-model="userName" @blur="blurPhone()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
@@ -41,11 +41,6 @@
                         <span class="isTip isPwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
                     </div>
                 </div>
-                <!-- <div class="btn">
-                                    <div class="redBtn" @click=submits()>
-                                        提&nbsp;交
-                                    </div>
-                                </div> -->
                 <submit text="提交" :disabled="submitBtnDisabledPwd" @click.native="submits"></submit>
             </mt-tab-container-item>
             <mt-tab-container-item id="tab-container2">
@@ -54,7 +49,7 @@
                     <ul class="normalLogin">
                         <li>
                             <i class="isTip isTel" v-if="judgePhone_"><img src="../assets/img/tishi@2x.png">输入的手机号有误</i>
-                            <input ref="userName_" v-model="userName_" @blur="blurPhone_()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
+                            <input ref="userName_" readonly="readonly" v-model="userName_" @blur="blurPhone_()" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
                         </li>
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" v-model="smsCode" class="sms" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " maxlength="4">
@@ -175,10 +170,10 @@
                 timer: null,
                 pswTitle: this.$route.query.title,
                 // v-model
-                userName_: '',
+                userName_: this.$route.query.mobileNumber,
                 newPwd_: '',
                 reNewPwd_: '',
-                userName: '',
+                userName: this.$route.query.mobileNumber,
                 normalPwd: '',
                 newPwd: '',
                 reNewPwd: '',
