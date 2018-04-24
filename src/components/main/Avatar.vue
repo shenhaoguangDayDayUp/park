@@ -5,13 +5,20 @@
             <img :src="querySrc" alt="">
             <!-- <img  src="../../assets/img/touxiang2@2x.png"> -->
         </div>
-        <vue-core-image-upload 
+            <vue-core-image-upload 
+            :crop="false" 
+            inputOfFile='avatar' 
+            inputAccept='image/jpg,image/jpeg,image/png'
+            @imageuploaded="imageuploaded"
+            :max-file-size="5242880" compress="90" :headers="data" text='修改头像' url="http://139.198.176.248/gateway/mobile/member/avatar">
+            </vue-core-image-upload>
+        <!-- <vue-core-image-upload 
         :crop="false" 
         inputOfFile='avatar' 
         inputAccept='image/jpg,image/jpeg,image/png'
-        @imagechanged="imagechanged"
-        :max-file-size="5242880" compress="80" :headers="data" text='修改头像' url="http://139.198.176.248/gateway/mobile/member/avatar">
-        </vue-core-image-upload>
+        @imageuploaded="imageuploaded"
+        :max-file-size="5242880" compress="90" :headers="data" text='修改头像' url="/api/gateway/mobile/member/avatar">
+        </vue-core-image-upload> -->
     </div>
 </template>
 <script>
@@ -33,36 +40,31 @@
         },
         methods: {
              imagechanged(code) {
-                 console.log(code)
+                //  console.log(code)
              },
              imageuploading(res) {
-                console.log(res)
+                // console.log(res)
              },
             // imageuploaded(res, data,done,errorUpload,isBinary,) {
             imageuploaded(res, data) {
-                console.log(res)
-                console.log('data')
-                console.log(data)
-                // console.log(res.contains(200)) 
-                // if (res.errcode == 500) {
-                //     this.src = 'http://img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png';
-                // }
                 if (res.indexOf('images') !== -1) {
                     this.querySrc = config.apiUrlPrefix[process.env.NODE_ENV]+ res + '?r=' + new Date().getTime();// 头像加时间戳
+                    console.log(this.querySrc)
                     this.$vux.toast.show({
                         text: '修改成功!',
                     });
                 } else {
                     this.$vux.toast.show({
-                        text: '头像修改失败!',
+                        // text: '头像修改失败!',
+                        text:res
                     });
                 }
             },
             // 异常处理
-            errorhandle(err) {  
-                console.log(111)
-                console.log(err.response);
-            }
+            // errorhandle(err) {  
+            //     console.log(111)
+            //     console.log(err.response);
+            // }
         },
         components: {
            'vue-core-image-upload': VueCoreImageUpload,
@@ -83,7 +85,8 @@
             align-items: center;
             justify-content: center;
             img {
-                width: 100%; // height:200px;
+                width: 100%; 
+                // height:400px;
             }
         }
         .g-core-image-upload-form input[name="avatar"] {
