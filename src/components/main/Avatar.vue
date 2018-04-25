@@ -3,22 +3,19 @@
         <Header title="我的头像" :isShow="true"></Header>
         <div class="imgCont">
             <img :src="querySrc" alt="">
-            <!-- <img  src="../../assets/img/touxiang2@2x.png"> -->
         </div>
-            <vue-core-image-upload 
-            :crop="false" 
-            inputOfFile='avatar' 
-            inputAccept='image/jpg,image/jpeg,image/png'
-            @imageuploaded="imageuploaded"
-            :max-file-size="5242880" compress="90" :headers="data" text='修改头像' url="http://139.198.176.248/gateway/mobile/member/avatar">
-            </vue-core-image-upload>
-        <!-- <vue-core-image-upload 
+        <vue-core-image-upload 
         :crop="false" 
         inputOfFile='avatar' 
         inputAccept='image/jpg,image/jpeg,image/png'
-        @imageuploaded="imageuploaded"
-        :max-file-size="5242880" compress="90" :headers="data" text='修改头像' url="/api/gateway/mobile/member/avatar">
-        </vue-core-image-upload> -->
+         @imageuploaded="imageuploaded" 
+         @imagechanged="imagechanged" 
+         :max-file-size="6291456" 
+         compress="90" 
+         :headers="data" 
+         text='修改头像' 
+         :url="avatar">
+        </vue-core-image-upload>
     </div>
 </template>
 <script>
@@ -36,38 +33,41 @@
                     'x-auth-token': sessionStorage.getItem('TOKEN')
                 },
                 querySrc: this.$route.query.src,
+                avatar: config.imgUrl[config.env.NODE_ENV] + "/gateway/mobile/member/avatar"
             }
         },
         methods: {
-             imagechanged(code) {
-                //  console.log(code)
-             },
-             imageuploading(res) {
-                // console.log(res)
-             },
-            // imageuploaded(res, data,done,errorUpload,isBinary,) {
+            imagechanged(code) {
+                 this.$vux.loading.show({
+                    text: '正在加载....'
+                })
+            },
+            // imageuploading(res) {
+            // },
             imageuploaded(res, data) {
+                this.$vux.loading.hide()
                 if (res.indexOf('images') !== -1) {
-                    this.querySrc = config.apiUrlPrefix[process.env.NODE_ENV]+ res + '?r=' + new Date().getTime();// 头像加时间戳
+                    this.querySrc = config.apiUrlPrefix[process.env.NODE_ENV] + res + '?r=' + new Date().getTime(); // 头像加时间戳
                     console.log(this.querySrc)
                     this.$vux.toast.show({
                         text: '修改成功!',
                     });
+                } else if (res.indexOf('图片大小超出上限') !== -1) {
+                    this.$vux.toast.show({
+                        text: res,
+                    });
                 } else {
                     this.$vux.toast.show({
-                        // text: '头像修改失败!',
-                        text:res
+                        text: '头像修改失败!',
                     });
                 }
             },
             // 异常处理
-            // errorhandle(err) {  
-            //     console.log(111)
-            //     console.log(err.response);
+            // errorhandle(err) {
             // }
         },
         components: {
-           'vue-core-image-upload': VueCoreImageUpload,
+            'vue-core-image-upload': VueCoreImageUpload,
             Header
         },
     }
@@ -85,8 +85,7 @@
             align-items: center;
             justify-content: center;
             img {
-                width: 100%; 
-                // height:400px;
+                width: 100%; // height:400px;
             }
         }
         .g-core-image-upload-form input[name="avatar"] {

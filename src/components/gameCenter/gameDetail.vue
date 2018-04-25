@@ -122,8 +122,8 @@
   .gameDetail {
     color: #fff;
     .gameTitle {
-      height: 278px; // padding: 38px 45px 24px;
-      padding: 38px 6% 24px;
+      // height: 278px; // padding: 38px 45px 24px;
+      padding: 38px 45px 24px;
       display: -webkit-flex;
       display: flex;
       margin-bottom:64px;
