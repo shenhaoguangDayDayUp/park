@@ -113,7 +113,7 @@
 <style lang="scss" scoped>
   .gameCenter {
     color: #fff;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
     img {
       width: 100%;
       height: 100%;
@@ -140,7 +140,7 @@
         justify-content: flex-start;
         flex-wrap: wrap;
         box-sizing: border-box; // margin-bottom:94px;
-        // margin-bottom: 130px;
+        // margin-bottom:300px;
         li {
           // width: 140px;
           width: 33.33333333333%;

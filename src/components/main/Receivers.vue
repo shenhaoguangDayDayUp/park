@@ -224,7 +224,7 @@
         }
         .btn {
             margin: 71px 82px 0 78px;
-            margin-bottom: 94px;
+            padding-bottom: 94px;
         }
     }
 </style>

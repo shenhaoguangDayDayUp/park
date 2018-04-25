@@ -3,7 +3,7 @@
         <div class="mainContent">
             <Header title="我的主页" :isShow="true">
                 <router-link to="./message" slot="right" class="msgWrap">
-                    <img src="../assets/img/xinxiaoxi.png"  alt="">
+                    <img src="../assets/img/xinxiaoxi.png" alt="">
                     <badge :text=unreadMsg v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
@@ -11,11 +11,11 @@
                 <div class="user-mess">
                 </div>
             </div>
-            <div class="mint-cell mint-cell-wrapper">
-                <!-- 已登陆状态下 -->
-                <div class="mint-cell-title" v-if=isActive>
-                    <div class="cell-logo" @click='$router.push({name:"Entity"})'>
-                        <img :src = "avatar" height="60" width="60">
+            <!-- 已登陆状态下 -->
+            <div class="mint-cell mint-cell-wrapper"  v-if=isActive  @click='$router.push({name:"Entity"})'>
+                <div class="mint-cell-title">
+                    <div class="cell-logo">
+                        <img :src="avatar" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>{{list.userName}}</span>
                             <span>{{list.mobileNumber}}</span>
@@ -25,9 +25,11 @@
                         <div class="right-arrow"></div>
                     </router-link>
                 </div>
-                <!-- 未登录状态下 -->
-                <div class="mint-cell-title" v-else>
-                    <div class="cell-logo" @click=toLogin>
+            </div>
+            <!-- 未登录状态下 -->
+            <div class="mint-cell mint-cell-wrapper" @click='$router.push({name:"Login"})' v-else>
+                <div class="mint-cell-title" >
+                    <div class="cell-logo">
                         <img data-v-48713cc3="" src="../assets/img/touxiang2@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
                             <span>请登录</span>
@@ -72,22 +74,22 @@
                 <div class="user-option-con mint-tabbar">
                     <div class="mint-tab-item" @click='$router.push({path:"/heart/list"})'>
                         <div class="mint-icon">
-                            <img src="../assets/img/xinyuandan.png" alt="">
+                            <img src="../assets/img/xinyuandan.png" alt="" class="pulse">
                             <badge :text=wishList v-show="wishList"></badge>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
-                    <div class="mint-tab-item"  @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
+                    <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
                         <div class="mint-icon">
-                            <img src="../assets/img/daifukuan.png" alt="">
+                            <img src="../assets/img/daifukuan.png" alt="" class="pulse">
                             <badge :text=unpaid v-show="unpaid"></badge>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
-                    <div class="mint-tab-item"  @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
+                    <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
                         <div class="mint-icon">
-                            <img src="../assets/img/daishouhuo.png" alt="">
-                        <badge :text=ungoods v-show="ungoods"></badge>
+                            <img src="../assets/img/daishouhuo.png" alt="" class="pulse">
+                            <badge :text=ungoods v-show="ungoods"></badge>
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
                     </div>
@@ -125,15 +127,15 @@
                 isActive: false,
                 unreadMsg: '',
                 ungoods: '',
-                unpaid:'',
-                wishList:'',
+                unpaid: '',
+                wishList: '',
                 list: {
                     userName: '',
                     mobileNumber: '',
                     point: '== ==',
                 },
-                avatar:'',
-                isAvatar:'',
+                avatar: '',
+                isAvatar: '',
             };
         },
         mounted() {
@@ -146,11 +148,6 @@
             }
         },
         methods: {
-            toLogin() {
-                this.$router.push({
-                    path: '/login'
-                });
-            },
             viewPoint() {
                 // if (this.point == '== ==') {
                 //     const TOKEN = sessionStorage.getItem('TOKEN')
@@ -184,19 +181,18 @@
                     } = res;
                     this.isActive = true;
                     this.unreadMsg = data['message.unread.count'];
-                    this.ungoods = data["order.process.count"],// 待收货
-                    this.unpaid = data[ "order.request.count"],// 待付款
-                    this.wishList = data['cart.item.count'],// 心愿单
-                    this.list = {
-                        userName: data['member.name'],
-                        mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
-                        point:data['account.balance'].toLocaleString()
-                    }
-                     var imgPrifex = config.imgUrl[config.env.NODE_ENV]
-                     this.avatar = imgPrifex + data["member.avatar"] +'?r=' + new Date().getTime();
+                    this.ungoods = data["order.process.count"], // 待收货
+                        this.unpaid = data["order.request.count"], // 待付款
+                        this.wishList = data['cart.item.count'], // 心愿单
+                        this.list = {
+                            userName: data['member.name'],
+                            mobileNumber: data['member.mobileNumber'].replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"),
+                            point: data['account.balance'].toLocaleString()
+                        }
+                    var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+                    this.avatar = imgPrifex + data["member.avatar"] + '?r=' + new Date().getTime();
                     // this.avatar = 'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
-                }).catch(error => {
-                });
+                }).catch(error => {});
             }
         }
     };
@@ -217,7 +213,7 @@
                 height: 124px;
                 width: 124px;
                 border-radius: 100%;
-                border: solid #ffffff 2px;
+                border: solid #ffffff 5px;
             }
             .mint-cell-title {
                 align-items: center;
@@ -251,14 +247,14 @@
             transform: rotate(315deg);
             -webkit-transform: rotate(315deg);
         }
-        .msgWrap{
+        .msgWrap {
             position: relative;
-            .vux-badge{
-            position: absolute;
-            right:-5px;
-            top:-5px;
-            background: #000;
-            color:#fff;
+            .vux-badge {
+                position: absolute;
+                right: -5px;
+                top: -5px;
+                background: #000;
+                color: #fff;
             }
         }
     }
@@ -334,6 +330,38 @@
     .user-option span {
         font-size: 13px;
     }
+    .pulse:active {
+        animation: pulse_4179 .5s linear infinite;
+        transform-origin: 50% 50%;
+    }
+    @keyframes pulse_4179 {
+        0% {
+            transform: scale(1.1)
+        }
+        25% {
+            transform: scale(0.8)
+        }
+        50% {
+            transform: scale(1.1)
+        }
+        100% {
+            transform: scale(1.1)
+        }
+    }
+    @-webkit-keyframes pulse_4179 {
+        0% {
+            transform: scale(1.1)
+        }
+        25% {
+            transform: scale(0.8)
+        }
+        50% {
+            transform: scale(1.1)
+        }
+        100% {
+            transform: scale(1.1)
+        }
+    }
 </style>
 <style lang="scss">
     #my {
@@ -357,19 +385,19 @@
     }
 </style>
 <style lang="scss">
-#mytab{
-.vux-badge{
-    background:#2F323B;
-    border-radius:100%;
-    border:1px solid #fff;
-    width:25px;
-    height:25px;
-    box-sizing:border-box;
-    line-height:25px;
-    text-align:center;
-    padding:0;
-}
-}
+    #mytab {
+        .vux-badge {
+            background: #2F323B;
+            border-radius: 100%;
+            border: 1px solid #fff;
+            width: 25px;
+            height: 25px;
+            box-sizing: border-box;
+            line-height: 25px;
+            text-align: center;
+            padding: 0;
+        }
+    }
 </style>
 
 
