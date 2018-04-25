@@ -13,8 +13,8 @@
         <div class="select-all-score">
             <span>{{total}}积分</span>
         </div>
-        <div class="select-all-button">
-            <div class="select-all-pay" @click.prevent='gotoChange'>兑换</div>
+        <div :class="[amount?'select-all-button':'select-all-button-disabled']">
+            <div :class="[amount?'select-all-pay':'select-all-pay-disabled']" @click.prevent='gotoChange'>兑换</div>
         </div>
     </div>
 </template>
@@ -102,6 +102,18 @@ export default {
     border-radius: 10px;
     .select-all-pay {
       color: black;
+    }
+  }
+  .select-all-button-disabled {
+    margin-left: 20px;
+    background:#666;
+    height: 80px;
+    padding: 20px;
+    flex: 1;
+    text-align: center;
+    border-radius: 10px;
+    .select-all-pay-disabled {
+      color:#000;
     }
   }
 }

@@ -43,9 +43,23 @@ export default {
     TabbarItem
   },
   name: "app",
+  methods:{
+       findActive(list,val){
+        for(var i = 0;i<list.length;i++){
+            for(var l =0;l<list[i].length;l++){
+                if(list[i][l]==val.path){
+                  this.active = i;
+                  console.log(i)
+                  break
+                }
+            }
+        }
+    }
+  },
   data() {
     return {
-      routerList: ["/gameCenter", "/prizeCity", "/main"],
+      active:'',
+      routerList: [["/gameCenter"], ["/prizeCity"], ["/main",'/change','/message']],
       selected: 2
     };
   },
@@ -57,10 +71,14 @@ export default {
     $route: {
       handler(val) {
        this.$nextTick(()=>{
-         var index =   this.routerList.findIndex((item,index)=>{
-             return val.path == item
-           })
-       this.selected = index
+         this.findActive(this.routerList,val);
+
+        //  var index =   this.routerList.findIndex((item,index)=>{
+        //      return val.path == item
+        //    })
+       this.selected = Number(this.active)
+
+      //  this.selected = index
        })
       },
       immediate: true,

@@ -184,13 +184,23 @@ updated() {
   .good-deital {
     position: relative;
     .back {
-      width: 100px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: black;
       z-index: 100;
       position: absolute;
       top: 40px;
       left: 20px;
-      width: 20px;
-      height: 20px;
+      line-height: 50px;
+      text-align: center;
+  
+      img{
+        width: 23px;
+        height: 33px;
+        padding-bottom: 5px;
+         padding-right: 5px;
+      }
     }
   }
   .goods-detail-title {

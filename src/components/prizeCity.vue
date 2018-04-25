@@ -1,7 +1,7 @@
 
 <template>
   <div class="prizeCity">
-    <Header title="长影平台">
+    <Header title="奖品展示">
       <span class="heart"
             slot="right">
         <img src="../assets/img/heart.png"
@@ -238,13 +238,17 @@ export default {
   background: #23262b;
   height: 100%;
   .heart {
+    box-sizing: border-box;
     // padding-right: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 94px;
     img {
-      padding: 10px;
+       padding-top: 10px;
+       padding-bottom: 10px;
+       padding-right: 20px;
+       margin-left: 10px;
       width: 50px;
       height: 50px;
     }

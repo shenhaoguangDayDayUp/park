@@ -96,6 +96,25 @@ export default {
       ]
     };
   },
+  mounted(){
+      if(!common.getCommon("TOKEN")){
+         this.$$message.confirm.show({
+            confirm(vm, resolve) {
+              vm.$router.push({ name: "Login" });
+              resolve();
+            },
+            cancel(vm, resolve) {
+              vm.$router.push({ name: "PrizeCity" });
+              resolve();
+            },
+            title: "您还没有登录",
+            content: "是否前往登录?",
+            rightBtnText: "随便看看",
+            leftBtnText: "确定"
+          });
+      }
+     
+  },
   components: {
     Header
   }
