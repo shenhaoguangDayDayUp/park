@@ -112,7 +112,7 @@ export default {
 .divider{
   padding-top:40px;
   padding-bottom: 40px;
-  font-size: 25px;
+  font-size: 20px;
 }
 .change {
   color: #fff;

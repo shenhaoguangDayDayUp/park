@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <!-- <transition :name="transitionName"> -->
+    <transition name="fade">
       <router-view></router-view>
-    <!-- </transition> -->
+    </transition>
     <!-- 路由跳转必写 -->
     <div v-transfer-dom>
       <loading :show="isLoading"
@@ -51,6 +51,12 @@ export default {
 <style lang="scss">
 #app {
   height: 100%; 
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 
 }
 </style>

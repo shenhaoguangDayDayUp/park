@@ -96,7 +96,7 @@ export default {
           text: "购买成功"
         });
         
-         this.$router.push({ name: "商品详情",params:{id:this.detail.items[0].product.code}, query: { index: 1,code:this.$route.query.code} });
+         this.$router.push({ name: "orderLsit",query: { index: 1,routeName:'PrizeCity' }  });
         // this.$router.push({ name: "orderLsit", query: { index: 1 } });
       } catch (error) {
         
