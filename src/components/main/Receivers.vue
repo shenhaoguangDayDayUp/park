@@ -26,7 +26,7 @@
         <!-- 按钮 -->
         <div class="btn">
             <div class="redBtn active">
-                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加一个新地址</router-link>
+                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加地址</router-link>
             </div>
         </div>
         <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
@@ -96,7 +96,7 @@
                 const deleteItem = {
                     "code": e
                 }
-                var that = this ;
+                var that = this;
                 this.$$message.confirm.show({
                     confirm(vm, resolve) {
                         loginApi.receiversDel({}, {
@@ -228,22 +228,26 @@
         }
     }
 </style>
-<style lang="scss">
+<style>
     .vux-check-icon>.weui-icon-success:before,
     .vux-check-icon>.weui-icon-success-circle:before {
         color: #ffcb16!important;
     }
-    .receivers {
-        .weui-icon-success {
-            font-size: 28px;
-        }
-        .vux-check-icon>span {
-            color: #fff;
-        }
-        .weui-icon-circle {
-            font-size: 28px;
-            color: #ffcb16;
-        }
+    body .weui-icon-success {
+        font-size: 28px;
+    }
+    body .vux-check-icon>span {
+        color: #fff;
+    }
+    body .weui-icon-circle {
+        font-size: 28px;
+        color: #ffcb16;
+    }
+    body .vux-popup-header-left {
+        font-size: 28px;
+    }
+    body .scroller-indicator{
+        font-size:28px;
     }
 </style>
 

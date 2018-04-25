@@ -6,12 +6,12 @@
         <img v-lazy="showData.icon" alt="">
       </div>
       <div class="gameRight">
-        <p>{{showData.name}}</p>
+        <!-- <p>{{showData.name}}</p> -->
         <p>{{showData.description}}</p>
         <submit text="开始游戏" @click.native="rename()"></submit>
       </div>
     </div>
-    <swiper id="swiper" :list="demo01_list" loop auto v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:80%;margin:0 auto;" :show-dots="false"></swiper>
+    <swiper id="swiper" :list="demo01_list" loop v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
     <div class="gameWinners">
       <span class="winnerTitle">中奖榜</span>
     </div>
@@ -139,12 +139,11 @@
       .gameRight {
         // width: 54.8%;
         margin-left: 36px;
-        p:nth-child(1) {
-          font-size: 36px;
-          line-height: 41px;
-          letter-spacing: 2px;
-        }
-        p:nth-child(2) {
+        display: flex;
+        display: -webkit-flex;
+        justify-content: space-between;
+        flex-direction: column;
+        p{
           font-size: 26px;
           line-height: 37px;
         }
@@ -190,12 +189,9 @@
     .vux-slider {
       overflow: visible;
     }
-    .vux-slider>.vux-swiper>.vux-swiper-item {
-      padding: 0 30px;
-    }
   }
   #gameDetail > .vux-slider>.vux-swiper>.vux-swiper-item {
-      padding: 0 30px!important;
+      padding: 0 11px!important;
     }
    #gameDetail >  .vux-slider > .vux-swiper > .vux-swiper-item > a > .vux-swiper-desc{
      background-image:none;

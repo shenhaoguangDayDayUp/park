@@ -55,8 +55,9 @@
         <ul class="messList" style="margin-top:100px;">
             <li @click="toLogout(e)" style="display:flex;
                     align-items:center;
-                    justify-content:center;">
-                退出登录
+                    justify-content:center;
+                    letter-spacing:10px;">
+                登出
             </li>
         </ul>
         <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->

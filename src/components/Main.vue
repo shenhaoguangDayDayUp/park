@@ -1,10 +1,10 @@
 <template>
     <div id="my">
         <div class="mainContent">
-            <Header title="我的主页" :isShow="true">
+            <Header title="个人中心">
                 <router-link to="./message" slot="right" class="msgWrap">
                     <img src="../assets/img/xinxiaoxi.png" alt="">
-                    <badge :text=unreadMsg v-show="unreadMsg"></badge>
+                    <badge  v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
             <div class="user-header">
@@ -75,21 +75,21 @@
                     <div class="mint-tab-item" @click='$router.push({path:"/heart/list"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/xinyuandan.png" alt="" class="pulse">
-                            <badge :text=wishList v-show="wishList"></badge>
+                            <badge  v-show="wishList"></badge>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
                     <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daifukuan.png" alt="" class="pulse">
-                            <badge :text=unpaid v-show="unpaid"></badge>
+                            <badge  v-show="unpaid"></badge>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
                     <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daishouhuo.png" alt="" class="pulse">
-                            <badge :text=ungoods v-show="ungoods"></badge>
+                            <badge  v-show="ungoods"></badge>
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
                     </div>
@@ -191,6 +191,7 @@
                         }
                     var imgPrifex = config.imgUrl[config.env.NODE_ENV]
                     this.avatar = imgPrifex + data["member.avatar"] + '?r=' + new Date().getTime();
+                    
                     // this.avatar = 'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
                 }).catch(error => {});
             }
@@ -212,8 +213,8 @@
             img {
                 height: 124px;
                 width: 124px;
-                border-radius: 100%;
-                border: solid #ffffff 5px;
+                // border-radius: 100%;
+                border: solid #ffffff 3px;
             }
             .mint-cell-title {
                 align-items: center;
@@ -251,10 +252,10 @@
             position: relative;
             .vux-badge {
                 position: absolute;
-                right: -5px;
-                top: -5px;
-                background: #000;
-                color: #fff;
+                right: -8px;
+                top: 3px;
+                // background: #000;
+                // color: #fff;
             }
         }
     }
@@ -387,13 +388,13 @@
 <style lang="scss">
     #mytab {
         .vux-badge {
-            background: #2F323B;
+            // background: #2F323B;
             border-radius: 100%;
-            border: 1px solid #fff;
-            width: 25px;
-            height: 25px;
+            // border: 1px solid #fff;
+            width: 15px;
+            height: 15px;
             box-sizing: border-box;
-            line-height: 25px;
+            // line-height: 25px;
             text-align: center;
             padding: 0;
         }
