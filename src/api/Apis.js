@@ -24,6 +24,7 @@ axios.interceptors.response.use(function (response) {
     window.global.$vux.loading.hide()
  return response;
 }, function (error) {
+    console.log(error.response)
     switch (error.response.status) { //这里修改了，如果出现500/502之类的，页面弹框里会出现一大堆报错。
         case 401:
             // window.global.$vux.toast.show({

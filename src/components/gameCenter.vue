@@ -22,7 +22,7 @@
       </div>
       <ul class="gameListCont" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <li v-for="(v,i) in gameList" :key='i'>
-          <img v-lazy="v.icon" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <img v-lazy="v.icon" alt="" @click.stop='$router.push({name:"gameDetail",query: {code:v.code}})'>
           <div>{{v.name}}</div>
         </li>
         <load-more v-if='loading' :tip="'正在加载'"></load-more>
