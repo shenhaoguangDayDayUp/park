@@ -26,9 +26,9 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     switch (error.response.status) { //这里修改了，如果出现500/502之类的，页面弹框里会出现一大堆报错。
         case 401:
-            window.global.$vux.toast.show({
-                text: error.response.data,
-            });
+            // window.global.$vux.toast.show({
+            //     text: error.response.data,
+            // });
             break;
         case 456:
             window.global.$vux.toast.show({

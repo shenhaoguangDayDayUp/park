@@ -8,16 +8,10 @@
       <div class="gameRight">
         <p>{{showData.name}}</p>
         <p>{{showData.description}}</p>
-        <!-- 按钮 -->
-        <!-- <div class="btn">
-                  <div class="redBtn" @click=rename()>
-                    开始游戏
-                  </div>
-                </div> -->
         <submit text="开始游戏" @click.native="rename()"></submit>
       </div>
     </div>
-    <swiper id="swiper" :list="demo01_list" loop auto v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="380px" style="width:80%;margin:0 auto;overflow: visible!important;" :show-dots="false"></swiper>
+    <swiper id="swiper" :list="demo01_list" loop auto v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:80%;margin:0 auto;" :show-dots="false"></swiper>
     <div class="gameWinners">
       <span class="winnerTitle">中奖榜</span>
     </div>
@@ -192,6 +186,7 @@
     overflow: visible!important;
   }
   .gameDetail {
+    overflow: hidden;
     .vux-slider {
       overflow: visible;
     }
@@ -202,6 +197,9 @@
   #gameDetail > .vux-slider>.vux-swiper>.vux-swiper-item {
       padding: 0 30px!important;
     }
+   #gameDetail >  .vux-slider > .vux-swiper > .vux-swiper-item > a > .vux-swiper-desc{
+     background-image:none;
+   }
 </style>
 
 

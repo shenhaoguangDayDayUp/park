@@ -101,7 +101,7 @@
         background-color: #23262b;
         height: 100%;
         .messList {
-            margin-bottom: 98px;
+            padding-bottom: 100px;
             li {
                 height: 93px;
                 border-bottom: 2px solid #323540;
@@ -121,12 +121,7 @@
                     display: -webkit-flex;
                     justify-content: flex-start;
                 }
-            } // li:first-child a:link {
-            //     color: #ffcb16;
-            // }
-            // li a:visited {
-            //     color: #fff;
-            // }
+            }
             li:last-child {
                 margin: 0;
             }
