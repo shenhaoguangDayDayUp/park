@@ -25,7 +25,7 @@ const route =new Router({
               return savedPosition
          
           } else {
-                   scrollTo(0, 0)
+                scrollTo(0, 0)
             return { x: 0, y: 0 }
           }
         }, 100)
@@ -239,7 +239,7 @@ route.beforeEach(function (to, from, next) {
 route.afterEach(function (to) {
   setTimeout(()=>{
     store.dispatch('toggleLoadingStatus', {isLoading: false})
-  },1000)
+  },500)
 
 })
 export default route

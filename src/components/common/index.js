@@ -48,7 +48,7 @@ const plugin = {
                     })
                 })
                 $vm.$on('success',msg => {
-                    // console.log($vm.confirm())
+                    console.log($vm.confirm())
                     return new Promise((resolve, reject) => {
                         $vm.confirm(window.global, resolve)
                     }).then(() => {
@@ -62,8 +62,6 @@ const plugin = {
                 $vm.showToast = false
             }
         }
-
-        // all Vux's plugins are included in this.$vux
         if (!vue.$$message) {
             vue.$$message = {
                 confirm

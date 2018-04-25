@@ -81,6 +81,22 @@ export default {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
+      if(!common.getCommon("TOKEN")){
+         this.$$message.confirm.show({
+            confirm(vm, resolve) {
+              vm.$router.push({ name: "Login" });
+              resolve();
+            },
+            cancel(vm, resolve) {
+              vm.$router.push({ name: "PrizeCity" });
+              resolve();
+            },
+            title: "您还没有登录",
+            content: "是否前往登录?",
+            rightBtnText: "随便看看",
+            leftBtnText: "确定"
+          });
+      }else{
       try {
         const { data } = await transactionsApi.CRD({ id: this.page }, token);
         this.loading = false;
@@ -90,6 +106,7 @@ export default {
         }
         this.count = data.count;
       } catch (error) {}
+      }
     }
   },
   mounted() {
