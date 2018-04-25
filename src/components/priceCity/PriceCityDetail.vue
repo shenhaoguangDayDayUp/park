@@ -2,7 +2,7 @@
   <div class="goods">
     <div class='good-deital'>
       <div class="back"
-           @click="$router.go(-1)">
+           @click="back">
 
         <img src="../../assets/img/close.png"
              alt="">
@@ -86,6 +86,12 @@ updated() {
 
  },
   methods: {
+    back(){
+      if(this.$route.query.hasOwnProperty('showBack')){
+      return  this.$router.push({name:'PrizeCity'})
+      }
+      this.$router.go(-1)
+    },
     async addCart() {
       try {
         if (common.getCommon("TOKEN")) {
@@ -97,8 +103,8 @@ updated() {
           this.$router.push({ name: "heart" });
         } else {
           this.$vux.toast.show({
-            text: "请先请先登录",
-            time: 3000
+            text: "请先登录",
+            time: 1000
           });
           this.$router.push({ name: "Login" });
         }
@@ -137,7 +143,7 @@ updated() {
           } else {
             this.$vux.toast.show({
               text: "请先登录",
-                time: 3000
+                time: 1000
             });
             this.$router.push({ name: "Login" });
           }
@@ -253,6 +259,7 @@ updated() {
     }
   }
   .goods-footer {
+    z-index: 100;
     height: 124px;
     width: 100%;
     background: #2a2d36;

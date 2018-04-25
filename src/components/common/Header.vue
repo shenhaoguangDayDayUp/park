@@ -1,86 +1,102 @@
 <template>
   <div class="nav-bar">
-    <span class="left-back" v-if="isShow">
-        <img src="../../assets/img/close.png" alt="" @click.stop='$router.go(-1)'> 
+    <span class="left-back"
+          v-if="isShow">
+       <slot name='left'>
+           <img src="../../assets/img/close.png"
+             alt=""
+             @click='back'>
+       </slot>
+      
+
     </span>
-     <span class="left-back" v-else>
-        
+    <span class="left-back"
+          v-else>
+
     </span>
     <div class="nav-title">
-        {{title}}
+      {{title}}
     </div>
-    <span class="nav-right"> 
-        <slot name='right'></slot>
+    <span class="nav-right">
+      <slot name='right'></slot>
     </span>
-     </div>
+  </div>
 </template>
 <script>
-  export default {
-    name:'Header',
-    props: {
-      title: {
-        type: [String],
-        default () {
-          return "";
-        }
-      },
-      isShow: {
-        type: [Boolean],
-        default () {
-          return false;
-        }
+export default {
+  name: "Header",
+  methods:{
+    back(){
+      if(this.$route.query.hasOwnProperty('routeName')){
+        return this.$router.push({name:this.$route.query.name})
       }
+      this.$router.go(-1)
     }
-  };
-</script>
-<style lang="scss" scoped>
-  .nav-bar {
-    font-size: 34px;
-    color: #fff;
-    position: relative;
-    height: 94px;
-    width: 100%;
-    background: #1b1a20;
-    box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.09);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-right: 20px;
-    padding-left: 20px;
-    .left-back {
-      flex: 1;
-      // position: absolute;
-      // left: 22px;
-      // height:100%;
-      // line-height: 94px;
-      img {
-        width: 20px;
-        height: 34px;
+  },
+  props: {
+    title: {
+      type: [String],
+      default() {
+        return "";
       }
-    }
-    .nav-title {
-       flex: 1;
-       text-align: center;
-      // text-align: center;
-      // letter-spacing: 2px;
-      // line-height: 94px;
-    }
-    .nav-right {
-        flex: 1;
-        text-align: right;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        // padding-right: 10px;
-      //  align-self: flex-end;
-      // position:absolute;
-      // right:22px;
-      // top:0;
-      // line-height: 94px;
+    },
+    isShow: {
+      type: [Boolean],
+      default() {
+        return false;
+      }
     }
   }
+};
+</script>
+<style lang="scss" scoped>
+.nav-bar {
+  font-size: 34px;
+  color: #fff;
+  position: relative;
+  height: 94px;
+  width: 100%;
+  background: #1b1a20;
+  box-shadow: 0px 9px 9px 0px rgba(0, 0, 0, 0.09);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-right: 20px;
+  padding-left: 20px;
+  .left-back {
+    flex: 1;
+    // position: absolute;
+    // left: 22px;
+    // height:100%;
+    // line-height: 94px;
+    img {
+      width: 20px;
+      height: 34px;
+    }
+  }
+  .nav-title {
+    flex: 1;
+    text-align: center;
+    // text-align: center;
+    // letter-spacing: 2px;
+    // line-height: 94px;
+  }
+  .nav-right {
+    flex: 1;
+    text-align: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    // padding-right: 10px;
+    //  align-self: flex-end;
+    // position:absolute;
+    // right:22px;
+    // top:0;
+    // line-height: 94px;
+  }
+}
 </style>
 
 
