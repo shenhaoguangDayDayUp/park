@@ -13,16 +13,19 @@ Vue.use(Router)
 const route =new Router({
     scrollBehavior (to, from, savedPosition) {
         setTimeout(() => {
-          console.log(savedPosition)
           if (savedPosition) {
-              console.log(to.matched.some(m => m.meta.scrollToTop))
+            // console.log(to)
+            // console.log(savedPosition)
+            // console.log(to.matched.some(m => m.meta.scrollToTop))
               if(to.matched.some(m => m.meta.scrollToTop)){
+                scrollTo(0, 0)
                 return { x: 0, y: 0 }
               }
               scrollTo(0, savedPosition.y)
               return savedPosition
          
           } else {
+                   scrollTo(0, 0)
             return { x: 0, y: 0 }
           }
         }, 100)
@@ -108,6 +111,9 @@ const route =new Router({
     {
       path: '/heart/list',
       name: 'heart',
+      meta:{
+        scrollToTop:true
+      },
       component:   () => import('@/components/priceCity/heart/Heart.vue'),
     },
     {
