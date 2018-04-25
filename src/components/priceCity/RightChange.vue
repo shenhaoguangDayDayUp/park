@@ -23,8 +23,8 @@
                 <div class="score color-gold">{{detail.grandTotal}}积分</div>
             </div>
         </div>
-        <div class="submit-box">
-            <div class="submit-btn"
+        <div :class="[defaultAderess?'submit-box':'submit-box-disabled']">
+            <div :class="[defaultAderess?'submit-btn':'submit-btn-disabled']" 
                  @click='gotoSubmit'>提交</div>
         </div>
     </div>
@@ -65,12 +65,13 @@ export default {
       };
       try {
         const { data } = await loginApi.receiversDefault({}, token);
+          this.$store.dispatch("toggleUpdateAddres", data);
         if (!data) {
           return this.$vux.toast.show({
             text: "收货信息为空"
           });
         }
-        this.$store.dispatch("toggleUpdateAddres", data);
+      
       } catch (error) {
         if(error.status == 567){
             this.$vux.toast.show({
@@ -160,6 +161,25 @@ export default {
       line-height: 78px;
       height: 78px;
       background: #ffcb16;
+      border-radius: 10px;
+      text-align: center;
+      color: #000;
+    }
+  }
+  .submit-box-disabled {
+    height: 120px;
+    padding-top: 21px;
+    padding-right: 18px;
+    padding-left: 18px;
+    padding-bottom: 21px;
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .submit-btn-disabled {
+      line-height: 78px;
+      height: 78px;
+      background: #666;
       border-radius: 10px;
       text-align: center;
       color: #000;
