@@ -106,7 +106,13 @@
                 this.userName = data.name;
                 this.nickname = data.nickname;
                 this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
-                this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
+                var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+                // this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
+                if(!sessionStorage.getItem("AVATAR")){
+                    sessionStorage.setItem("AVATAR", imgPrifex + data["member.avatar"]);
+                }else{
+                    this.avatar = sessionStorage.getItem("AVATAR");
+                }
             }).catch(error => {
                 console.log(error.response.status)
             });

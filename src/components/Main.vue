@@ -4,7 +4,7 @@
             <Header title="个人中心">
                 <router-link to="./message" slot="right" class="msgWrap">
                     <img src="../assets/img/xinxiaoxi.png" alt="">
-                    <badge  v-show="unreadMsg"></badge>
+                    <badge v-show="unreadMsg"></badge>
                 </router-link>
             </Header>
             <div class="user-header">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <!-- 已登陆状态下 -->
-            <div class="mint-cell mint-cell-wrapper"  v-if=isActive  @click='$router.push({name:"Entity"})'>
+            <div class="mint-cell mint-cell-wrapper" v-if=isActive @click='$router.push({name:"Entity"})'>
                 <div class="mint-cell-title">
                     <div class="cell-logo">
                         <img :src="avatar" height="60" width="60">
@@ -28,7 +28,7 @@
             </div>
             <!-- 未登录状态下 -->
             <div class="mint-cell mint-cell-wrapper" @click='$router.push({name:"Login"})' v-else>
-                <div class="mint-cell-title" >
+                <div class="mint-cell-title">
                     <div class="cell-logo">
                         <img data-v-48713cc3="" src="../assets/img/touxiang2@2x.png" height="60" width="60">
                         <div class="mint-cell-text" style="padding-left:40px;">
@@ -75,21 +75,21 @@
                     <div class="mint-tab-item" @click='$router.push({path:"/heart/list"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/xinyuandan.png" alt="" class="pulse">
-                            <badge  v-show="wishList"></badge>
+                            <badge v-show="wishList"></badge>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
                     <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daifukuan.png" alt="" class="pulse">
-                            <badge  v-show="unpaid"></badge>
+                            <badge v-show="unpaid"></badge>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
                     <div class="mint-tab-item" @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
                         <div class="mint-icon">
                             <img src="../assets/img/daishouhuo.png" alt="" class="pulse">
-                            <badge  v-show="ungoods"></badge>
+                            <badge v-show="ungoods"></badge>
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
                     </div>
@@ -190,10 +190,43 @@
                             point: data['account.balance'].toLocaleString()
                         }
                     var imgPrifex = config.imgUrl[config.env.NODE_ENV]
-                    this.avatar = imgPrifex + data["member.avatar"] + '?r=' + new Date().getTime();
-                    
-                    // this.avatar = 'http://changyingyule.cn'+ data["member.avatar"] + '?r=' + new Date().getTime(); // 头像加时间戳
+                    console.log(!sessionStorage.getItem("AVATAR"))
+                    if (!sessionStorage.getItem("AVATAR")) {
+                        // console.log(imgPrifex + data["member.avatar"])
+                        // console.log(this.changeToBase64(imgPrifex + data["member.avatar"]))
+                        sessionStorage.setItem("AVATAR", this.changeToBase64(imgPrifex + data["member.avatar"]);
+                        this.avatar = this.changeToBase64(imgPrifex + data["member.avatar"]);
+                        // console.log(11111111111111)
+                        // console.log(this.avatar)
+                    } else {
+                        this.avatar = sessionStorage.getItem("AVATAR");
+                    }
+                    // this.avatar = imgPrifex + data["member.avatar"] + '?r=' + new Date().getTime();// 头像加时间戳
                 }).catch(error => {});
+            },
+            getBase64Image(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+                var dataURL = canvas.toDataURL("image/" + ext);
+                return dataURL;
+            },
+            changeToBase64(url) {
+                var that = this;
+                var img = document.createElement('img');
+                img.src = url; //此处自己替换本地图片的地址
+                img.onload = function() {
+                    var data = that.getBase64Image(img);
+                    var img1 = document.createElement('img');
+                    img1.src = data;
+                    document.body.appendChild(img1);
+                    console.log(img1);
+                    console.log(data)
+                    return data;
+                }
             }
         }
     };
@@ -212,8 +245,7 @@
             padding: 0;
             img {
                 height: 124px;
-                width: 124px;
-                // border-radius: 100%;
+                width: 124px; // border-radius: 100%;
                 border: solid #ffffff 3px;
             }
             .mint-cell-title {
@@ -253,8 +285,7 @@
             .vux-badge {
                 position: absolute;
                 right: -8px;
-                top: 3px;
-                // background: #000;
+                top: 3px; // background: #000;
                 // color: #fff;
             }
         }
@@ -389,12 +420,10 @@
     #mytab {
         .vux-badge {
             // background: #2F323B;
-            border-radius: 100%;
-            // border: 1px solid #fff;
+            border-radius: 100%; // border: 1px solid #fff;
             width: 15px;
             height: 15px;
-            box-sizing: border-box;
-            // line-height: 25px;
+            box-sizing: border-box; // line-height: 25px;
             text-align: center;
             padding: 0;
         }
