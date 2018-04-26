@@ -77,14 +77,31 @@ export default {
         console.log(error);
       }
     },
-    async gotoCancel() {
+     gotoCancel() {
+      var that = this;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-      try {
-        await orderCheckOutApi.cancel({ id: this.$route.query.code }, token);
-        this.$router.push({ name: "PrizeCity" });
+        this.$$message.confirm.show({
+            confirm(vm, resolve) {
+                try {
+         orderCheckOutApi.cancel({ id: that.$route.query.code }, token).then(res=>{
+               that.$vux.toast.show({
+          text: "取消成功"
+        });
+        
+           that.$router.push({ name: "PrizeCity" });
+         });
+        
       } catch (error) {}
+              resolve();
+            },
+            title: "提示",
+            content: "是否取消?",
+            rightBtnText: "返回",
+            leftBtnText: "确定"
+          });
+   
     },
     async gotoPayment() {
       var token = {
@@ -176,6 +193,7 @@ export default {
     padding-bottom: 21px;
     box-sizing: content-box;
     display: flex;
+     font-size: 30px;
     flex-direction: row;
     align-items: center;
     justify-content: center;

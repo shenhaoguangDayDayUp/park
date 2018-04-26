@@ -3,7 +3,9 @@ const app = {
     state:{
         isLoading:false,
         defaultAderess:'',
-        defaultAvatar:''
+        defaultAvatar:'',
+        goodsList:{goods:[],selected:false}
+
     },
     mutations: {
         updateAddres(state, payload){
@@ -14,6 +16,9 @@ const app = {
         },
         updateAvatar(state,payload){
           state.defaultAvatar = payload
+        },
+        updateGoodsList (state, payload) {
+          state.goodsList = payload
         }
      },
      actions: {
@@ -26,6 +31,10 @@ const app = {
         toggleUpdateAvatar({ commit },view) {
           commit('updateAvatar',view)
         },
+        toggleGoodsList({ commit },view){
+          commit('updateGoodsList',view)
+        }
+      
       }
 
 }

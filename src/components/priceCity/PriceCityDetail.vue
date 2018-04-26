@@ -11,7 +11,7 @@
       </div>
       <swiper :list="bannerData"
               auto
-               height="5rem"></swiper>
+               height="10rem"></swiper>
     </div>
     <div class="goods-detail-title">
       <div class="bar"></div>
@@ -80,10 +80,10 @@ export default {
 
 updated() {
  var nodeList = this.$refs['goods-content'].querySelectorAll('img')
+ console.log(nodeList)
   for(var i=0;i<nodeList.length;i++){
     nodeList[i].style.width='100%'
   }
-
  },
   methods: {
     back(){

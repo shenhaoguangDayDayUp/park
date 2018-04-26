@@ -67,6 +67,7 @@ import { Swipeout, SwipeoutItem, SwipeoutButton, Toast, XDialog } from "vux";
 import TableviewCell from "@/common/TableviewCell";
 import { heartCartApi, orderCheckOutApi } from "@/api/api";
 import { common } from "@/logic";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -82,8 +83,9 @@ export default {
     TableviewCell,
     Toast
   },
-  mounted() {
-    this.getList();
+ async mounted() {
+   await this.getList();
+   this.defaultSelect()
   },
   watch: {
     list: {
@@ -98,6 +100,22 @@ export default {
     }
   },
   methods: {
+    defaultSelect() {
+      if (this.goodsList.goods.length) {
+        this.list.map(item=>{
+          this.goodsList.goods.map(res=>{
+            if(res.product.code == item.code){
+                return  item.selected = true    
+            }
+          })
+        })
+        this.allSelect = this.goodsList.selected;
+         this.getAmount();
+          this.getTotal();
+          // this.selectAll()
+        console.log(this.list)
+      }
+    },
     success() {
       this.$router.push({ name: "Login" });
     },
@@ -136,7 +154,7 @@ export default {
           return { product: { code: item.code }, quantity: item.quantity };
         });
         personalInfo.items = productList;
-        console.log(personalInfo);
+        this.$store.dispatch("toggleGoodsList",{goods:personalInfo.items,selected:this.allSelect} );
         try {
           const { data } = await orderCheckOutApi.checkout(personalInfo, token);
           var productInfo = JSON.stringify(data);
@@ -173,7 +191,7 @@ export default {
               resolve();
             },
             cancel(vm, resolve) {
-              vm.$router.push({ name: "PrizeCity" });
+              vm.$router.push({ name: "gameCenter" });
               resolve();
             },
             title: "您还没有登录",
@@ -184,9 +202,7 @@ export default {
           // this.$vux.toast.show({
           //   text: "会员没有登录请先登录"
           // });
-         
         }
-
       } catch (err) {}
     },
     async deleteItem(index) {
@@ -243,9 +259,12 @@ export default {
       this.checkAll();
     },
     async valueChange(item) {
+
       const product = this.list[item.index];
-      if (product.quantity == 1 && item.type == -1) {
-        return
+            console.log(product);
+                 console.log(item);
+      if (item.value == 1 && item.type == -1) {
+        return;
         // return this.$vux.toast.show({
         //   text: "不能再少了"
         // });
@@ -299,7 +318,9 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["goodsList"])
+  },
   data() {
     return {
       showToast: false,

@@ -180,6 +180,7 @@ export default {
       try {
         const { data } = await rewordRecommenApi.get();
         this.recommodList = data;
+
       } catch (error) {}
     },
     needData(data) {},
@@ -239,16 +240,20 @@ export default {
   height: 100%;
   .heart {
     box-sizing: border-box;
+    width: 60%;
     // padding-right: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     height: 94px;
     img {
-       padding-top: 10px;
-       padding-bottom: 10px;
-       padding-right: 20px;
-       margin-left: 10px;
+      // align-self: flex-start;
+      //  padding-top: 5px;
+      //  padding-bottom: 5px;
+       padding:7px ;
+      //  padding-right: 20px;
+      //  margin-left: 10px;
       width: 50px;
       height: 50px;
     }
@@ -285,9 +290,9 @@ export default {
   }
   .hot {
     box-sizing: border-box;
-    height: 360px;
+    height: 340px;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     border: none;
   }
 }
@@ -332,6 +337,8 @@ export default {
   padding-right: 20px;
   padding-top: 20px;
   white-space: nowrap;
+    display: flex;
+  flex-direction: row;
   &::-webkit-scrollbar {
     background-color: transparent;
   }
@@ -341,15 +348,16 @@ export default {
   margin-right: 0;
 }
 .shop_item_3 {
-  display: inline-block;
-  margin-right: 0.26667rem;
-  width: 230px;
+  // display: inline-block;
+
+  margin-right: 20px;
+  width: 210px;
 }
 
 .shop_item_3_img {
   // border: 1px solid #e6e6e6;
-  height: 230px;
-  width: 230px;
+  height: 210px;
+  width: 210px;
   position: relative;
 }
 .shop_item_3_img::after {
@@ -384,7 +392,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
-  display: -webkit-box;
+  // display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }

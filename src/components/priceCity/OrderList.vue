@@ -1,6 +1,6 @@
 <template>
   <div class="order-list">
-        <Header title="订单清单"
+    <Header title="订单清单"
             :isShow="true"></Header>
     <!-- <Header title="订单清单"
             :isShow='true'></Header> -->
@@ -12,7 +12,7 @@
          default-color='#ffffff'
          @on-before-index-change="switchTabItem">
       <tab-item>待支付</tab-item>
-      <tab-item>待发货</tab-item>
+      <tab-item>待收货</tab-item>
       <tab-item>全部订单</tab-item>
     </tab>
     <div>
@@ -118,13 +118,13 @@ export default {
       };
       if (!common.getCommon("TOKEN")) {
         this.$$message.confirm.show({
-          confirm(vm,resolve) {
+          confirm(vm, resolve) {
             vm.$router.push({ name: "Login" });
-            resolve()
+            resolve();
           },
-          cancel(vm,resolve) {
-            vm.$router.push({ name: "PrizeCity" });
-            resolve()
+          cancel(vm, resolve) {
+            vm.$router.push({ name: "gameCenter" });
+            resolve();
           },
           title: "您还没有登录",
           content: "是否前往登录?",
@@ -223,7 +223,22 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     background: #2a2d36;
+    margin-bottom: 10px;
+
+    .content-title::after {
+      content: " ";
+      position: absolute;
+      // top: 20px;
+      bottom: 15px;
+      right: 0px;
+      left: 0px;
+      border-bottom: 2px solid #323540;
+      // border-right: 2px solid #282828;
+      // transform: scaleX(0.5);
+      transform-origin: 0% 0%;
+    }
     .content-title {
+          position: relative;
       height: 128px;
       display: flex;
       flex-direction: row;

@@ -13,7 +13,7 @@ let axios = Axios.create({
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
     window.global.$vux.loading.show({
-        text: '正在加载....',
+        text: '正在加载',
         onShow(){
             window.global.$root.eventHub.$emit('LodingShow')
         },
@@ -21,7 +21,7 @@ axios.interceptors.request.use(function (config) {
             window.global.$root.eventHub.$emit('LodingHide')  
         }
        })
-       document.body.style.overflow = 'hidden';
+
     return config;
 }, function (error) {
         return Promise.reject(error);
@@ -29,9 +29,7 @@ axios.interceptors.request.use(function (config) {
 });
 axios.interceptors.response.use(function (response) {
     window.global.$vux.loading.hide();
-    setTimeout(function(){
-        document.body.style.overflow = 'auto';
-    },'500')
+
  return response;
 }, function (error) {
     console.log(error.response)

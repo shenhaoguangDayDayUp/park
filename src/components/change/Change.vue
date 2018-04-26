@@ -88,7 +88,7 @@ export default {
               resolve();
             },
             cancel(vm, resolve) {
-              vm.$router.push({ name: "PrizeCity" });
+              vm.$router.push({ name: "gameCenter" });
               resolve();
             },
             title: "您还没有登录",

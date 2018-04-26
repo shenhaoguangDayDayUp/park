@@ -53,6 +53,15 @@
     max-width:none !important;
     color: #515151 !important;
   }
+  .weui-loading_toast{
+    .weui-mask_transparent{
+      background: rgba(17,17,17,0.7)
+    }
+    .weui-toast{
+      background: transparent !important;
+    }
+  }
+ 
   // .weui-tabbar{
   //   background: #1b1a20 !important;
   // }

@@ -27,8 +27,9 @@ export default {
   name: "Header",
   methods:{
     back(){
+      console.log(this.$route.query.hasOwnProperty('routeName'))
       if(this.$route.query.hasOwnProperty('routeName')){
-        return this.$router.push({name:this.$route.query.name})
+        return this.$router.push({name:this.$route.query.routeName})
       }
       this.$router.go(-1)
     }
