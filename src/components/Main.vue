@@ -253,7 +253,7 @@ export default {
           var data = that.getBase64Image(img);
           var img1 = document.createElement("img");
           img1.src = data;
-          document.body.appendChild(img1);
+        //   document.body.appendChild(img1);
              resolve(data)
           return data;
         };

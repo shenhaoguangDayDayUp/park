@@ -47,7 +47,7 @@ export default {
 
       this.$root.eventHub.$on('LodingShow',res=>{
         document.querySelector('body').style = 'display:block;height:100%;overflow-y:hidden;font-size:'+document.querySelector('body').style.fontSize
-            console.log(document.querySelector('body'))
+            // console.log(document.querySelector('body'))
         // this.loding = {
         //   'display': 'block',
         //   'overflow-y': 'auto',
@@ -56,7 +56,7 @@ export default {
       })
        this.$root.eventHub.$on('LodingHide',res=>{
        document.querySelector('body').style = 'font-size:'+document.querySelector('body').style.fontSize
-            console.log(document.querySelector('body'))
+            // console.log(document.querySelector('body'))
         // this.loding = {
         //    'display': 'block',
         //   'overflow-y': 'inherit',
