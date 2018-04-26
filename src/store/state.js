@@ -3,7 +3,7 @@ const app = {
     state:{
         isLoading:false,
         defaultAderess:'',
-
+        defaultAvatar:''
     },
     mutations: {
         updateAddres(state, payload){
@@ -11,6 +11,9 @@ const app = {
         },
         updateLoadingStatus (state, payload) {
           state.isLoading = payload.isLoading
+        },
+        updateAvatar(state,payload){
+          state.defaultAvatar = payload
         }
      },
      actions: {
@@ -20,7 +23,9 @@ const app = {
         toggleLoadingStatus({ commit },view) {
           commit('updateLoadingStatus',view)
         },
-      
+        toggleUpdateAvatar({ commit },view) {
+          commit('updateAvatar',view)
+        },
       }
 
 }

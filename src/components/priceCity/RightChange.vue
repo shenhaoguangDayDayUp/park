@@ -85,6 +85,8 @@ export default {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
+      console.log(11111111)
+      console.log(this)
       var personalInfo = {
         receiverName: this.defaultAderess.name,
         receiverMobileNumber: this.defaultAderess.mobileNumber,
