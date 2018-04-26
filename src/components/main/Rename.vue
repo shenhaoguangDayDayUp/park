@@ -1,6 +1,6 @@
 <template>
     <div class="rename">
-        <Header title="修改用户昵称" :isShow="true"></Header>
+        <Header title="修改昵称" :isShow="true"></Header>
         <x-input 
         title="" 
         placeholder="请填写你的昵称" 

@@ -80,6 +80,10 @@ export default {
 }
 
 }
+// .vux-loading > .weui-mask_transparent{
+//   height:100vh;
+//   overflow: hidden;
+// }
 </style>
 
  

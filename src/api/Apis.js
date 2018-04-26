@@ -21,13 +21,17 @@ axios.interceptors.request.use(function (config) {
             window.global.$root.eventHub.$emit('LodingHide')  
         }
        })
+       document.body.style.overflow = 'hidden';
     return config;
 }, function (error) {
         return Promise.reject(error);
     
 });
 axios.interceptors.response.use(function (response) {
-    window.global.$vux.loading.hide()
+    window.global.$vux.loading.hide();
+    setTimeout(function(){
+        document.body.style.overflow = 'auto';
+    },'500')
  return response;
 }, function (error) {
     console.log(error.response)
@@ -53,7 +57,8 @@ axios.interceptors.response.use(function (response) {
             });
             break;
     }
-    window.global.$vux.loading.hide()
+    window.global.$vux.loading.hide();
+    document.body.style.overflow = 'auto';
     return Promise.reject(error);
 }); 
 

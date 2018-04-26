@@ -34,7 +34,7 @@ const route =new Router({
     {
       path: '/',
       component: () => import('@/components/common/Layout.vue'),
-      redirect: '/main',
+      redirect: '/gameCenter',
       children: [
         {
           path: '/main',
@@ -72,6 +72,14 @@ const route =new Router({
             scrollToTop:true
           },
           component: () => import('@/components/main/Message'),
+        },
+        {
+          path: '/entity',
+          name: 'Entity',
+          meta:{
+            scrollToTop:true
+          },
+          component: () => import('@/components/main/Entity'),
         },
       ]
     },
@@ -163,14 +171,6 @@ const route =new Router({
         scrollToTop:true
       },
       component: () => import('@/components/main/MessageDetail'),
-    },
-    {
-      path: '/entity',
-      name: 'Entity',
-      meta:{
-        scrollToTop:true
-      },
-      component: () => import('@/components/main/Entity'),
     },
     {
       path: '/rename',

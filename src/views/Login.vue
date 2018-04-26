@@ -157,9 +157,9 @@
           } else {
             sessionStorage.setItem("TOKEN", headers['x-auth-token']);
           }
-          if (this.$route.query.forgetPwd == 1) {
+          if (this.$route.query.forgetPwd == 1) { //修改密码后的登录
             this.$router.push({
-              path: '/main'
+              path: '/gameCenter'
             })
           } else {
             this.$router.go(-1)

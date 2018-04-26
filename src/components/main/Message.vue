@@ -4,10 +4,16 @@
         <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
             <li v-for="(v,i) in msgsList" :key="i">
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
-                    <div class="msgItem"><div style="width:40%;">{{v.sendAt}}</div><div>{{v.title}}</div></div>
+                    <div class="msgItem">
+                        <div style="width:40%;">{{v.sendAt}}</div>
+                        <div>{{v.title}}</div>
+                    </div>
                 </router-link>
                 <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
-                    <div class="msgItem"><div style="width:40%;">{{v.sendAt}}</div><div>{{v.title}}</div></div>
+                    <div class="msgItem">
+                        <div style="width:40%;">{{v.sendAt}}</div>
+                        <div>{{v.title}}</div>
+                    </div>
                 </router-link>
             </li>
             <load-more v-if='loading' :tip="'正在加载'"></load-more>
@@ -16,7 +22,7 @@
     </div>
 </template>
 <script>
-    import Header from '../common/Header'   
+    import Header from '../common/Header'
     import {
         InfiniteScroll
     } from "mint-ui";
@@ -63,8 +69,12 @@
                         data.records[index].sendAt = this.timeStamp(data.records[index].sendAt)
                         const element = data.records[index];
                         this.msgsList.push(element);
-                    }
+                      }
                     this.count = data.count;
+                    // this.$vux.loading.show({
+                    //     text: '正在加载....'
+                    // })
+                    // document.body.style.overflow = 'hidden';
                 }).catch(error => {})
             },
             loadMore() {
@@ -116,8 +126,8 @@
                 span span {
                     margin-left: 27px;
                 }
-                .msgItem{
-                    display:flex;
+                .msgItem {
+                    display: flex;
                     display: -webkit-flex;
                     justify-content: flex-start;
                 }
