@@ -218,15 +218,9 @@ export default {
           console.log(!sessionStorage.getItem("AVATAR"));
           if (!sessionStorage.getItem("AVATAR")) {
                this.changeToBase64(imgPrifex + data["member.avatar"]).then(res=>{
-                   console.log(res)
+                   sessionStorage.setItem("AVATAR",res);
+                   this.avatar = res;
                })
-            // sessionStorage.setItem(
-            //   "AVATAR",
-            //   this.changeToBase64(imgPrifex + data["member.avatar"])
-            // );
-            this.avatar = this.changeToBase64(
-              imgPrifex + data["member.avatar"]
-            );
           } else {
             this.avatar = sessionStorage.getItem("AVATAR");
           }
@@ -248,7 +242,7 @@ export default {
       var that = this;
       var img = document.createElement("img");
       img.src = url; //此处自己替换本地图片的地址
-      return new Promise(function(resolve, reject) {
+      return new Promise(function(resolve, reject) { //onload是异步
         img.onload = function() {
           var data = that.getBase64Image(img);
           var img1 = document.createElement("img");
