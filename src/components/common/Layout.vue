@@ -42,6 +42,10 @@ export default {
     Tabbar,
     TabbarItem
   },
+  mounted(){
+    //清空购物车
+     this.$store.dispatch("toggleGoodsList",{goods:[],selected:false} );
+  },
   name: "app",
   methods:{
        findActive(list,val){

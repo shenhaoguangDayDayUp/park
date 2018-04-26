@@ -4,11 +4,11 @@
             <div class="my-dialog">
                 <span class="title">
                     <span>{{title}}</span>
-                    <span class="title-icon"
+                    <!-- <span class="title-icon"
                           @click='showToast = false'>
                         <img src="../../assets/img/close1.png"
                              alt="">
-                    </span>
+                    </span> -->
                 </span>
                 <!-- <slot  name='header'></slot> -->
                 <div class="content">

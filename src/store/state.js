@@ -3,6 +3,7 @@ const app = {
     state:{
         isLoading:false,
         defaultAderess:'',
+        goodsList:{goods:[],selected:false}
 
     },
     mutations: {
@@ -11,6 +12,9 @@ const app = {
         },
         updateLoadingStatus (state, payload) {
           state.isLoading = payload.isLoading
+        },
+        updateGoodsList (state, payload) {
+          state.goodsList = payload
         }
      },
      actions: {
@@ -20,6 +24,9 @@ const app = {
         toggleLoadingStatus({ commit },view) {
           commit('updateLoadingStatus',view)
         },
+        toggleGoodsList({ commit },view){
+          commit('updateGoodsList',view)
+        }
       
       }
 

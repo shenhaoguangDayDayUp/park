@@ -54,14 +54,14 @@ export default {
       value = isNaN(value) ? 0 : value;
       value -= 1;
       if(value <= 0){
-        this.$vux.toast.show({
+     return   this.$vux.toast.show({
           text: "不能再少了"
         });
         value = 1;
       }
      this.quntity = value
-        console.log(this.quntity)
-      this.$emit('valueChange', { value: value, index: this.index,type:-1 });
+        console.log(this.quntity )
+      this.$emit('valueChange', { value: this.quntity, index: this.index,type:-1 });
     },
     doPlus() {
      let value = parseInt(this.quntity);
@@ -71,7 +71,7 @@ export default {
         return;
       }
       this.quntity = value
-      this.$emit('valueChange', { value: value, index: this.index,type:1 });
+      this.$emit('valueChange', { value:  this.quntity , index: this.index,type:1 });
     }
   }
 };
