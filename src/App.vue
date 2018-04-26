@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <router-view></router-view>
+      <router-view :style="loding"></router-view>
     </transition>
     <!-- 路由跳转必写 -->
     <div v-transfer-dom>
@@ -19,7 +19,8 @@ import { mapGetters } from "vuex";
 export default {
   data(){
     return {
-      transitionName:'slide-left'
+      transitionName:'slide-left',
+      loding:{},
     }
   },
   directives: {
@@ -43,6 +44,26 @@ export default {
   mounted() {
     document.getElementById("app").style.display = "block";
     document.getElementById("appLoading").style.display = "none";
+
+      this.$root.eventHub.$on('LodingShow',res=>{
+        document.querySelector('body').style = 'display:block;height:100%;overflow-y:hidden;font-size:'+document.querySelector('body').style.fontSize
+            console.log(document.querySelector('body'))
+        // this.loding = {
+        //   'display': 'block',
+        //   'overflow-y': 'auto',
+        //   'height':'100%'
+        // }
+      })
+       this.$root.eventHub.$on('LodingHide',res=>{
+       document.querySelector('body').style = 'font-size:'+document.querySelector('body').style.fontSize
+            console.log(document.querySelector('body'))
+        // this.loding = {
+        //    'display': 'block',
+        //   'overflow-y': 'inherit',
+        //   'height':'100%'
+        // }
+      })
+  
   },
   
 };

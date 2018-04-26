@@ -1,127 +1,137 @@
 <template>
     <div class="avatar">
-        <Header title="我的头像" :isShow="true"></Header>
+        <Header title="我的头像"
+                :isShow="true"></Header>
         <div class="imgCont">
-            <img :src="querySrc" alt="">
+            <img :src="querySrc"
+                 alt="">
         </div>
-        <vue-core-image-upload 
-        :crop="false" 
-        inputOfFile='avatar' 
-        inputAccept='image/jpg,image/jpeg,image/png'
-         @imageuploaded="imageuploaded" 
-         @imagechanged="imagechanged" 
-         :max-file-size="6291456" 
-         compress="90" 
-         :headers="data" 
-         text='修改头像' 
-         :url="avatar">
+        <vue-core-image-upload :crop="false"
+                               inputOfFile='avatar'
+                               inputAccept='image/jpg,image/jpeg,image/png'
+                               @imageuploaded="imageuploaded"
+                               @imagechanged="imagechanged"
+                               :max-file-size="6291456"
+                               compress="90"
+                               :headers="data"
+                               text='修改头像'
+                               :url="avatar">
         </vue-core-image-upload>
     </div>
 </template>
 <script>
-    import Header from '../common/Header'
-    import config from '@/api/config'
-    import VueCoreImageUpload from 'vue-core-image-upload';
-    import {
-        loginApi,
-    } from '../../api/api';
-    export default {
-        name: 'Avatar',
-        data() {
-            return {
-                data: {
-                    'x-auth-token': sessionStorage.getItem('TOKEN')
-                },
-                querySrc: this.$route.query.src,
-                avatar: config.imgUrl[config.env.NODE_ENV] + "/gateway/mobile/member/avatar"
-            }
+import Header from "../common/Header";
+import config from "@/api/config";
+import VueCoreImageUpload from "vue-core-image-upload";
+import { loginApi } from "../../api/api";
+export default {
+  name: "Avatar",
+  data() {
+    return {
+      data: {
+        "x-auth-token": sessionStorage.getItem("TOKEN")
+      },
+      querySrc: this.$route.query.src,
+      avatar:
+        config.imgUrl[config.env.NODE_ENV] + "/gateway/mobile/member/avatar"
+    };
+  },
+  methods: {
+    imagechanged(code) {
+      this.$vux.loading.show({
+        text: "正在加载....",
+        onShow() {
+          this.$root.eventHub.$emit("LodingShow");
         },
-        methods: {
-            imagechanged(code) {
-                 this.$vux.loading.show({
-                    text: '正在加载....'
-                })
-            },
-            // imageuploading(res) {
-            // },
-            imageuploaded(res, data) {
-                this.$vux.loading.hide()
-                if (res.indexOf('images') !== -1) {
-                    this.querySrc = config.apiUrlPrefix[process.env.NODE_ENV] + res + '?r=' + new Date().getTime(); // 头像加时间戳
-                    console.log(this.querySrc)
-                    this.$vux.toast.show({
-                        text: '修改成功!',
-                    });
-                } else if (res.indexOf('图片大小超出上限') !== -1) {
-                    this.$vux.toast.show({
-                        text: res,
-                    });
-                } else {
-                    this.$vux.toast.show({
-                        text: '头像修改失败!',
-                    });
-                }
-            },
-            // 异常处理
-            // errorhandle(err) {
-            // }
-        },
-        components: {
-            'vue-core-image-upload': VueCoreImageUpload,
-            Header
-        },
+        onHide() {
+          this.$root.eventHub.$emit("LodingHide");
+        }
+      });
+    },
+    // imageuploading(res) {
+    // },
+    imageuploaded(res, data) {
+      this.$vux.loading.hide();
+      if (res.indexOf("images") !== -1) {
+        this.querySrc =
+          config.apiUrlPrefix[process.env.NODE_ENV] +
+          res +
+          "?r=" +
+          new Date().getTime(); // 头像加时间戳
+        console.log(this.querySrc);
+        this.$vux.toast.show({
+          text: "修改成功!"
+        });
+      } else if (res.indexOf("图片大小超出上限") !== -1) {
+        this.$vux.toast.show({
+          text: res
+        });
+      } else {
+        this.$vux.toast.show({
+          text: "头像修改失败!"
+        });
+      }
     }
+    // 异常处理
+    // errorhandle(err) {
+    // }
+  },
+  components: {
+    "vue-core-image-upload": VueCoreImageUpload,
+    Header
+  }
+};
 </script>
 <style lang="scss" scoped>
-    .avatar {
-        color: #fff;
-        height: 100vh;
-        overflow: hidden;
-        .imgCont {
-            height: 80%;
-            width: 100%;
-            display: flex;
-            display: -webkit-flex;
-            align-items: center;
-            justify-content: center;
-            img {
-                width: 100%; // height:400px;
-            }
-        }
-        .g-core-image-upload-form input[name="avatar"] {
-            font-size: 30px;
-            text-align: center;
-        }
+.avatar {
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  .imgCont {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 100%; // height:400px;
     }
+  }
+  .g-core-image-upload-form input[name="avatar"] {
+    font-size: 30px;
+    text-align: center;
+  }
+}
 </style>
 <style>
-    .avatar .g-core-image-upload-btn {
-        font-size: 30px;
-        text-align: center;
-        letter-spacing: 2px;
-    }
-    .avatar .g-core-image-corp-container .btn-upload:hover {
-        border-color: #ffcb16;
-    }
-    .avatar .image-mask {
-        position: absolute;
-        z-index: 999;
-        /* background: #000; */
-    }
-    .avatar .g-core-image-corp-container .info-aside {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        background: #000;
-    }
-    .avatar .g-core-image-corp-container .btn-upload {
-        background: #ffcb16;
-        border-color: #ffcb16;
-        width: 100px;
-    }
-    .avatar .image-mask .mask {
-        background: #000!important;
-    }
+.avatar .g-core-image-upload-btn {
+  font-size: 30px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.avatar .g-core-image-corp-container .btn-upload:hover {
+  border-color: #ffcb16;
+}
+.avatar .image-mask {
+  position: absolute;
+  z-index: 999;
+  /* background: #000; */
+}
+.avatar .g-core-image-corp-container .info-aside {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #000;
+}
+.avatar .g-core-image-corp-container .btn-upload {
+  background: #ffcb16;
+  border-color: #ffcb16;
+  width: 100px;
+}
+.avatar .image-mask .mask {
+  background: #000 !important;
+}
 </style>
 
 
