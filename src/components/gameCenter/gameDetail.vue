@@ -31,8 +31,8 @@
   import Submit from '../common/Button';
   import config from '../../api/config.js';
   import {
-        loginApi,
-    } from '../../api/api';
+    loginApi,
+  } from '../../api/api';
   import {
     gameApi
   } from '../../api/api';
@@ -179,7 +179,7 @@
         }
       }
       .gameRight {
-        // width: 54.8%;
+        width: 411px;
         margin-left: 36px;
         display: flex;
         display: -webkit-flex;
@@ -188,6 +188,11 @@
         p {
           font-size: 26px;
           line-height: 37px;
+          height:114px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+          overflow: hidden;
         }
       }
     }
@@ -224,19 +229,16 @@
   }
 </style>
 <style lang="scss">
-  #gameDetail>#swiper>.vux-swiper {
+  #gameDetail #swiper .vux-swiper {
     overflow: visible!important;
   }
-  .gameDetail {
-    overflow: hidden;
-    .vux-slider {
-      overflow: visible;
-    }
+  #gameDetail .vux-slider {
+    overflow: visible;
   }
-  #gameDetail>.vux-slider>.vux-swiper>.vux-swiper-item {
+  #gameDetail .vux-slider .vux-swiper .vux-swiper-item {
     padding: 0 11px!important;
   }
-  #gameDetail>.vux-slider>.vux-swiper>.vux-swiper-item>a>.vux-swiper-desc {
+  #gameDetail .vux-slider .vux-swiper .vux-swiper-item a .vux-swiper-desc {
     background-image: none;
   }
 </style>

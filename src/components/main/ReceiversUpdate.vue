@@ -6,7 +6,7 @@
             <x-input name="username" ref="userName"
                      placeholder="请输入姓名"
                      :is-type="isTypeUserName"
-                     :show-clear="false"
+                     :show-clear="true"
                      :required = true
                      :min="2" 
                      :max="12"

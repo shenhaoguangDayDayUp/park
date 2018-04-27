@@ -95,30 +95,36 @@
                     <div class="mint-tab-item"
                          @click='$router.push({path:"/heart/list"})'>
                         <div class="mint-icon">
-                            <img src="../assets/img/xinyuandan.png"
+                            <div class="mint-icon-img">
+                              <img src="../assets/img/xinyuandan.png"
                                  alt=""
                                  class="pulse">
-                            <badge v-show="wishList"></badge>
+                              <badge v-show="wishList"></badge>
+                            </div>
                         </div>
                         <div class="mint-tab-item-label">心愿单</div>
                     </div>
                     <div class="mint-tab-item"
                          @click='$router.push({ name: "orderLsit", query: { index: 0 } })'>
                         <div class="mint-icon">
+                          <div class="mint-icon-img"> 
                             <img src="../assets/img/daifukuan.png"
                                  alt=""
                                  class="pulse">
                             <badge v-show="unpaid"></badge>
+                          </div>
                         </div>
                         <div class="mint-tab-item-label">待付款</div>
                     </div>
                     <div class="mint-tab-item"
                          @click='$router.push({ name: "orderLsit", query: { index: 1 } })'>
                         <div class="mint-icon">
+                          <div class="mint-icon-img">
                             <img src="../assets/img/daishouhuo.png"
                                  alt=""
                                  class="pulse">
                             <badge v-show="ungoods"></badge>
+                          </div>
                         </div>
                         <div class="mint-tab-item-label">待收货</div>
                     </div>
@@ -387,6 +393,18 @@ export default {
         display: flex;
         justify-content: center; // height: 48px;
         margin-bottom: 18px;
+        .mint-icon-img{
+          width: 55px;
+          height: 55px;
+          position: relative;
+          span{
+            position: absolute;
+            top:-5px;
+            right:-7.5px;
+            // top:-7.5px;
+            // right:-7.5px;
+          }
+        }
         img {
           width: 55px;
           height: 55px;
