@@ -21,7 +21,8 @@ axios.interceptors.request.use(function (config) {
             window.global.$root.eventHub.$emit('LodingHide')  
         }
        })
-
+       
+     
     return config;
 }, function (error) {
         return Promise.reject(error);

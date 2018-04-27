@@ -176,8 +176,16 @@ export default {
         align-items: center;
         .list-item-content_right{
             flex: 1;
+            vertical-align: middle;
             .price{
                 margin-left: 10px;
+                font-size: 36px;
+                 vertical-align: middle;
+            }
+            img{
+              width: 34px;
+              height: 34px;
+              vertical-align: middle;
             }
         }
         .list-item-content_quntity{

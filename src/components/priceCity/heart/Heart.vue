@@ -9,7 +9,8 @@
                      @deleteItem="deleteItem"
                      :index='index'
                      @tachStart='tachStart'
-                     style="margin-bottom:20px">
+                     class='m-b-22'
+                     >
         <HeartItems v-outside='outside'
                     :key="item.code"
                     :url="item.imagePath"
@@ -93,7 +94,6 @@ export default {
         this.gotoChangeBtn = val.filter(item => item.selected).length
           ? true
           : false;
-        console.log(this.gotoChangeBtn);
       },
       immediate: true,
       deep: true
@@ -361,6 +361,9 @@ export default {
   background: #23262b;
   height: 100%;
   overflow: auto;
+  .m-b-22{
+    margin-bottom: 22px;
+  }
   // .my-dialog {
   //   font-size: 32px;
   //   height: 368px;

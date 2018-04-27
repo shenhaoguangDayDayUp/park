@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import Header from './Header';
 import Dialog from './Dialog';
+import Empty from './Empty';
+Empty.install = function (Vue) {
+    Vue.component(Empty.name, Empty);
+}
+Vue.use(Empty);
 Header.install = function (Vue) {
     Vue.component(Header.name, Header);
 }

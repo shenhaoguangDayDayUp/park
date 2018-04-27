@@ -114,13 +114,13 @@ export default {
     },
     getInfo() {
       this.detail = JSON.parse(this.$route.query.product);
-      console.log(JSON.parse(this.$route.query.product));
       //    await orderCheckOutApi({id})
     }
   }
 };
 </script>
 <style lang='scss' scoped>
+
 .right-change {
   color: #fff;
   background: #23262b;

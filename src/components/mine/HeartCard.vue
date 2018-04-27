@@ -4,7 +4,7 @@
             <div class='sd__quantity__btn '
                  @click.stop='doMinus'>
                 <img class='icon'
-                     src='../../assets/img/jianhao@1x.png'>
+                     src='../../assets/img/jianhao@2x.png'>
             </div>
             <div class='sd__quantity__input' :num.sync='quntity'>
                 {{quntity}}
@@ -14,7 +14,7 @@
             <div class='sd__quantity__btn'
                  @click.stop='doPlus'>
                 <img class='icon'
-                     src='../../assets/img/jiahao@1x.png' />
+                     src='../../assets/img/jiahao@2x.png' />
             </div>
         </div>
     </div>
