@@ -2,20 +2,45 @@
   <div class="order-list">
     <Header title="订单清单" :isShow="true"></Header>
     <!-- <Header title="订单清单"
-              :isShow='true'></Header> -->
-    <div class="order-list-content">
-      <tab v-model="tabActive" style="margin-top:20px;" prevent-default active-color='#fdcd00' bar-active-color="#fdcd00" default-color='#ffffff' @on-before-index-change="switchTabItem">
-        <tab-item>待支付</tab-item>
-        <tab-item>待收货</tab-item>
-        <tab-item>全部订单</tab-item>
-      </tab>
-      <div>
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-          <div class="order-content" @click='$router.push({name:"order",query:{code:item.code}})' v-for="(item,key) in list" :key='key'>
-            <div class="content-title">
-              <div class="title-left">{{item.placeAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
-              <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
-              <div class="title-right">{{item.grandTotal}}积分</div>
+            :isShow='true'></Header> -->
+    <tab v-model="tabActive"
+         style="margin-top:20px;"
+         prevent-default
+         active-color='#fdcd00'
+         bar-active-color="#fdcd00"
+         default-color='#ffffff'
+         @on-before-index-change="switchTabItem">
+      <tab-item>待支付</tab-item>
+      <tab-item>待收货</tab-item>
+      <tab-item>全部订单</tab-item>
+    </tab>
+    <div>
+      <div v-infinite-scroll="loadMore"
+           infinite-scroll-disabled="loading"
+           infinite-scroll-distance="10">
+        <div class="order-content"
+             @click='$router.push({name:"order",query:{code:item.code}})'
+             v-for="(item,key) in list"
+             :key='key'>
+          <div class="content-title">
+            <div class="title-left">{{item.placeAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
+            <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
+            <div class="title-right">
+              <span>
+                <img src="../../assets/img/big_gold@2x.png" alt="">
+              </span>
+              {{item.grandTotal}}
+            </div>
+          </div>
+          <div class="content-list">
+            <div class="img-content">
+              <div class="content"
+                   v-for="(items,keys) in item.items"
+                   :key='keys'
+                   v-if='keys<3'>
+                <img v-lazy="items.product.imagePath"
+                     alt="">
+              </div>
             </div>
             <div class="content-list">
               <div class="img-content">
@@ -249,8 +274,15 @@
         flex: 1;
         text-align: center;
       }
-      .right {
-        flex: 1;
+      .title-right {
+        // flex: 1;
+        	color: #ffcb16;
+        text-align: right;
+        margin-right: 5px;
+        img{
+          width: 34px;
+          height: 34px;
+        }
       }
     }
     .order-content {

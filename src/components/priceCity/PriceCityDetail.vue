@@ -27,8 +27,8 @@
 
     </div>
     <div class="goods-footer">
-      <div class="btn-box">
-        <div class="btn"
+      <div class="btn-box ">
+        <div class="btn-right"
              @click='addCart'>
           加入心愿单
         </div>
@@ -220,6 +220,8 @@ updated() {
     }
   }
   .goods-detail-title {
+    padding-top:44px;
+    padding-bottom: 44px;
     min-height: 124px;
     width: 100%;
     background: #2a2d36;
@@ -237,7 +239,7 @@ updated() {
       background: #ffcb16;
     }
     .title {
-      font-size: 32px;
+      font-size: 36px;
       color: white;
       margin-left: 20px;
       min-width: 300px;
@@ -245,14 +247,17 @@ updated() {
     .icon {
       text-align: right;
       align-self: flex-start;
-      padding-top: 10px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       // flex: 1;
       // width: 250px;
       text-align: right;
+      vertical-align: middle;
+      line-height: 45px;
+      font-size: 36px;
       span {
+        vertical-align: middle;
         align-self: center;
         img {
           width: 35px;
@@ -261,7 +266,6 @@ updated() {
       }
       .price {
         display: inline-block;
-        font-size: 25px;
         margin-left: 16px;
         margin-right: 20px;
       }
@@ -309,10 +313,21 @@ updated() {
         border-radius: 10px;
         text-align: center;
         color: #000000;
-        font-size: 30px;
+        font-size: 32px;
         line-height: 80px;
       }
+       .btn-right{
+        margin: 0;
+        height: 100%;
+        border-radius: 10px;
+        text-align: center;
+        color: #000000;
+        font-size: 32px;
+        line-height: 80px;
+        background: #fdd139
     }
+    }
+   
   }
 }
 </style>
