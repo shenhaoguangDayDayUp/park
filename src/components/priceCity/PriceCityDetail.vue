@@ -4,7 +4,7 @@
       <div class="back"
            @click="back">
 
-        <img src="../../assets/img/close.png"
+        <img src="../../assets/img/return@2x.png"
              alt="">
 
         <!-- <XIcon type="ios-arrow-right"></XIcon> -->
@@ -203,7 +203,7 @@ updated() {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background: black;
+      // background: black;
       z-index: 100;
       position: absolute;
       top: 40px;
@@ -212,8 +212,8 @@ updated() {
       text-align: center;
   
       img{
-        width: 23px;
-        height: 33px;
+        width: 100%;
+        height: 100%;
         padding-bottom: 5px;
          padding-right: 5px;
       }

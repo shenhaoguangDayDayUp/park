@@ -117,6 +117,7 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+
 .right-change {
   color: #fff;
   background: #23262b;

@@ -4,11 +4,11 @@
     <Header title="奖品展示">
       <span class="heart"
             slot="right">
-        <img src="../assets/img/heart.png"
+        <img src="../assets/img/heart@2x.png"
              alt=""
              @click.stop='$router.push({name:"heart"})'>
         <img @click.stop='$router.push({name:"orderLsit"})'
-             src="../assets/img/order.png"
+             src="../assets/img/order@2x.png"
              alt="">
       </span>
     </Header>
@@ -240,7 +240,7 @@ export default {
   height: 100%;
   .heart {
     box-sizing: border-box;
-    width: 120px;
+    width: 100px;
     // padding-right: 20px;
     display: flex;
     flex-direction: row;
@@ -251,11 +251,11 @@ export default {
       // align-self: flex-start;
       //  padding-top: 5px;
       //  padding-bottom: 5px;
-       padding:7px ;
+      //  padding:7px ;
       //  padding-right: 20px;
       //  margin-left: 10px;
-      width: 50px;
-      height: 50px;
+      width: 36px;
+      height: 35px;
     }
   }
   .index_banner_1 {

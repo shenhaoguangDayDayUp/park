@@ -39,10 +39,11 @@
               </div>
             </div>
             <div class="content-right">
-              >
+              <span class="right-arrow"></span>
             </div>
           </div>
         </div>
+  
         <load-more v-if='loading&&list.length'
                    :tip="'正在加载'"></load-more>
         <divider class="divider"
@@ -50,7 +51,7 @@
 
       </div>
     </div>
-
+      <Empty :show.sync= 'show'></Empty>
     <!-- <Dialog :visible.sync='showToast'
             @success='success'
             @cancel='cancel'>
@@ -73,6 +74,16 @@ import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
 import { timingSafeEqual } from "crypto";
 export default {
+  computed:{
+    show:{
+      get(){
+        return this.list.length > 0?false:true
+      },
+      set(val){
+
+      }
+    }
+  },
   directives: {
     InfiniteScroll
   },
@@ -143,7 +154,6 @@ export default {
             dataList = data.records;
             this.count = data.count;
             this.loading = false;
-            console.log(dataList);
           } catch (error) {}
         } else if (this.tabActive == 1) {
           try {
@@ -184,6 +194,15 @@ export default {
   padding-top: 40px;
   padding-bottom: 40px;
 }
+.right-arrow {
+    display: inline-block;
+    border-right: 5px solid #ccc;
+    border-bottom: 5px solid #ccc;
+    width: 22px;
+    height: 22px;
+    transform: rotate(315deg);
+    -webkit-transform: rotate(315deg);
+  }
 .order-list {
   color: #fff;
   background: #23262b;
@@ -223,7 +242,7 @@ export default {
     padding-left: 20px;
     padding-right: 20px;
     background: #2a2d36;
-    margin-bottom: 10px;
+    margin-bottom: 22px;
 
     .content-title::after {
       content: " ";

@@ -1,29 +1,29 @@
 <template>
-    <div :visible.sync="show">
-        <x-dialog v-model="showToast">
-            <div class="my-dialog">
-                <span class="title">
-                    <span>{{title}}</span>
-                    <!-- <span class="title-icon"
+  <div :visible.sync="show">
+    <x-dialog v-model="showToast">
+      <div class="my-dialog">
+        <span class="title">
+          <span>{{title}}</span>
+          <!-- <span class="title-icon"
                           @click='showToast = false'>
                         <img src="../../assets/img/close1.png"
                              alt="">
                     </span> -->
-                </span>
-                <!-- <slot  name='header'></slot> -->
-                <div class="content">
-                    {{content}}
-                    <!-- <slot  name='content'></slot> -->
-                </div>
-                <div class='bottom'>
-                    <div class="left"
-                         @click='onCancel'>{{rightBtnText}}</div>
-                    <div class="right"
-                         @click='onConfirm'>{{leftBtnText}}</div>
-                </div>
-            </div>
-        </x-dialog>
-    </div>
+        </span>
+        <!-- <slot  name='header'></slot> -->
+        <div class="content">
+          {{content}}
+          <!-- <slot  name='content'></slot> -->
+        </div>
+        <div class='bottom'>
+          <div class="left"
+               @click='onCancel'>{{rightBtnText}}</div>
+          <div class="right"
+               @click='onConfirm'>{{leftBtnText}}</div>
+        </div>
+      </div>
+    </x-dialog>
+  </div>
 </template>
 <script>
 import { XDialog } from "vux";
@@ -54,9 +54,17 @@ export default {
       this.$emit("cancel");
     },
     onConfirm() {
-        console.log(this.$root)
       //  this.showToast = false
       this.$emit("success");
+    }
+  },
+  watch: {
+    showToast(val) { 
+      if (val) {// 设置弹框出现不能滚动
+        window.global.$root.eventHub.$emit("LodingShow");
+      } else {
+        window.global.$root.eventHub.$emit("LodingHide");
+      }
     }
   },
   data() {
@@ -121,11 +129,10 @@ export default {
       padding: 10px;
       flex: 1;
       margin-left: 20px;
-      border: 1px solid #ffcb16;
+      border: 2px solid #ffcb16;
       margin-right: 10px;
       border-radius: 10px;
-      box-shadow: 0px 4px 3px 0px 
-		rgba(0, 0, 0, 0.04);
+      box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
     }
     .right {
       padding: 10px;
@@ -134,8 +141,7 @@ export default {
       margin-right: 20px;
       margin-left: 10px;
       border-radius: 10px;
-      box-shadow: 0px 4px 3px 0px 
-		rgba(0, 0, 0, 0.04);
+      box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
     }
   }
 }

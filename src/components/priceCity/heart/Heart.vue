@@ -9,7 +9,8 @@
                      @deleteItem="deleteItem"
                      :index='index'
                      @tachStart='tachStart'
-                     style="margin-bottom:20px">
+                     class='m-b-22'
+                     >
         <HeartItems v-outside='outside'
                     :key="item.code"
                     :url="item.imagePath"
@@ -359,6 +360,9 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
+  .m-b-22{
+    margin-bottom: 22px;
+  }
   // .my-dialog {
   //   font-size: 32px;
   //   height: 368px;

@@ -10,11 +10,11 @@
         <div class="receive-detail">
             <!-- <div class="address"> -->
                 <div class='receive-detail-title'>
-                    <span style="margin-right:20px">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}
+                    <span style="">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}打发打发的
                 </div>
             <!-- </div> -->
             <div class="right-img"  v-if='show'>
-                    >
+                    <span class="right-arrow "></span>
             </div>
         </div>
     </div>
@@ -58,6 +58,15 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.right-arrow {
+    display: inline-block;
+    border-right: 5px solid #ccc;
+    border-bottom: 5px solid #ccc;
+    width: 22px;
+    height: 22px;
+    transform: rotate(315deg);
+    -webkit-transform: rotate(315deg);
+  }
 .change-address {
   height: 230px;
   width: 100%;
@@ -84,7 +93,7 @@ export default {
     flex: 1;
     line-height: 108px;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 67px;
   }
   .receive-detail {
     padding-right: 20px;
@@ -103,6 +112,7 @@ export default {
         // position: absolute;
     }
     .receive-detail-title{
+      margin-right:20px;
       flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
