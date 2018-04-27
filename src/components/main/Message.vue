@@ -19,6 +19,7 @@
             <load-more v-if='loading' :tip="'正在加载'"></load-more>
             <divider v-if='noMoreData'>没有更多消息了</divider>
         </ul>
+        <Empty :show.sync='show'></Empty>
     </div>
 </template>
 <script>
@@ -37,6 +38,14 @@
     } from 'vux'
     export default {
         name: "Message",
+        computed: {
+            show: {
+                get() {
+                    return this.list.length > 0 ? false : true
+                },
+                set(val) {}
+            }
+        },
         data() {
             return {
                 loading: false,
