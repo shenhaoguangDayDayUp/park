@@ -1,24 +1,26 @@
 <template>
     <div class="message">
         <Header title="消息清单" :isShow="true"></Header>
-        <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-            <li v-for="(v,i) in msgsList" :key="i">
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
-                    <div class="msgItem">
-                        <div style="width:40%;">{{v.sendAt}}</div>
-                        <div>{{v.title}}</div>
-                    </div>
-                </router-link>
-                <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
-                    <div class="msgItem">
-                        <div style="width:40%;">{{v.sendAt}}</div>
-                        <div>{{v.title}}</div>
-                    </div>
-                </router-link>
-            </li>
-            <load-more v-if='loading' :tip="'正在加载'"></load-more>
-            <divider v-if='noMoreData'>没有更多消息了</divider>
-        </ul>
+        <div class="messageContent">
+            <ul class="messList" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+                <li v-for="(v,i) in msgsList" :key="i">
+                    <router-link :to="{name:'MessageDetail',query: {id: v.code}}" v-if="!v.readAt" style="color:#ffcb16;">
+                        <div class="msgItem">
+                            <div style="width:40%;">{{v.sendAt}}</div>
+                            <div>{{v.title}}</div>
+                        </div>
+                    </router-link>
+                    <router-link :to="{name:'MessageDetail',query: {id: v.code}}" style="color:#fff;" v-else>
+                        <div class="msgItem">
+                            <div style="width:40%;">{{v.sendAt}}</div>
+                            <div>{{v.title}}</div>
+                        </div>
+                    </router-link>
+                </li>
+                <load-more v-if='loading' :tip="'正在加载'"></load-more>
+                <divider v-if='noMoreData && msgsList.length'>没有更多消息了</divider>
+            </ul>
+        </div>
         <Empty :show.sync='show'></Empty>
     </div>
 </template>
@@ -38,14 +40,7 @@
     } from 'vux'
     export default {
         name: "Message",
-        computed: {
-            show: {
-                get() {
-                    return this.list.length > 0 ? false : true
-                },
-                set(val) {}
-            }
-        },
+        computed: {},
         data() {
             return {
                 loading: false,
@@ -53,58 +48,56 @@
                 count: 0,
                 page: 1,
                 noMoreData: false,
+                show: false
             };
         },
-        mounted() {
-            this.list();
+        async mounted() {
+            console.log(99999999)
+            await this.list();
+            this.show = this.msgsList.length > 0 ? false : true
+            console.log('wjhfhsdaklfjd')
         },
         methods: {
-            list() {
-                this.loading = true;
+            async list() {
+                // this.loading = true;
                 const TOKEN = sessionStorage.getItem('TOKEN');
-                getMsgApi.msgList({
-                    id: this.page
-                }, {
-                    data: {},
-                    headers: {
-                        'x-auth-token': TOKEN
-                    }
-                }).then(res => {
-                    this.loading = false;
+                if (TOKEN) {
                     const {
                         data
-                    } = res;
+                    } = await getMsgApi.msgList({
+                        id: this.page
+                    }, {
+                        data: {},
+                        headers: {
+                            'x-auth-token': TOKEN
+                        }
+                    });
                     for (let index = 0; index < data.records.length; index++) {
                         data.records[index].sendAt = this.timeStamp(data.records[index].sendAt)
                         const element = data.records[index];
                         this.msgsList.push(element);
                     }
                     this.count = data.count;
-                    // this.$vux.loading.show({
-                    //     text: '正在加载....'
-                    // })
-                    // document.body.style.overflow = 'hidden';
-                }).catch(error => {
-                    // this.loading = false;
-                    // if (error.response.status == 401) {
-                    //     var that = this;
-                    //     this.$$message.confirm.show({
-                    //         confirm(vm, resolve) {
-                    //             vm.$router.push({
-                    //                 name: "Login"
-                    //             });
-                    //             resolve();
-                    //         },
-                    //         cancel(vm, resolve) {
-                    //             resolve();
-                    //         },
-                    //         title: "提示",
-                    //         content: "请您先登录!",
-                    //         rightBtnText: "取消",
-                    //         leftBtnText: "确定"
-                    //     });
-                    // }
-                })
+                } else {
+                    this.$$message.confirm.show({
+                        confirm(vm, resolve) {
+                            vm.$router.push({
+                                name: "Login"
+                            });
+                            resolve();
+                        },
+                        cancel(vm, resolve) {
+                            vm.$router.push({
+                                name: "gameCenter"
+                            });
+                            resolve();
+                        },
+                        title: "您还没有登录",
+                        content: "是否前往登录?",
+                        rightBtnText: "随便看看",
+                        leftBtnText: "确定"
+                    });
+                }
             },
             loadMore() {
                 if (this.msgsList.length >= this.count) { //当拉到底的时候
@@ -139,9 +132,12 @@
     .message {
         background-color: #23262b;
         height: 100%;
-        .messList {
-            padding-bottom: 100px;
+        overflow: auto;
+        .messageContent {
             margin-top: 94px;
+            padding-bottom: 100px;
+        }
+        .messList {
             li {
                 height: 93px;
                 border-bottom: 2px solid #323540;

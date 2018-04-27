@@ -1,22 +1,17 @@
 <template>
     <div class="rename">
         <Header title="修改昵称" :isShow="true"></Header>
-        <x-input 
-        title="" 
-        placeholder="请填写你的昵称" 
-        :min="2" :max="10" 
-        :icon-type="iconType" 
-        v-model="name"></x-input>
+        <x-input title="" placeholder="请填写你的昵称" :min="2" :max="10" :icon-type="iconType" :is-type="isTypeUserName" v-model="name"></x-input>
         <!-- 报错信息 -->
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
         <!-- 按钮 -->
         <!-- <div class="btn">
-            <div class="redBtn active" @click=rename()>
-                保&nbsp;存
-            </div>
-        </div> -->
+                    <div class="redBtn active" @click=rename()>
+                        保&nbsp;存
+                    </div>
+                </div> -->
         <submit text="保存" :disabled="submitBtnDisabled" @click.native="rename()"></submit>
     </div>
 </template>
@@ -40,7 +35,7 @@
         },
         computed: {
             submitBtnDisabled() {
-                if (this.name) return false;
+                if (this.isUserName) return false;
                 return true;
             }
         },
@@ -49,6 +44,7 @@
                 isError: '',
                 name: this.$route.query.name,
                 iconType: '',
+                isUserName: false,
             }
         },
         methods: {
@@ -83,7 +79,22 @@
                             break;
                     }
                 });
-            }
+            },
+            isTypeUserName(value) {
+                //  var regName =/^[\u4e00-\u9fa5]{2,4}$/;
+                var regName = /^[\u4E00-\u9FA5A-Za-z0-9]{2,10}$/; //2-20位中文、英文、数字但不包括下划线等符号
+                if (!regName.test(value)) {
+                    this.isUserName = false;
+                    return {
+                        valid: false,
+                        msg: '输入姓名格式有误'
+                    };
+                }
+                this.isUserName = true;
+                return {
+                    valid: true
+                };
+            },
         }
     }
 </script>
@@ -100,19 +111,28 @@
 </style>
 <style lang="scss">
     .rename {
-            overflow: auto;
+        overflow: auto;
         .vux-x-input.weui-cell {
             height: 92px; // background: #2a2d36;
             font-size: 30px;
             margin: 0 23px; // margin: 0 82px 0 78px;
             border-bottom: 1px solid #fff;
-            margin-top:94px;
+            margin-top: 94px;
         }
         .vux-x-input.weui-cell:before {
             border: none;
         }
         .weui-icon.weui_icon_clear.weui-icon-clear {
             font-size: 20px;
+        }
+        .weui-icon-warn {
+            color: #ffcb16 !important;
+        }
+        .vux-x-input .vux-input-icon {
+            font-size: 24px;
+        }
+        .weui-cell_warn {
+            color: #ffcb16 !important;
         }
     }
 </style>

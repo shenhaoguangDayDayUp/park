@@ -95,13 +95,13 @@
   } from "crypto";
   export default {
     computed: {
-      show: {
-        get() {
-          return this.list.length > 0 ? false : true
-        },
-        set(val) {
-        }
-      }
+      // show: {
+      //   get() {
+      //     return this.list.length > 0 ? false : true
+      //   },
+      //   set(val) {
+      //   }
+      // }
     },
     directives: {
       InfiniteScroll
@@ -114,11 +114,13 @@
         page: 1,
         count: 0,
         noMoreData: false,
-        list: []
+        list: [],
+        show:false
       };
     },
-    mounted() {
-      this.getList();
+    async  mounted() {
+    await this.getList();
+      this.show = this.list.length > 0 ? false : true
     },
     components: {
       Tab,

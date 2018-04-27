@@ -1,7 +1,7 @@
 <template>
   <transition :name="transition">
     <div class="empty-box"
-         v-show='show'>
+         v-if='show'>
       <img src="../../assets/img/dizhi@2x.png"
            alt="">
     </div>
@@ -55,11 +55,12 @@ export default {
 .show-enter,
 .show-leave-active {
   opacity: 0;
+  transition: opacity 1000ms;
 }
-.show-leave-active,
-.show-enter-active {
-  transition: opacity 300ms;
-}
+// .show-leave-active,
+// .show-enter-active {
+//   transition: opacity 300ms;
+// }
 </style>
 
 
