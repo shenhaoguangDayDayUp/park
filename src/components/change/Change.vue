@@ -6,7 +6,7 @@
     <div class="change-content">
       <div class="content">
         <div class="sticky-content">
-          <sticky :offset="94" :check-sticky-support="false">
+          <sticky :offset="80" :check-sticky-support="false">
             <div class="title">
               <div class="title-left">余额</div>
               <div class="title-right">{{remaind}}</div>

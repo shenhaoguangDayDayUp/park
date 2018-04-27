@@ -2,9 +2,8 @@
   <div class="order-list">
     <Header title="订单清单"
             :isShow="true"></Header>
-    <!-- <Header title="订单清单"
-            :isShow='true'></Header> -->
-    <tab v-model="tabActive"
+     <div class="order-list-container">
+        <tab v-model="tabActive"
          style="margin-top:20px;"
          prevent-default
          active-color='#fdcd00'
@@ -57,17 +56,11 @@
       </div>
     </div>
       <Empty :show.sync= 'show'></Empty>
-    <!-- <Dialog :visible.sync='showToast'
-            @success='success'
-            @cancel='cancel'>
-      <template slot="header">
-        您还没有登录
-      </template>
-      <template slot="content">
-        是否前往登录?
-      </template>
-      
-    </Dialog> -->
+      </div>       
+    <!-- <Header title="订单清单"
+            :isShow='true'></Header> -->
+   
+   
   </div>
 </template>
 
@@ -79,16 +72,16 @@ import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
 import { timingSafeEqual } from "crypto";
 export default {
-  computed:{
-    show:{
-      get(){
-        return this.list.length > 0?false:true
-      },
-      set(val){
+  // computed:{
+  //   show:{
+  //     get(){
+  //       return this.list.length > 0?false:true
+  //     },
+  //     set(val){
 
-      }
-    }
-  },
+  //     }
+  //   }
+  // },
   directives: {
     InfiniteScroll
   },
@@ -100,11 +93,13 @@ export default {
       page: 1,
       count: 0,
       noMoreData: false,
-      list: []
+      list: [],
+      show:false,
     };
   },
-  mounted() {
-    this.getList();
+async  mounted() {
+   await this.getList();
+   this.show =  this.list.length > 0?false:true
   },
   components: {
     Tab,
@@ -195,6 +190,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.order-list-container{
+  margin-top: 94px;
+}
 .divider {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -209,6 +207,7 @@ export default {
     -webkit-transform: rotate(315deg);
   }
 .order-list {
+  overflow:auto;
   color: #fff;
   background: #23262b;
   height: 100%;
