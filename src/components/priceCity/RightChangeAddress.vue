@@ -10,7 +10,7 @@
         <div class="receive-detail">
             <!-- <div class="address"> -->
                 <div class='receive-detail-title'>
-                    <span style="">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}打发打发的
+                    <span style="">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}打说撒范德萨带撒发大法师打发生的
                 </div>
             <!-- </div> -->
             <div class="right-img"  v-if='show'>
@@ -76,7 +76,7 @@ export default {
   align-items: flex-start;
   flex-wrap: wrap;
   //   justify-content: space-between;
-  font-size: 33px;
+  font-size: 28px;
   .receive {
     height: 108px;
     width: 50%;

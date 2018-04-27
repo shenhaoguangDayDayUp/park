@@ -12,15 +12,22 @@
         <div class="order">
             <div class="right-price-box">
                 <div class="price">奖品小计:</div>
-                <div class="score">{{detail.itemsSubtotal}}积分</div>
+                <div class="score">
+                   <img src="../../assets/img/big_gold@2x.png"/>
+                  {{detail.itemsSubtotal}}
+                  </div>
             </div>
             <div class="right-price-box">
-                <div class="price">快递费:</div>
-                <div class="score">{{detail.deliveryFee}}积分</div>
+                <div class="price">快递费用:</div>
+                <div class="score">
+                   <img src="../../assets/img/big_gold@2x.png"/>
+                  {{detail.deliveryFee}}</div>
             </div>
             <div class="right-price-box">
                 <div class="price">订单合计:</div>
-                <div class="score color-gold">{{detail.grandTotal}}积分</div>
+                <div class="score color-gold">
+                 <img src="../../assets/img/big_gold@2x.png"/>
+                          {{detail.grandTotal}}</div>
             </div>
         </div>
         <div :class="[defaultAderess?'submit-box':'submit-box-disabled']">
@@ -85,8 +92,6 @@ export default {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-      console.log(11111111)
-      console.log(this)
       var personalInfo = {
         receiverName: this.defaultAderess.name,
         receiverMobileNumber: this.defaultAderess.mobileNumber,
@@ -123,6 +128,7 @@ export default {
   background: #23262b;
   min-height: 100%;
   .order {
+    margin-top: 22px;
     width: 100%;
     box-sizing: border-box;
     font-size: 28px;
@@ -133,6 +139,7 @@ export default {
     padding-bottom: 68px;
     padding-right: 30px;
     border-bottom: 1px solid #323540;
+    background: #2a2d36;
     .right-price-box {
       flex: 1;
       display: flex;
@@ -142,7 +149,13 @@ export default {
       .price {
       }
       .score {
+        text-align: right;
         margin-left: 20px;
+        min-width: 150px;
+        img{
+          width: 34px;
+          height: 34px;
+        }
       }
       .color-gold {
         color: #ffcb16;
@@ -157,6 +170,7 @@ export default {
     padding-bottom: 21px;
     box-sizing: content-box;
     display: flex;
+    font-size: 32px;
     flex-direction: column;
     justify-content: center;
     .submit-btn {
@@ -169,6 +183,7 @@ export default {
     }
   }
   .submit-box-disabled {
+        font-size: 32px;
     height: 120px;
     padding-top: 21px;
     padding-right: 18px;

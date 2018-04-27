@@ -93,6 +93,7 @@ export default {
     margin-left: 10px;
   }
   .select-all-button {
+         font-size: 32px;
     margin-left: 20px;
     background: #ffcb16;
     height: 80px;
@@ -105,6 +106,7 @@ export default {
     }
   }
   .select-all-button-disabled {
+   font-size: 32px;
     margin-left: 20px;
     background:#666;
     height: 80px;

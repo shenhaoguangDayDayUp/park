@@ -79,17 +79,23 @@ export default {
             bottom: 0;
             .price-left{
                 flex: 1;
-                line-height: 35px;
+                line-height: 36px;
+                vertical-align: middle;
                 img{
-                    height: 35px;
+                    height: 34px;
+                     width: 34px;
+                        vertical-align: middle;
                 }
                 .price{
                     color: #ffcb16;
+                    font-size: 36px;
+                  vertical-align: middle;
                 }
             }
             .price-quntity{
                  flex: 1;
                  text-align: right;
+                 font-size: 34px;
             }
         }
  

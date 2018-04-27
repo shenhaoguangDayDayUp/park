@@ -26,7 +26,12 @@
           <div class="content-title">
             <div class="title-left">{{item.placeAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
             <!-- <div class="title-center">{{item.status|orderStatus}}</div> -->
-            <div class="title-right">{{item.grandTotal}}积分</div>
+            <div class="title-right">
+              <span>
+                <img src="../../assets/img/big_gold@2x.png" alt="">
+              </span>
+              {{item.grandTotal}}
+            </div>
           </div>
           <div class="content-list">
             <div class="img-content">
@@ -273,7 +278,13 @@ export default {
       }
       .title-right {
         // flex: 1;
+        	color: #ffcb16;
         text-align: right;
+        margin-right: 5px;
+        img{
+          width: 34px;
+          height: 34px;
+        }
       }
     }
     .content-list {
