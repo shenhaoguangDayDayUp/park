@@ -20,7 +20,7 @@
                  @click='$router.push({name:"Entity"})'>
                 <div class="mint-cell-title">
                     <div class="cell-logo">
-                        <img :src="avatar"
+                        <img v-lazy="avatar"
                              height="60"
                              width="60">
                         <div class="mint-cell-text"
@@ -40,10 +40,11 @@
                  v-else>
                 <div class="mint-cell-title">
                     <div class="cell-logo">
-                        <img data-v-48713cc3=""
-                             src="../assets/img/touxiang2@2x.png"
+                        <img
+                             :src= "defaultImg"
                              height="60"
                              width="60">
+                             <!-- <img src="../assets/img/touxiang2@2x.png" alt=""> -->
                         <div class="mint-cell-text"
                              style="padding-left:40px;">
                             <span>请登录</span>
@@ -134,12 +135,16 @@ import swal from "sweetalert";
 import axios from "axios";
 import { user } from "@/logic";
 import { integralApi, loginApi, getMsgApi } from "../api/api";
+import { mapGetters } from 'vuex'
 export default {
   name: "Login",
   components: {
     XHeader,
     Badge,
-    Header
+    Header,
+  },
+  computed:{
+    ...mapGetters(["defaultAvatar"])
   },
   data() {
     return {
@@ -154,16 +159,24 @@ export default {
         point: "== =="
       },
       avatar: "",
-      isAvatar: ""
+      defaultImg: ""
     };
   },
   mounted() {
+    // var defaultAvatar = require("../assets/img/touxiang2@2x.png");
+    // console.log(this.avatar)
+    // this.avatar = "" || defaultAvatar,
+    // console.log(this.avatar)
     this.$root.eventHub.$on("notification", () => {
       this.Api();
     });
     // 如果用户信息存在(半小时后token过期了)或者token存在(登录时候没选下次自动登录)时再发请求
     if (user.getLoginUser("$LoginUser") || sessionStorage.getItem("TOKEN")) {
       this.Api();
+    }else{
+      console.log(1111111)
+      this.defaultImg = require("../assets/img/touxiang2@2x.png");
+      console.log(this.defaultImg)
     }
   },
   methods: {
@@ -215,15 +228,24 @@ export default {
               point: data["account.balance"].toLocaleString()
             });
           var imgPrifex = config.imgUrl[config.env.NODE_ENV];
-          console.log(!sessionStorage.getItem("AVATAR"));
-          if (!sessionStorage.getItem("AVATAR")) {
-               this.changeToBase64(imgPrifex + data["member.avatar"]).then(res=>{
-                   sessionStorage.setItem("AVATAR",res);
+          if(!this.defaultAvatar){
+              this.changeToBase64(imgPrifex + data["member.avatar"]+ '?r=' + new Date().getTime()).then(res=>{
+                //    sessionStorage.setItem("AVATAR",res);
                    this.avatar = res;
-               })
-          } else {
-            this.avatar = sessionStorage.getItem("AVATAR");
+                   this.$store.dispatch("toggleUpdateAvatar", res);
+              })
+          }else{
+              this.avatar = this.defaultAvatar
           }
+        //   if (!sessionStorage.getItem("AVATAR")) {
+        //        this.changeToBase64(imgPrifex + data["member.avatar"]).then(res=>{
+        //            sessionStorage.setItem("AVATAR",res);
+        //            this.avatar = res;
+        //            console.log(res)
+        //        })
+        //   } else {
+        //     this.avatar = sessionStorage.getItem("AVATAR");
+        //   }
           // this.avatar = imgPrifex + data["member.avatar"] + '?r=' + new Date().getTime();// 头像加时间戳
         })
         .catch(error => {});
@@ -245,8 +267,8 @@ export default {
       return new Promise(function(resolve, reject) { //onload是异步
         img.onload = function() {
           var data = that.getBase64Image(img);
-          var img1 = document.createElement("img");
-          img1.src = data;
+        //   var img1 = document.createElement("img");
+        //   img1.src = data;
         //   document.body.appendChild(img1);
              resolve(data)
           return data;

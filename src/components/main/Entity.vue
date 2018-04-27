@@ -2,14 +2,14 @@
     <div class="entity">
         <Header title="会员信息" :isShow="true"></Header>
         <ul class="messList">
-            <li class="logoIcon" @click.stop='$router.push({name:"Avatar",query: {src: avatar}})'>
+            <li class="logoIcon" @click='$router.push({name:"Avatar"})'>
                 <span>头像</span>
                 <span>
-                        <img :src= "avatar">
-                        </span>
+                                        <img :src= "avatar">
+                                        </span>
                 <span> </span>
             </li>
-            <li @click.stop='$router.push({name:"Rename",query: {name: nickname}})'>
+            <li @click='$router.push({name:"Rename",query: {name: nickname}})'>
                 <span>昵称</span>
                 <span>{{nickname}}</span>
                 <div class="right">
@@ -35,7 +35,7 @@
             </li>
         </ul>
         <ul class="messList">
-            <li @click.stop='$router.push({name:"Receivers"})'>
+            <li @click='$router.push({name:"Receivers"})'>
                 <span>收货地址</span>
                 <span></span>
                 <div class="right">
@@ -44,7 +44,7 @@
             </li>
         </ul>
         <ul class="messList">
-            <li @click.stop='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
+            <li @click='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
                 <span>重置密码</span>
                 <span></span>
                 <div class="right">
@@ -54,9 +54,9 @@
         </ul>
         <ul class="messList" style="margin-top:100px;">
             <li @click="toLogout(e)" style="display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    letter-spacing:10px;">
+                                    align-items:center;
+                                    justify-content:center;
+                                    letter-spacing:10px;">
                 登出
             </li>
         </ul>
@@ -68,6 +68,9 @@
     import axios from 'axios'
     import config from '../../api/config.js'
     import {
+        mapGetters
+    } from 'vuex'
+    import {
         user
     } from '@/logic'
     import {
@@ -77,6 +80,9 @@
         name: "entity",
         components: {
             Header
+        },
+        computed: {
+            ...mapGetters(["defaultAvatar"])
         },
         data() {
             return {
@@ -108,10 +114,15 @@
                 this.idCardNumber = data.idCardNumber.replace(/(\d{6})\d{8}(\d{4})/, "$1********$2");
                 var imgPrifex = config.imgUrl[config.env.NODE_ENV]
                 // this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
-                if(!sessionStorage.getItem("AVATAR")){
-                    sessionStorage.setItem("AVATAR", imgPrifex + data["member.avatar"]);
-                }else{
-                    this.avatar = sessionStorage.getItem("AVATAR");
+                console.log(!this.defaultAvatar)
+                if (!this.defaultAvatar) {
+                    this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
+                        //    sessionStorage.setItem("AVATAR",res);
+                        this.avatar = res;
+                        this.$store.dispatch("toggleUpdateAvatar", res);
+                    })
+                } else {
+                    this.avatar = this.defaultAvatar
                 }
             }).catch(error => {
                 console.log(error.response.status)
@@ -188,7 +199,33 @@
                 // }).catch(function(error) {
                 //     console.log(error);
                 // })
-            }
+            },
+            // base64
+            getBase64Image(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+                var dataURL = canvas.toDataURL("image/" + ext);
+                return dataURL;
+            },
+            changeToBase64(url) {
+                var that = this;
+                var img = document.createElement("img");
+                img.src = url; //此处自己替换本地图片的地址
+                return new Promise(function(resolve, reject) { //onload是异步
+                    img.onload = function() {
+                        var data = that.getBase64Image(img);
+                        // var img1 = document.createElement("img");
+                        // img1.src = data;
+                        // document.body.appendChild(img1);
+                        resolve(data)
+                        return data;
+                    };
+                });
+            },
         }
     }
 </script>
