@@ -1,26 +1,28 @@
 <template>
   <div class="gameDetail" id="gameDetail">
     <Header :title="this.$route.query.name" :isShow="true"></Header>
-    <div class="gameTitle">
-      <div class="gameImg">
-        <img v-lazy="showData.icon" alt="">
+    <div class="gameDetailContent">
+      <div class="gameTitle">
+        <div class="gameImg">
+          <img v-lazy="showData.icon" alt="">
+        </div>
+        <div class="gameRight">
+          <!-- <p>{{showData.name}}</p> -->
+          <p>{{showData.description}}</p>
+          <submit text="开始游戏" @click.native="startGame()"></submit>
+        </div>
       </div>
-      <div class="gameRight">
-        <!-- <p>{{showData.name}}</p> -->
-        <p>{{showData.description}}</p>
-        <submit text="开始游戏" @click.native="startGame()"></submit>
+      <swiper id="swiper" :list="demo01_list" loop v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
+      <div class="gameWinners">
+        <span class="winnerTitle">中奖榜</span>
       </div>
+      <ul class="winnersList">
+        <li v-for='(v,i) in winnersList' :key="i">
+          <span>{{v.mobileNumber}}</span>
+          <span>{{v.money}}</span>
+        </li>
+      </ul>
     </div>
-    <swiper id="swiper" :list="demo01_list" loop v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
-    <div class="gameWinners">
-      <span class="winnerTitle">中奖榜</span>
-    </div>
-    <ul class="winnersList">
-      <li v-for='(v,i) in winnersList' :key="i">
-        <span>{{v.mobileNumber}}</span>
-        <span>{{v.money}}</span>
-      </li>
-    </ul>
   </div>
 </template>
 <script>
@@ -28,6 +30,9 @@
   import Header from "../common/Header.vue";
   import Submit from '../common/Button';
   import config from '../../api/config.js';
+  import {
+        loginApi,
+    } from '../../api/api';
   import {
     gameApi
   } from '../../api/api';
@@ -107,8 +112,19 @@
         } catch (err) {}
       },
       startGame() {
-        // 未登录时去登录！(本地的localStorage是否存在)
-        if (!localStorage.getItem("$LoginUser")) {
+        const TOKEN = sessionStorage.getItem('TOKEN')
+        if (TOKEN) {
+          loginApi.entity({}, {
+            data: {},
+            headers: {
+              'x-auth-token': TOKEN
+            }
+          }).then(res => {
+            window.location.href = 'http://demo.cc5918.com/zdbgj/?ACRuPSZwPSZsPXRydWUmaXA9NDcuOTIuMTU3LjI1MSZtPXRydWU='
+          }).catch(error => {
+            console.log(error.response.status)
+          });
+        } else {
           var that = this;
           this.$$message.confirm.show({
             confirm(vm, resolve) {
@@ -142,6 +158,11 @@
   }
   .gameDetail {
     color: #fff;
+    height: 100%;
+    overflow: auto;
+    .gameDetailContent {
+      margin-top: 94px; // padding-bottom:94px;
+    }
     .gameTitle {
       // height: 278px; // padding: 38px 45px 24px;
       padding: 38px 45px 24px;
@@ -192,7 +213,7 @@
     }
     button {
       // width: 300px;
-      width:100%;
+      width: 100%;
       height: 62px;
       line-height: 62px; // margin-top:29px;
       margin-top: 20px;

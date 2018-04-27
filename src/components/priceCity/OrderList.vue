@@ -4,7 +4,8 @@
             :isShow="true"></Header>
     <!-- <Header title="订单清单"
             :isShow='true'></Header> -->
-    <tab v-model="tabActive"
+            <div class="order-list-content">
+               <tab v-model="tabActive"
          style="margin-top:20px;"
          prevent-default
          active-color='#fdcd00'
@@ -50,6 +51,8 @@
 
       </div>
     </div>
+            </div>
+   
 
     <!-- <Dialog :visible.sync='showToast'
             @success='success'
@@ -188,7 +191,11 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
+  overflow: auto;
   box-sizing: border-box;
+  .order-list-content{
+    margin-top:94px;
+  }
   .order-scoller {
     min-height: 80%;
   }

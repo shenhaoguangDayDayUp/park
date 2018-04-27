@@ -66,6 +66,10 @@ export default {
   box-sizing: border-box;
   padding-right: 20px;
   padding-left: 20px;
+  position: fixed;
+  top:0;
+  left:0;
+  z-index:99999;
   .left-back {
     flex: 1;
     // position: absolute;

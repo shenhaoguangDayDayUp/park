@@ -360,6 +360,7 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
+  overflow: auto;
   // .my-dialog {
   //   font-size: 32px;
   //   height: 368px;

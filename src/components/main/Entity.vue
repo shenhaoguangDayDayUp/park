@@ -1,65 +1,68 @@
 <template>
     <div class="entity">
         <Header title="会员信息" :isShow="true"></Header>
-        <ul class="messList">
-            <li class="logoIcon" @click='$router.push({name:"Avatar"})'>
-                <span>头像</span>
-                <span>
-                                        <img :src= "avatar">
-                                        </span>
-                <span> </span>
-            </li>
-            <li @click='$router.push({name:"Rename",query: {name: nickname}})'>
-                <span>昵称</span>
-                <span>{{nickname}}</span>
-                <div class="right">
-                    <div class="right-arrow"></div>
-                </div>
-            </li>
-        </ul>
-        <ul class="messList">
-            <li>
-                <span>姓名</span>
-                <span>{{userName}}</span>
-                <span></span>
-            </li>
-            <li>
-                <span>手机号</span>
-                <span>{{mobileNumber}}</span>
-                <span></span>
-            </li>
-            <li>
-                <span>身份证号</span>
-                <span>{{idCardNumber}}</span>
-                <span></span>
-            </li>
-        </ul>
-        <ul class="messList">
-            <li @click='$router.push({name:"Receivers"})'>
-                <span>收货地址</span>
-                <span></span>
-                <div class="right">
-                    <div class="right-arrow"></div>
-                </div>
-            </li>
-        </ul>
-        <ul class="messList">
-            <li @click='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
-                <span>重置密码</span>
-                <span></span>
-                <div class="right">
-                    <div class="right-arrow"></div>
-                </div>
-            </li>
-        </ul>
-        <ul class="messList" style="margin-top:100px;">
-            <li @click="toLogout(e)" style="display:flex;
-                                    align-items:center;
-                                    justify-content:center;
-                                    letter-spacing:10px;">
-                登出
-            </li>
-        </ul>
+        <div class="entityContent">
+            <ul class="messList">
+                <li class="logoIcon" @click='$router.push({name:"Avatar"})'>
+                    <span>头像</span>
+                    <span>
+                                            <img :src= "avatar">
+                                            </span>
+                    <span> </span>
+                </li>
+                <li @click='$router.push({name:"Rename",query: {name: nickname}})'>
+                    <span>昵称</span>
+                    <span>{{nickname}}</span>
+                    <div class="right">
+                        <div class="right-arrow"></div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="messList">
+                <li>
+                    <span>姓名</span>
+                    <span>{{userName}}</span>
+                    <span></span>
+                </li>
+                <li>
+                    <span>手机号</span>
+                    <span>{{mobileNumber}}</span>
+                    <span></span>
+                </li>
+                <li>
+                    <span>身份证号</span>
+                    <span>{{idCardNumber}}</span>
+                    <span></span>
+                </li>
+            </ul>
+            <ul class="messList">
+                <li @click='$router.push({name:"Receivers"})'>
+                    <span>收货地址</span>
+                    <span></span>
+                    <div class="right">
+                        <div class="right-arrow"></div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="messList">
+                <li @click='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
+                    <span>重置密码</span>
+                    <span></span>
+                    <div class="right">
+                        <div class="right-arrow"></div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="messList">
+                <li @click="toLogout(e)" style="display:flex;
+                                        align-items:center;
+                                        justify-content:center;
+                                        letter-spacing:10px;">
+                    登出
+                </li>
+            </ul>
+            
+        </div>
         <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
     </div>
 </template>
@@ -234,8 +237,13 @@
         background-color: #23262b;
         height: 100%;
         color: #fff;
+        overflow: auto; 
+        .entityContent{
+            margin-top:94px;
+            padding-bottom: 100px;
+        }
         .messList {
-            margin-bottom: 26px;
+            margin-bottom: 22px;
             li {
                 height: 92px;
                 border-bottom: 2px solid #323540; // margin-bottom: 26px;

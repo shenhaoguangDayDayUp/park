@@ -2,7 +2,8 @@
   <div class="gameCenter">
     <Header title="游戏中心">
     </Header>
-    <div class="banner">
+    <div class="gameCenterContent">
+      <div class="banner">
       <img src="../assets/img/banner.png" alt="">
     </div>
     <div class="gameList">
@@ -29,6 +30,8 @@
         <divider v-if='noMoreData'>没有更多游戏了</divider>
       </ul>
     </div>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -113,7 +116,12 @@
 <style lang="scss" scoped>
   .gameCenter {
     color: #fff;
-    padding-bottom: 100px;
+    height:100%;
+    overflow: auto;
+    .gameCenterContent{
+      margin-top: 94px;
+      padding-bottom: 100px;
+    }
     img {
       width: 100%;
       height: 100%;
@@ -156,6 +164,9 @@
             font-size: 28px;
             width: 100%;
             text-align: center;
+          }
+          div{
+            font-size:28px;
           }
         } // li:nth-child(4n){
         //   margin-right:0;

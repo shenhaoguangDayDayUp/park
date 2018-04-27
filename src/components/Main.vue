@@ -156,7 +156,7 @@ export default {
       list: {
         userName: "",
         mobileNumber: "",
-        point: "== =="
+        point: "---"
       },
       avatar: "",
       defaultImg: ""
@@ -302,7 +302,7 @@ export default {
     img {
       height: 124px;
       width: 124px; // border-radius: 100%;
-      border: solid #ffffff 3px;
+      // border: solid #ffffff 3px;
     }
     .mint-cell-title {
       align-items: center;
@@ -326,6 +326,7 @@ export default {
     padding: 0 53px;
     display: flex;
     position: relative;
+    margin-top:97px;
   }
   .right-arrow {
     display: inline-block;
@@ -349,6 +350,7 @@ export default {
 .mainContent {
   display: flex;
   flex-direction: column;
+  height:100%;
   img {
     width: 36px;
     height: 35px;
@@ -356,7 +358,7 @@ export default {
 }
 .user-option {
   background-color: #2f323b;
-  margin-top: 23px;
+  margin-top: 22px;
   color: #fff;
   .user-option-title {
     span {
