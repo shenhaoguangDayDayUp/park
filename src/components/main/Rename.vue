@@ -100,11 +100,13 @@
 </style>
 <style lang="scss">
     .rename {
+            overflow: auto;
         .vux-x-input.weui-cell {
             height: 92px; // background: #2a2d36;
             font-size: 30px;
             margin: 0 23px; // margin: 0 82px 0 78px;
             border-bottom: 1px solid #fff;
+            margin-top:94px;
         }
         .vux-x-input.weui-cell:before {
             border: none;

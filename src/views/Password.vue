@@ -23,13 +23,13 @@
                             <i class="isTip isPwd" v-if="judgePwd"><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
                             <input @blur="blurPwd()" v-model="normalPwd" ref="normalPwd" placeholder="当前密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
-                                                <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                                    <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeNewPwd"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
                             <input @blur="blurNewPwd()" ref="newPwd" v-model="newPwd" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
-                                                <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                                    <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeReNewPwd"><img src="../assets/img/tishi@2x.png">两次输入密码不一致</i>
@@ -54,15 +54,15 @@
                         <li id="msg" class="errorTips">
                             <input ref="smsCode" v-model="smsCode" class="sms" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " maxlength="4">
                             <button class="smsCode" @click="getCode()" :disabled="!show">
-                                                            <span v-show="show">发送验证码</span>
-                                                            <span v-show="!show">{{count}}秒后重发</span>
-                                                        </button>
+                                                                <span v-show="show">发送验证码</span>
+                                                                <span v-show="!show">{{count}}秒后重发</span>
+                                                            </button>
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeNewPwd_"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
                             <input v-model="newPwd_" ref="newPwd_" @blur="blurNewPwd_()" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                             <!-- <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
-                                                <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                                    <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
                         </li>
                         <li>
                             <i class="isTip isPwd" v-if="judgeReNewPwd_"><img src="../assets/img/tishi@2x.png">两次密码输入不一致</i>
@@ -90,15 +90,15 @@
                     <li id="msg" class="errorTips">
                         <input ref="smsCode" class="sms" type="tel" autocomplete="off" placeholder="短信验证码" style="background-color:transparent " maxlength="4">
                         <button class="smsCode" @click="getCode()" :disabled="!show">
-                                                            <span v-show="show">发送验证码</span>
-                                                            <span v-show="!show">{{count}}秒后重发</span>
-                                                        </button>
+                                                                <span v-show="show">发送验证码</span>
+                                                                <span v-show="!show">{{count}}秒后重发</span>
+                                                            </button>
                     </li>
                     <li>
                         <i class="isTip isPwd" v-if="judgeNewPwd_"><img src="../assets/img/tishi@2x.png">新密码为6-20位字母数字及非空字符</i>
                         <input ref="newPwd_" v-model="newPwd_" @blur="blurNewPwd_()" placeholder="新密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
                         <!-- <span class="icon-eye eye-grey" v-show='seen_' @click=toggle()><img src="../assets/img/hide.png"></span>
-                                                <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
+                                                    <span class="icon-eye eye-red" v-show='!seen_' @click=toggle()><img src="../assets/img/show.png"></span> -->
                     </li>
                     <li>
                         <i class="isTip isPwd" v-if="judgeReNewPwd_"><img src="../assets/img/tishi@2x.png">两次密码输入不一致</i>
@@ -111,10 +111,10 @@
                 <span class="isTip isPwd"><img src="../assets/img/tishi@2x.png">{{isError}}</span>
             </div>
             <!-- <div class="btn">
-                                    <div class="redBtn" @click=submitsNo()>
-                                        提&nbsp;交
-                                    </div>
-                                </div> -->
+                                        <div class="redBtn" @click=submitsNo()>
+                                            提&nbsp;交
+                                        </div>
+                                    </div> -->
             <submit text="提交" :disabled="submitBtnDisabled" @click.native="submitsNo"></submit>
             <div>手机动态码：{{sCode}}</div>
         </div>
@@ -188,8 +188,9 @@
             },
             submitBtnDisabledPwd() {
                 const _this = myValidator;
+                //  && this.reNewPwd_ == this.newPwd_
                 // if (this.$options.methods.isPoneAvailable(this.$refs.userName.value) && this.$options.methods.isPwd(this.$refs.normalPwd.value) && this.$options.methods.isPwd(this.$refs.newPwd.value) && (this.$refs.newPwd.value == this.$refs.reNewPwd.value)) {
-                if (_this.isPoneAvailable(this.userName) && _this.isPwd(this.normalPwd) && _this.isPwd(this.newPwd) && _this.isPwd(this.reNewPwd)) return false;
+                if (_this.isPoneAvailable(this.userName) && _this.isPwd(this.normalPwd) && _this.isPwd(this.newPwd) && _this.isPwd(this.reNewPwd )) return false;
                 return true;
             },
         },
@@ -368,12 +369,14 @@
                         loginApi.resetNo(fgtParams, {}).then(res => {
                             this.$router.push({
                                 name: 'Login',
-                                query: {forgetPwd: 1}
+                                query: {
+                                    forgetPwd: 1
+                                }
                             })
                         }).catch(error => {
                             this.isError = '修改失败!';
                         });
-                    } 
+                    }
                 } else {
                     this.isError = '手机动态码为空!';
                 }
@@ -388,9 +391,12 @@
 <style lang="scss" scoped>
     @import '../style/myform.scss';
     .password {
-        background-image: url("../assets/img/bg.jpg");
+        background: url("../assets/img/bg.jpg") no-repeat;
         color: #fff;
         height: 100%;
+        width: 100%;
+        background-size: cover;
+        overflow: auto;
         .normalTab {
             // margin-top: 36px;
             font-size: 34px;
@@ -398,6 +404,7 @@
         }
         .mint-tab-container {
             margin: 75px 81px 0 79px;
+            margin-top: 94px;
         }
         .mint-button--small {
             display: inline-block;
@@ -417,6 +424,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 61px;
+            padding-top:94px;
             .nav-tab {
                 width: 50%;
             }

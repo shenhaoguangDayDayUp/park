@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-    <Header title="用户登录" :isShow="true"></Header>
-    <div class="normalTab">L O G O</div>
+    <Header title="会员登录" :isShow="true"></Header>
+    <!-- <div class="normalTab">L O G O</div> -->
     <div class="content">
       <div class="slide_son" style="display: inline-block;width: 100%;">
         <!--账号登录begin-->
@@ -174,9 +174,12 @@
 <style lang="scss" scoped>
   @import '../style/myform.scss';
   .login {
-    background-image: url("../assets/img/bg.jpg");
+    background: url("../assets/img/bg.jpg") no-repeat;
     color: #fff;
     height: 100%;
+    width:100%;
+    background-size: cover;
+    overflow: auto;
   }
   .toRegister {
     display: flex;

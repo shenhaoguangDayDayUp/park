@@ -1,36 +1,32 @@
 <template>
     <div class="receivers">
         <Header title="收货地址" :isShow="true"></Header>
-        <ul class="receiversList" v-for="(v,i) in List" :key='i'>
-            <li>
-                <div class="receiversMsg">
-                    <div class="MsgTop">
-                        <span>{{v.name}}</span>
-                        <span>{{v.mobileNumber}}</span>
+        <div class="receiversContent">
+            <ul class="receiversList" v-for="(v,i) in List" :key='i'>
+                <li>
+                    <div class="receiversMsg">
+                        <div class="MsgTop">
+                            <span>{{v.name}}</span>
+                            <span>{{v.mobileNumber}}</span>
+                        </div>
+                        <div class="MsgBottom">
+                            {{v.province}}{{v.city}}{{v.district}}{{v.street}}
+                        </div>
                     </div>
-                    <div class="MsgBottom">
-                        {{v.province}}{{v.city}}{{v.district}}{{v.street}}
+                    <div class="receiversUpdate">
+                        <div @click="chooseFav(v.code)" class="rcvDefault">
+                            <check-icon :value.sync="v.favorite"> 默认地址</check-icon>
+                        </div>
+                        <div class="rcvDone">
+                            <div @click='$router.push({path:"/receiversUpdate",query: {code: v.code,title:"编辑收货地址"}})'><img src="../../assets/img/edit.png" alt=""><span>编辑</span></div>
+                            <div @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt=""><span>删除</span></div>
+                        </div>
                     </div>
-                </div>
-                <div class="receiversUpdate">
-                    <div @click="chooseFav(v.code)" class="rcvDefault">
-                        <check-icon :value.sync="v.favorite"> 默认地址</check-icon>
-                    </div>
-                    <div class="rcvDone">
-                        <div @click='$router.push({path:"/receiversUpdate",query: {code: v.code,title:"编辑收货地址"}})'><img src="../../assets/img/edit.png" alt=""><span>编辑</span></div>
-                        <div @click="deleteList(v.code,i)"><img src="../../assets/img/delete.png" alt=""><span>删除</span></div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <!-- 按钮 -->
-        <div class="btn">
-            <div class="redBtn active">
-                <router-link :to="{path:'/receiversUpdate',query: {title:'添加收货地址 '}}">添加地址</router-link>
-            </div>
+                </li>
+            </ul>
+            <!-- 按钮 -->
+            <submit :text="添加地址" @click.native='$router.push({name: "ReceiversUpdate",query: {title: "添加收货地址"}}) '>添加地址</submit>
         </div>
-        <!-- <button :text="submit001"  @click.native="processButton001" type="primary"></button> -->
-        <!-- <submit :text="submit"  @click.native='$router.push({name: "ReceiversUpdate",query: {title: "添加收货地址"}}) ' :disabled="disabled"></submit>        -->
     </div>
 </template>
 <script>
@@ -127,8 +123,8 @@
                         });
                         resolve();
                     },
-                    title: "",
-                    content: "确认要删除该收货地址吗?",
+                    title: "提示",
+                    content: "确定要删除该收货地址吗?",
                     rightBtnText: "取消",
                     leftBtnText: "确定"
                 });
@@ -166,6 +162,11 @@
         background-color: #23262b;
         height: 100%;
         color: #fff; // margin-bottom:94px;
+        overflow: auto;
+        .receiversContent{
+            margin-top: 94px;
+            padding-bottom:94px;
+        }
         .receiversList {
             li {
                 // box-sizing: inherit;
@@ -174,7 +175,7 @@
                 padding-bottom: 0;
                 background: #2a2d36;
                 font-size: 30px;
-                margin-bottom: 20px;
+                margin-bottom: 22px;
                 .receiversMsg {
                     height: 192px;
                     border-bottom: 2px solid #323540;
@@ -224,7 +225,6 @@
         }
         .btn {
             margin: 71px 82px 0 78px;
-            padding-bottom: 94px;
         }
     }
 </style>
@@ -246,8 +246,8 @@
     body .vux-popup-header-left {
         font-size: 28px;
     }
-    body .scroller-indicator{
-        font-size:28px;
+    body .scroller-indicator {
+        font-size: 28px;
     }
 </style>
 

@@ -34,7 +34,6 @@ const app = {
         toggleGoodsList({ commit },view){
           commit('updateGoodsList',view)
         }
-      
       }
 
 }

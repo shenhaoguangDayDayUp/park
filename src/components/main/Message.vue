@@ -19,6 +19,7 @@
             <load-more v-if='loading' :tip="'正在加载'"></load-more>
             <divider v-if='noMoreData'>没有更多消息了</divider>
         </ul>
+        <Empty :show.sync='show'></Empty>
     </div>
 </template>
 <script>
@@ -37,6 +38,14 @@
     } from 'vux'
     export default {
         name: "Message",
+        computed: {
+            show: {
+                get() {
+                    return this.list.length > 0 ? false : true
+                },
+                set(val) {}
+            }
+        },
         data() {
             return {
                 loading: false,
@@ -69,13 +78,33 @@
                         data.records[index].sendAt = this.timeStamp(data.records[index].sendAt)
                         const element = data.records[index];
                         this.msgsList.push(element);
-                      }
+                    }
                     this.count = data.count;
                     // this.$vux.loading.show({
                     //     text: '正在加载....'
                     // })
                     // document.body.style.overflow = 'hidden';
-                }).catch(error => {})
+                }).catch(error => {
+                    // this.loading = false;
+                    // if (error.response.status == 401) {
+                    //     var that = this;
+                    //     this.$$message.confirm.show({
+                    //         confirm(vm, resolve) {
+                    //             vm.$router.push({
+                    //                 name: "Login"
+                    //             });
+                    //             resolve();
+                    //         },
+                    //         cancel(vm, resolve) {
+                    //             resolve();
+                    //         },
+                    //         title: "提示",
+                    //         content: "请您先登录!",
+                    //         rightBtnText: "取消",
+                    //         leftBtnText: "确定"
+                    //     });
+                    // }
+                })
             },
             loadMore() {
                 if (this.msgsList.length >= this.count) { //当拉到底的时候
@@ -112,10 +141,11 @@
         height: 100%;
         .messList {
             padding-bottom: 100px;
+            margin-top: 94px;
             li {
                 height: 93px;
                 border-bottom: 2px solid #323540;
-                margin-bottom: 26px;
+                margin-bottom: 22px;
                 color: #fff;
                 font-size: 30px;
                 padding-left: 23px;

@@ -2,51 +2,45 @@
 <template>
   <div class="prizeCity">
     <Header title="奖品展示">
-      <span class="heart"
-            slot="right">
-        <img src="../assets/img/heart@2x.png"
-             alt=""
-             @click.stop='$router.push({name:"heart"})'>
-        <img @click.stop='$router.push({name:"orderLsit"})'
-             src="../assets/img/order@2x.png"
-             alt="">
-      </span>
+      <span class="heart" slot="right">
+          <img src="../assets/img/heart@2x.png"
+               alt=""
+               @click.stop='$router.push({name:"heart"})'>
+          <img @click.stop='$router.push({name:"orderLsit"})'
+               src="../assets/img/order@2x.png"
+               alt="">
+        </span>
     </Header>
-    <div class="index_banner_1">
-      <div @click='indexToDetail'>
-         <swiper :list="bannerList" v-model="index" 
-              auto
-              loop
-              height="5rem"
-              dots-class="custom-bottom"
-              dots-position="center"></swiper>
-      </div>
-     
-      <div class="box">
-        <span class="icon"></span>
-        <span class="title">热门推荐</span>
-        <span class="icon"></span>
-        <!-- <span class="span">更多></span> -->
-      </div>
-      <div class="hot-box">
-        <div class='hot'>
-          <template v-for="(good,gidx) in recommodList">
-            <router-link :key="gidx"
-                         :to="{name:'商品详情',params: {id: good.code}}"
-                         class="shop_item_3">
-              <div class="shop_item_3_img">
-                <img v-lazy='good.imagePath'>
-              </div>
-              <div class="shop_item_3_msg">
-                {{good.name}}
-              </div>
-              <div class="shop_item_3_price">
-                <span><img src="../assets/img/big_gold@2x.png"
-                       alt=""></span>
-                <span>{{good.price}}</span>
-              </div>
-            </router-link>
-          </template>
+    <div class="prizeCityContent">
+      <div class="index_banner_1">
+        <div @click='indexToDetail'>
+          <swiper :list="bannerList" v-model="index" auto height="5rem" dots-class="custom-bottom" dots-position="center"></swiper>
+        </div>
+        <div class="box">
+          <span class="icon"></span>
+          <span class="title">热门推荐</span>
+          <span class="icon"></span>
+          <!-- <span class="span">更多></span> -->
+        </div>
+        <div class="hot-box">
+          <div class='hot'>
+            <template v-for="(good,gidx) in recommodList">
+                <router-link :key="gidx"
+                             :to="{name:'商品详情',params: {id: good.code}}"
+                             class="shop_item_3">
+                  <div class="shop_item_3_img">
+                    <img v-lazy='good.imagePath'>
+                  </div>
+                  <div class="shop_item_3_msg">
+                    {{good.name}}
+                  </div>
+                  <div class="shop_item_3_price">
+                    <span><img src="../assets/img/big_gold@2x.png"
+                           alt=""></span>
+                    <span>{{good.price}}</span>
+                  </div>
+                </router-link>
+</template>
         </div>
         <div class="box">
           <span class="icon"></span>
@@ -90,464 +84,495 @@
       </div>
 
     </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Header from "./common/Header.vue";
-import { Swiper, LoadMore, Divider } from "vux";
-import { InfiniteScroll } from "mint-ui";
-import { getAllProductApi, brandListApi, rewordRecommenApi } from "@/api/api";
-import Vue from "vue";
-import config from "@/api/config";
-export default {
-  data() {
-    return {
-      index:0,
-      bannerList:[],
-      recommodList: [],
-      hasMore: true,
-      allLoaded: false,
-      noMoreData: false,
-      page: 1,
-      count: 0,
-      param: {
-        limit: 16,
-        offset: 0,
-        total: 1
-      },
-      goods: [
-        // { url: "https://static.vux.li/demo/1.jpg", id: 1 },
-        // { url: "https://static.vux.li/demo/1.jpg", id: 2 },
-        // { url: "https://static.vux.li/demo/1.jpg", id: 3 },
-        // { url: "https://static.vux.li/demo/1.jpg", id: 4 }
-      ],
-      loading: false,
-      isGrid: true,
-      goodsList: [
-        { url: "https://static.vux.li/demo/1.jpg" },
-        { url: "https://static.vux.li/demo/1.jpg" },
-        { url: "https://static.vux.li/demo/1.jpg" },
-        { url: "https://static.vux.li/demo/1.jpg" },
-        { url: "https://static.vux.li/demo/3.jpg" }
-      ],
-      bannerData: [
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/1.jpg"
-          // title: '送你一朵fua'
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/2.jpg"
-          // title: '送你一辆车'
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          // title: '送你一次旅行',
-          fallbackImg: "https://static.vux.li/demo/3.jpg"
-        }
-      ]
-    };
-  },
-  mounted() {
-    // this.$$message.confirm.show({confirm(){
-    //   console.log(1111)
-    // },title:'您还没有登录',content:'是否前往登录12131313',rightBtnText:'随便看看',leftBtnText:'确定'})
-
-    this.getList();
-    this.getRecommondList();
-    this.getBanner();
-
-  },
-  methods: {
-      indexToDetail(){
-      
-      },
-    async getBanner() {
-      try {
-        const { data } = await getAllProductApi.getBanner();
-        var imgPrifex = config.imgUrl[config.env.NODE_ENV]
-        var bannerList = data.split(',').map(item=>{
-          config
-          return {img:imgPrifex+item}
-        })
-        this.bannerList = bannerList
- 
-      } catch (error) {}
-    },
-    async getRecommondList() {
-      try {
-        const { data } = await rewordRecommenApi.get();
-        this.recommodList = data;
-
-      } catch (error) {}
-    },
-    needData(data) {},
-    loadBottom() {
-      // this.allLoaded = true;
-      // this.$refs.loadmore.onBottomLoaded();
-    },
-    async getList() {
-      this.loading = true;
-      //  this.page
-      try {
-        const { data } = await getAllProductApi.getList({ id: this.page });
-        // const { data } = await brandListApi.query({categoryId:178,brandId:134,partionId:314,sortBy:'together',sortOrder:'ASC',limit:this.param.limit,offset:this.param.offset});
-        // this.param.limit = data.limit;
-        // this.param.offset = data.offset;
-        // this.param.total = data.total;
-        this.loading = false;
-        for (let index = 0; index < data.records.length; index++) {
-          const element = data.records[index];
-          this.goods.push(element);
-        }
-        this.count = data.count;
-        console.log(data);
-        console.log(this.goods);
-        // this.goods = data.items;
-      } catch (err) {}
-    },
-    loadMore() {
-      if (this.goods.length >= this.count) {
-        this.loading = false;
-        this.noMoreData = true;
-        return;
-      }
-      this.page += 1;
-      this.getList();
-    },
-    bannerHandle() {}
-  },
-  components: {
+  import Header from "./common/Header.vue";
+  import {
     Swiper,
     LoadMore,
-    Header,
     Divider
-  },
-  directives: {
+  } from "vux";
+  import {
     InfiniteScroll
-  }
-};
+  } from "mint-ui";
+  import {
+    getAllProductApi,
+    brandListApi,
+    rewordRecommenApi
+  } from "@/api/api";
+  import Vue from "vue";
+  import config from "@/api/config";
+  export default {
+    data() {
+      return {
+        index: 0,
+        bannerList: [],
+        recommodList: [],
+        hasMore: true,
+        allLoaded: false,
+        noMoreData: false,
+        page: 1,
+        count: 0,
+        param: {
+          limit: 16,
+          offset: 0,
+          total: 1
+        },
+        goods: [
+          // { url: "https://static.vux.li/demo/1.jpg", id: 1 },
+          // { url: "https://static.vux.li/demo/1.jpg", id: 2 },
+          // { url: "https://static.vux.li/demo/1.jpg", id: 3 },
+          // { url: "https://static.vux.li/demo/1.jpg", id: 4 }
+        ],
+        loading: false,
+        isGrid: true,
+        goodsList: [{
+            url: "https://static.vux.li/demo/1.jpg"
+          },
+          {
+            url: "https://static.vux.li/demo/1.jpg"
+          },
+          {
+            url: "https://static.vux.li/demo/1.jpg"
+          },
+          {
+            url: "https://static.vux.li/demo/1.jpg"
+          },
+          {
+            url: "https://static.vux.li/demo/3.jpg"
+          }
+        ],
+        bannerData: [{
+            url: "javascript:",
+            img: "https://static.vux.li/demo/1.jpg"
+            // title: '送你一朵fua'
+          },
+          {
+            url: "javascript:",
+            img: "https://static.vux.li/demo/2.jpg"
+            // title: '送你一辆车'
+          },
+          {
+            url: "javascript:",
+            img: "https://static.vux.li/demo/5.jpg",
+            // title: '送你一次旅行',
+            fallbackImg: "https://static.vux.li/demo/3.jpg"
+          }
+        ]
+      };
+    },
+    mounted() {
+      // this.$$message.confirm.show({confirm(){
+      //   console.log(1111)
+      // },title:'您还没有登录',content:'是否前往登录12131313',rightBtnText:'随便看看',leftBtnText:'确定'})
+      this.getList();
+      this.getRecommondList();
+      this.getBanner();
+    },
+    methods: {
+      indexToDetail() {},
+      async getBanner() {
+        try {
+          const {
+            data
+          } = await getAllProductApi.getBanner();
+          var imgPrifex = config.imgUrl[config.env.NODE_ENV]
+          var bannerList = data.split(',').map(item => {
+            config
+            return {
+              img: imgPrifex + item
+            }
+          })
+          this.bannerList = bannerList
+        } catch (error) {}
+      },
+      async getRecommondList() {
+        try {
+          const {
+            data
+          } = await rewordRecommenApi.get();
+          this.recommodList = data;
+        } catch (error) {}
+      },
+      needData(data) {},
+      loadBottom() {
+        // this.allLoaded = true;
+        // this.$refs.loadmore.onBottomLoaded();
+      },
+      async getList() {
+        this.loading = true;
+        //  this.page
+        try {
+          const {
+            data
+          } = await getAllProductApi.getList({
+            id: this.page
+          });
+          // const { data } = await brandListApi.query({categoryId:178,brandId:134,partionId:314,sortBy:'together',sortOrder:'ASC',limit:this.param.limit,offset:this.param.offset});
+          // this.param.limit = data.limit;
+          // this.param.offset = data.offset;
+          // this.param.total = data.total;
+          this.loading = false;
+          for (let index = 0; index < data.records.length; index++) {
+            const element = data.records[index];
+            this.goods.push(element);
+          }
+          this.count = data.count;
+          console.log(data);
+          console.log(this.goods);
+          // this.goods = data.items;
+        } catch (err) {}
+      },
+      loadMore() {
+        if (this.goods.length >= this.count) {
+          this.loading = false;
+          this.noMoreData = true;
+          return;
+        }
+        this.page += 1;
+        this.getList();
+      },
+      bannerHandle() {}
+    },
+    components: {
+      Swiper,
+      LoadMore,
+      Header,
+      Divider
+    },
+    directives: {
+      InfiniteScroll
+    }
+  };
 </script>
 <style lang="scss" scoped>
-.prizeCity {
-  .gold {
-    color: #ffcb16;
-  }
-  color: #fff;
-  background: #23262b;
-  height: 100%;
-  .heart {
-    box-sizing: border-box;
-    width: 100px;
-    // padding-right: 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 94px;
-    img {
-      // align-self: flex-start;
-      //  padding-top: 5px;
-      //  padding-bottom: 5px;
-      //  padding:7px ;
-      //  padding-right: 20px;
-      //  margin-left: 10px;
-      width: 36px;
-      height: 35px;
+    .prizeCity {
+    height: 100%;
+    overflow: auto;
+    .prizeCityContent {
+      margin-top: 94px;
     }
-  }
-  .index_banner_1 {
+    .gold {
+      color: #ffcb16;
+    }
+    color: #fff;
     background: #23262b;
-  }
-  .box {
-    position: relative;
-    text-align: center;
-    height: 94px;
-    line-height: 94px;
-    font-size: 34px;
-  }
-  .title {
-    margin: 0 15px;
-  }
-  .icon {
-    display: inline-block;
-    height: 16px;
-    width: 16px;
-    line-height: 8px;
-    border-radius: 9px;
-    background-color: #fdcd00;
-  }
-  .span {
-    position: absolute;
-    right: 0;
-    font-size: 27px;
-    color: #afb0b4;
-  }
-  .hot-box {
-    padding: 0 20px;
-  }
-  .hot {
-    box-sizing: border-box;
-    height: 340px;
-    width: 100%;
-    // height: 100%;
-    border: none;
-  }
-}
-.box {
-  position: relative;
-  text-align: center;
-  height: 94px;
-  line-height: 94px;
-  font-size: 34px;
-}
-.title {
-  margin: 0 15px;
-}
-.icon {
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  line-height: 8px;
-  border-radius: 9px;
-  background-color: #fdcd00;
-}
-.span {
-  position: absolute;
-  right: 0;
-  font-size: 27px;
-  color: #afb0b4;
-}
-
-.hot-box {
-  padding: 0 20px;
-}
-.hot {
-  box-sizing: border-box;
-  // height: 360px;
-  height: auto;
-  width: 100%;
-  padding: 0 20px;
-  background: white;
-  border-radius: 10px;
-  overflow-x: scroll;
-  -webkit-overflow-x: scroll;
-  padding-right: 20px;
-  padding-top: 20px;
-  white-space: nowrap;
-    display: flex;
-  flex-direction: row;
-  &::-webkit-scrollbar {
-    background-color: transparent;
-  }
-}
-
-.shop_item_3:last-child {
-  margin-right: 0;
-}
-.shop_item_3 {
-  // display: inline-block;
-
-  margin-right: 20px;
-  width: 210px;
-}
-
-.shop_item_3_img {
-  // border: 1px solid #e6e6e6;
-  height: 210px;
-  width: 210px;
-  position: relative;
-}
-.shop_item_3_img::after {
-  content: " ";
-  position: absolute;
-  top: 20px;
-  bottom: 20px;
-  right: -12px;
-  border-right: 2px solid #666a74;
-  // border-right: 2px solid #282828;
-  // transform: scaleX(0.5);
-  transform-origin: 100% 100%;
-}
-.shop_item_3:last-child {
-  .shop_item_3_img::after {
-    content: none;
-  }
-}
-
-.shop_item_3_img img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.shop_item_3_msg {
-  height: 50px;
-  line-height: 50px;
-  font-size: 24px;
-  color: #333333;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  // display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-
-.shop_item_3_price {
-  color: #ffcb16;
-  height: 25px;
-  // line-height: 64px;
-  text-align: center;
-}
-
-.shop_item_3_price span {
-  font-size: 22px;
-  img {
-    width: 25px;
-    height: 25px;
-  }
-  // margin-right: 0.4rem;
-}
-
-.shop_item_3_price del {
-  font-size: 0.26667rem;
-  color: #999;
-}
-.list-goods {
-  padding: 0 20px 20px 20px;
-  .list_content {
-    border-radius: 10px;
-    background-color: rgb(255, 255, 255);
-    padding: 0 30px;
-    position: relative;
-    &:nth-child(even) .list_item {
-      margin-left: 0px !important;
+    height: 100%;
+    .heart {
+      box-sizing: border-box;
+      width: 100px; // padding-right: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      height: 94px;
+      img {
+        // align-self: flex-start;
+        //  padding-top: 5px;
+        //  padding-bottom: 5px;
+        //  padding:7px ;
+        //  padding-right: 20px;
+        //  margin-left: 10px;
+        width: 36px;
+        height: 35px;
+      }
+      .gold {
+        color: #ffcb16;
+      }
+      color: #fff;
+      background: #23262b;
+      height: 100%;
+      .heart {
+        box-sizing: border-box;
+        width: 60%; // padding-right: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 94px;
+        img {
+          // align-self: flex-start;
+          //  padding-top: 5px;
+          //  padding-bottom: 5px;
+          padding: 7px; //  padding-right: 20px;
+          //  margin-left: 10px;
+          width: 50px;
+          height: 50px;
+        }
+      }
+      .index_banner_1 {
+        background: #23262b;
+        margin-top: 94px;
+      }
+      .box {
+        position: relative;
+        text-align: center;
+        height: 94px;
+        line-height: 94px;
+        font-size: 34px;
+      }
+      .title {
+        margin: 0 15px;
+      }
+      .icon {
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        line-height: 8px;
+        border-radius: 9px;
+        background-color: #fdcd00;
+      }
+      .span {
+        position: absolute;
+        right: 0;
+        font-size: 27px;
+        color: #afb0b4;
+      }
+      .hot-box {
+        padding: 0 20px;
+      }
+      .hot {
+        box-sizing: border-box;
+        height: 340px;
+        width: 100%; // height: 100%;
+        border: none;
+      }
     }
-    .list_item {
-      margin-top: 30px;
-      width: 50%;
-      // margin-left: 12px;
+    .box {
+      position: relative;
+      text-align: center;
+      height: 94px;
+      line-height: 94px;
+      font-size: 34px;
+    }
+    .title {
+      margin: 0 15px;
+    }
+    .icon {
       display: inline-block;
-      vertical-align: top;
-      position: relative;
-      &:nth-child(odd)::after {
-        content: " ";
-        position: absolute;
-        top: 60px;
-        bottom: 180px;
-        right: -2px;
-        border-right: 2px solid #666a74;
-        // transform: scaleX(0.5);
-        transform-origin: 100% 100%;
-      }
-      &:nth-child(even) .list_item_imgBox {
-        //  padding-right: 0 !important;
-      }
-      .list_item_imgBox {
-        padding: 10px;
-        // border: 1px solid rgb(230, 230, 230);
-        .list_logo {
-          position: absolute;
-          display: inline-block;
-          width: 42px;
-          height: 21px;
-        }
-        .list_img {
-          display: inline-block;
-          width: 100%;
-          height: 260px;
-          //position: absolute
-        }
-      }
-      .list_item_title {
-        text-align: center;
-        height: 46px;
-        line-height: 30px;
-        font-size: 24px;
-        color: rgb(51, 51, 51);
-        padding: 15px 15px;
-        // border-bottom: 1px solid rgb(230, 230, 230);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-      .list_item_description {
-        font-size: 22px;
-        color: #999999;
-        text-align: center;
-        padding: 10px 0px;
-        line-height: 30px;
-        span img {
-          width: 25px;
-          height: 25px;
-        }
-      }
-      .list_item_orice {
-        font-size: 24px;
-        color: rgb(51, 51, 51);
-        padding: 10px 0px;
+      height: 16px;
+      width: 16px;
+      line-height: 8px;
+      border-radius: 9px;
+      background-color: #fdcd00;
+    }
+    .span {
+      position: absolute;
+      right: 0;
+      font-size: 27px;
+      color: #afb0b4;
+    }
+    .hot-box {
+      padding: 0 20px;
+    }
+    .hot {
+      box-sizing: border-box; // height: 360px;
+      height: auto;
+      width: 100%;
+      padding: 0 20px;
+      background: white;
+      border-radius: 10px;
+      overflow-x: scroll;
+      -webkit-overflow-x: scroll;
+      padding-right: 20px;
+      padding-top: 20px;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      &::-webkit-scrollbar {
+        background-color: transparent;
       }
     }
-    .linear_item_linear {
-      display: block !important;
-      padding: 27px 0px 27px 235px;
+    .shop_item_3:last-child {
+      margin-right: 0;
+    }
+    .shop_item_3 {
+      // display: inline-block;
+      margin-right: 20px;
+      width: 210px;
+    }
+    .shop_item_3_img {
+      // border: 1px solid #e6e6e6;
+      height: 210px;
+      width: 210px;
       position: relative;
-      width: auto;
-      .list_item_imgBox {
-        position: absolute;
-        left: 0;
-        padding: 0px;
-        border: 1px solid rgb(230, 230, 230);
-        .list_logo {
-          position: absolute;
-          display: inline-block;
-          width: 42px;
-          height: 21px;
-        }
-        .list_img {
-          display: inline-block;
-          width: 165px;
-          height: 165px;
-          //position: absolute
-        }
-      }
-      .list_item_title {
-        height: 46px;
-        line-height: 30px;
-        font-size: 24px;
-        color: rgb(51, 51, 51);
-        padding: 15px 0px;
-        border-bottom: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: break-all;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-      .list_item_description {
-        font-size: 22px;
-        color: #979797;
-        text-align: left;
-        padding: 10px 0px;
-        line-height: 30px;
-      }
-      .list_item_orice {
-        font-size: 24px;
-        color: #000000;
-        padding: 10px 0px;
+    }
+    .shop_item_3_img::after {
+      content: " ";
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+      right: -12px;
+      border-right: 2px solid #666a74; // border-right: 2px solid #282828;
+      // transform: scaleX(0.5);
+      transform-origin: 100% 100%;
+    }
+    .shop_item_3:last-child {
+      .shop_item_3_img::after {
+        content: none;
       }
     }
-  }
-}
+    .shop_item_3_img img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .shop_item_3_msg {
+      height: 50px;
+      line-height: 50px;
+      font-size: 24px;
+      color: #333333;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all; // display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+    .shop_item_3_price {
+      color: #ffcb16;
+      height: 25px; // line-height: 64px;
+      text-align: center;
+    }
+    .shop_item_3_price span {
+      font-size: 22px;
+      img {
+        width: 25px;
+        height: 25px;
+      } // margin-right: 0.4rem;
+    }
+    .shop_item_3_price del {
+      font-size: 0.26667rem;
+      color: #999;
+    }
+    .list-goods {
+      padding: 0 20px 20px 20px;
+      .list_content {
+        border-radius: 10px;
+        background-color: rgb(255, 255, 255);
+        padding: 0 30px;
+        position: relative;
+        &:nth-child(even) .list_item {
+          margin-left: 0px !important;
+        }
+        .list_item {
+          margin-top: 30px;
+          width: 50%; // margin-left: 12px;
+          display: inline-block;
+          vertical-align: top;
+          position: relative;
+          &:nth-child(odd)::after {
+            content: " ";
+            position: absolute;
+            top: 60px;
+            bottom: 180px;
+            right: -2px;
+            border-right: 2px solid #666a74; // transform: scaleX(0.5);
+            transform-origin: 100% 100%;
+          }
+          &:nth-child(even) .list_item_imgBox {
+            //  padding-right: 0 !important;
+          }
+          .list_item_imgBox {
+            padding: 10px; // border: 1px solid rgb(230, 230, 230);
+            .list_logo {
+              position: absolute;
+              display: inline-block;
+              width: 42px;
+              height: 21px;
+            }
+            .list_img {
+              display: inline-block;
+              width: 100%;
+              height: 260px; //position: absolute
+            }
+          }
+          .list_item_title {
+            text-align: center;
+            height: 46px;
+            line-height: 30px;
+            font-size: 24px;
+            color: rgb(51, 51, 51);
+            padding: 15px 15px; // border-bottom: 1px solid rgb(230, 230, 230);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+          .list_item_description {
+            font-size: 22px;
+            color: #999999;
+            text-align: center;
+            padding: 10px 0px;
+            line-height: 30px;
+            span img {
+              width: 25px;
+              height: 25px;
+            }
+          }
+          .list_item_orice {
+            font-size: 24px;
+            color: rgb(51, 51, 51);
+            padding: 10px 0px;
+          }
+        }
+        .linear_item_linear {
+          display: block !important;
+          padding: 27px 0px 27px 235px;
+          position: relative;
+          width: auto;
+          .list_item_imgBox {
+            position: absolute;
+            left: 0;
+            padding: 0px;
+            border: 1px solid rgb(230, 230, 230);
+            .list_logo {
+              position: absolute;
+              display: inline-block;
+              width: 42px;
+              height: 21px;
+            }
+            .list_img {
+              display: inline-block;
+              width: 165px;
+              height: 165px; //position: absolute
+            }
+          }
+          .list_item_title {
+            height: 46px;
+            line-height: 30px;
+            font-size: 24px;
+            color: rgb(51, 51, 51);
+            padding: 15px 0px;
+            border-bottom: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+          .list_item_description {
+            font-size: 22px;
+            color: #979797;
+            text-align: left;
+            padding: 10px 0px;
+            line-height: 30px;
+          }
+          .list_item_orice {
+            font-size: 24px;
+            color: #000000;
+            padding: 10px 0px;
+          }
+        }
+      }
+    }
+    }
 </style>
 
 

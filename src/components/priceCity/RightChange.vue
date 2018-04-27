@@ -2,7 +2,8 @@
     <div class="right-change">
         <Header title="兑换"
                 :isShow='true'></Header>
-        <RightChange :item='defaultAderess'></RightChange>
+        <div class="right-change-content">
+          <RightChange :item='defaultAderess'></RightChange>
 
         <RightChangeItems v-for='(item,index) in detail.items'
                           :item='item'
@@ -34,6 +35,8 @@
             <div :class="[defaultAderess?'submit-btn':'submit-btn-disabled']" 
                  @click='gotoSubmit'>提交</div>
         </div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -127,6 +130,10 @@ export default {
   color: #fff;
   background: #23262b;
   min-height: 100%;
+  overflow: auto;
+  .right-change-content{
+    margin-top:94px;
+  }
   .order {
     margin-top: 22px;
     width: 100%;

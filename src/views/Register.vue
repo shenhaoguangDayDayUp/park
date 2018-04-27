@@ -1,10 +1,10 @@
 <template>
   <div class="changepsd">
-    <Header title="用户注册" :isShow="true"></Header>
+    <Header title="会员注册" :isShow="true"></Header>
     <div class="logo">
       <!-- <img src="../assets/img/images/logo.png" alt=""> -->
     </div>
-    <div class="normalTab">L O G O</div>
+    <!-- <div class="normalTab">L O G O</div> -->
     <div class="content">
       <ul class="slide">
         <li class="slide_son" style="display: inline-block;width: 100%;">
@@ -261,9 +261,12 @@
 <style scoped lang="scss">
   @import '../style/myform.scss';
   .changepsd {
-    background-image: url("../assets/img/bg.jpg");
+    background: url("../assets/img/bg.jpg") no-repeat;
     color: #fff;
     height: 100%;
+    width:100%;
+    background-size: cover;
+    overflow: auto;
   }
 </style>
 

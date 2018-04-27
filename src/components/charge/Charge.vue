@@ -127,11 +127,13 @@ export default {
   background: #23262b;
   height: 100%;
   font-size: 28px;
+  overflow: auto;
   .content {
     box-sizing: border-box;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 36px;
+    margin-top:94px;
     // height: 100%;
     .price {
       display: flex;
