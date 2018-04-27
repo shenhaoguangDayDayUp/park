@@ -93,7 +93,6 @@ export default {
         this.gotoChangeBtn = val.filter(item => item.selected).length
           ? true
           : false;
-        console.log(this.gotoChangeBtn);
       },
       immediate: true,
       deep: true

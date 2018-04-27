@@ -240,7 +240,7 @@ export default {
   height: 100%;
   .heart {
     box-sizing: border-box;
-    width: 60%;
+    width: 120px;
     // padding-right: 20px;
     display: flex;
     flex-direction: row;

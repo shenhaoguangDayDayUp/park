@@ -109,7 +109,6 @@ export default {
     },
     getInfo() {
       this.detail = JSON.parse(this.$route.query.product);
-      console.log(JSON.parse(this.$route.query.product));
       //    await orderCheckOutApi({id})
     }
   }
