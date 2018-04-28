@@ -158,18 +158,22 @@
     padding-bottom: 40px;
     font-size: 20px;
   }
+  .change-content{
+    padding-bottom:94px;
+  }
   .change {
     color: #fff;
     background: #23262b;
     height: 100%;
     font-size: 28px;
-    box-sizing: border-box;
-    position: relative;
+    // box-sizing: border-box;
+    // position: relative;
     .content {
       padding-left: 20px;
       padding-right: 20px;
       width: 100%;
       box-sizing: border-box;
+      padding-bottom:94px;
       // margin-top: 94px;
       // overflow: auto;
       .sticky-content {
@@ -177,9 +181,10 @@
         position: fixed;
         top:94px;
         left: 0;
+        z-index:100;
       }
       .scoller-content{
-
+        position: relative;
         padding-top:  94px;
       }
       .vux-fixed {
