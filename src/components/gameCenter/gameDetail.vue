@@ -235,6 +235,7 @@
       line-height: 62px; // margin-top:29px;
       margin-top: 20px;
       // background-color: #ffcb16;
+      background: #666;
       // box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
       border-radius: 31px;
     }
