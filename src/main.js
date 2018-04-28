@@ -16,7 +16,7 @@ import  { ToastPlugin,LoadingPlugin } from 'vux'
 import VueLazyLoad from 'vue-lazyload'
 
 import outside from './directives/outside.js';
-
+import $config from '@/api/config'
 
 Vue.use(VueLazyLoad,{
     error:'../static/zhanwei2@1x.png',
@@ -33,7 +33,16 @@ Vue.use(ToastPlugin,{
 })
 import  './components/common'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+
+(function(){ //消除正式环境的所有console.log
+  var log = console.log;
+  console.log = function(){
+      var args = Array.prototype.slice.call(arguments, 0);
+      $config.env.NODE_ENV != 'production' && log.apply(console, args);
+  };
+})();
 
 /* eslint-disable no-new */
 window.global = new Vue({
