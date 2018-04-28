@@ -456,6 +456,7 @@
     }
     .list-goods {
       padding: 0 20px 20px 20px;
+      padding-bottom:100px;
       .list_content {
         border-radius: 10px;
         background-color: rgb(255, 255, 255);
