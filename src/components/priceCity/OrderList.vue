@@ -29,7 +29,7 @@
               <span>
                 <img src="../../assets/img/big_gold@2x.png" alt="">
               </span>
-              {{item.grandTotal}}
+              {{item.grandTotal|currency}}
             </div>
           </div>
           <div class="content-list">

@@ -9,7 +9,7 @@
           
             <div class="title">
               <div class="title-left">余额</div>
-              <div class="title-right">{{remaind}}</div>
+              <div class="title-right">{{remaind|currency}}</div>
             </div>
         
         </div>

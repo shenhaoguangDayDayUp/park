@@ -37,7 +37,7 @@
                     <div class="shop_item_3_price">
                       <span><img src="../assets/img/big_gold@2x.png"
                              alt=""></span>
-                      <span>{{good.price}}</span>
+                      <span>{{good.price|currency}}</span>
                     </div>
                   </router-link>
 </template>
@@ -72,7 +72,7 @@
             <div class="list_item_description">
               <span><img src="../assets/img/big_gold@2x.png"
                      alt=""></span>
-              <span class="gold">{{item.price}}</span>
+              <span class="gold">{{item.price|currency}}</span>
             </div>
           </router-link>
         </div>

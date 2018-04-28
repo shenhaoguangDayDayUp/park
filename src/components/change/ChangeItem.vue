@@ -3,7 +3,7 @@
         <div :class="['item-time',item.type=='PAYMENT'?'':'gold']">{{item.updateAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
          <div :class="['item',item.type=='PAYMENT'?'':'gold']">{{item.note}}</div>
           <div :class="['item-type',item.type=='PAYMENT'?'':'gold']">{{item.type|recordStatus}}</div>
-           <div :class="['item-amount',item.type=='PAYMENT'?'':'gold']">{{item.amount}}</div>
+           <div :class="['item-amount',item.type=='PAYMENT'?'':'gold']">{{item.amount|currency}}</div>
     </div>
 </template>
 <script>

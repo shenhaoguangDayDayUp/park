@@ -15,20 +15,20 @@
                 <div class="price">奖品小计:</div>
                 <div class="score">
                    <img src="../../assets/img/big_gold@2x.png"/>
-                  {{detail.itemsSubtotal}}
+                  {{detail.itemsSubtotal|currency}}
                   </div>
             </div>
             <div class="right-price-box">
                 <div class="price">快递费用:</div>
                 <div class="score">
                    <img src="../../assets/img/big_gold@2x.png"/>
-                  {{detail.deliveryFee}}</div>
+                  {{detail.deliveryFee|currency}}</div>
             </div>
             <div class="right-price-box">
                 <div class="price">订单合计:</div>
                 <div class="score color-gold">
                  <img src="../../assets/img/big_gold@2x.png"/>
-                          {{detail.grandTotal}}</div>
+                          {{detail.grandTotal|currency}}</div>
             </div>
         </div>
         <div :class="[defaultAderess?'submit-box':'submit-box-disabled']">

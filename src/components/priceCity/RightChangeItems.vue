@@ -10,7 +10,7 @@
               <div class="price-box">
                     <div class="price-left">
                       <img src="../../assets/img/big_gold@2x.png"/>
-                    <span class='price'>{{item.product.price}}</span>
+                    <span class='price'>{{item.product.price|currency}}</span>
                     </div>
                      <div class="price-quntity">
                          x{{item.quantity}}

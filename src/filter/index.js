@@ -1,25 +1,31 @@
 import Vue from 'vue'
 const digitsRE = /(\d{3})(?=\d)/g
 Vue.filter('currency', (value, currency = '￥', decimals = 2) => {
-  value = parseFloat(value) / 100
-  if (!isFinite(value) || (!value && value !== 0)) {
-    return 0
+  if(value){
+    return value.toLocaleString()
+  }else{
+    return 0;
   }
-  var stringified = Math.abs(value).toFixed(decimals)
-  var _int = decimals
-    ? stringified.slice(0, -1 - decimals)
-    : stringified
-  var i = _int.length % 3
-  var head = i > 0
-    ? (_int.slice(0, i) + (_int.length > 3 ? ',' : ''))
-    : ''
-  var _float = decimals
-    ? stringified.slice(-1 - decimals)
-    : ''
-  var sign = value < 0 ? '-' : ''
-  return sign + currency + head +
-    _int.slice(i).replace(digitsRE, '$1,') +
-    _float
+
+  // value = parseFloat(value) / 100
+  // if (!isFinite(value) || (!value && value !== 0)) {
+  //   return 0
+  // }
+  // var stringified = Math.abs(value).toFixed(decimals)
+  // var _int = decimals
+  //   ? stringified.slice(0, -1 - decimals)
+  //   : stringified
+  // var i = _int.length % 3
+  // var head = i > 0
+  //   ? (_int.slice(0, i) + (_int.length > 3 ? ',' : ''))
+  //   : ''
+  // var _float = decimals
+  //   ? stringified.slice(-1 - decimals)
+  //   : ''
+  // var sign = value < 0 ? '-' : ''
+  // return sign + currency + head +
+  //   _int.slice(i).replace(digitsRE, '$1,') +
+  //   _float
 })
 
 Vue.filter('dateFilter', function (val, fmt = 'yyyy-MM-dd hh:mm:ss') {
@@ -75,6 +81,8 @@ Vue.filter('recordStatus', val => {
 
 Vue.prototype.$orderStatus = Vue.filter('orderStatus');
 Vue.prototype.$recordStatus = Vue.filter('recordStatus');
+Vue.prototype.$currency = Vue.filter('currency');
+
 
 String.prototype.queryParameters = function () {
   var obj = {};

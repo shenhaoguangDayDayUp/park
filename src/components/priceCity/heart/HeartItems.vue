@@ -21,7 +21,7 @@
                         <span>  
                              <img src="../../../assets/img/big_gold@2x.png"/>
                         </span>
-                             <span class="price">{{price}}</span>
+                             <span class="price">{{price|currency}}</span>
                         </div>
                     <div class="list-item-content_quntity">
                         <slot name="right"></slot>

@@ -20,7 +20,7 @@
       <div class="icon">
         <span><img src="../../assets/img/big_gold@2x.png"
                alt="" /></span>
-        <div class="price">{{detail.price}}</div>
+        <div class="price">{{detail.price|currency}}</div>
       </div>
     </div>
     <div class="goods-content" ref='goods-content'

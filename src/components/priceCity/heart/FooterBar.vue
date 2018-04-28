@@ -11,7 +11,7 @@
             <span>{{amount}}</span>件,
         </div>
         <div class="select-all-score">
-            <span>{{total}}积分</span>
+            <span>{{total|currency}}积分</span>
         </div>
         <div :class="[amount?'select-all-button':'select-all-button-disabled']">
             <div :class="[amount?'select-all-pay':'select-all-pay-disabled']" @click.prevent='gotoChange'>兑换</div>
