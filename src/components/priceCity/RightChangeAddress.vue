@@ -25,7 +25,7 @@ export default {
   methods:{
     editAddress(){
       if(this.showEidt){
-         this.$router.push({name:'Receivers',query:{code:this.item.code}}) 
+         this.$router.push({name:'ReceiversList',query:{code:this.item.code}}) 
       }
      
     }
