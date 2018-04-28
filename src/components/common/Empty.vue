@@ -44,6 +44,7 @@ export default {
   height: auto;
   text-align: center;
   img {
+    width: 300px;
     margin: auto;
     position: absolute;
     top: 0;

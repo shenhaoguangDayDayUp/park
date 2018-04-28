@@ -115,7 +115,11 @@ updated() {
             headers: { "x-auth-token": common.getCommon("TOKEN") }
           };
           await heartCartApi.addOrdel(obj, token);
-          this.$router.push({ name: "heart" });
+            this.$vux.toast.show({
+            text: "加入成功",
+            time: 2000
+          });
+          // this.$router.push({ name: "heart" });
         } else {
           this.$vux.toast.show({
             text: "请先登录",
