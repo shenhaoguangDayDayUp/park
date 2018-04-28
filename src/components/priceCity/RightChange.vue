@@ -77,8 +77,22 @@ export default {
         const { data } = await loginApi.receiversDefault({}, token);
           this.$store.dispatch("toggleUpdateAddres", data);
         if (!data) {
-          return this.$vux.toast.show({
-            text: "收货信息为空"
+          // return this.$vux.toast.show({
+          //   text: "收货信息为空"
+          // });
+             this.$$message.confirm.show({
+            confirm(vm, resolve) {
+              vm.$router.push({ name: "ReceiversList" });
+              resolve();
+            },
+            cancel(vm, resolve) {
+              vm.$router.go(-1)
+              resolve();
+            },
+            title: "您还没有添加收货地址",
+            content: "是否前往添加?",
+            rightBtnText: "取消",
+            leftBtnText: "确定"
           });
         }
       
