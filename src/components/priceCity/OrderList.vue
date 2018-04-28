@@ -191,7 +191,7 @@ async  mounted() {
 
 <style lang='scss' scoped>
 .order-list-container{
-  margin-top: 94px;
+  
 }
 .divider {
   padding-top: 40px;
@@ -212,6 +212,7 @@ async  mounted() {
   background: #23262b;
   height: 100%;
   box-sizing: border-box;
+  padding-top: 94px;
   .order-scoller {
     min-height: 80%;
   }

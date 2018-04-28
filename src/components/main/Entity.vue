@@ -237,9 +237,9 @@
         background-color: #23262b;
         height: 100%;
         color: #fff;
-        overflow: auto; 
+        // overflow: auto; 
+            // padding-top:94px;
         .entityContent{
-            margin-top:94px;
             padding-bottom: 100px;
         }
         .messList {

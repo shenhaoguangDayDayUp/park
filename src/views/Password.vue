@@ -395,6 +395,7 @@
         color: #fff;
         height: 100%;
         width: 100%;
+        padding-top:94px;
         background-size: cover;
             padding-top: 94px;
         // overflow: auto;
@@ -424,7 +425,6 @@
             display: flex;
             justify-content: space-around;
             margin-top: 61px;
-            padding-top:94px;
             .nav-tab {
                 width: 50%;
             }

@@ -376,7 +376,8 @@ export default {
   color: #fff;
   background: #23262b;
   height: 100%;
-  overflow: auto;
+  // overflow: auto;
+    padding-top:94px;
   .m-b-22 {
     margin-bottom: 22px;
   }

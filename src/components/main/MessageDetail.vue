@@ -70,9 +70,10 @@
     .messageDetail {
         background-color: #23262b;
         height: 100%;
-        overflow: auto;
+        // overflow: auto;
+        padding-top:94px;
         .messList {
-            margin-top:94px;
+            // margin-top:94px;
             li {
                 color: #fff;
                 font-size: 30px;
