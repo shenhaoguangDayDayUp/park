@@ -11,6 +11,7 @@
       </div>
       <swiper :list="bannerData"
               auto
+              loop
                height="10rem"></swiper>
     </div>
     <div class="goods-detail-title">

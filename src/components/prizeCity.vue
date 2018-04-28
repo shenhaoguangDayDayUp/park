@@ -474,16 +474,26 @@
             content: " ";
             position: absolute;
             top: 60px;
-            bottom: 180px;
+            bottom: 150px;
             right: -2px;
             border-right: 2px solid #666a74; // transform: scaleX(0.5);
             transform-origin: 100% 100%;
           }
           &:nth-child(even) .list_item_imgBox {
+                 margin-left: 30px; 
+            //  padding-right: 0 !important;
+          }
+          &:nth-child(odd) .list_item_imgBox {
+                margin-right: 30px; 
             //  padding-right: 0 !important;
           }
           .list_item_imgBox {
-            padding: 10px; // border: 1px solid rgb(230, 230, 230);
+            //   padding-top: 30px;
+            //  padding-bottom:30px;
+            // padding-right: 50px;
+            background: #e7e6e6;
+              // padding-left: 50px;
+             // border: 1px solid rgb(230, 230, 230)
             .list_logo {
               position: absolute;
               display: inline-block;
