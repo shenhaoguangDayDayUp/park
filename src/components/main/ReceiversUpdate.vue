@@ -267,10 +267,10 @@
     background-color: #23262b;
     height: 100%;
     color: #fff;
-    overflow: auto;
+    // overflow: auto;
+    padding-top: 94px;
     .addrForm {
       margin: 56px 80px 0;
-      padding-top: 94px;
     }
   }
   .close {

@@ -151,8 +151,9 @@
 <style lang="scss" scoped>
   .avatar {
     color: #fff;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
+    padding-top:94px;
     .imgCont {
       height: 80%;
       width: 100%;

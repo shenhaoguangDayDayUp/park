@@ -3,7 +3,7 @@
     <router-view></router-view>
     <!-- 路由跳转必写 -->
     <tabbar v-model="selected"
-            style="position:fixed;left:0;bottom:0">
+            style="position:fixed;left:0;bottom:0;z-index:900">
       <tabbar-item link="/gameCenter">
         <img v-if=" selected !== 0 "
              slot="icon"
@@ -97,6 +97,7 @@ export default {
 #mytab {
   height: 100%;
   padding:94px 0;
+  // padding-top:94px;
   .weui-tabbar {
     height: 98px;
     background: #2f323b;

@@ -81,12 +81,12 @@
         background-color: #23262b;
         height: 100%;
         color: #fff; // margin-bottom:94px;
-        overflow: auto;
+        // overflow: auto;
+            padding-top: 94px;
         .manage{
             font-size:24px;
         }
         .receiversContent{
-            margin-top: 94px;
             padding-bottom:94px;
         }
         .receiversList {
@@ -101,7 +101,6 @@
                 .receiversMsg {
                     // height: 192px;
                     // height:150px;
-                    
                     border-bottom: 2px solid #323540;
                     .MsgTop {
                         height: 68px;

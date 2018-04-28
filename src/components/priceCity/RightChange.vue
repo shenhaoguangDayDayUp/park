@@ -130,9 +130,10 @@ export default {
   color: #fff;
   background: #23262b;
   min-height: 100%;
-  overflow: auto;
+  // overflow: auto;
+  padding-top:94px;
   .right-change-content{
-    margin-top:94px;
+    
   }
   .order {
     margin-top: 22px;

@@ -11,7 +11,6 @@ export default {
 <style lang='scss' scoped>
   .list-group{
     padding-bottom:122px; 
-    margin-top:94px;
 
   }
 </style>

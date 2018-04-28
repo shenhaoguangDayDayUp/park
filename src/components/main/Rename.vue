@@ -6,12 +6,6 @@
         <div class="isError" v-show='isError'>
             <span class="isTip ispwd"><img src="../../assets/img/tishi@2x.png">{{isError}}</span>
         </div>
-        <!-- 按钮 -->
-        <!-- <div class="btn">
-                    <div class="redBtn active" @click=rename()>
-                        保&nbsp;存
-                    </div>
-                </div> -->
         <submit text="保存" :disabled="submitBtnDisabled" @click.native="rename()"></submit>
     </div>
 </template>
@@ -102,7 +96,9 @@
     .rename {
         background-color: #23262b;
         height: 100%;
+        padding-top:94px;
         color: #fff;
+        
         .btn,
         .isError {
             margin: 71px 82px 0 78px;
@@ -111,28 +107,31 @@
 </style>
 <style lang="scss">
     .rename {
-        overflow: auto;
+        // overflow: auto;
         .vux-x-input.weui-cell {
             height: 92px; // background: #2a2d36;
             font-size: 30px;
             margin: 0 23px; // margin: 0 82px 0 78px;
             border-bottom: 1px solid #fff;
-            margin-top: 94px;
+            // margin-top: 94px;
         }
         .vux-x-input.weui-cell:before {
             border: none;
         }
         .weui-icon.weui_icon_clear.weui-icon-clear {
-            font-size: 20px;
+            font-size: 25px;
         }
         .weui-icon-warn {
             color: #ffcb16 !important;
         }
         .vux-x-input .vux-input-icon {
-            font-size: 24px;
+            font-size: 25px;
         }
         .weui-cell_warn {
             color: #ffcb16 !important;
+        }
+        .vux-input-icon.weui-icon-warn:before, .vux-input-icon.weui-icon-success:before{
+            font-size:25px;
         }
     }
 </style>

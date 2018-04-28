@@ -162,9 +162,9 @@
         background-color: #23262b;
         height: 100%;
         color: #fff; // margin-bottom:94px;
-        overflow: auto;
+        // overflow: auto;
+            padding-top: 94px;
         .receiversContent{
-            margin-top: 94px;
             padding-bottom:94px;
         }
         .receiversList {
