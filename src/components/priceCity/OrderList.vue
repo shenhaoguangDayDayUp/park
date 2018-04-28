@@ -4,7 +4,6 @@
             :isShow="true"></Header>
      <div class="order-list-container">
         <tab v-model="tabActive"
-         style="margin-top:20px;"
          prevent-default
          active-color='#fdcd00'
          bar-active-color="#fdcd00"
@@ -326,4 +325,11 @@ async  mounted() {
   }
 }
 </style>
+<style lang="scss">
+.order-list .vux-tab-warp{
+      height:70px;
+      padding:0;
+    }
+</style>
+
 
