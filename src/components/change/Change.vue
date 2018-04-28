@@ -17,8 +17,6 @@
           <ChangeItem :item='item' v-for=" (item,index) in list" :key='index'></ChangeItem>
           <load-more v-if='loading&&list.length' :tip="'正在加载'"></load-more>
           <divider class="divider" v-if='noMoreData'>没有更多交易明细了</divider>
-          <br>
-          <br>
         </div>
       </div>
     </div>
@@ -155,7 +153,7 @@
 <style lang="scss" scoped>
   .divider {
     padding-top: 40px;
-    padding-bottom: 40px;
+    // padding-bottom: 40px;
     font-size: 20px;
   }
   .change-content{
