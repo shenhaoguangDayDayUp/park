@@ -54,7 +54,7 @@
                 </li>
             </ul>
             <ul class="messList">
-                <li @click="toLogout(e)" style="display:flex;
+                <li @click="toLogout()" style="display:flex;
                                         align-items:center;
                                         justify-content:center;
                                         letter-spacing:10px;">

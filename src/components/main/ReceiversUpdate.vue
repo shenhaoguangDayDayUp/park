@@ -2,7 +2,7 @@
   <div class="receiverUpdate">
     <Header :title="rcvTitle" :isShow="true"></Header>
     <div class="addrForm">
-      <x-input name="username" ref="userName" placeholder="请输入姓名" :is-type="isTypeUserName" :show-clear="true" :required=t rue :min="2" :max="12" v-model="userName" @on-change="userNameChange" :icon-type="iconType"></x-input>
+      <x-input name="username" ref="userName" placeholder="请输入姓名" :is-type="isTypeUserName" :show-clear="true" :required="true" :min="2" :max="12" v-model="userName" @on-change="userNameChange" :icon-type="iconType"></x-input>
       <x-input name="mobile" placeholder="请输入手机号码" keyboard="number" :max="11" :is-type="isTypeMobileNumber" :show-clear="false" v-model="mobileNumber" :icon-type="iconType"></x-input>
       <!-- 收货地址开始 -->
       <x-address :title="title" :list="addressData" placeholder="点击选择" v-model="areaValue">
