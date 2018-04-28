@@ -54,8 +54,8 @@ export default {
 }
 .show-enter,
 .show-leave-active {
-  opacity: 0;
-  transition: opacity 1000ms;
+  // opacity: 0;
+  // transition: opacity 1000ms;
 }
 // .show-leave-active,
 // .show-enter-active {
