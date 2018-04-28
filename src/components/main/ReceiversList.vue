@@ -2,7 +2,7 @@
     <div class="receivers">
         <Header title="收货地址"
                 :isShow="true">
-            <span class="manage"
+            <span v-if='List.length' class="manage"
                   slot="right"
                   @click='$router.push({name: "Receivers"})'>管理</span>
         </Header>

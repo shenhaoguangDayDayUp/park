@@ -123,6 +123,7 @@ async  mounted() {
       this.getList();
     },
     async getList() {
+      this.show = false
       this.loading = true;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
@@ -152,6 +153,7 @@ async  mounted() {
               token
             );
             dataList = data.records;
+            this.show =  dataList.length > 0?false:true
             this.count = data.count;
             this.loading = false;
           } catch (error) {}
@@ -162,6 +164,7 @@ async  mounted() {
               token
             );
             dataList = data.records;
+            this.show =  dataList.length > 0?false:true
             this.count = data.count;
             this.loading = false;
           } catch (error) {}
@@ -171,8 +174,10 @@ async  mounted() {
             dataList = data.records;
             this.count = data.count;
             this.loading = false;
+            this.show =  dataList.length > 0?false:true
           } catch (error) {}
         }
+   
         for (let index = 0; index < dataList.length; index++) {
           const element = dataList[index];
           this.list.push(element);
