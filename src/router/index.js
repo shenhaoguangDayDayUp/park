@@ -165,6 +165,14 @@ const route =new Router({
       component: () => import('@/components/main/ReceiversUpdate'),
     },
     {
+      path: '/receiversList',
+      name: 'ReceiversList',
+      meta:{
+        scrollToTop:true
+      },
+      component: () => import('@/components/main/ReceiversList'),
+    },
+    {
       path: '/messageDetail',
       name: 'MessageDetail',
       meta:{

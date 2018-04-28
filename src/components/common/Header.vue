@@ -7,12 +7,9 @@
              alt=""
              @click='back'>
        </slot>
-      
-
     </span>
     <span class="left-back"
           v-else>
-
     </span>
     <div class="nav-title">
       {{title}}
