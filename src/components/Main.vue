@@ -2,13 +2,19 @@
     <div id="my">
         <div class="mainContent">
             <Header title="个人中心">
-                <router-link to="./message"
+              <span class="msgWrap" slot="right">
+            <img src="../assets/img/xinxiaoxi.png"
+                 alt=""
+                 @click.stop='$router.push({name:"Message"})' >
+                 <badge v-show="unreadMsg"></badge>
+          </span>
+                <!-- <router-link to="./message"
                              slot="right"
                              class="msgWrap">
                     <img src="../assets/img/xinxiaoxi.png"
                          alt="">
-                    <badge v-show="unreadMsg"></badge>
-                </router-link>
+                    
+                </router-link> -->
             </Header>
             <div class="user-header">
                 <div class="user-mess">
@@ -72,7 +78,7 @@
                          @click='$router.push({name:"charge"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/chongzhi.png"
-                                 alt="">
+                                 alt="" class="pulse">
                         </div>
                         <div class="mint-tab-item-label">在线充值</div>
                     </div>
@@ -80,7 +86,7 @@
                          @click='$router.push({name:"change"})'>
                         <div class="mint-icon">
                             <img src="../assets/img/jiaoyimingxi.png"
-                                 alt="">
+                                 alt="" class="pulse">
                         </div>
                         <div class="mint-tab-item-label">交易明细</div>
                     </div>
@@ -345,11 +351,16 @@ export default {
   }
   .msgWrap {
     position: relative;
+    height:100%;
     .vux-badge {
       position: absolute;
-      right: -8px;
-      top: 3px; // background: #000;
-      // color: #fff;
+      right: -7px;
+      top: -7px; 
+    }
+    img{
+      position: absolute;
+      top:0;
+      right:0;
     }
   }
 }
@@ -496,7 +507,7 @@ export default {
 #mytab {
   .vux-badge {
     // background: #2F323B;
-    border-radius: 100%; // border: 1px solid #fff;
+    border-radius: 15px; // border: 1px solid #fff;
     width: 15px;
     height: 15px;
     box-sizing: border-box; // line-height: 25px;
@@ -504,6 +515,11 @@ export default {
     padding: 0;
   }
 }
+</style>
+<style lang="scss">
+    #my .nav-bar .nav-right {
+      height: 35px;
+    }
 </style>
 
 
