@@ -491,7 +491,7 @@
             //   padding-top: 30px;
             //  padding-bottom:30px;
             // padding-right: 50px;
-            background: #e7e6e6;
+
               // padding-left: 50px;
              // border: 1px solid rgb(230, 230, 230)
             .list_logo {
@@ -546,7 +546,8 @@
             position: absolute;
             left: 0;
             padding: 0px;
-            border: 1px solid rgb(230, 230, 230);
+            border: none !important;
+            // border: 1px solid rgb(230, 230, 230);
             .list_logo {
               position: absolute;
               display: inline-block;
@@ -557,6 +558,7 @@
               display: inline-block;
               width: 165px;
               height: 165px; //position: absolute
+         
             }
           }
           .list_item_title {
