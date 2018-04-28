@@ -251,9 +251,9 @@
 <style lang="scss" scoped>
   .prizeCity {
     height: 100%;
-    overflow: auto;
+    // overflow: auto;
     .prizeCityContent {
-      margin-top: 94px;
+      // margin-top: 94px;
     }
     .gold {
       color: #ffcb16;
@@ -280,13 +280,13 @@
         // height:35px;
         // height:30.625px;
         // width:35px;
-        height: 100%;
+        height: 95%;
       }
       .gold {
         color: #ffcb16;
       }
       color: #fff;
-      background: #23262b;
+      // background: #23262b;
       height: 100%;
       .heart {
         box-sizing: border-box;

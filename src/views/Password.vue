@@ -396,7 +396,8 @@
         height: 100%;
         width: 100%;
         background-size: cover;
-        overflow: auto;
+            padding-top: 94px;
+        // overflow: auto;
         .normalTab {
             // margin-top: 36px;
             font-size: 34px;
@@ -404,7 +405,6 @@
         }
         .mint-tab-container {
             margin: 75px 81px 0 79px;
-            margin-top: 94px;
         }
         .mint-button--small {
             display: inline-block;

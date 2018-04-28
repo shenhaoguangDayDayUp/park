@@ -338,7 +338,7 @@ export default {
     padding: 0 53px;
     display: flex;
     position: relative;
-    margin-top:97px;
+    // margin-top:97px;
   }
   .right-arrow {
     display: inline-block;
