@@ -6,7 +6,7 @@
     <div class="change-content">
       <div class="content">
         <div class="sticky-content">
-          <sticky :offset="80" :check-sticky-support="false">
+          <sticky ref='sticky' :offset='offset' :check-sticky-support="false">
             <div class="title">
               <div class="title-left">余额</div>
               <div class="title-right">{{remaind}}</div>
@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+        <Empty :show.sync='show'></Empty>
   </div>
 </template>
 <script>
@@ -50,6 +51,8 @@
     },
     data() {
       return {
+        show:false,
+        offset:0,
         page: 1,
         loading: false,
         noMoreData: false,
@@ -124,8 +127,15 @@
         }
       }
     },
-    mounted() {
-      this.getList();
+   async mounted() {
+      var myDiv = this.$refs.sticky.$el;
+       var finalStyle = myDiv.currentStyle ? myDiv.currentStyle : document.defaultView.getComputedStyle(myDiv, null)
+       var offset = finalStyle.top;
+       this.offset = offset.split('px')[0]
+
+      // this.$refs.sticky.querySelector('')
+     await this.getList();
+            this.show = this.list.length > 0 ? false : true;
       this.getRemaind();
     },
     components: {

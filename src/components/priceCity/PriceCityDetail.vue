@@ -80,11 +80,9 @@ export default {
 
 updated() {
  var nodeList = this.$refs['goods-content'].querySelectorAll('img')
- console.log(nodeList)
   for(var i=0;i<nodeList.length;i++){
     nodeList[i].style.width='100%'
   }
-
   var table = this.$refs['goods-content'].querySelector('table')
     if(table){
     table.style.width = 'auto'
