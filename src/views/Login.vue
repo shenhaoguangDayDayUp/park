@@ -179,7 +179,8 @@
     height: 100%;
     width:100%;
     background-size: cover;
-    overflow: auto;
+    // overflow: auto;
+    padding-top:97px;
   }
   .toRegister {
     display: flex;

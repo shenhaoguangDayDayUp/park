@@ -132,9 +132,9 @@
     .message {
         background-color: #23262b;
         height: 100%;
-        overflow: auto;
+        // overflow: auto;
+        // padding-top: 94px;
         .messageContent {
-            margin-top: 94px;
             padding-bottom: 100px;
         }
         .messList {
