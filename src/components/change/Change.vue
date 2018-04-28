@@ -6,14 +6,14 @@
     <div class="change-content">
       <div class="content">
         <div class="sticky-content">
-          <sticky ref='sticky' :offset='offset' :check-sticky-support="false">
+          
             <div class="title">
               <div class="title-left">余额</div>
               <div class="title-right">{{remaind}}</div>
             </div>
-          </sticky>
+        
         </div>
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+        <div class="scoller-content" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
           <ChangeItem :item='item' v-for=" (item,index) in list" :key='index'></ChangeItem>
           <load-more v-if='loading&&list.length' :tip="'正在加载'"></load-more>
           <divider class="divider" v-if='noMoreData'>没有更多交易明细了</divider>
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-        <Empty :show.sync='show'></Empty>
+        <Empty :show.sync='shows'></Empty>
   </div>
 </template>
 <script>
@@ -51,7 +51,7 @@
     },
     data() {
       return {
-        show:false,
+        shows:false,
         offset:0,
         page: 1,
         loading: false,
@@ -63,6 +63,8 @@
     },
     methods: {
       loadMore() {
+        console.log(this.list.length )
+                console.log(this.count)
         if (this.list.length >= this.count) {
           this.loading = false;
           this.noMoreData = true;
@@ -128,14 +130,14 @@
       }
     },
    async mounted() {
-      var myDiv = this.$refs.sticky.$el;
-       var finalStyle = myDiv.currentStyle ? myDiv.currentStyle : document.defaultView.getComputedStyle(myDiv, null)
-       var offset = finalStyle.top;
-       this.offset = offset.split('px')[0]
-
+      // var myDiv = this.$refs.sticky.$el;
+      //  var finalStyle = myDiv.currentStyle ? myDiv.currentStyle : document.defaultView.getComputedStyle(myDiv, null)
+      //  var offset = finalStyle.top;
+      //  this.offset = offset.split('px')[0];
+      //  console.log( this.offset )
       // this.$refs.sticky.querySelector('')
      await this.getList();
-            this.show = this.list.length > 0 ? false : true;
+     this.shows = this.list.length > 0 ? false : true;
       this.getRemaind();
     },
     components: {
@@ -162,15 +164,23 @@
     height: 100%;
     font-size: 28px;
     box-sizing: border-box;
+    position: relative;
     .content {
       padding-left: 20px;
       padding-right: 20px;
       width: 100%;
       box-sizing: border-box;
-      margin-top: 94px;
-      overflow: auto;
+      // margin-top: 94px;
+      // overflow: auto;
       .sticky-content {
-        height: 100px;
+        width: 100%;
+        position: fixed;
+        top:94px;
+        left: 0;
+      }
+      .scoller-content{
+
+        padding-top:  94px;
       }
       .vux-fixed {
         width: 95% !important;
@@ -180,6 +190,8 @@
         display: flex;
         flex-direction: row;
         height: 94px;
+        padding-left: 18px;
+        padding-right: 18px;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #ffcb16;
