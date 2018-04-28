@@ -38,19 +38,19 @@
   // console.log( document.body.offsetHeight)
   // console.log(document.documentElement.clientHeight)
 
-  var winHeight = document.documentElement.clientHeight; //获取当前页面高度  
-  window.onresize = resize
-  function resize(){
-    // console.log('start resize')
-		var thisHeight = window.innerHeight; //可视页面高度
-		if (winHeight - thisHeight > 50) {
-      //当软键盘弹出,在这里面操作
-      document.querySelector('body').style.height = winHeight + 'px'
-		} else {
-      //当软键盘收起,在此处操作  
-      document.querySelector('body').style.height = '100%'
-		}
-	}; 
+  // var winHeight = document.documentElement.clientHeight; //获取当前页面高度  
+  // window.onresize = resize
+  // function resize(){
+  //   // console.log('start resize')
+	// 	var thisHeight = window.innerHeight; //可视页面高度
+	// 	if (winHeight - thisHeight > 50) {
+  //     //当软键盘弹出,在这里面操作
+  //     document.querySelector('body').style.height = winHeight + 'px'
+	// 	} else {
+  //     //当软键盘收起,在此处操作  
+  //     document.querySelector('body').style.height = '100%'
+	// 	}
+	// }; 
 	// var winHeight = $('window').height(); //获取当前页面高度  
   // $('window').resize(function () {
 	// 	var thisHeight = $(this).height();
