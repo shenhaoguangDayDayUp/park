@@ -25,7 +25,7 @@
                 </li>
             </ul>
             <!-- 按钮 -->
-            <submit :text="添加地址" @click.native='$router.push({name: "ReceiversUpdate",query: {title: "添加收货地址"}}) '>添加地址</submit>
+            <submit @click.native='$router.push({name: "ReceiversUpdate",query: {title: "添加收货地址"}}) '>添加地址</submit>
         </div>
     </div>
 </template>
