@@ -96,6 +96,7 @@ export default {
 <style lang="scss" scoped>
 #mytab {
   height: 100%;
+  padding:94px 0;
   .weui-tabbar {
     height: 98px;
     background: #2f323b;

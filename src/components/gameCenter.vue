@@ -117,9 +117,10 @@
   .gameCenter {
     color: #fff;
     height:100%;
-    overflow: auto;
+    // overflow: auto;
+    // position: relative;
     .gameCenterContent{
-      margin-top: 94px;
+      // margin-top: 94px;
       padding-bottom: 100px;
     }
     img {
