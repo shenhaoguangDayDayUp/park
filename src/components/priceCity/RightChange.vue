@@ -75,7 +75,6 @@ export default {
       };
       try {
         const { data } = await loginApi.receiversDefault({}, token);
-        console.log(data)
           this.$store.dispatch("toggleUpdateAddres", data);
         if (!data) {
           return this.$vux.toast.show({

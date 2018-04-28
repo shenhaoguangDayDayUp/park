@@ -76,11 +76,13 @@
             </div>
           </router-link>
         </div>
+        <div>
+          
+        </div>
         <load-more v-if='loading&&goods.length'
                    :tip="'正在加载'"></load-more>
-        <divider v-if='noMoreData&&goods.length'>我是有底线的</divider>
-        <br>
-        <br>
+        <divider v-if='noMoreData&&goods.length'>没有更多商品</divider>
+     
       </div>
 
     </div>
