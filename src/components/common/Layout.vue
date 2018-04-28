@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       active:'',
-      routerList: [["/gameCenter"], ["/prizeCity"], ["/main",'/change','/message']],
+      routerList: [["/gameCenter"], ["/prizeCity"], ["/main",'/change','/message','/entity']],
       selected: 2
     };
   },
