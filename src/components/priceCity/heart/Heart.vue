@@ -9,8 +9,7 @@
                      @deleteItem="deleteItem"
                      :index='index'
                      @tachStart='tachStart'
-                     class='m-b-22'
-                     >
+                     class='m-b-22'>
         <HeartItems v-outside='outside'
                     :key="item.code"
                     :url="item.imagePath"
@@ -55,6 +54,7 @@
         </template>
 
     </Dialog> -->
+    <Empty :show.sync='show'></Empty>
 
   </div>
 </template>
@@ -84,9 +84,10 @@ export default {
     TableviewCell,
     Toast
   },
- async mounted() {
-   await this.getList();
-   this.defaultSelect()
+  async mounted() {
+    await this.getList();
+    this.show = this.list.length > 0 ? false : true;
+    this.defaultSelect();
   },
   watch: {
     list: {
@@ -102,18 +103,18 @@ export default {
   methods: {
     defaultSelect() {
       if (this.goodsList.goods.length) {
-        this.list.map(item=>{
-          this.goodsList.goods.map(res=>{
-            if(res.product.code == item.code){
-                return  item.selected = true    
+        this.list.map(item => {
+          this.goodsList.goods.map(res => {
+            if (res.product.code == item.code) {
+              return (item.selected = true);
             }
-          })
-        })
+          });
+        });
         this.allSelect = this.goodsList.selected;
-         this.getAmount();
-          this.getTotal();
-          // this.selectAll()
-        console.log(this.list)
+        this.getAmount();
+        this.getTotal();
+        // this.selectAll()
+        console.log(this.list);
       }
     },
     success() {
@@ -154,7 +155,10 @@ export default {
           return { product: { code: item.code }, quantity: item.quantity };
         });
         personalInfo.items = productList;
-        this.$store.dispatch("toggleGoodsList",{goods:personalInfo.items,selected:this.allSelect} );
+        this.$store.dispatch("toggleGoodsList", {
+          goods: personalInfo.items,
+          selected: this.allSelect
+        });
         try {
           const { data } = await orderCheckOutApi.checkout(personalInfo, token);
           var productInfo = JSON.stringify(data);
@@ -185,6 +189,7 @@ export default {
           this.getAmount();
           this.getTotal();
         } else {
+          this.show = this.list.length > 0 ? false : true;
           this.$$message.confirm.show({
             confirm(vm, resolve) {
               vm.$router.push({ name: "Login" });
@@ -206,26 +211,37 @@ export default {
       } catch (err) {}
     },
     async deleteItem(index) {
-      try {
-        var product = this.list[index];
-        var token = {
-          headers: { "x-auth-token": common.getCommon("TOKEN") }
-        };
-        await heartCartApi.deleteProduct(
-          { product: { code: product.code } },
-          token
-        );
-        this.list.splice(index, 1);
-        this.tachStart();
-        this.getAmount();
-        this.getTotal();
-        this.$vux.toast.show({
-          text: "删除成功",
-          type: "text",
-          position: "middle",
-          time: 2000
-        });
-      } catch (error) {}
+      var that = this;
+      this.$$message.confirm.show({
+        confirm(vm, resolve) {
+          resolve();
+          try {
+            var product = that.list[index];
+            var token = {
+              headers: { "x-auth-token": common.getCommon("TOKEN") }
+            };
+            heartCartApi
+              .deleteProduct({ product: { code: product.code } }, token)
+              .then(res => {
+                that.list.splice(index, 1);
+                that.show = that.list.length > 0 ? false : true;
+                that.tachStart();
+                that.getAmount();
+                that.getTotal();
+                that.$vux.toast.show({
+                  text: "删除成功",
+                  type: "text",
+                  position: "middle",
+                  time: 2000
+                });
+              });
+          } catch (error) {}
+        },
+        title: "提示",
+        content: "是否删除商品?",
+        rightBtnText: "取消",
+        leftBtnText: "确定"
+      });
     },
     tachStart() {
       var cell = this.$refs.cell;
@@ -259,10 +275,9 @@ export default {
       this.checkAll();
     },
     async valueChange(item) {
-
       const product = this.list[item.index];
-            console.log(product);
-                 console.log(item);
+      console.log(product);
+      console.log(item);
       if (item.value == 1 && item.type == -1) {
         return;
         // return this.$vux.toast.show({
@@ -329,6 +344,7 @@ export default {
       allSelect: false,
       amount: 0,
       total: 0,
+      show: false,
       list: [
         // {
         //   id: 1,
@@ -361,7 +377,7 @@ export default {
   background: #23262b;
   height: 100%;
   overflow: auto;
-  .m-b-22{
+  .m-b-22 {
     margin-bottom: 22px;
   }
   // .my-dialog {

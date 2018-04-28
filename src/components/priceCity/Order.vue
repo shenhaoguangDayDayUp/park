@@ -100,7 +100,7 @@ export default {
               resolve();
             },
             title: "提示",
-            content: "是否取消?",
+            content: "是否取消订单?",
             rightBtnText: "返回",
             leftBtnText: "确定"
           });

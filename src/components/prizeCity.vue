@@ -14,7 +14,7 @@
     <div class="prizeCityContent">
       <div class="index_banner_1">
         <div @click='indexToDetail'>
-          <swiper :list="bannerList" v-model="index" auto height="5rem" dots-class="custom-bottom" dots-position="center"></swiper>
+          <swiper :list="bannerList" loop v-model="index" auto height="5rem" dots-class="custom-bottom" dots-position="center"></swiper>
         </div>
         <div class="box">
           <span class="icon"></span>
@@ -336,6 +336,7 @@
       }
       .hot-box {
         padding: 0 20px;
+  
       }
       .hot {
         box-sizing: border-box;
@@ -373,7 +374,8 @@
     }
     .hot {
       box-sizing: border-box; // height: 360px;
-      height: auto;
+      // height: auto;
+   
       width: 100%;
       padding: 0 20px;
       background: white;
@@ -382,6 +384,7 @@
       -webkit-overflow-x: scroll;
       padding-right: 20px;
       padding-top: 20px;
+      padding-bottom:20px;
       white-space: nowrap;
       display: flex;
       flex-direction: row;
