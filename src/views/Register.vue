@@ -73,7 +73,7 @@
         </div>
       </div> -->
       <submit text="注册" :disabled="submitBtnDisabled" @click.native="register"></submit>
-      <div>手机动态码：{{sCode}}</div>
+      <div>模拟短信验证码：{{sCode}}</div>
     </div>
     
   </div>
