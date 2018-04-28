@@ -240,7 +240,7 @@ const route =new Router({
 
 
 route.beforeEach(function (to, from, next) {
-  Vue.$$message.confirm.hide()
+  // Vue.$$message.confirm.hide()
   store.dispatch('toggleLoadingStatus', {isLoading: true})
   next()
 })

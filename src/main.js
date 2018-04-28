@@ -31,7 +31,8 @@ Vue.use(ToastPlugin,{
   position: "middle",
   time: 2000
 })
-import  './components/common'
+
+
 
 Vue.config.productionTip = false;
 
