@@ -10,7 +10,7 @@
         <div class="receive-detail">
             <!-- <div class="address"> -->
                 <div class='receive-detail-title'>
-                    <span style="">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}打说撒范德萨带撒发大法师打发生的
+                    <span style="">详细地址:</span>{{item.province}}{{item.city}}{{item.district}}{{item.street}}
                 </div>
             <!-- </div> -->
             <div class="right-img"  v-if='show'>
@@ -25,7 +25,7 @@ export default {
   methods:{
     editAddress(){
       if(this.showEidt){
-         this.$router.push({name:'Receivers',query:{code:this.item.code}}) 
+         this.$router.push({name:'ReceiversList',query:{code:this.item.code}}) 
       }
      
     }
