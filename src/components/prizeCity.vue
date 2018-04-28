@@ -3,13 +3,13 @@
   <div class="prizeCity">
     <Header title="奖品展示">
       <span class="heart" slot="right">
-          <img src="../assets/img/heart@2x.png"
-               alt=""
-               @click.stop='$router.push({name:"heart"})'>
-          <img @click.stop='$router.push({name:"orderLsit"})'
-               src="../assets/img/order@2x.png"
-               alt="">
-        </span>
+            <img src="../assets/img/heart@2x.png"
+                 alt=""
+                 @click.stop='$router.push({name:"heart"})' class="heart-img">
+            <img @click.stop='$router.push({name:"orderLsit"})'
+                 src="../assets/img/order@2x.png"
+                 alt="">
+          </span>
     </Header>
     <div class="prizeCityContent">
       <div class="index_banner_1">
@@ -25,21 +25,21 @@
         <div class="hot-box">
           <div class='hot'>
             <template v-for="(good,gidx) in recommodList">
-                <router-link :key="gidx"
-                             :to="{name:'商品详情',params: {id: good.code}}"
-                             class="shop_item_3">
-                  <div class="shop_item_3_img">
-                    <img v-lazy='good.imagePath'>
-                  </div>
-                  <div class="shop_item_3_msg">
-                    {{good.name}}
-                  </div>
-                  <div class="shop_item_3_price">
-                    <span><img src="../assets/img/big_gold@2x.png"
-                           alt=""></span>
-                    <span>{{good.price}}</span>
-                  </div>
-                </router-link>
+                  <router-link :key="gidx"
+                               :to="{name:'商品详情',params: {id: good.code}}"
+                               class="shop_item_3">
+                    <div class="shop_item_3_img">
+                      <img v-lazy='good.imagePath'>
+                    </div>
+                    <div class="shop_item_3_msg">
+                      {{good.name}}
+                    </div>
+                    <div class="shop_item_3_price">
+                      <span><img src="../assets/img/big_gold@2x.png"
+                             alt=""></span>
+                      <span>{{good.price}}</span>
+                    </div>
+                  </router-link>
 </template>
         </div>
         <div class="box">
@@ -249,7 +249,7 @@
   };
 </script>
 <style lang="scss" scoped>
-    .prizeCity {
+  .prizeCity {
     height: 100%;
     overflow: auto;
     .prizeCityContent {
@@ -270,14 +270,17 @@
       justify-content: space-between;
       height: 94px;
       img {
-        // align-self: flex-start;
-        //  padding-top: 5px;
-        //  padding-bottom: 5px;
-        //  padding:7px ;
-        //  padding-right: 20px;
-        //  margin-left: 10px;
-        width: 36px;
-        height: 35px;
+        // width: 35px;
+        // height: 40px;
+        // height:36px;
+        height: 100%; // width:31.5px;
+      }
+      .heart-img {
+        // width:40px;
+        // height:35px;
+        // height:30.625px;
+        // width:35px;
+        height: 100%;
       }
       .gold {
         color: #ffcb16;
@@ -585,8 +588,14 @@
         }
       }
     }
+  }
+</style>
+<style lang="scss" >
+    .prizeCity .nav-bar .nav-right {
+      height: 35px;
     }
 </style>
+
 
 
 

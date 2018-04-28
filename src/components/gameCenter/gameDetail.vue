@@ -9,7 +9,7 @@
         <div class="gameRight">
           <!-- <p>{{showData.name}}</p> -->
           <p>{{showData.description}}</p>
-          <submit text="开始游戏" @click.native="startGame()"></submit>
+          <submit text="开始游戏" @click.native="startGame()" :disabled="submitBtnDisabled"></submit>
         </div>
       </div>
       <swiper id="swiper" :list="demo01_list" loop v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
@@ -82,6 +82,7 @@
         ],
         showData: {},
         demo01_index: 0,
+        submitBtnDisabled:true
       };
     },
     mounted() {
@@ -225,6 +226,16 @@
       margin-top: 20px;
       background-color: #ffcb16;
       box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
+      border-radius: 31px;
+    }
+    button:disabled{
+      // width: 300px;
+      width: 100%;
+      height: 62px;
+      line-height: 62px; // margin-top:29px;
+      margin-top: 20px;
+      // background-color: #ffcb16;
+      // box-shadow: 0px 4px 3px 0px rgba(0, 0, 0, 0.04);
       border-radius: 31px;
     }
   }

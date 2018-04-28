@@ -69,10 +69,6 @@ export default {
   z-index:999;
   .left-back {
     flex: 1;
-    // position: absolute;
-    // left: 22px;
-    // height:100%;
-    // line-height: 94px;
     img {
       width: 20px;
       height: 34px;
@@ -81,9 +77,6 @@ export default {
   .nav-title {
     flex: 1;
     text-align: center;
-    // text-align: center;
-    // letter-spacing: 2px;
-    // line-height: 94px;
   }
   .nav-right {
     flex: 1;
@@ -91,12 +84,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    // padding-right: 10px;
-    //  align-self: flex-end;
-    // position:absolute;
-    // right:22px;
-    // top:0;
-    // line-height: 94px;
   }
 }
 </style>
