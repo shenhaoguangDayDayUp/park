@@ -153,7 +153,6 @@ function send(url, data, otherOptions, method = 'get') {
             config = Object.assign({}, { url: url, method: method, data: data }, otherOptions);
         }  
         // config = Object.assign({},config,{data:{},headers:{'Content-Type':'application/json'}})
-
         axios.request(config).then((res) => {
             // if (!res.data) res.data = { code: 200 };
             resolve(res);
