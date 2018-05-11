@@ -27,7 +27,7 @@
           <div>{{v.name}}</div>
         </li>
         <load-more v-if='loading' :tip="'正在加载'"></load-more>
-        <divider v-if='noMoreData'>没有更多游戏了</divider>
+        <divider v-if='noMoreData'>沪ICP备18016530号</divider>
       </ul>
     </div>
     </div>
