@@ -97,6 +97,11 @@ export default {
     };
   },
 async  mounted() {
+    window.global.$root.eventHub.$on('loding',res=>{
+        this.loading = false;
+            this.getList();
+  
+      })
    await this.getList();
    this.show =  this.list.length > 0?false:true
   },
