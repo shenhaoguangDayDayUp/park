@@ -128,7 +128,6 @@ async  mounted() {
     },
     async getList() {
       this.show = false
-      console.log(1111)
       this.loading = true;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }

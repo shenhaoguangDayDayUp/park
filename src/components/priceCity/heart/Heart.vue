@@ -142,12 +142,12 @@ export default {
           headers: { "x-auth-token": common.getCommon("TOKEN") }
         };
         var personalInfo = {
-          receiverName: "Lin",
-          receiverMobileNumber: "17717396576",
-          receiverProvince: 2,
-          receiverCity: 2822,
-          receiverDistrict: 51979,
-          receiverStreet: "中信廣場",
+          // receiverName: "Lin",
+          // receiverMobileNumber: "17717396576",
+          // receiverProvince: 2,
+          // receiverCity: 2822,
+          // receiverDistrict: 51979,
+          // receiverStreet: "中信廣場",
           items: []
         };
         var productList = [...this.list];
@@ -160,9 +160,9 @@ export default {
           selected: this.allSelect
         });
         try {
-          const { data } = await orderCheckOutApi.checkout(personalInfo, token);
-          var productInfo = JSON.stringify(data);
-          // console.log(JSON.stringify(data))
+          // const { data } = await orderCheckOutApi.checkout(personalInfo, token);
+          // var productInfo = JSON.stringify(data);
+          var productInfo = JSON.stringify({personalInfo:personalInfo});
           this.$router.push({
             name: "rightChange",
             query: { product: productInfo }

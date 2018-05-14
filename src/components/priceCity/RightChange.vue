@@ -59,8 +59,9 @@ export default {
     RightChangeItems
   },
   async mounted() {
-    this.getInfo();
-    this.getDefaultAddress();
+   await this.getDefaultAddress();
+   await  this.getInfo();
+
     // window.global.$root.eventHub.$on("addressUpdate", () => {
     //   console.log("地址更新了");
     //   this.$vux.toast.show({
@@ -131,9 +132,20 @@ export default {
         this.$router.push({ name: "order", query: { code: data.code } });
       } catch (error) {}
     },
-    getInfo() {
-      this.detail = JSON.parse(this.$route.query.product);
-      //    await orderCheckOutApi({id})
+  async getInfo() {
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      var personalInfo = JSON.parse(this.$route.query.product);
+      Object.assign(personalInfo.personalInfo,{receiverName: this.defaultAderess.name,
+        receiverMobileNumber: this.defaultAderess.mobileNumber,
+        receiverProvince: this.defaultAderess.provinceID,
+        receiverCity: this.defaultAderess.cityID,
+        receiverDistrict: this.defaultAderess.districtID,
+        receiverStreet: this.defaultAderess.street,})
+    const { data } = await orderCheckOutApi.checkout(personalInfo.personalInfo, token);
+    this.detail = data
+  
     }
   }
 };
