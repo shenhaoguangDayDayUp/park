@@ -51,11 +51,12 @@ export default {
   computed: {
     ...mapGetters(["defaultAderess"]),
     shows(){
-        if(this.$route.query.hasOwnProperty('showEidts')){
-          return false
-        }else{
-             return this.detail.status =="REQUEST"?true:false
-        }
+       return false
+        // if(this.$route.query.hasOwnProperty('showEidts')){
+        //   return false
+        // }else{
+        //      return this.detail.status =="REQUEST"?true:false
+        // }
    
     }
   },
@@ -138,6 +139,8 @@ export default {
           token
         );
         this.detail = data;
+
+      // this.$store.dispatch("toggleUpdateAddres", data);
       } catch (error) {}
     }
   },
