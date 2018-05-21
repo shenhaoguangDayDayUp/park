@@ -162,7 +162,7 @@ export default {
         try {
           // const { data } = await orderCheckOutApi.checkout(personalInfo, token);
           // var productInfo = JSON.stringify(data);
-          var productInfo = JSON.stringify({personalInfo:personalInfo});
+          var productInfo = JSON.stringify({ personalInfo: personalInfo });
           this.$router.push({
             name: "rightChange",
             query: { product: productInfo }
@@ -204,9 +204,7 @@ export default {
             rightBtnText: "随便看看",
             leftBtnText: "确定"
           });
-          // this.$vux.toast.show({
-          //   text: "会员没有登录请先登录"
-          // });
+       
         }
       } catch (err) {}
     },
@@ -377,7 +375,7 @@ export default {
   background: #23262b;
   height: 100%;
   // overflow: auto;
-    padding-top:94px;
+  padding-top: 94px;
   .m-b-22 {
     margin-bottom: 22px;
   }

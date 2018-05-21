@@ -1,19 +1,6 @@
 import Vue from 'vue'
-import Header from './Header';
-import Dialog from './Dialog';
-import Empty from './Empty';
-Empty.install = function (Vue) {
-    Vue.component(Empty.name, Empty);
-}
-Vue.use(Empty);
-Header.install = function (Vue) {
-    Vue.component(Header.name, Header);
-}
-Vue.use(Header);
-Dialog.install = function (Vue) {
-    Vue.component(Dialog.name, Dialog);
-}
-Vue.use(Dialog);
+
+
 import ToastComponent from './Toast.vue'
 
 
@@ -28,13 +15,10 @@ const plugin = {
                 propsData: {
                     title: ''
                 },
-                data:options,
-                mounted () {
-                    console.log(this)
-                }
             })
             document.body.appendChild($vm.$el)
         }
+
         const confirm = {
             show(options) {
                 $vm.showToast = true
@@ -43,7 +27,6 @@ const plugin = {
                         $vm[prop] = options[prop];
                     }
                   }
-        
                 // $vm = Object.assign($vm, options)
                 $vm.$off('cancel')
                 $vm.$off('success')
@@ -72,17 +55,17 @@ const plugin = {
         }
 
         // all Vux's plugins are included in this.$vux
-        if (!vue.$$message) {
-            vue.$$message = {
+        if (!vue.$$messages) {
+            vue.$$messages = {
                 confirm
             }
         } else {
-            vue.$$message.confirm = confirm
+            vue.$$messages.confirm = confirm
         }
 
         vue.mixin({
             created: function () {
-                this.$$message = vue.$$message
+                this.$$messages = vue.$$messages
             }
         })
     }

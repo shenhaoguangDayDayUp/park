@@ -51,7 +51,12 @@ export default {
   computed: {
     ...mapGetters(["defaultAderess"]),
     shows(){
-      return this.detail.status =="REQUEST"?true:false
+        if(this.$route.query.hasOwnProperty('showEidts')){
+          return false
+        }else{
+             return this.detail.status =="REQUEST"?true:false
+        }
+   
     }
   },
   data() {

@@ -135,30 +135,37 @@ updated() {
           text: "请选择商品"
         });
       } else {
+        
         var token = {
           headers: { "x-auth-token": common.getCommon("TOKEN") }
         };
         var personalInfo = {
-          receiverName: "Lin",
-          receiverMobileNumber: "17717396576",
-          receiverProvince: 2,
-          receiverCity: 2822,
-          receiverDistrict: 51979,
-          receiverStreet: "中信廣場",
-          items: [{ product: { code: this.detail.code }, quantity: 1 }]
+          // receiverName: "Lin",
+          // receiverMobileNumber: "17717396576",
+          // receiverProvince: 2,
+          // receiverCity: 2822,
+          // receiverDistrict: 51979,
+          // receiverStreet: "中信廣場",
+          // items: [{ product: { code: this.detail.code }, quantity: 1 }]
+          items:[{ product: { code: this.detail.code }, quantity: 1 }]
         };
 
         try {
           if (common.getCommon("TOKEN")) {
-            const { data } = await orderCheckOutApi.checkout(
-              personalInfo,
-              token
-            );
-            var productInfo = JSON.stringify(data);
-            this.$router.push({
-              name: "rightChange",
-              query: { product: productInfo }
-            });
+              var productInfo = JSON.stringify({ personalInfo: personalInfo });
+          this.$router.push({
+            name: "rightChange",
+            query: { product: productInfo }
+          });
+            // const { data } = await orderCheckOutApi.checkout(
+            //   personalInfo,
+            //   token
+            // );
+            // var productInfo = JSON.stringify(data);
+            // this.$router.push({
+            //   name: "rightChange",
+            //   query: { product: productInfo }
+            // });
           } else {
             this.$vux.toast.show({
               text: "请先登录",

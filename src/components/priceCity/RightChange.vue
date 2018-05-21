@@ -129,7 +129,7 @@ export default {
       personalInfo.items = productList;
       try {
         const { data } = await orderCheckOutApi.place(personalInfo, token);
-        this.$router.push({ name: "order", query: { code: data.code } });
+        this.$router.push({ name: "order", query: { code: data.code,showEidts:false } });
       } catch (error) {}
     },
   async getInfo() {
