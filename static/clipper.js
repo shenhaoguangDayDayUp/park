@@ -87,21 +87,22 @@ export default {
     //外部接口，用于input['file']对象change时的调用
     Vue.prototype.clip = function ( e , opt ) {
       let self = this;
-
+      
       this.fileObj = e.srcElement;
 
       let files = e.target.files || e.dataTransfer.files;
+      this.file = files;
+ 
 
       if (!files.length) return false;  //不是图片直接返回
 
       //调用初始化方法
       this.initilize( opt );
-      console.log('opt')
-      console.log(opt)
+     
       //获取图片文件资源
       this.picValue = files[0];
-      console.log('files[0]')
-      console.log(files[0])
+
+
       //去获取拍照时的信息，解决拍出来的照片旋转问题
       // Exif.getData( files[0] , function(){
       //   self.Orientation = Exif.getTag( files[0], 'Orientation');
@@ -109,15 +110,13 @@ export default {
       // });
 
 
-      console.log('this.picValue')
-      console.log(this.picValue)
+    
       //调用方法转成url格式
       this.originUrl = this.getObjectURL( this.picValue );
       //每次替换图片要重新得到新的url
       if(this.cropper){
         this.cropper.replace(this.originUrl);
-        console.log('this.cropper')
-        console.log(this.cropper)
+  
       }
 
 
@@ -148,7 +147,7 @@ export default {
         croppedCanvas = self.cropper.getCroppedCanvas();
         // Round
         roundedCanvas = self.getRoundedCanvas(croppedCanvas);
-        console.log('roundedCanvas')
+
         console.log(roundedCanvas)
         let imgData = roundedCanvas.toDataURL();
         console.log('imgData')
@@ -213,21 +212,33 @@ export default {
       //这边写图片的上传
       let self = this;
       console.log(111)
-      console.log(imageData)
-      console.log(this.baseBlob(imageData))
+
+
+      
       const TOKEN = sessionStorage.getItem('TOKEN')
       var form=document.forms[0];
     
-      var formData = new FormData(form);   //这里连带form里的其他参数也一起提交了,如果不需要提交其他参数可以直接FormData无参数的构造函数
-      
+      var formData = new FormData();   //这里连带form里的其他参数也一起提交了,如果不需要提交其他参数可以直接FormData无参数的构造函数
       //convertBase64UrlToBlob函数是将base64编码转换为Blob
-      formData.append("avatar",this.baseBlob(imageData)); 
-                console.log(1111)
-                console.log(formData)
+      formData.append("avatar",this.dataURItoBlob(imageData),this.file[0].name); 
+     
+    //    var xhr = new XMLHttpRequest();
+    //    xhr.open('POST', '/api/gateway/mobile/member/avatar');
+    //   //  xhr.setRequestHeader('Content-Type','multipart/form-data');
+    //    xhr.setRequestHeader('x-auth-token',TOKEN);
+    //    xhr.send(formData)
+    //    xhr.onreadystatechange = function () {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         alert(xhr.responseText);
+    //     }
+    //     else {
+    //         alert(xhr.statusText);
+    //     }
+    // }
                 axios.post('/api/gateway/mobile/member/avatar', formData, {
                     method: 'post',
                     headers: {
-                        'Content-Type': 'form-data',
+                        'Content-Type': 'multipart/form-data',
                         'x-auth-token': TOKEN
                     }
                 }).then(function(res) {
@@ -393,5 +404,18 @@ export default {
       }  
       return new Blob( [ab] , {type : types});  
   }  
+  Vue.prototype.dataURItoBlob = function dataURItoBlob(base64Data) {
+    var byteString;
+    if (base64Data.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(base64Data.split(',')[1]);
+    else
+      byteString = unescape(base64Data.split(',')[1]);
+    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ia], { type: mimeString });
+  }
   }
 }

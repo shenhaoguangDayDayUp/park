@@ -251,4 +251,7 @@ route.afterEach(function (to) {
   // },500)
 
 })
+
+
+
 export default route

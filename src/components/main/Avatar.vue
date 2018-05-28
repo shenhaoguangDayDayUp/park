@@ -49,8 +49,6 @@
       }else{
         this.GetList();
       }
-      console.log(this)
-      console.log(this. Vue.prototype.postImg)
     },
     methods: {
       imagechanged(code) {
