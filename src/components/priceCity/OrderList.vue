@@ -97,6 +97,11 @@ export default {
     };
   },
 async  mounted() {
+    window.global.$root.eventHub.$on('loding',res=>{
+        this.loading = false;
+            this.getList();
+  
+      })
    await this.getList();
    this.show =  this.list.length > 0?false:true
   },
@@ -123,7 +128,6 @@ async  mounted() {
     },
     async getList() {
       this.show = false
-      console.log(1111)
       this.loading = true;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
