@@ -1,7 +1,8 @@
 var myValidator = {
       //密码验证
       isPwd: function(pwd) {
-        var patrn = /^(\S){6,20}$/;
+        var patrn = /^[a-zA-Z0-9]\w{6,20}$/ 
+        // var patrn = /^(\S){6,20}$/; // 可以是中文
           if (!patrn.exec(pwd)) return false;
           return true
       },

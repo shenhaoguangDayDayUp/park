@@ -19,7 +19,7 @@ import outside from './directives/outside.js';
 import $config from '@/api/config'
 
 Vue.use(VueLazyLoad,{
-    error:'../static/zhanwei2@1x.png',
+    error:'./static/zhanwei2@1x.png',
     loading:'./static/zhanwei2@1x.png',
     preLoad: 1.3,
     attempt: 1,
@@ -33,8 +33,9 @@ Vue.use(ToastPlugin,{
 })
 import  './components/common'
 
-
-
+import clipper from '../static/clipper'
+  Vue.config.productionTip = false
+  Vue.use(clipper)
 Vue.config.productionTip = false;
 
 

@@ -12,7 +12,9 @@
       </div>
       <ul class="gameListCont">
         <li v-for="(v,i) in rcmList" :key='i'>
-          <img v-lazy="v.icon"  alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <!-- <div class="gameListImg">  -->
+            <img v-lazy="v.icon"  alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <!-- </div> -->
           <div>{{v.name}}</div>
         </li>
       </ul>
@@ -23,7 +25,9 @@
       </div>
       <ul class="gameListCont" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <li v-for="(v,i) in gameList" :key='i'>
+          <!-- <div class="gameListImg"> -->
           <img v-lazy="v.icon" alt="" @click.stop='$router.push({name:"gameDetail",query: {name: v.name,code:v.code}})'>
+          <!-- </div> -->
           <div>{{v.name}}</div>
         </li>
         <load-more v-if='loading' :tip="'正在加载'"></load-more>
@@ -156,6 +160,12 @@
           margin-bottom: 55px;
           text-align: center; // margin-right:45px;
           box-sizing: border-box;
+          .gameListImg{
+            height: 190px;
+            width: 190px;
+            margin:0 auto;
+            margin-bottom: 24px;
+          }
           img {
             height: 190px;
             width: 190px;

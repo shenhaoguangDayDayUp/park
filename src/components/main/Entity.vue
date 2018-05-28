@@ -63,7 +63,7 @@
             </ul>
             
         </div>
-        <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
+        <input name="imgLocal" type='file' accept="image/*" @change="selectImg" />
     </div>
 </template>
 <script>
@@ -179,6 +179,8 @@
                 console.log(imgFile);
                 let formData = new FormData(); //通过formdata上传
                 formData.append('avatar', imgFile);
+                console.log(222)
+                console.log(formData)
                 axios.post('/api/gateway/mobile/member/avatar', formData, {
                     method: 'post',
                     headers: {

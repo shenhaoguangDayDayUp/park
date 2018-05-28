@@ -12,7 +12,7 @@
           <submit text="开始游戏" @click.native="startGame()" :disabled="submitBtnDisabled"></submit>
         </div>
       </div>
-      <swiper id="swiper" :list="demo01_list" loop v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
+      <swiper id="swiper" :list="baseList" loop auto v-model="demo01_index" @on-index-change="demo01_onIndexChange" height="5rem" style="width:90%;margin:0 auto;" :show-dots="false"></swiper>
       <div class="gameWinners">
         <span class="winnerTitle">中奖榜</span>
       </div>
@@ -50,11 +50,10 @@
   //   img: 'https://static.vux.li/demo/5.jpg',
   //   fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
   // }]
-  const baseList = []
   export default {
     data() {
       return {
-        demo01_list: baseList,
+        baseList: [],
         winnersList: [{
             mobileNumber: '177****5678',
             money: '123,456'
@@ -103,13 +102,19 @@
           data.icon = imgPrifex + data.icon;
           this.showData = data;
           this.showData.banners = this.showData.banners.split(',');
+          this.baseList = [];
           for (let index = 0; index < this.showData.banners.length; index++) {
-            const element = {
-              url: 'javascript:',
-              img: imgPrifex + this.showData.banners[index] + '?r=' + new Date().getTime(), // 头像加时间戳
-            };
-            baseList.push(element);
+            console.log(this.showData.banners[index])
+            if(this.showData.banners[index]){ //如果图片为空，则跳过
+              const element = {
+                url: 'javascript:',
+                img: imgPrifex + this.showData.banners[index] + '?r=' + new Date().getTime(), // 头像加时间戳
+              };
+              this.baseList.push(element);
+            }
           }
+          console.log(this.baseList);
+          
         } catch (err) {}
       },
       startGame() {

@@ -12,7 +12,7 @@
               <input v-model="userName" @blur="blurPhone()" id="userName" type="number" placeholder="手机号" autocomplete="off" autofocus="autofocus" style="background-color:transparent " oninput="if(value.length>11)value=value.slice(0,11)" maxlength="11">
             </li>
             <li class="lg_border">
-              <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
+              <i class="isTip ispwd" v-if=judgePwd><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字或下划线</i>
               <input @blur="blurPwd()" v-model="normalPwd" ref="normalPwd" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(6,20)" maxlength="20">
               <span class="icon-eye eye-grey" v-show=seen @click=toggle()><img src="../assets/img/hide.png"></span>
               <span class="icon-eye eye-red" v-show=!seen @click=toggle()><img src="../assets/img/show.png"></span>
@@ -109,7 +109,8 @@
       },
       // 密码验证
       isPwd(pwd) {
-        var patrn = /^(\S){6,20}$/;
+        var patrn = /^(\S){6,20}$/; // 这种可以写汉字
+        // var patrn = /^[a-zA-Z0-9]\w{6,20}$/ 
         if (!patrn.exec(pwd)) return false;
         return true
       },
