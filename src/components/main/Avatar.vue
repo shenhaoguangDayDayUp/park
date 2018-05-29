@@ -44,6 +44,9 @@
       ...mapGetters(["defaultAvatar"])
     },
     mounted() {
+      console.log(999)
+      console.log(this)
+      console.log(this.$store)
       if(this.defaultAvatar){
         this.querySrc = this.defaultAvatar
       }else{
@@ -119,9 +122,6 @@
         return new Promise(function(resolve, reject) { //onload是异步
           img.onload = function() {
             var data = that.getBase64Image(img);
-            // var img1 = document.createElement("img");
-            // img1.src = data;
-            // document.body.appendChild(img1);
             resolve(data)
             return data;
           };
@@ -154,11 +154,12 @@
         let image = document.getElementById('img');
         console.log(11111111)
         // console.log(this.postImg(imageData))
-      
-        this.clip(  event,{
+        this.clip(event,{
           resultObj:image,
           aspectRadio:1
         })
+        console.log(2222)
+        console.log(this.querySrc)
       }
     },
     components: {

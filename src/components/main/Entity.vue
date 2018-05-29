@@ -118,6 +118,7 @@
                 var imgPrifex = config.imgUrl[config.env.NODE_ENV]
                 // this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
                 console.log(!this.defaultAvatar)
+                console.log(333)
                 if (!this.defaultAvatar) {
                     this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
                         //    sessionStorage.setItem("AVATAR",res);
