@@ -6,7 +6,7 @@
                 <li class="logoIcon" @click='$router.push({name:"Avatar"})'>
                     <span>头像</span>
                     <span>
-                                            <img :src= "avatar">
+                                            <img v-lazy= "avatar">
                                             </span>
                     <span> </span>
                 </li>
@@ -63,7 +63,7 @@
             </ul>
             
         </div>
-        <input name="imgLocal" type='file' accept="image/*" @change="selectImg" />
+        <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
     </div>
 </template>
 <script>
@@ -120,7 +120,8 @@
                 console.log(!this.defaultAvatar)
                 console.log(333)
                 if (!this.defaultAvatar) {
-                    this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
+                    // this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
+                        this.changeToBase64(imgPrifex + data.avatar ).then(res => {
                         //    sessionStorage.setItem("AVATAR",res);
                         this.avatar = res;
                         this.$store.dispatch("toggleUpdateAvatar", res);

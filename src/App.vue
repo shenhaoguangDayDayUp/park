@@ -88,10 +88,20 @@ export default {
 }
 
 }
-// .vux-loading > .weui-mask_transparent{
-//   height:100vh;
-//   overflow: hidden;
-// }
+#cancel_clip{
+      border:1px solid #ffcb16!important;
+      color:#ffcb16!important;
+      background: #fff!important;
+      border-radius: 5px!important;
+      width:100px!important;
+      height:40px!important;
+}
+#clip_button{
+  background: #ffcb16!important;
+  border-radius: 5px!important;
+  width:100px!important;
+      height:40px!important;
+}
 </style>
 
  

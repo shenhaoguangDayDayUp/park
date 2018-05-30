@@ -7,7 +7,7 @@ const path = require('path')
 module.exports = {
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 1000,
     autoOpenBrowser: true,
     host:'0.0.0.0',//可以在手机端访问了
     assetsSubDirectory: 'static',

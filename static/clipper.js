@@ -107,10 +107,10 @@ export default {
 
 
       //去获取拍照时的信息，解决拍出来的照片旋转问题
-      Exif.getData( files[0] , function(){
-        self.Orientation = Exif.getTag( files[0], 'Orientation');
-        console.log(self.Orientation)
-      });
+      // Exif.getData( files[0] , function(){
+      //   self.Orientation = Exif.getTag( files[0], 'Orientation');
+      //   console.log(self.Orientation)
+      // });
 
 
     
@@ -144,8 +144,10 @@ export default {
       let roundedCanvas;
 
       // Crop
-      document.querySelector('.crop_loading').style.display = 'block';
-
+      // document.querySelector('.crop_loading').style.display = 'block';
+      window.global.$vux.loading.show({
+          text: "图片上传中....",
+      })
       setTimeout(function () {
         croppedCanvas = self.cropper.getCroppedCanvas();
         // Round
@@ -203,7 +205,7 @@ export default {
       this.cropper.destroy();
       this.cropper = null;
     }
-    //图片上传
+    //图片上传 请求写在这里
     Vue.prototype.postImg = function( imageData ) {
       //这边写图片的上传
       let self = this;
@@ -225,17 +227,27 @@ export default {
     //         alert(xhr.statusText);
     //     }
     // }
+      var apiUrlPrifex = config.apiUrlPrefix[config.env.NODE_ENV];
       var imgPrifex = config.imgUrl[config.env.NODE_ENV];
-      axios.post('/api/gateway/mobile/member/avatar', formData, {
+      axios.post(apiUrlPrifex+'/gateway/mobile/member/avatar', formData, {
           method: 'post',
           headers: {
               'Content-Type': 'multipart/form-data',
               'x-auth-token': TOKEN
           }
-      }).then(function(res) {
-        window.global.$store.dispatch("toggleUpdateAvatar", imgPrifex + res.data);
-      }).catch(function(error) {
-          console.log(error);
+      }).then(res=>{
+        this.changeToBase64(imgPrifex + res.data ).then(response => {
+          window.global.$vux.loading.hide();
+          window.global.$store.dispatch("toggleUpdateAvatar", response);
+          window.global.$vux.toast.show({
+            text: "修改成功!"
+          });
+        })
+      }).catch(err=>{
+        window.global.$vux.loading.hide();
+        this.$vux.toast.show({
+          text: "头像修改失败!"
+        });
       })
       self.destoried();
       // window.setTimeout( function () {
