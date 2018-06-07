@@ -58,7 +58,10 @@
       </div>       
     <!-- <Header title="订单清单"
             :isShow='true'></Header> -->
-   
+   <KeyBord ref="pay"
+   :is-pay='isPay'
+   @pas-end='pasEnd'
+   @close='isPay=false'></KeyBord>
    
   </div>
 </template>
@@ -70,6 +73,7 @@ import { orderListApi } from "@/api/api";
 import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
 import { timingSafeEqual } from "crypto";
+import KeyBord from "@/common/KeyBord";
 export default {
   // computed:{
   //   show:{
@@ -94,6 +98,7 @@ export default {
       noMoreData: false,
       list: [],
       show:false,
+      isPay:true
     };
   },
 async  mounted() {
@@ -110,9 +115,13 @@ async  mounted() {
     TabItem,
     Header,
     LoadMore,
-    Divider
+    Divider,
+    KeyBord
   },
   methods: {
+    pasEnd(){
+
+    },
     cancel() {},
     success() {
       this.$router.push({ name: "Login" });
