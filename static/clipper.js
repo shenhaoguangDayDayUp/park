@@ -55,6 +55,11 @@ export default {
       let str = '<div><img id="clip_image" src="originUrl"></div><button type="button" id="cancel_clip">取消</button><button type="button" id="clip_button">确定</button>';
       str+= '<div class="crop_loading"><div class="crop_content"><img src="../../../static/loading.gif"><div class="crop_text">图片上传中</div></div></div>';
       str+= '<div class="crop_success"><div class="crop_success_text">上传成功</div></div></div>';
+      //   var self = this;
+      //  Exif.getData(  this.picValue[0] , function(){
+      //   self.Orientation = Exif.getTag(  this.picValue[0], 'Orientation');
+      //   console.log(self.Orientation)
+      // });
 
       let body = document.getElementsByTagName('body')[0];
       this.reagion = document.createElement('div');
@@ -99,11 +104,13 @@ export default {
 
       if (!files.length) return false;  //不是图片直接返回
 
+    //获取图片文件资源
+    this.picValue = files[0];
       //调用初始化方法
       this.initilize( opt );
+        
      
-      //获取图片文件资源
-      this.picValue = files[0];
+      
 
 
       //去获取拍照时的信息，解决拍出来的照片旋转问题
