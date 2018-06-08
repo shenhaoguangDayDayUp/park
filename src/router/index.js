@@ -9,29 +9,46 @@ import Main from '@/components/Main'
 import PrizeCity from '@/components/prizeCity'
 import store from '../store'
 Vue.use(Router)
-
+var timer = null
 const route =new Router({
     scrollBehavior (to, from, savedPosition) {
         setTimeout(() => {
+          console.log(to)
           if (savedPosition) {
             // console.log(to)
             // console.log(savedPosition)
             // console.log(to.matched.some(m => m.meta.scrollToTop))
+              
               if(to.matched.some(m => m.meta.scrollToTop)){
                 scrollTo(0, 0)
                 return { x: 0, y: 0 }
               }
-         
-              console.log(savedPosition.y)
-        
-              scrollTo(0, savedPosition.y+1000)
-              return savedPosition
+              return new Promise(resolve=>{
+                var a = 1;
+                timer = setInterval(res=>{
+                  a++;
+                  scrollTo(0, savedPosition.y)
+                  if(a ==4){
+                    clearInterval(timer)
+                  }
+                },350)
+              
+                // timer = setInterval(res=>{
+                //   scrollTo(0, savedPosition.y)
+                // },300)
+                scrollTo(0, savedPosition.y)
+                resolve(savedPosition)
+                return savedPosition
+              })
+             
          
           } else {
+            console.log(333333)
                 scrollTo(0, 0)
+                console.log(333333)
             return { x: 0, y: 0 }
           }
-        }, 1000)
+        }, 350)
     },
   routes: [
     {
@@ -50,9 +67,6 @@ const route =new Router({
         {
           path: '/gameCenter',
           name: 'gameCenter',
-          meta:{
-            scrollToTop:true
-          },
           component: () => import('@/components/gameCenter'),
         },
         {
