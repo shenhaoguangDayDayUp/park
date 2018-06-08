@@ -11,7 +11,7 @@
                 </li>
             </ul>
             <ul class="messList">
-                <li @click='$router.push({name:"PayoutPassword",query:{title:"支付密码",mobileNumber:mobileNumberFullname}})'>
+                <li @click='$router.push({name:"PasswordSetRedeem",query:{title:"支付密码",mobileNumber:mobileNumberFullname}})'>
                     <span>设置兑换密码</span>
                     <span></span>
                     <div class="right">

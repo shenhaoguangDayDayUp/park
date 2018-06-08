@@ -90,6 +90,9 @@ export default {
   width:100px!important;
       height:40px!important;
 }
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 </style>
 
  

@@ -1,33 +1,43 @@
 <template>
     <div class="payoutpassword">
-        <Header title="设定支付密码" :isShow="true"></Header>
+        <Header title="设定兑换密码" :isShow="true"></Header>
+        {{pwdinput}}
         <div class="slide_son content">
             <ul class="normalLogin">
                 <li>
-                    <i class="isTip ispwd" v-show='judgePwd'><img src="../assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
+                    <i class="isTip ispwd" v-show='judgePwd'><img src="@/assets/img/tishi@2x.png">请输入6-20位字母数字及非空字符</i>
                     <input ref="normalPwd" v-model="normalPwd" @blur="blurPwd()" placeholder="登录密码" autocomplete="off" type="password" style="background-color:transparent " oninput="if(value.length>20)value=value.slice(0,20)" maxlength="20">
                 </li>
             </ul>
             <submit text="下一步" :disabled="submitBtnDisabled" @click.native="next()"></submit>
         </div>
-        
+         <KeyBord ref="pay"
+         payTitle="请设置兑换密码"
+        :is-pay='isPay'
+        @pas-end='pasEnd'
+        v-model="pwdinput"
+        @close='isPay=false'></KeyBord>
     </div>
 </template>
 
 <script>
     import Header from "@/components/common/Header.vue";
     import Submit from "@/components/common/Button.vue";
+    import KeyBord from "@/common/KeyBord";
     import {
         user
     } from '@/logic'
     import {
         loginApi,
-    } from '../api/api';
+    } from '@/api/api';
     export default {
         name: "PayoutPassword",
         data() {
             return {
                 normalPwd: '',
+                numbers: '',
+                isPay:false,
+                pwdinput:''
             };
         },
         watch:{
@@ -55,19 +65,23 @@
                 }
             },
             next(){
-                this.$router.push({
-                            name: 'PasswordRedeem'
-                        })
-            }
+                this.isPay = true;
+            },
+            pasEnd(){
+                // console.log(this.pwdinput)
+                // console.log(this.$refs.pay) //获取子组件的data
+                // this.$refs.pay.lodingShow = false;
+            },
         },
         components: {
             Header,
             Submit,
+            KeyBord
         },
     };
 </script>
 <style lang="scss" scoped>
-    @import '../style/myform.scss';
+    @import '../../style/myform.scss';
     .payoutpassword {
         background-color: #23262b;
         color: #fff;

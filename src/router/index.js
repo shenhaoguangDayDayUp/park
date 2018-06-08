@@ -152,12 +152,12 @@ const route =new Router({
       component: Password,
     },
     {
-      path: '/payoutpassword',
-      name: 'PayoutPassword',
+      path: '/passwordSetRedeem',
+      name: 'PasswordSetRedeem',
       meta:{
         scrollToTop:true
       },
-      component: () => import('@/views/PayoutPassword'),
+      component: () => import('@/components/main/PasswordSetRedeem'),
     },
     {
       path: '/passwordSet',
@@ -166,14 +166,6 @@ const route =new Router({
         scrollToTop:true
       },
       component: () => import('@/components/main/PasswordSet'),
-    },
-    {
-      path: '/passwordRedeem',
-      name: 'PasswordRedeem',
-      meta:{
-        scrollToTop:true
-      },
-      component: () => import('@/components/main/PasswordRedeem'),
     },
     {
       path: '/receivers',
