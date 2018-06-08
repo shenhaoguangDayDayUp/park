@@ -201,12 +201,15 @@ export default {
     //销毁原来的对象
     Vue.prototype.destoried = function () {
       let self = this;
+      console.log(self)
+      console.log(this.reagion)
+      console.log(this.reagion.parentNode)
+      //移除裁剪框
+      this.reagion.parentNode.removeChild(this.reagion);
       //移除事件
       this.removeEvent( this.clickBtn , 'click' , null );
       this.removeEvent( this.cancelBtn , 'click' , null );
       this.removeEvent( this.fileObj , 'click' , null );
-      //移除裁剪框
-      this.reagion.parentNode.removeChild(this.reagion);
 
       //销毁裁剪对象
       this.cropper.destroy();
@@ -395,59 +398,50 @@ export default {
     }
     //移除事件
     Vue.prototype.removeEvent = function ( obj , type , fn ) {
+      // console.log(obj)
+      // console.log(type)
+      // console.log(fn)
       if( obj.removeEventListener ){
         obj.removeEventListener( type , fn , false );
       }else{
         obj.detachEvent( 'on' + type , fn );
       }
     }
-    
-    // base64toFile--我自己加的
-  //   Vue.prototype.baseBlob = function convertBase64UrlToBlob(urlData){  
-  //     var types = urlData.split(';')[0].split(':')[1];
-  //     var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte  
-  //     //处理异常,将ascii码小于0的转换为大于0  
-  //     var ab = new ArrayBuffer(bytes.length);  
-  //     var ia = new Uint8Array(ab);  
-  //     for (var i = 0; i < bytes.length; i++) {  
-  //         ia[i] = bytes.charCodeAt(i);  
-  //     }  
-  //     return new Blob( [ab] , {type : types});  
-  // }  
-  Vue.prototype.dataURItoBlob = function dataURItoBlob(base64Data) {
-    var byteString;
-    if (base64Data.split(',')[0].indexOf('base64') >= 0)
-      byteString = atob(base64Data.split(',')[1]);
-    else
-      byteString = unescape(base64Data.split(',')[1]);
-    var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
+  // base64toFile
+    Vue.prototype.dataURItoBlob = function dataURItoBlob(base64Data) {
+      var byteString;
+      if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);
+      else
+        byteString = unescape(base64Data.split(',')[1]);
+      var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ia], { type: mimeString });
     }
-    return new Blob([ia], { type: mimeString });
-  }
-  Vue.prototype.getBase64Image = function getBase64Image(img) {
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, img.width, img.height);
-    var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
-    var dataURL = canvas.toDataURL("image/" + ext);
-    return dataURL;
-  }
-  Vue.prototype.changeToBase64 = function changeToBase64(url) {
-    var that = this;
-    var img = document.createElement("img");
-    img.src = url; //此处自己替换本地图片的地址
-    return new Promise(function(resolve, reject) { //onload是异步
-      img.onload = function() {
-        var data = that.getBase64Image(img);
-        resolve(data)
-        return data;
-      };
-    });
-  }
+    Vue.prototype.getBase64Image = function getBase64Image(img) {
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+      var dataURL = canvas.toDataURL("image/" + ext);
+      return dataURL;
+    }
+    Vue.prototype.changeToBase64 = function changeToBase64(url) {
+      var that = this;
+      var img = document.createElement("img");
+      img.src = url; //此处自己替换本地图片的地址
+      return new Promise(function(resolve, reject) { //onload是异步
+        img.onload = function() {
+          var data = that.getBase64Image(img);
+          resolve(data)
+          return data;
+        };
+      });
+    }
   }
 }

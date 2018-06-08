@@ -1,6 +1,6 @@
 <template>
   <div class="avatar">
-    <Header title="我的头像" :isShow="true"></Header>
+    <Header title="我的头像" :isShow="true" class="avatarReturn" @clickRtn="clickRtn"></Header>
     <div class="updateImg">
       <div class="imgCont">
             <img :src="querySrc" alt="" id="img">
@@ -57,6 +57,12 @@
       }
     },
     methods: {
+      clickRtn(){ //移除头像的裁切框
+        this.destoried(); 
+        // if(document.querySelector('#clip_container')){
+        //   document.querySelector('body').removeChild(document.querySelector('#clip_container')); 
+        // }
+      },
       imagechanged(code) {
         console.log(code)
         this.$vux.loading.show({
@@ -160,7 +166,7 @@
         let image = document.getElementById('img');
         this.clip(event,{
           resultObj:image,
-          aspectRadio:1
+          aspectRadio:'Free'
         })
       }
     },
