@@ -45,8 +45,8 @@
                 </li>
             </ul>
             <ul class="messList">
-                <li @click='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
-                    <span>重置密码</span>
+                <li @click='$router.push({name:"PasswordSet",query:{mobileNumber:mobileNumberFullname}})'>
+                    <span>设置密码</span>
                     <span></span>
                     <div class="right">
                         <div class="right-arrow"></div>
@@ -70,9 +70,7 @@
     import Header from '../common/Header'
     import axios from 'axios'
     import config from '../../api/config.js'
-    import {
-        mapGetters
-    } from 'vuex'
+    import {mapGetters} from 'vuex'
     import {
         user
     } from '@/logic'
@@ -98,6 +96,8 @@
             }
         },
         mounted() {
+            console.log(1111)
+                                console.log(this.$store)
             const TOKEN = sessionStorage.getItem('TOKEN')
             // 请求用户信息
             loginApi.entity({}, {
@@ -152,6 +152,7 @@
                             if (status == 200) {
                                 localStorage.removeItem('$LoginUser')
                                 sessionStorage.removeItem('TOKEN')
+                                that.$store.dispatch("toggleUpdateAvatar", ''); // vuex中的头像base64也要置空！
                                 that.$router.push({
                                     path: '/login'
                                 });
@@ -310,9 +311,6 @@
                     line-height: 119px;
                 }
             }
-        }
-        .messList:nth-child(2) {
-            li {}
         }
     }
 </style>
