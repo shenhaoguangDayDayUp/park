@@ -21,14 +21,17 @@ const route =new Router({
                 scrollTo(0, 0)
                 return { x: 0, y: 0 }
               }
-              scrollTo(0, savedPosition.y)
+         
+              console.log(savedPosition.y)
+        
+              scrollTo(0, savedPosition.y+1000)
               return savedPosition
          
           } else {
                 scrollTo(0, 0)
             return { x: 0, y: 0 }
           }
-        }, 100)
+        }, 1000)
     },
   routes: [
     {

@@ -23,7 +23,7 @@
                          @click='gotoConfirm'>确定
                     </div>
                 </div> -->
-                   <div class="pas-box v-1px" v-show="keyShow">
+                   <div class="pas-box v-1px" >
                 <div v-for="(pas,i) in pasDigits" :key="i" :class="{'v-1px-l':i>0}">
                     <input type="password" :value="val[i]" disabled>
                 </div>

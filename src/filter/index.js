@@ -72,7 +72,8 @@ Vue.filter('orderStatus', val => {
 Vue.filter('recordStatus', val => {
   return {
       "BONUS": "赠送",
-      "PAYMENT": "消费",
+      "REDEEM": "兑换",
+      "BET": '下注',
       "PAYOUT": "奖金",
       "RECHARGE": "充值",
   }[val]
