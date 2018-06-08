@@ -7,8 +7,11 @@
  *       exif    获取图片源信息，解决ios图片旋转的问题
  * */
 import axios from 'axios'
+import Vue from 'vue'
+import config from "@/api/config";
 import Cropper from 'cropperjs'
 import Exif from 'exif-js'
+import {mapGetters} from 'vuex'
 export default {
   install( Vue ){
     //初始化方法
@@ -52,6 +55,11 @@ export default {
       let str = '<div><img id="clip_image" src="originUrl"></div><button type="button" id="cancel_clip">取消</button><button type="button" id="clip_button">确定</button>';
       str+= '<div class="crop_loading"><div class="crop_content"><img src="../../../static/loading.gif"><div class="crop_text">图片上传中</div></div></div>';
       str+= '<div class="crop_success"><div class="crop_success_text">上传成功</div></div></div>';
+      //   var self = this;
+      //  Exif.getData(  this.picValue[0] , function(){
+      //   self.Orientation = Exif.getTag(  this.picValue[0], 'Orientation');
+      //   console.log(self.Orientation)
+      // });
 
       let body = document.getElementsByTagName('body')[0];
       this.reagion = document.createElement('div');
@@ -87,21 +95,24 @@ export default {
     //外部接口，用于input['file']对象change时的调用
     Vue.prototype.clip = function ( e , opt ) {
       let self = this;
-
+      
       this.fileObj = e.srcElement;
 
       let files = e.target.files || e.dataTransfer.files;
+      this.file = files;
+ 
 
       if (!files.length) return false;  //不是图片直接返回
 
+    //获取图片文件资源
+    this.picValue = files[0];
       //调用初始化方法
       this.initilize( opt );
-      console.log('opt')
-      console.log(opt)
-      //获取图片文件资源
-      this.picValue = files[0];
-      console.log('files[0]')
-      console.log(files[0])
+        
+     
+      
+
+
       //去获取拍照时的信息，解决拍出来的照片旋转问题
       // Exif.getData( files[0] , function(){
       //   self.Orientation = Exif.getTag( files[0], 'Orientation');
@@ -109,15 +120,13 @@ export default {
       // });
 
 
-      console.log('this.picValue')
-      console.log(this.picValue)
+    
       //调用方法转成url格式
       this.originUrl = this.getObjectURL( this.picValue );
       //每次替换图片要重新得到新的url
       if(this.cropper){
         this.cropper.replace(this.originUrl);
-        console.log('this.cropper')
-        console.log(this.cropper)
+  
       }
 
 
@@ -142,19 +151,15 @@ export default {
       let roundedCanvas;
 
       // Crop
-      document.querySelector('.crop_loading').style.display = 'block';
-
+      // document.querySelector('.crop_loading').style.display = 'block';
+      window.global.$vux.loading.show({
+          text: "图片上传中....",
+      })
       setTimeout(function () {
         croppedCanvas = self.cropper.getCroppedCanvas();
         // Round
         roundedCanvas = self.getRoundedCanvas(croppedCanvas);
-        console.log('roundedCanvas')
-        console.log(roundedCanvas)
         let imgData = roundedCanvas.toDataURL();
-        console.log('imgData')
-        console.log(imgData)
-        console.log('image')
-        console.log(image)
         image.src = imgData;
 
         //判断图片是否大于100k,不大于直接上传，反之压缩
@@ -162,7 +167,6 @@ export default {
           self.resultObj.src = imgData;
           //图片上传
           self.postImg( imgData );
-
         }else{
           image.onload = function () {
             //压缩处理
@@ -197,44 +201,64 @@ export default {
     //销毁原来的对象
     Vue.prototype.destoried = function () {
       let self = this;
+      console.log(self)
+      console.log(this.reagion)
+      console.log(this.reagion.parentNode)
+      //移除裁剪框
+      this.reagion.parentNode.removeChild(this.reagion);
       //移除事件
       this.removeEvent( this.clickBtn , 'click' , null );
       this.removeEvent( this.cancelBtn , 'click' , null );
       this.removeEvent( this.fileObj , 'click' , null );
-      //移除裁剪框
-      this.reagion.parentNode.removeChild(this.reagion);
 
       //销毁裁剪对象
       this.cropper.destroy();
       this.cropper = null;
     }
-    //图片上传
+    //图片上传 请求写在这里
     Vue.prototype.postImg = function( imageData ) {
       //这边写图片的上传
       let self = this;
-      console.log(111)
-      console.log(imageData)
-      console.log(this.baseBlob(imageData))
       const TOKEN = sessionStorage.getItem('TOKEN')
       var form=document.forms[0];
-    
-      var formData = new FormData(form);   //这里连带form里的其他参数也一起提交了,如果不需要提交其他参数可以直接FormData无参数的构造函数
-      
+      var formData = new FormData();   //这里连带form里的其他参数也一起提交了,如果不需要提交其他参数可以直接FormData无参数的构造函数
       //convertBase64UrlToBlob函数是将base64编码转换为Blob
-      formData.append("avatar",this.baseBlob(imageData)); 
-                console.log(1111)
-                console.log(formData)
-                axios.post('/api/gateway/mobile/member/avatar', formData, {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'form-data',
-                        'x-auth-token': TOKEN
-                    }
-                }).then(function(res) {
-                    console.log(res); //
-                }).catch(function(error) {
-                    console.log(error);
-                })
+      formData.append("avatar",this.dataURItoBlob(imageData),this.file[0].name); 
+    //    var xhr = new XMLHttpRequest();
+    //    xhr.open('POST', '/api/gateway/mobile/member/avatar');
+    //   //  xhr.setRequestHeader('Content-Type','multipart/form-data');
+    //    xhr.setRequestHeader('x-auth-token',TOKEN);
+    //    xhr.send(formData)
+    //    xhr.onreadystatechange = function () {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         alert(xhr.responseText);
+    //     }
+    //     else {
+    //         alert(xhr.statusText);
+    //     }
+    // }
+      var apiUrlPrifex = config.apiUrlPrefix[config.env.NODE_ENV];
+      var imgPrifex = config.imgUrl[config.env.NODE_ENV];
+      axios.post(apiUrlPrifex+'/gateway/mobile/member/avatar', formData, {
+          method: 'post',
+          headers: {
+              'Content-Type': 'multipart/form-data',
+              'x-auth-token': TOKEN
+          }
+      }).then(res=>{
+        this.changeToBase64(imgPrifex + res.data ).then(response => {
+          window.global.$vux.loading.hide();
+          window.global.$store.dispatch("toggleUpdateAvatar", response);
+          window.global.$vux.toast.show({
+            text: "修改成功!"
+          });
+        })
+      }).catch(err=>{
+        window.global.$vux.loading.hide();
+        this.$vux.toast.show({
+          text: "头像修改失败!"
+        });
+      })
       self.destoried();
       // window.setTimeout( function () {
       //   document.querySelector('.crop_loading').style.display = 'none';
@@ -374,24 +398,50 @@ export default {
     }
     //移除事件
     Vue.prototype.removeEvent = function ( obj , type , fn ) {
+      // console.log(obj)
+      // console.log(type)
+      // console.log(fn)
       if( obj.removeEventListener ){
         obj.removeEventListener( type , fn , false );
       }else{
         obj.detachEvent( 'on' + type , fn );
       }
     }
-    
-    // base64toFile--我自己加的
-    Vue.prototype.baseBlob = function convertBase64UrlToBlob(urlData){  
-      var types = urlData.split(';')[0].split(':')[1];
-      var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte  
-      //处理异常,将ascii码小于0的转换为大于0  
-      var ab = new ArrayBuffer(bytes.length);  
-      var ia = new Uint8Array(ab);  
-      for (var i = 0; i < bytes.length; i++) {  
-          ia[i] = bytes.charCodeAt(i);  
-      }  
-      return new Blob( [ab] , {type : types});  
-  }  
+  // base64toFile
+    Vue.prototype.dataURItoBlob = function dataURItoBlob(base64Data) {
+      var byteString;
+      if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);
+      else
+        byteString = unescape(base64Data.split(',')[1]);
+      var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ia], { type: mimeString });
+    }
+    Vue.prototype.getBase64Image = function getBase64Image(img) {
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+      var dataURL = canvas.toDataURL("image/" + ext);
+      return dataURL;
+    }
+    Vue.prototype.changeToBase64 = function changeToBase64(url) {
+      var that = this;
+      var img = document.createElement("img");
+      img.src = url; //此处自己替换本地图片的地址
+      return new Promise(function(resolve, reject) { //onload是异步
+        img.onload = function() {
+          var data = that.getBase64Image(img);
+          resolve(data)
+          return data;
+        };
+      });
+    }
   }
 }

@@ -42,34 +42,22 @@ export default {
   },
   methods: {},
   mounted() {
+    window.onscroll= function(){
+                //变量t是滚动条滚动时，距离顶部的距离
+                var t = document.documentElement.scrollTop||document.body.scrollTop;
+                console.log(t)
+
+            }
     document.getElementById("app").style.display = "block";
     document.getElementById("appLoading").style.display = "none";
 
       this.$root.eventHub.$on('LodingShow',res=>{
         document.querySelector('body').style = 'display:block;height:100%;overflow:hidden !important;font-size:'+document.querySelector('body').style.fontSize
-              // document.body.style.overflow='hidden';
-        // document.addEventListener("touchmove",function(e){
-        //   e.preventDefault();
-        // },false)
-            // console.log(document.querySelector('body'))
-        // this.loding = {
-        //   'display': 'block',
-        //   'overflow-y': 'auto',
-        //   'height':'100%'
-        // }
+   
       })
        this.$root.eventHub.$on('LodingHide',res=>{
        document.querySelector('body').style = 'font-size:'+document.querySelector('body').style.fontSize
-        // document.body.style.overflow='';
-        //   document.addEventListener("touchmove",function(e){
-        //   e.preventDefault();
-        // },false)
-            // console.log(document.querySelector('body'))
-        // this.loding = {
-        //    'display': 'block',
-        //   'overflow-y': 'inherit',
-        //   'height':'100%'
-        // }
+      
       })
   
   },
@@ -88,10 +76,20 @@ export default {
 }
 
 }
-// .vux-loading > .weui-mask_transparent{
-//   height:100vh;
-//   overflow: hidden;
-// }
+#cancel_clip{
+      border:1px solid #ffcb16!important;
+      color:#ffcb16!important;
+      background: #fff!important;
+      border-radius: 5px!important;
+      width:100px!important;
+      height:40px!important;
+}
+#clip_button{
+  background: #ffcb16!important;
+  border-radius: 5px!important;
+  width:100px!important;
+      height:40px!important;
+}
 </style>
 
  

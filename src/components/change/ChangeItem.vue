@@ -1,9 +1,9 @@
 <template>
     <div class="change-item">
-        <div :class="['item-time',item.type=='PAYMENT'?'':'gold']">{{item.updateAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
-         <div :class="['item',item.type=='PAYMENT'?'':'gold']">{{item.note}}</div>
-          <div :class="['item-type',item.type=='PAYMENT'?'':'gold']">{{item.type|recordStatus}}</div>
-           <div :class="['item-amount',item.type=='PAYMENT'?'':'gold']">{{item.amount|currency}}</div>
+        <div :class="['item-time',item.type=='REDEEM'||item.type=='BET'?'':'gold']">{{item.updateAt|dateFilter('yyyy-MM-dd hh:mm')}}</div>
+         <div :class="['item',item.type=='REDEEM'||item.type=='BET'?'':'gold']">{{item.note}}</div>
+          <div :class="['item-type',item.type=='REDEEM'||item.type=='BET'?'':'gold']">{{item.type|recordStatus}}</div>
+           <div :class="['item-amount',item.type=='REDEEM'||item.type=='BET'?'':'gold']">{{item.amount|currency}}</div>
     </div>
 </template>
 <script>

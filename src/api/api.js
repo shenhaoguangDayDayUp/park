@@ -112,7 +112,7 @@ export let getAllProductApi = new Api('store/product','id',{
        
  
 })
-//心愿单相关
+//心愿单相关 
 export let heartCartApi = new Api('store/cart','id',{
     addOrdel:{
         url:'item',
@@ -143,7 +143,7 @@ export let orderCheckOutApi = new Api('store/order','id',{
         method: 'post'    
     },
     payment:{
-        url:'payment/{id}',
+        url:'redeem/{id}',
         method: 'put'    
     },
     cancel:{

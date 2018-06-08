@@ -6,7 +6,7 @@
                 <li class="logoIcon" @click='$router.push({name:"Avatar"})'>
                     <span>头像</span>
                     <span>
-                                            <img :src= "avatar">
+                                            <img v-lazy= "avatar">
                                             </span>
                     <span> </span>
                 </li>
@@ -45,8 +45,8 @@
                 </li>
             </ul>
             <ul class="messList">
-                <li @click='$router.push({name:"Password",query:{title:"重置密码",mobileNumber:mobileNumberFullname}})'>
-                    <span>重置密码</span>
+                <li @click='$router.push({name:"PasswordSet",query:{mobileNumber:mobileNumberFullname}})'>
+                    <span>设置密码</span>
                     <span></span>
                     <div class="right">
                         <div class="right-arrow"></div>
@@ -63,16 +63,14 @@
             </ul>
             
         </div>
-        <input name="imgLocal" type='file' accept="image/*" @change="selectImg" />
+        <!-- <input name="imgLocal" type='file' accept="image/*" @change="selectImg" /> -->
     </div>
 </template>
 <script>
     import Header from '../common/Header'
     import axios from 'axios'
     import config from '../../api/config.js'
-    import {
-        mapGetters
-    } from 'vuex'
+    import {mapGetters} from 'vuex'
     import {
         user
     } from '@/logic'
@@ -98,6 +96,8 @@
             }
         },
         mounted() {
+            console.log(1111)
+                                console.log(this.$store)
             const TOKEN = sessionStorage.getItem('TOKEN')
             // 请求用户信息
             loginApi.entity({}, {
@@ -118,8 +118,10 @@
                 var imgPrifex = config.imgUrl[config.env.NODE_ENV]
                 // this.avatar = config.apiUrlPrefix[process.env.NODE_ENV] + data.avatar + '?r=' + new Date().getTime(); // 头像加时间戳
                 console.log(!this.defaultAvatar)
+                console.log(333)
                 if (!this.defaultAvatar) {
-                    this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
+                    // this.changeToBase64(imgPrifex + data.avatar + '?r=' + new Date().getTime()).then(res => {
+                        this.changeToBase64(imgPrifex + data.avatar ).then(res => {
                         //    sessionStorage.setItem("AVATAR",res);
                         this.avatar = res;
                         this.$store.dispatch("toggleUpdateAvatar", res);
@@ -150,6 +152,7 @@
                             if (status == 200) {
                                 localStorage.removeItem('$LoginUser')
                                 sessionStorage.removeItem('TOKEN')
+                                that.$store.dispatch("toggleUpdateAvatar", ''); // vuex中的头像base64也要置空！
                                 that.$router.push({
                                     path: '/login'
                                 });
@@ -308,9 +311,6 @@
                     line-height: 119px;
                 }
             }
-        }
-        .messList:nth-child(2) {
-            li {}
         }
     }
 </style>

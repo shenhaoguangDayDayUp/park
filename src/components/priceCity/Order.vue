@@ -36,7 +36,7 @@
       <div class="submit-cancel"
            @click='gotoCancel'>取消</div>
       <div class="submit-btn"
-           @click='gotoPayment'>支付</div>
+           @click='gotoPayment'>兑换</div>
     </div>
   </div>
 </template>
