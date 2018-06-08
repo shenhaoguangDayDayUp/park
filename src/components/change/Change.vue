@@ -61,8 +61,8 @@
     },
     methods: {
       loadMore() {
-        console.log(this.list.length )
-                console.log(this.count)
+        // console.log(this.list.length )
+        //         console.log(this.count)
         if (this.list.length >= this.count) {
           this.loading = false;
           this.noMoreData = true;
@@ -123,11 +123,17 @@
               this.list.push(element);
             }
             this.count = data.count;
-          } catch (error) {}
+          } catch (error) {
+             this.loading = false;
+          }
         }
       }
     },
    async mounted() {
+      window.global.$root.eventHub.$on('loding',res=>{
+        this.loading = false
+         this.getList();
+      })
       // var myDiv = this.$refs.sticky.$el;
       //  var finalStyle = myDiv.currentStyle ? myDiv.currentStyle : document.defaultView.getComputedStyle(myDiv, null)
       //  var offset = finalStyle.top;

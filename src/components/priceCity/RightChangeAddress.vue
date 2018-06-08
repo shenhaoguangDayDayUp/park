@@ -4,7 +4,7 @@
             <span class='title'>收货人:</span>
             <span>{{item.name}}</span>
         </div>
-        <div class="tel">
+        <div class="tel">  
             {{item.mobileNumber}}
         </div>
         <div class="receive-detail">

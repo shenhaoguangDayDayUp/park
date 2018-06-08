@@ -241,14 +241,14 @@ const route =new Router({
 
 route.beforeEach(function (to, from, next) {
   Vue.$$message.confirm.hide()
-  store.dispatch('toggleLoadingStatus', {isLoading: true})
+  // store.dispatch('toggleLoadingStatus', {isLoading: true})
   next()
 })
 
 route.afterEach(function (to) {
-  setTimeout(()=>{
-    store.dispatch('toggleLoadingStatus', {isLoading: false})
-  },500)
+  // setTimeout(()=>{
+  //   store.dispatch('toggleLoadingStatus', {isLoading: false})
+  // },500)
 
 })
 export default route

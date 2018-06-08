@@ -35,6 +35,7 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
     switch (error.response.status) { //这里修改了，如果出现500/502之类的，页面弹框里会出现一大堆报错。
         case 401:
+
             // window.global.$vux.toast.show({
             //     text: error.response.data,
             // });
@@ -56,7 +57,7 @@ axios.interceptors.response.use(function (response) {
             break;
     }
     window.global.$vux.loading.hide();
-    document.body.style.overflow = 'auto';
+    // document.body.style.overflow = 'auto';
     return Promise.reject(error);
 }); 
 
@@ -165,6 +166,7 @@ function send(url, data, otherOptions, method = 'get') {
                         .then(function (response) {
                             sessionStorage.setItem("TOKEN", response.headers['x-auth-token']);
                             window.global.$root.eventHub.$emit('notification')
+                            window.global.$root.eventHub.$emit('loding')
                         })
                         .catch(function (error) {
                             console.log(error);

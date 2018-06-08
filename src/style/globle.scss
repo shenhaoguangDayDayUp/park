@@ -61,6 +61,12 @@
       background: transparent !important;
     }
   }
+  .vux-mask-enter, .vux-mask-leave-active {
+    opacity: 0 !important;
+   }
+   .vux-mask-leave-active, .vux-mask-enter-active {
+     transition: opacity 80ms !important;
+   }
   .sticky-content{
     .vux-sticky-box{
       top:94px !important;

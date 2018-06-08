@@ -18,6 +18,7 @@ import VueLazyLoad from 'vue-lazyload'
 import outside from './directives/outside.js';
 import $config from '@/api/config'
 
+
 Vue.use(VueLazyLoad,{
     error:'./static/zhanwei2@1x.png',
     loading:'./static/zhanwei2@1x.png',
@@ -26,6 +27,7 @@ Vue.use(VueLazyLoad,{
     try: 2
 })
 Vue.use(LoadingPlugin)
+
 Vue.use(ToastPlugin,{
   type: "text",
   position: "middle",
