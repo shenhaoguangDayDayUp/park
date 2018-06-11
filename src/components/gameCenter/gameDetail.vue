@@ -169,6 +169,7 @@
     .gameDetailContent {
       margin-top: 94px; // padding-bottom:94px;
       overflow-x: hidden;
+      overflow-y: auto;
     }
     .gameTitle {
       // height: 278px; // padding: 38px 45px 24px;
