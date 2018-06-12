@@ -68,6 +68,7 @@ export default {
     this.$on('form.addField', (field) => {
       if (field) {
         this.fields = [...this.fields, field]
+      console.log(this.fields)
       }
     })
     this.$on('form.removeField', (field) => {

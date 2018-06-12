@@ -30,6 +30,7 @@
         },
         data() {
             return {
+                mobileNumberFullname:this.$route.query.mobileNumber,
             }
         },
     }

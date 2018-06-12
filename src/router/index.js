@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import Password from '@/views/Password'
@@ -164,6 +163,14 @@ const route =new Router({
         scrollToTop:true
       },
       component: Password,
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      meta:{
+        scrollToTop:true
+      },
+      component: ()=>import('@/views/Home')
     },
     {
       path: '/passwordSetRedeem',
