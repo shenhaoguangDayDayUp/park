@@ -1,9 +1,9 @@
 <template>
-    <div class="pay-box" v-if="isPay">
+    <div class="pay-box" v-if="isPay" ref="input">
 
             <div class="my-dialog">
                 <div class="title" slot="header">
-                    请输入兑换密码
+                    {{payTitle}}
                     <!-- <slot  name='header'></slot> -->
                     <span class="title-icon"
                           @click='close'>
@@ -86,6 +86,10 @@ let timer = null;
 export default {
     name: 'vue-pay-keyboard',
     props: {
+        value:{ // 绑定了一个ref input 父组件获取子组件的值
+            type:String,
+            default:''
+        },
         payTitle: {
             type: String,
             default: '请输入支付密码'
@@ -144,6 +148,7 @@ export default {
                 this.val.push(val)
                 if (this.val.length === this.pasDigits) {
                     // 密码输入完毕
+                    this.$emit("input",this.val.join('')) //传给父组件
                     this.$emit('pas-end', this.val.join(''))
                     this.keyShow = false;
                     this.lodingShow = true;
@@ -236,6 +241,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
+    height:100%;
 }
 .loading-ani {
     animation: loadingRotate .8s infinite;
@@ -377,7 +383,7 @@ input {
     color: black;
     background: white;
   font-size: 32px;
-  height: 368px;
+//   height: 368px;
   padding-bottom: 20px;
   display: flex;
   flex-direction: column;
