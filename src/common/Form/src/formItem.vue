@@ -1,9 +1,12 @@
 <template>
   <div class="form-item">
-    <label :for="prop" class="form-item-label" v-if="label">
-      <!-- {{ label }} -->
-    </label>
+    <!-- <label :for="prop" class="form-item-label" v-if="label">
+      {{ label }}
+    </label> -->
     <div class="form-item-content">
+      <!-- <i class="isTip ispwd"  v-if="validateState === 'error'"><img src="@/assets/img/tishi@2x.png">{{validateMessage}}</i> -->
+      <i class="isTip ispwd" v-if="validateState === 'error'"><img src="@/assets/img/tishi@2x.png">报错信息</i>
+      
       <slot></slot>
     </div>
   </div>
@@ -11,6 +14,11 @@
 <script>
 export default {
   name: 'form-item',
+  data(){
+    return{
+      validateState: '',
+    }
+  },
   computed: {
     form () {
       let parent = this.$parent
@@ -40,7 +48,22 @@ export default {
   },
   props: {
     prop: String,
-    label: String
+    label: String,
+    validateStatus: String,
+    validateMessage:String,
+    error: String,
+  },
+  watch: {
+    // error(value) {
+    //     this.validateMessage = value;
+    //     this.validateState = value ? 'error' : '';
+    //   },
+      validateStatus(value) {
+        console.log('value')
+        console.log(value);
+        console.log(this.prop)
+        this.validateState = value;
+      }
   },
   mounted () {
     if (this.prop) {
