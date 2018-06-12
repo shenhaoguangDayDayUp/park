@@ -42,12 +42,7 @@ export default {
   },
   methods: {},
   mounted() {
-    window.onscroll= function(){
-                //变量t是滚动条滚动时，距离顶部的距离
-                var t = document.documentElement.scrollTop||document.body.scrollTop;
-                console.log(t)
-
-            }
+    
     document.getElementById("app").style.display = "block";
     document.getElementById("appLoading").style.display = "none";
 

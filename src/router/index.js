@@ -24,19 +24,19 @@ const route =new Router({
                 return { x: 0, y: 0 }
               }
               return new Promise(resolve=>{
-                var a = 1;
-                timer = setInterval(res=>{
-                  a++;
-                  scrollTo(0, savedPosition.y)
-                  if(a ==4){
-                    clearInterval(timer)
-                  }
-                },350)
+                // var a = 1;
+                // timer = setInterval(res=>{
+                //   a++;
+                //   scrollTo(0, savedPosition.y)
+                //   if(a ==4){
+                //     clearInterval(timer)
+                //   }
+                // },350)
               
                 // timer = setInterval(res=>{
                 //   scrollTo(0, savedPosition.y)
                 // },300)
-                scrollTo(0, savedPosition.y)
+                scrollTo(0, 0)
                 resolve(savedPosition)
                 return savedPosition
               })
