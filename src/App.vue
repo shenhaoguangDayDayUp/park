@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <transition name="fade">
+
       <router-view :style="loding"></router-view>
+
     </transition>
     <!-- 路由跳转必写 -->
     <div v-transfer-dom>

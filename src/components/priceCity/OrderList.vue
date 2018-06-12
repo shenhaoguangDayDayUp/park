@@ -58,10 +58,7 @@
       </div>       
     <!-- <Header title="订单清单"
             :isShow='true'></Header> -->
-   <KeyBord ref="pay"
-   :is-pay='isPay'
-   @pas-end='pasEnd'
-   @close='isPay=false'></KeyBord>
+
    
   </div>
 </template>
@@ -73,7 +70,7 @@ import { orderListApi } from "@/api/api";
 import { common } from "@/logic";
 import { InfiniteScroll } from "mint-ui";
 import { timingSafeEqual } from "crypto";
-import KeyBord from "@/common/KeyBord";
+
 export default {
   // computed:{
   //   show:{
@@ -116,7 +113,6 @@ async  mounted() {
     Header,
     LoadMore,
     Divider,
-    KeyBord
   },
   methods: {
     pasEnd(){

@@ -9,15 +9,25 @@ let axios = Axios.create({
     data:{},
     headers:{'Content-Type':'application/json'}
 })
+let show = false
 
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
+ 
+    if(show){
+        return;
+    }
+
     window.global.$vux.loading.show({
         text: '正在加载',
         onShow(){
+            show = true
             window.global.$root.eventHub.$emit('LodingShow')
         },
         onHide(){
+            setTimeout(res=>{
+                show = false
+            },350)
             window.global.$root.eventHub.$emit('LodingHide')  
         }
        })

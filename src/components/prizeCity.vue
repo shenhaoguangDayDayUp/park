@@ -1,5 +1,6 @@
 
 <template>
+
   <div class="prizeCity">
     <Header title="奖品展示">
       <span class="heart" slot="right">
@@ -42,6 +43,7 @@
                   </router-link>
 </template>
         </div>
+   
         <div class="box">
           <span class="icon"></span>
           <span class="title">全部商品</span>

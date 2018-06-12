@@ -23,14 +23,14 @@ const route =new Router({
                 return { x: 0, y: 0 }
               }
               return new Promise(resolve=>{
-                var a = 1;
-                timer = setInterval(res=>{
-                  a++;
-                  scrollTo(0, savedPosition.y)
-                  if(a ==4){
-                    clearInterval(timer)
-                  }
-                },350)
+                // var a = 1;
+                // timer = setInterval(res=>{
+                //   a++;
+                //   scrollTo(0, savedPosition.y)
+                //   if(a ==4){
+                //     clearInterval(timer)
+                //   }
+                // },350)
               
                 // timer = setInterval(res=>{
                 //   scrollTo(0, savedPosition.y)
@@ -42,9 +42,7 @@ const route =new Router({
              
          
           } else {
-            console.log(333333)
                 scrollTo(0, 0)
-                console.log(333333)
             return { x: 0, y: 0 }
           }
         }, 350)
@@ -66,11 +64,17 @@ const route =new Router({
         {
           path: '/gameCenter',
           name: 'gameCenter',
+          meta:{
+            scrollToTop:true
+          },
           component: () => import('@/components/gameCenter'),
         },
         {
           path: '/prizeCity',
           name: 'PrizeCity',
+          meta:{
+            scrollToTop:true
+          },
           component:   () => import('@/components/prizeCity'),
         },
         {
@@ -178,7 +182,7 @@ const route =new Router({
       meta:{
         scrollToTop:true
       },
-      component: () => import('@/views/PayoutPassword'),
+      component: () => import('@/components/main/PasswordSetRedeem'),
     },
     {
       path: '/passwordSet',
@@ -187,14 +191,6 @@ const route =new Router({
         scrollToTop:true
       },
       component: () => import('@/components/main/PasswordSet'),
-    },
-    {
-      path: '/passwordRedeem',
-      name: 'PasswordRedeem',
-      meta:{
-        scrollToTop:true
-      },
-      component: () => import('@/components/main/PasswordRedeem'),
     },
     {
       path: '/receivers',

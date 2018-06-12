@@ -38,6 +38,11 @@
       <div class="submit-btn"
            @click='gotoPayment'>兑换</div>
     </div>
+       <KeyBord ref="pay"
+   :is-pay='isPay'
+   v-model="password"
+   @pas-end='pasEnd'
+   @close='isPay=false'></KeyBord>
   </div>
 </template>
 <script>
@@ -46,6 +51,7 @@ import RightChangeItems from "./RightChangeItems.vue";
 import { common } from "@/logic";
 import { orderCheckOutApi, loginApi } from "@/api/api";
 import { mapGetters } from "vuex";
+import KeyBord from "@/common/KeyBord";
 
 export default {
   computed: {
@@ -62,7 +68,10 @@ export default {
   },
   data() {
     return {
-      detail: {}
+      isPay:false,
+      password:'',
+      detail: {},
+    
     };
   },
   mounted() {
@@ -70,6 +79,9 @@ export default {
     this.getOrderInfo();
   },
   methods: {
+    pasEnd(){
+
+    },
     async getDefaultAddress() {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
@@ -113,6 +125,7 @@ export default {
    
     },
     async gotoPayment() {
+      this.isPay = true
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
@@ -152,7 +165,8 @@ export default {
   },
   components: {
     RightChange,
-    RightChangeItems
+    RightChangeItems,
+    KeyBord
   }
 };
 </script>

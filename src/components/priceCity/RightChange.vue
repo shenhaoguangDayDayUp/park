@@ -143,8 +143,17 @@ export default {
         receiverCity: this.defaultAderess.cityID,
         receiverDistrict: this.defaultAderess.districtID,
         receiverStreet: this.defaultAderess.street,})
-    const { data } = await orderCheckOutApi.checkout(personalInfo.personalInfo, token);
-    this.detail = data
+        console.log(personalInfo.personalInfo)
+        try {
+              const { data } = await orderCheckOutApi.checkout(personalInfo.personalInfo, token)
+               this.detail = data
+
+        } catch (error) {
+          
+            console.log(242424)
+        }
+    ;
+   
   
     }
   }
