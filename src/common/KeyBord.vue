@@ -81,7 +81,7 @@
                     <div class="key v-1px-l"
                          style="background: #e8e8e8"
                          @touchstart="del($event)"
-                         @touchend="inputEnd($event,'del')">-
+                         @touchend="inputEnd($event,'del')">x
                     </div>
                 </div>
             </div>
@@ -183,10 +183,10 @@ export default {
         if (this.val.length === this.pasDigits) {
           // 密码输入完毕
           this.$emit("input", this.val.join("")); //传给父组件
-          this.$emit("pas-end", this.val.join(""));
           this.keyShow = false;
           this.lodingShow = true;
           this.$refs.loading.classList.add("loading-ani");
+          this.$emit("pas-end", this.val.join(""));
           this.val = [];
         }
       } else {
