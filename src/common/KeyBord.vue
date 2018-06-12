@@ -149,10 +149,11 @@ export default {
                 if (this.val.length === this.pasDigits) {
                     // 密码输入完毕
                     this.$emit("input",this.val.join('')) //传给父组件
-                    this.$emit('pas-end', this.val.join(''))
+                    console.log(222)
                     this.keyShow = false;
                     this.lodingShow = true;
-                    this.$refs.loading.classList.add('loading-ani')
+                    this.$refs.loading.classList.add('loading-ani');
+                    this.$emit('pas-end', this.val.join(''))
                     this.val = [];
                 }
             } else {

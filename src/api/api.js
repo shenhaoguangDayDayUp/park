@@ -66,6 +66,16 @@ export let loginApi = new Api('member','id',{
     avatar:{
         url:'avatar',// 头像
         method:'post'
+    },
+})
+export let pwdApi = new Api('member/password','id',{
+    validate:{
+        url:'validate', // 验证密码
+        method:'put',
+    },
+    redeem:{
+        url:'redeem', //设置兑换密码
+        method:'put'
     }
 })
 
