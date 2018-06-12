@@ -24,19 +24,19 @@ const route =new Router({
                 return { x: 0, y: 0 }
               }
               return new Promise(resolve=>{
-                // var a = 1;
-                // timer = setInterval(res=>{
-                //   a++;
-                //   scrollTo(0, savedPosition.y)
-                //   if(a ==4){
-                //     clearInterval(timer)
-                //   }
-                // },350)
+                var a = 1;
+                timer = setInterval(res=>{
+                  a++;
+                  scrollTo(0, savedPosition.y)
+                  if(a ==4){
+                    clearInterval(timer)
+                  }
+                },350)
               
                 // timer = setInterval(res=>{
                 //   scrollTo(0, savedPosition.y)
                 // },300)
-                scrollTo(0, 0)
+                scrollTo(0, savedPosition.y)
                 resolve(savedPosition)
                 return savedPosition
               })
@@ -166,12 +166,12 @@ const route =new Router({
       component: Password,
     },
     {
-      path: '/passwordSetRedeem',
-      name: 'PasswordSetRedeem',
+      path: '/payoutpassword',
+      name: 'PayoutPassword',
       meta:{
         scrollToTop:true
       },
-      component: () => import('@/components/main/PasswordSetRedeem'),
+      component: () => import('@/views/PayoutPassword'),
     },
     {
       path: '/passwordSet',
@@ -180,6 +180,14 @@ const route =new Router({
         scrollToTop:true
       },
       component: () => import('@/components/main/PasswordSet'),
+    },
+    {
+      path: '/passwordRedeem',
+      name: 'PasswordRedeem',
+      meta:{
+        scrollToTop:true
+      },
+      component: () => import('@/components/main/PasswordRedeem'),
     },
     {
       path: '/receivers',
