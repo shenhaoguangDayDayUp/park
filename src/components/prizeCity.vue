@@ -110,6 +110,7 @@
   import Vue from "vue";
   import config from "@/api/config";
   export default {
+    name:'prizeCity',
     data() {
       return {
         index: 0,
@@ -168,13 +169,16 @@
         ]
       };
     },
+    created(){
+   this.getList();
+      this.getRecommondList();
+      this.getBanner();
+    },
     mounted() {
       // this.$$message.confirm.show({confirm(){
       //   console.log(1111)
       // },title:'您还没有登录',content:'是否前往登录12131313',rightBtnText:'随便看看',leftBtnText:'确定'})
-      this.getList();
-      this.getRecommondList();
-      this.getBanner();
+   
     },
     methods: {
       indexToDetail() {},
@@ -460,7 +464,7 @@
     }
     .list-goods {
       padding: 0 20px 20px 20px;
-      padding-bottom:100px;
+      // padding-bottom:100px;
       .list_content {
         border-radius: 10px;
         background-color: rgb(255, 255, 255);

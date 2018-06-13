@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <transition name="fade">
-
-      <router-view :style="loding"></router-view>
+      <div>
+           <transition name="fade">
+        <keep-alive> <router-view v-if='isKeepAlive' :style="loding"></router-view> </keep-alive> 
+           </transition>
+      </div>
+      
+   <transition name="fade">
+ <router-view v-if='!isKeepAlive'></router-view>
 
     </transition>
     <!-- 路由跳转必写 -->
@@ -29,7 +34,13 @@ export default {
     TransferDom
   },
   computed: {
-    ...mapGetters(["isLoading"])
+    ...mapGetters(["isLoading"]),
+    isKeepAlive(){
+
+        return !this.$route.meta.scrollToTop
+
+     
+    }
   },
   components: {
     Loading
@@ -39,11 +50,25 @@ export default {
 　　　　const toDepth = to.path.split('/').length
 　　　　const fromDepth = from.path.split('/').length
 　　　this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
-    
  　　}
   },
   methods: {},
   mounted() {
+     document.documentElement.addEventListener('touchstart', function (event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, false);
+var lastTouchEnd = 0;
+document.documentElement.addEventListener('touchend', function (event) {
+  var now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+
     
     document.getElementById("app").style.display = "block";
     document.getElementById("appLoading").style.display = "none";

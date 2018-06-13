@@ -15,7 +15,7 @@ axios.interceptors.request.use(function (config) {
     // Do something before request is sent
  
     if(show){
-        return;
+        return config;
     }
 
     window.global.$vux.loading.show({
@@ -43,6 +43,8 @@ axios.interceptors.response.use(function (response) {
 
  return response;
 }, function (error) {
+
+    console.log(error)
     switch (error.response.status) { //这里修改了，如果出现500/502之类的，页面弹框里会出现一大堆报错。
         case 401:
 

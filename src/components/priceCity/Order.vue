@@ -18,17 +18,17 @@
         </div>
         <div class="price">奖品小计:</div>
         <div class="score">
-           <img src="../../assets/img/big_gold@2x.png"/>{{detail.itemsSubtotal|currency}}</div>
+          <img src="../../assets/img/big_gold@2x.png" />{{detail.itemsSubtotal|currency}}</div>
       </div>
       <div class="right-price-box">
         <div class="price">快递费用:</div>
         <div class="score">
-           <img src="../../assets/img/big_gold@2x.png"/>{{detail.deliveryFee|currency}}</div>
+          <img src="../../assets/img/big_gold@2x.png" />{{detail.deliveryFee|currency}}</div>
       </div>
       <div class="right-price-box">
         <div class="price">订单合计:</div>
         <div class="score color-gold">
-           <img src="../../assets/img/big_gold@2x.png"/>{{detail.grandTotal|currency}}</div>
+          <img src="../../assets/img/big_gold@2x.png" />{{detail.grandTotal|currency}}</div>
       </div>
     </div>
     <div class="submit-box"
@@ -38,11 +38,13 @@
       <div class="submit-btn"
            @click='gotoPayment'>兑换</div>
     </div>
-       <KeyBord ref="pay"
-   :is-pay='isPay'
-   v-model="password"
-   @pas-end='pasEnd'
-   @close='isPay=false'></KeyBord>
+    <KeyBord ref="pay"
+             :is-pay='isPay'
+             v-model="password"
+             @pas-end='pasEnd'
+             @close='isPay=false'>
+
+    </KeyBord>
   </div>
 </template>
 <script>
@@ -52,26 +54,25 @@ import { common } from "@/logic";
 import { orderCheckOutApi, loginApi } from "@/api/api";
 import { mapGetters } from "vuex";
 import KeyBord from "@/common/KeyBord";
+import sha1 from "js-sha1";
 
 export default {
   computed: {
     ...mapGetters(["defaultAderess"]),
-    shows(){
-       return false
-        // if(this.$route.query.hasOwnProperty('showEidts')){
-        //   return false
-        // }else{
-        //      return this.detail.status =="REQUEST"?true:false
-        // }
-   
+    shows() {
+      return false;
+      // if(this.$route.query.hasOwnProperty('showEidts')){
+      //   return false
+      // }else{
+      //      return this.detail.status =="REQUEST"?true:false
+      // }
     }
   },
   data() {
     return {
-      isPay:false,
-      password:'',
-      detail: {},
-    
+      isPay: false,
+      password: "",
+      detail: {}
     };
   },
   mounted() {
@@ -79,8 +80,38 @@ export default {
     this.getOrderInfo();
   },
   methods: {
-    pasEnd(){
+    async pasEnd() {
+      // if (sha1(this.password) != common.getPassword()) {
+      //   this.$refs.pay.lodingShow = false;
+      //   this.$refs.pay.keyShow = true;
+      //   this.$vux.toast.show({
+      //     text: "支付密码不正确"
+      //   });
+      //   return;
+      // }
 
+      var token = {
+        headers: { "x-auth-token": common.getCommon("TOKEN") }
+      };
+      try {
+        await orderCheckOutApi.payment({ id: this.$route.query.code,passwordRedeem:sha1(this.password) }, token);
+        this.$vux.toast.show({
+          text: "购买成功"
+        });
+        this.isPay = false;
+        this.$refs.pay.lodingShow = false;
+        this.$refs.pay.keyShow = false;
+
+        this.$router.push({
+          name: "orderLsit",
+          query: { index: 1, routeName: "PrizeCity" }
+        });
+        // this.$router.push({ name: "orderLsit", query: { index: 1 } });
+      } catch (error) {
+        this.isPay = false;
+        this.$refs.pay.lodingShow = false;
+        this.$refs.pay.keyShow = true;
+      }
     },
     async getDefaultAddress() {
       var token = {
@@ -88,64 +119,78 @@ export default {
       };
       try {
         const { data } = await loginApi.receiversDefault({}, token);
-        if(!data){
+        if (!data) {
           this.$vux.toast.show({
-            text:'请先填写收货地址'
-          })
+            text: "请先填写收货地址"
+          });
         }
         this.$store.dispatch("toggleUpdateAddres", data);
       } catch (error) {
         console.log(error);
       }
     },
-     gotoCancel() {
+    gotoCancel() {
       var that = this;
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
-        this.$$message.confirm.show({
-            confirm(vm, resolve) {
-                try {
-         orderCheckOutApi.cancel({ id: that.$route.query.code }, token).then(res=>{
-               that.$vux.toast.show({
-          text: "取消成功"
-        });
-        
-           that.$router.push({ name: "PrizeCity" });
-         });
-        
-      } catch (error) {}
-              resolve();
-            },
-            title: "提示",
-            content: "是否取消订单?",
-            rightBtnText: "返回",
-            leftBtnText: "确定"
-          });
-   
+      this.$$message.confirm.show({
+        confirm(vm, resolve) {
+          try {
+            orderCheckOutApi
+              .cancel({ id: that.$route.query.code }, token)
+              .then(res => {
+                that.$vux.toast.show({
+                  text: "取消成功"
+                });
+
+                that.$router.push({ name: "PrizeCity" });
+              });
+          } catch (error) {}
+          resolve();
+        },
+        title: "提示",
+        content: "是否取消订单?",
+        rightBtnText: "返回",
+        leftBtnText: "确定"
+      });
     },
     async gotoPayment() {
-      this.isPay = true
+
+
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
       try {
-         await orderCheckOutApi.payment({ id: this.$route.query.code }, token);
-           this.$vux.toast.show({
-          text: "购买成功"
-        });
-        
-         this.$router.push({ name: "orderLsit",query: { index: 1,routeName:'PrizeCity' }  });
-        // this.$router.push({ name: "orderLsit", query: { index: 1 } });
+        const { status } = await loginApi.redeem({}, token);
+      
+        if (status == 200) {
+             this.isPay = true;
+
+    
+        }
       } catch (error) {
-        
+       var self = this;
+        if(error.status == 456){
+              this.$$message.confirm.show({
+        confirm(vm, resolve) { 
+          self.$router.push({ name: "PasswordSetRedeem" })
+          resolve();
+        },
+        title: "提示",
+        content: "您还没有设置支付密码,是否前往设置?",
+        rightBtnText: "取消",
+        leftBtnText: "确定"
+      });
+        }
+    
       }
-     
     },
     async getOrderInfo() {
       var token = {
         headers: { "x-auth-token": common.getCommon("TOKEN") }
       };
+
       try {
         const { data } = await orderCheckOutApi.entity(
           { id: this.$route.query.code },
@@ -153,7 +198,7 @@ export default {
         );
         this.detail = data;
 
-      // this.$store.dispatch("toggleUpdateAddres", data);
+        // this.$store.dispatch("toggleUpdateAddres", data);
       } catch (error) {}
     }
   },
@@ -176,7 +221,7 @@ export default {
   background: #23262b;
   //   height: 100%;
   min-height: 100%;
-  padding-top:94px;
+  padding-top: 94px;
   .order {
     width: 100%;
     box-sizing: border-box;
@@ -188,8 +233,8 @@ export default {
     padding-bottom: 68px;
     padding-right: 30px;
     border-bottom: 1px solid #323540;
-     background: #2a2d36;
-     margin-top: 22px;
+    background: #2a2d36;
+    margin-top: 22px;
     .right-price-box {
       flex: 1;
       display: flex;
@@ -204,13 +249,12 @@ export default {
         }
       }
       .price {
-
       }
       .score {
         text-align: right;
         margin-left: 20px;
         min-width: 150px;
-        img{
+        img {
           width: 34px;
           height: 34px;
           margin-right: 5px;
@@ -229,7 +273,7 @@ export default {
     padding-bottom: 21px;
     box-sizing: content-box;
     display: flex;
-     font-size: 32px;
+    font-size: 32px;
     flex-direction: row;
     align-items: center;
     justify-content: center;

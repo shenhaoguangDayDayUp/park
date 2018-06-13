@@ -42,6 +42,7 @@ const route =new Router({
              
          
           } else {
+
                 scrollTo(0, 0)
             return { x: 0, y: 0 }
           }
@@ -65,7 +66,7 @@ const route =new Router({
           path: '/gameCenter',
           name: 'gameCenter',
           meta:{
-            scrollToTop:true
+            scrollToTop:false
           },
           component: () => import('@/components/gameCenter'),
         },
@@ -73,7 +74,7 @@ const route =new Router({
           path: '/prizeCity',
           name: 'PrizeCity',
           meta:{
-            scrollToTop:true
+            scrollToTop:false
           },
           component:   () => import('@/components/prizeCity'),
         },

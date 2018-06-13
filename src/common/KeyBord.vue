@@ -16,7 +16,7 @@
             </div>
             <div class="content">
                 <!-- 支付金额:100 -->
-                <!-- <slot  name='content'></slot> -->
+                <slot  name='content'></slot>
             </div>
             <!-- <div class='bottom'>
                     <div class="left"
