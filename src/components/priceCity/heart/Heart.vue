@@ -297,7 +297,7 @@ export default {
           this.$router.push({ name: "Login" });
         }
       } catch (error) {
-        // console.log(error)
+        
       }
     },
     getAmount() {

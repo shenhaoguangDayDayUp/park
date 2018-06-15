@@ -72,6 +72,10 @@
       top:94px !important;
     }
   }
+  @media screen and (min-width:1024px){
+    body{ width:750px; margin:0 auto; position:relative;}
+  }
+  
  
   // .weui-tabbar{
   //   background: #1b1a20 !important;
