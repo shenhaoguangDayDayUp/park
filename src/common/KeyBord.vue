@@ -129,7 +129,7 @@ export default {
     },
     payTitle: {
       type: String,
-      default: "请输入支付密码"
+      default: "请输入兑换密码"
     },
     highlightColor: {
       // 高亮颜色
