@@ -5,6 +5,7 @@ const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const vuxLoader = require('vux-loader')
 
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
