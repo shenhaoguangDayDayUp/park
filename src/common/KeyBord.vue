@@ -81,7 +81,8 @@
                     <div class="key v-1px-l"
                          style="background: #e8e8e8"
                          @touchstart="del($event)"
-                         @touchend="inputEnd($event,'del')">x
+                         @touchend="inputEnd($event,'del')">
+                         <img class="delete-img" src="../assets/img/delete1.png" alt="">
                     </div>
                 </div>
             </div>
@@ -230,6 +231,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.delete-img{
+  width: 40px;
+  height: 40px;
+}
 div,
 span,
 input {

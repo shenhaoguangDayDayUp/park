@@ -14,6 +14,7 @@
     <div v-transfer-dom>
       <!-- <loading :show="isLoading"
                :text="''"
+               
                :position='"absolute"'></loading> -->
     </div>
   </div>
