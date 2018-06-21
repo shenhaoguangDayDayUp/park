@@ -43,6 +43,14 @@
              v-model="password"
              @pas-end='pasEnd'
              @close='isPay=false'>
+             <div slot="content">
+               <div class='content-title'>
+                  <div class="titles">兑换积分</div>
+                        <div class="contents">
+                          <img src="../../assets/img/big_gold@2x.png" />{{detail.grandTotal|currency}}
+                        </div>
+               </div>
+             </div>
 
     </KeyBord>
   </div>
@@ -216,6 +224,29 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+.content-title{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .titles{
+    font-size: 28px;
+ 
+  }
+  .contents{
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 60px;
+    color: #ffcb16;
+    img{
+         width: 45px;
+          height: 45px;
+          margin-right: 10px;
+    }
+  }
+}
 .right-change {
   color: #fff;
   background: #23262b;

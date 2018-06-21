@@ -145,6 +145,7 @@ export default {
       type: Boolean,
       default: false
     }
+
   },
   data() {
     return {
@@ -457,11 +458,12 @@ input {
     }
   }
   .content {
-    font-size: 30px;
-    flex: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // font-size: 30px;
+    width: 100%;
+    // flex: 5;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
   }
   .bottom {
     flex: 3;
