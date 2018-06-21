@@ -173,22 +173,40 @@ function send(url, data, otherOptions, method = 'get') {
             let { data } = response;
             if(response.status == '401'){
                 // 报401要重新去拿token,但必须要有账户和密码才能去自动登录。
+                console.log('请求');
+                
                 if(user.getLoginUser('$LoginUser')){
                     axios.put('/member/login', JSON.parse(localStorage.getItem('$LoginUser')))
                         .then(function (response) {
                             sessionStorage.setItem("TOKEN", response.headers['x-auth-token']);
-                            window.global.$root.eventHub.$emit('notification')
+                            console.log('发射信号')
+                            window.global.$root.eventHub.$emit('mynotification')
                             window.global.$root.eventHub.$emit('loding')
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
                 }else{
+                    window.global.$$message.confirm.show({
+                        confirm(vm, resolve) {
+                          vm.$router.push({ name: "Login" });
+                          resolve();
+                        },
+                        cancel(vm, resolve) {
+                          vm.$router.push({ name: "gameCenter" });
+                          resolve();
+                        },
+                        title: "您还没有登录",
+                        content: "是否前往登录?",
+                        rightBtnText: "随便看看",
+                        leftBtnText: "确定"
+                      });
                     // console.log(401,401)
                     // window.global.$router.push({
                     //     path:'/login'
                     // })
                 }
+                console.log('请求结束')
             }else {
                 // reject(data); //报错信息在response里面,故返回response就好
                 reject(response);

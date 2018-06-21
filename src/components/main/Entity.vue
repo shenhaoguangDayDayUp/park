@@ -180,15 +180,18 @@
                 const TOKEN = sessionStorage.getItem('TOKEN')
                 let imgFile = e.srcElement.files[0]; //取到上传的图片
                 console.log(imgFile);
+                
                 let formData = new FormData(); //通过formdata上传
+                console.log(1111)
+                console.log(formData)
+
                 formData.append('avatar', imgFile);
-                console.log(222)
                 console.log(formData)
                 axios.post('/api/gateway/mobile/member/avatar', formData, {
                     method: 'post',
                     headers: {
                         'Content-Type': 'form-data',
-                        'x-auth-token': TOKEN
+                        'x-auth-token': TOKEN,
                     }
                 }).then(function(res) {
                     console.log(res); //

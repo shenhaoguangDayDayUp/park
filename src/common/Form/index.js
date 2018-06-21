@@ -1,7 +1,7 @@
-import VForm from './src/form'
-import FormItem from './src/formItem'
+import ElForm from './src/form'
+import ElFormItem from './src/formItem'
 
 export {
-  VForm,
-  FormItem
+  ElForm,
+  ElFormItem
 }

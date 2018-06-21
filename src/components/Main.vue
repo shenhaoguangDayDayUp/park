@@ -179,11 +179,13 @@ export default {
     // console.log(this.avatar)
     // this.avatar = "" || defaultAvatar,
     // console.log(this.avatar)
-    this.$root.eventHub.$on("notification", () => {
+    this.$root.eventHub.$on("mynotification", () => {
+      console.log('接受信号');
       this.Api();
     });
     // 如果用户信息存在(半小时后token过期了)或者token存在(登录时候没选下次自动登录)时再发请求
     if (user.getLoginUser("$LoginUser") || sessionStorage.getItem("TOKEN")) {
+      console.log('token过期');
       this.Api();
     }else{
       console.log(1111111)
@@ -213,9 +215,9 @@ export default {
       // }
     },
     Api() {
+      console.log('api')
       const TOKEN = sessionStorage.getItem("TOKEN");
-      loginApi
-        .main(
+      loginApi.main(
           {},
           {
             data: {},
@@ -249,6 +251,8 @@ export default {
           }else{
               this.avatar = this.defaultAvatar
           }
+          // console.log('解除信号');
+          this.$root.eventHub.$off("mynotification");
         //   if (!sessionStorage.getItem("AVATAR")) {
         //        this.changeToBase64(imgPrifex + data["member.avatar"]).then(res=>{
         //            sessionStorage.setItem("AVATAR",res);

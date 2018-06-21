@@ -1,81 +1,94 @@
 <template>
-  <form class="v-form">
+  <form class="el-form" :class="[
+    labelPosition ? 'el-form--label-' + labelPosition : '',
+    { 'el-form--inline': inline }
+  ]">
     <slot></slot>
-  </form>  
+  </form>
 </template>
 <script>
-import AsyncValidator from 'async-validator'
-export default {
-  name: 'v-form',
-  componentName: 'VForm', // 通过 $options.componentName 来找 form 组件
-  data () {
-    return {
-      fields: [], // field: {prop, el}
-      formError: {}
-    }
-  },
-  computed: {
-    formRules () {
-      const descriptor = {}
-      this.fields.forEach(({prop}) => {
-        if (!Array.isArray(this.rules[prop])) {
-          console.warn(`prop 为 ${prop} 的 FormItem 校验规则不存在或者其值不是数组`)
-          descriptor[prop] = [{ required: true }]
-          return
-        }
-        descriptor[prop] = this.rules[prop]
-      })
-      return descriptor
+  export default {
+    name: 'ElForm',
+
+    componentName: 'ElForm',
+
+    props: {
+      model: Object,
+      rules: Object,
+      labelPosition: String,
+      labelWidth: String,
+      labelSuffix: {
+        type: String,
+        default: ''
+      },
+      inline: Boolean,
+      showMessage: {
+        type: Boolean,
+        default: true
+      }
     },
-    formValues () {
-      const formData = this.fields.reduce((data, {prop}) => {
-        data[prop] = this.model[prop]
-        return data
-      }, {})
-      // console.log(formData)
-      return formData
-    }
-  },
-  methods: {
-    validate (callback) {
-      const validator = new AsyncValidator(this.formRules)
-      validator.validate(this.formValues, (errors) => {
-        let formError = {}
-        if (errors && errors.length) {
-          errors.forEach(({message, field}) => {
-            formError[field] = message
-          })
-        } else {
-          formError = {}
+    watch: {
+      rules() {
+        this.validate();
+      }
+    },
+    data() {
+      return {
+        fields: []
+      };
+    },
+    created() {
+      this.$on('el.form.addField', (field) => {
+        if (field) {
+          this.fields.push(field);
         }
-        this.formError = formError
-        // 让错误信息的顺序与表单组件的顺序相同
-        const errInfo = []
-        this.fields.forEach(({prop, el}, index) => {
-          if (formError[prop]) {
-            errInfo.push(formError[prop])
-          }
-        })
-        callback(errInfo)
-      })
+      });
+      /* istanbul ignore next */
+      this.$on('el.form.removeField', (field) => {
+        if (field.prop) {
+          this.fields.splice(this.fields.indexOf(field), 1);
+        }
+      });
+    },
+    methods: {
+      resetFields() {
+        if (!this.model) {
+          process.env.NODE_ENV !== 'production' &&
+          console.warn('[Element Warn][Form]model is required for resetFields to work.');
+          return;
+        }
+        this.fields.forEach(field => {
+          field.resetField();
+        });
+      },
+      validate(callback) {
+        if (!this.model) {
+          console.warn('[Element Warn][Form]model is required for validate to work!');
+          return;
+        };
+        let valid = true;
+        let count = 0;
+        // 如果需要验证的fields为空，调用验证时立刻返回callback
+        if (this.fields.length === 0 && callback) {
+          callback(true);
+        }
+        this.fields.forEach((field, index) => {
+          field.validate('', errors => {
+            if (errors) {
+              valid = false;
+            }
+            if (typeof callback === 'function' && ++count === this.fields.length) {
+              callback(valid);
+            }
+          });
+        });
+      },
+      validateField(prop, cb) {
+        var field = this.fields.filter(field => field.prop === prop)[0];
+        if (!field) { throw new Error('must call validateField with valid prop string!'); }
+
+        field.validate('', cb);
+      }
     }
-  },
-  props: {
-    model: Object,
-    rules: Object
-  },
-  created () {
-    this.$on('form.addField', (field) => {
-      if (field) {
-        this.fields = [...this.fields, field]
-      console.log(this.fields)
-      }
-    })
-    this.$on('form.removeField', (field) => {
-      if (field) {
-        this.fields = this.fields.filter(({prop}) => prop !== field.prop)
-      }
-    })
-  }
-}
+  };
 </script>
